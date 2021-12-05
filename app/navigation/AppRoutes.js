@@ -52,17 +52,7 @@ const AppNavigator = () => {
         name="Feed"
         component={FeedNavigator}
       />
-      <Tab.Screen
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="bell-o" color={color} size={size} />
-          ),
-          tabBarShowLabel: false,
-        }}
-        name="Notifications"
-        component={FeedNavigator}
-      />
+
       <Tab.Screen
         options={{
           headerShown: false,
@@ -72,6 +62,17 @@ const AppNavigator = () => {
           tabBarShowLabel: false,
         }}
         name="MEssage"
+        component={FeedNavigator}
+      />
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="bell-o" color={color} size={size} />
+          ),
+          tabBarShowLabel: false,
+        }}
+        name="Notifications"
         component={FeedNavigator}
       />
       <Tab.Screen

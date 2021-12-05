@@ -5,6 +5,8 @@ import Screen from "../components/Screen";
 import colors from "../config/colors";
 import { useFonts } from "expo-font";
 import { FontAwesome } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+import PostCard from "../components/PostCard";
 
 function Home(props) {
   const [loaded] = useFonts({
@@ -51,13 +53,41 @@ function Home(props) {
         </View>
         <View
           style={{
-            padding: 10,
+            // padding: 10,
             borderBottomColor: "black",
+            position: "relative",
             borderTopWidth: 2,
             marginTop: 10,
           }}
         >
-          <Text>Timeline | showing recent posts</Text>
+          <Text
+            style={{
+              padding: 18,
+              fontSize: 18,
+              color: "#fff",
+              zIndex: 1,
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Text style={{ fontWeight: "700" }}>Timeline | </Text>
+            <Text style={{ fontSize: 14 }}>showing recent posts</Text>
+          </Text>
+          <LinearGradient
+            colors={["#1160af", "#9e7b9b"]}
+            // colors={["red", "white"]}
+            style={styles.grad_diverder}
+            start={[0, 0]}
+            end={[1, 0]}
+          />
+        </View>
+        <View>
+          <PostCard />
+          <PostCard />
+          <PostCard />
+          <PostCard />
+          <PostCard />
         </View>
       </ScrollView>
     </Screen>
@@ -65,6 +95,15 @@ function Home(props) {
 }
 
 const styles = StyleSheet.create({
+  grad_diverder: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
+    height: "100%",
+    width: "100%",
+  },
   tab_Container: {
     paddingHorizontal: 20,
     paddingVertical: 10,
