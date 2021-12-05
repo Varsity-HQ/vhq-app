@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
-import LandingScreen from "../screens/LandingScreen";
+import Home from "../screens/Home";
 
 const FeedNavigator = () => (
   <Stack.Navigator>
@@ -11,8 +11,8 @@ const FeedNavigator = () => (
       options={{
         headerShown: false,
       }}
-      name="LandingScreen"
-      component={LandingScreen}
+      name="Home"
+      component={Home}
     />
   </Stack.Navigator>
 );
