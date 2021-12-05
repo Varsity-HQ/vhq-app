@@ -5,13 +5,16 @@ import AppNavigator from "./app/navigation/AppRoutes";
 import AuthRoutes from "./app/navigation/AuthRoutes";
 import LandingScreen from "./app/screens/LandingScreen";
 import vhqTheme from "./app/navigation/navigationTheme";
+import FloatingButton from "./app/components/FloatingButton";
 
 export default function App() {
   return (
-    // <LandingScreen />
-
-    <NavigationContainer theme={vhqTheme}>
-      <AppNavigator />
-    </NavigationContainer>
+    <>
+      <FloatingButton />
+      {/* <LandingScreen /> */}
+      <NavigationContainer theme={vhqTheme}>
+        <AppNavigator />
+      </NavigationContainer>
+    </>
   );
 }
