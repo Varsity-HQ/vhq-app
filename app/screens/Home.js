@@ -1,5 +1,12 @@
 import React from "react";
-import { View, StyleSheet, Text, ScrollView, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  Image,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
@@ -8,7 +15,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import PostCard from "../components/PostCard";
 
-function Home(props) {
+function Home({ navigation }) {
   const [loaded] = useFonts({
     Lobster: require("../Fonts/Lobster-Regular.ttf"),
   });
@@ -21,12 +28,16 @@ function Home(props) {
       <ScrollView>
         <View style={styles.header}>
           <View style={{ width: "30%" }}>
-            <Image
-              style={styles.profilepic}
-              source={{
-                uri: "https://varsityhq.imgix.net/vhq_img202130693415.jpeg",
-              }}
-            />
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate("Profile", {})}
+            >
+              <Image
+                style={styles.profilepic}
+                source={{
+                  uri: "https://varsityhq.imgix.net/vhq_img202130693415.jpeg",
+                }}
+              />
+            </TouchableWithoutFeedback>
           </View>
           <Text style={styles.vhq_title}>VarsityHQ</Text>
           <View style={styles.header_uni_container}>

@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 const Stack = createNativeStackNavigator();
 
 import Home from "../screens/Home";
+import Profile from "../screens/Profile";
 
 const FeedNavigator = () => (
   <Stack.Navigator>
@@ -13,6 +14,13 @@ const FeedNavigator = () => (
       }}
       name="Home"
       component={Home}
+    />
+    <Stack.Screen
+      options={{
+        headerShown: false,
+      }}
+      name="Profile"
+      component={Profile}
     />
   </Stack.Navigator>
 );

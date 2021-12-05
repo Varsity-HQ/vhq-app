@@ -10,7 +10,7 @@ import FloatingButton from "./app/components/FloatingButton";
 export default function App() {
   return (
     <>
-      <FloatingButton />
+
       {/* <LandingScreen /> */}
       <NavigationContainer theme={vhqTheme}>
         <AppNavigator />
