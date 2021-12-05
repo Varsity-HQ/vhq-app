@@ -14,8 +14,11 @@ function TabNavigator({ active = 1, style, items = [], onPress }) {
     <ScrollView horizontal={true} style={[styles.container, style]}>
       {items.map((x, index) => {
         return (
-          <TouchableWithoutFeedback onPress={() => onPress(x.index)}>
-            <View key={index} style={styles.tab}>
+          <TouchableWithoutFeedback
+            key={index}
+            onPress={() => onPress(x.index)}
+          >
+            <View style={styles.tab}>
               <View
                 style={[
                   styles.tab_indicator_1,

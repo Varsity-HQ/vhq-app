@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -11,11 +11,41 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
 import { useFonts } from "expo-font";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import PostCard from "../components/PostCard";
 
+import TabNavigator from "../components/TabNavigator";
+
+const home_tabs = [
+  {
+    title: "All",
+    index: 1,
+    icon: (
+      <Ionicons color={colors.white} size={18} name="ios-file-tray-stacked" />
+    ),
+  },
+  {
+    title: "Events",
+    index: 2,
+    icon: <FontAwesome color={colors.white} size={16} name="calendar-o" />,
+  },
+  {
+    title: "Discover",
+    index: 3,
+    icon: (
+      <FontAwesome color={colors.white} size={16} name="arrow-circle-o-right" />
+    ),
+  },
+  {
+    title: "Offers",
+    index: 4,
+    icon: <FontAwesome color={colors.white} size={16} name="tags" />,
+  },
+];
+
 function Home({ navigation }) {
+  const [index, setTab] = useState(1);
   const [loaded] = useFonts({
     Lobster: require("../Fonts/Lobster-Regular.ttf"),
   });
@@ -52,15 +82,11 @@ function Home({ navigation }) {
           </View>
         </View>
         <View style={styles.tabbar_container}>
-          <ScrollView horizontal={true}>
-            <View style={styles.tab}>
-              <View style={styles.tab_indicator_1}></View>
-              <View style={styles.tab_Container}>
-                <Text style={styles.text}>All</Text>
-              </View>
-              <View style={styles.tab_indicator_2}></View>
-            </View>
-          </ScrollView>
+          <TabNavigator
+            active={index}
+            onPress={(i) => setTab(i)}
+            items={home_tabs}
+          />
         </View>
         <View
           style={{
@@ -68,7 +94,7 @@ function Home({ navigation }) {
             borderBottomColor: "black",
             position: "relative",
             borderTopWidth: 2,
-            marginTop: 10,
+            // marginTop: 10,
           }}
         >
           <Text

@@ -1,9 +1,17 @@
 import React from "react";
-import { View, StyleSheet, Text, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableWithoutFeedback,
+} from "react-native";
 import colors from "../config/colors";
 import { FontAwesome, Ionicons, Feather } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-function PostCard(props) {
+function PostCard({ navigation }) {
+  const nav = useNavigation();
   return (
     <View style={styles.container}>
       <View
@@ -13,23 +21,25 @@ function PostCard(props) {
           alignItems: "center",
         }}
       >
-        <View style={{ flexDirection: "row" }}>
-          <Image
-            style={styles.p_avatar}
-            source={{
-              uri: "https://varsityhq.imgix.net/vhq_img202122286166.jpeg",
-            }}
-          />
-          <View style={{ marginLeft: 10 }}>
-            <Text style={styles.u_name}>
-              Paballo M{" "}
-              <Text style={styles.date_posted}>&nbsp;11 days ago</Text>
-            </Text>
-            <Text style={styles.username}>
-              @pabie - <FontAwesome name="university" size={12} />
-            </Text>
+        <TouchableWithoutFeedback onPress={() => nav.push("Profile")}>
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              style={styles.p_avatar}
+              source={{
+                uri: "https://varsityhq.imgix.net/vhq_img202122286166.jpeg",
+              }}
+            />
+            <View style={{ marginLeft: 10 }}>
+              <Text style={styles.u_name}>
+                Paballo M{" "}
+                <Text style={styles.date_posted}>&nbsp;11 days ago</Text>
+              </Text>
+              <Text style={styles.username}>
+                @pabie - <FontAwesome name="university" size={12} />
+              </Text>
+            </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
         <View style={{ marginRight: 10 }}>
           <Ionicons
             color={colors.white}
@@ -39,7 +49,10 @@ function PostCard(props) {
         </View>
       </View>
       <View style={styles.content_container}>
-        <Text style={{ fontSize: 16, color: colors.light }}>
+        <Text
+          onPress={() => nav.navigate("PostPage")}
+          style={{ fontSize: 16, color: colors.light }}
+        >
           Ever fell in love with someone that doesn't below to you ? Its
           actuaally really say but im testing this
         </Text>

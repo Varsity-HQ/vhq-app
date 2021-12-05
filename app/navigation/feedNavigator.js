@@ -5,6 +5,7 @@ const Stack = createNativeStackNavigator();
 
 import Home from "../screens/Home";
 import Profile from "../screens/Profile";
+// import PostPage from "../screens/PostPage";
 
 const FeedNavigator = () => (
   <Stack.Navigator>
@@ -22,6 +23,13 @@ const FeedNavigator = () => (
       name="Profile"
       component={Profile}
     />
+    {/* <Stack.Screen
+      options={{
+        headerShown: false,
+      }}
+      name="PostPage"
+      component={PostPage}
+    /> */}
   </Stack.Navigator>
 );
 

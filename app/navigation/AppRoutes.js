@@ -9,6 +9,12 @@ import colors from "../config/colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, Text, View } from "react-native";
 import RIcon from "react-native-remix-icon";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import PostPage from "../screens/PostPage";
+import Profile from "../screens/Profile";
+
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const TabBar = (props) => {
   return (
@@ -23,7 +29,34 @@ const TabBar = (props) => {
     </LinearGradient>
   );
 };
-const Tab = createBottomTabNavigator();
+
+const AppRoutes = () => {
+  return (
+    <Stack.Navigator initialRouteName="AppNavigator">
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="AppNavigator"
+        component={AppNavigator}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="Profile"
+        component={Profile}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="PostPage"
+        component={PostPage}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const AppNavigator = () => {
   return (
@@ -115,4 +148,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppNavigator;
+export default AppRoutes;
