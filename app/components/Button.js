@@ -4,24 +4,43 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import colors from "../config/colors";
 
-function AppButton({ title, onPress, type = 1 }) {
+function AppButton({ title, style, onPress, type = 1 }) {
+  if (type === 3) {
+    return (
+      <TouchableOpacity style={[styles.button_t3, style]} onPress={onPress}>
+        <Text style={styles.text_t3}>{title}</Text>
+      </TouchableOpacity>
+    );
+  }
   if (type === 2) {
     return (
-      <TouchableOpacity style={[styles.button_t2]} onPress={onPress}>
+      <TouchableOpacity style={[styles.button_t2, style]} onPress={onPress}>
         <Text style={styles.text_t2}>{title}</Text>
       </TouchableOpacity>
     );
   }
   if (type === 1) {
     return (
-      <TouchableOpacity style={[styles.button]} onPress={onPress}>
+      <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
         <Text style={styles.text}>{title}</Text>
       </TouchableOpacity>
     );
   }
+
+  return null;
 }
 
 const styles = StyleSheet.create({
+  button_t3: {
+    position: "relative",
+    backgroundColor: colors.darkish3,
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 12,
+    // width: "100%",
+    marginVertical: 10,
+  },
   button_t2: {
     position: "relative",
     backgroundColor: colors.white,
@@ -45,6 +64,11 @@ const styles = StyleSheet.create({
     padding: 15,
     width: "100%",
     marginVertical: 10,
+  },
+  text_t3: {
+    color: colors.white,
+    fontSize: 15,
+    fontWeight: "600",
   },
   text_t2: {
     color: colors.primary,

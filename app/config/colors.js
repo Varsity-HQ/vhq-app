@@ -7,6 +7,7 @@ export default {
   dark_opacity_2: "#374e64ad",
   darkish: "#15202b",
   darkish2: "#163952",
+  darkish3: "#105d83e7",
   white: "#fff",
   light: "#f9f9f9",
   lighish: "#7d868c",
