@@ -13,24 +13,13 @@ import RIcon from "react-native-remix-icon";
 const TabBar = (props) => {
   return (
     <LinearGradient
-      style={styles.bottomNav}
       colors={["#1c2b3a", colors.dark]}
       // colors={["red", "white"]}
       start={[1, 0]}
       end={[1, 1]}
     >
-      <BottomTabBar
-        {...props}
-        style={[
-          { backgroundColor: "transparent" },
-          {
-            shadowColor: colors.black,
-            shadowOpacity: 20,
-            shadowRadius: 5,
-            borderTopColor: colors.dark,
-          },
-        ]}
-      />
+      <View style={styles.bottomNav}></View>
+      <BottomTabBar {...props} style={[{ backgroundColor: "transparent" }]} />
     </LinearGradient>
   );
 };
@@ -42,8 +31,10 @@ const AppNavigator = () => {
       tabBar={TabBar}
       screenOptions={{
         tabBarStyle: {
+          marginTop: 0,
           backgroundColor: "transparent",
-          borderTopColor: colors.dark,
+          borderTopColor: colors.darkish2,
+          borderTopWidth: 2,
           shadowColor: colors.black,
           shadowOpacity: 20,
           shadowRadius: 5,
@@ -112,10 +103,14 @@ const AppNavigator = () => {
 const styles = StyleSheet.create({
   bottomNav: {
     shadowColor: colors.black,
-    shadowOpacity: 20,
+    shadowOpacity: 25,
     shadowRadius: 5,
     borderTopColor: colors.dark,
-    padding: 0,
+    padding: 5,
+    marginTop: 0,
+    height: 1,
+    width: "100%",
+    backgroundColor: colors.dark,
   },
 });
 
