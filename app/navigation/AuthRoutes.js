@@ -1,6 +1,5 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 import LandingScreen from "../screens/LandingScreen";
 import Login from "../screens/Login";
 import Signup from "../screens/Signup";

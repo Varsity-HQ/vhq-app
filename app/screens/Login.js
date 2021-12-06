@@ -12,7 +12,33 @@ import colors from "../config/colors";
 import AppButton from "../components/Button";
 import Input from "../components/Input";
 
+import Form from "../components/Forms/Form";
+import SubmitButton from "../components/Forms/SubmitButton";
+import AppFormField from "../components/Forms/FormField";
+
+import * as Yup from "yup";
+import axios from "axios";
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required("Provide a username, phone number or email"),
+  password: Yup.string().required().min(4).label("Password"),
+});
+
 function Login({ navigation }) {
+  const handleSubmit = ({ email, password }) => {
+    axios
+      .post("/login", {
+        email,
+        password,
+      })
+      .then((data) => {
+        console.log(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <ImageBackground
       // blurRadius={4}
@@ -37,17 +63,33 @@ function Login({ navigation }) {
             <Text style={styles.subHeading}>Login to your account</Text>
           </View>
           <View style={{ marginTop: 20 }}>
-            <Input
-              cstyles={{
-                marginBottom: 15,
+            <Form
+              validationSchema={validationSchema}
+              initialValues={{
+                email: "",
+                password: "",
               }}
-              icon="user"
-              placeholder="Email, Username or Phonenumber"
-            />
-            <Input secureTextEntry icon="lock" placeholder="Password" />
-            <View style={{ marginTop: 20 }}>
-              <AppButton icon="" type={1} title="Login" />
-            </View>
+              onSubmit={handleSubmit}
+            >
+              <AppFormField
+                cstyles={{
+                  marginBottom: 15,
+                }}
+                name="email"
+                icon="user"
+                placeholder="Email, Username or Phonenumber"
+              />
+              <AppFormField
+                secureTextEntry
+                icon="lock"
+                name="password"
+                placeholder="Password"
+              />
+
+              <View style={{ marginTop: 20 }}>
+                <SubmitButton icon="" type={1} title="Login" />
+              </View>
+            </Form>
           </View>
           <View
             style={{
