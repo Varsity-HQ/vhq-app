@@ -7,6 +7,16 @@ const initialData = {
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "SET_USER_DATA":
+      return {
+        ...state,
+        accData: actions.payload,
+      };
+    case "SET_AUTH_STATE":
+      return {
+        ...state,
+        authenticated: actions.payload,
+      };
     default:
       return state;
   }

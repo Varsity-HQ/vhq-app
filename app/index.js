@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import AppNavigator from "./navigation/AppRoutes";
@@ -6,6 +6,16 @@ import AuthRoutes from "./navigation/AuthRoutes";
 import vhqTheme from "./navigation/navigationTheme";
 import axios from "axios";
 import { connect } from "react-redux";
+import auth_storage from "./auth/auth_storage";
+
+import AppLoading from "expo-app-loading";
+import {
+  setAuthState,
+  set_user_token,
+  set_token,
+  set_user,
+} from "./store/actions/actions";
+import store from "./store/store";
 
 axios.defaults.baseURL = "http://172.20.10.4:5000";
 
@@ -14,8 +24,47 @@ const mapStateToProps = (state) => {
     authenticated: state.core.authenticated,
   };
 };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    set_user_token: (state) => dispatch(set_user_token(state)),
+    setAuthState: (state) => dispatch(setAuthState(state)),
+    set_token: (token) => dispatch(set_token(token)),
+    set_user: (user) => dispatch(set_user(user)),
+  };
+};
 
-function App({ authenticated }) {
+function App({ authenticated, set_user, setAuthState, set_token }) {
+  const [isReady, setisReady] = useState();
+  const restoreToken = async () => {
+    const token = await auth_storage.getToken();
+    if (token) {
+      //   console.log({ oldToken: token });
+      set_token(token);
+      await axios
+        .get("/get/account")
+        .then((data) => {
+          console.log(data.data);
+          set_user(data.data);
+          setAuthState(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setAuthState(false);
+    }
+  };
+
+  if (!isReady) {
+    return (
+      <AppLoading
+        startAsync={restoreToken}
+        onFinish={() => setisReady(true)}
+        onError={console.warn}
+      />
+    );
+  }
+
   return (
     <NavigationContainer theme={vhqTheme}>
       {authenticated ? <AppNavigator /> : <AuthRoutes />}
@@ -23,4 +72,4 @@ function App({ authenticated }) {
   );
 }
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

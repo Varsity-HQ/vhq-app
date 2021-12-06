@@ -3,11 +3,24 @@ import { useFormikContext } from "formik";
 
 import AppButton from "../Button";
 
-function SubmitButton({ title, type, ...props }) {
+function SubmitButton({ title, loading, type, ...props }) {
   const { handleSubmit } = useFormikContext();
 
   return (
-    <AppButton title={title} {...props} type={type} onPress={handleSubmit} />
+    <AppButton
+      disabled={loading ? true : false}
+      title={loading ? "Please wait" : title}
+      {...props}
+      type={type}
+      style={
+        loading
+          ? {
+              opacity: 0.5,
+            }
+          : {}
+      }
+      onPress={handleSubmit}
+    />
   );
 }
 

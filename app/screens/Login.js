@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -18,14 +18,29 @@ import AppFormField from "../components/Forms/FormField";
 
 import * as Yup from "yup";
 import axios from "axios";
+import ErrorMessage from "../components/Forms/ErrorMessage";
+import { connect } from "react-redux";
+
+import { set_user_token } from "../store/actions/actions";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required("Provide a username, phone number or email"),
   password: Yup.string().required().min(4).label("Password"),
 });
 
-function Login({ navigation }) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    set_user_token: (token) => dispatch(set_user_token(token)),
+  };
+};
+
+function Login({ navigation, set_user_token }) {
+  const [processing, set_processing] = useState(false);
+  const [error, set_error] = useState({});
+
   const handleSubmit = ({ email, password }) => {
+    set_processing(true);
+    set_error("");
     axios
       .post("/login", {
         email,
@@ -33,9 +48,14 @@ function Login({ navigation }) {
       })
       .then((data) => {
         console.log(data.data);
+        set_processing(false);
+        return set_user_token(data.data.token);
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response) {
+          set_error({ ...err.response.data });
+        }
+        set_processing(false);
       });
   };
 
@@ -63,6 +83,8 @@ function Login({ navigation }) {
             <Text style={styles.subHeading}>Login to your account</Text>
           </View>
           <View style={{ marginTop: 20 }}>
+            <ErrorMessage error={error.error} visible={error.error} />
+            <ErrorMessage error={error.password} visible={error.password} />
             <Form
               validationSchema={validationSchema}
               initialValues={{
@@ -87,7 +109,12 @@ function Login({ navigation }) {
               />
 
               <View style={{ marginTop: 20 }}>
-                <SubmitButton icon="" type={1} title="Login" />
+                <SubmitButton
+                  loading={processing}
+                  icon=""
+                  type={1}
+                  title="Login"
+                />
               </View>
             </Form>
           </View>
@@ -140,4 +167,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);
