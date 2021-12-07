@@ -19,6 +19,9 @@ import {
 } from "../components/Forms";
 import * as Yup from "yup";
 import axios from "axios";
+import { set_token, get_user } from "../store/actions/actions";
+import { connect } from "react-redux";
+import store from "../store/store";
 
 const u_name_validationSchema = Yup.object().shape({
   username: Yup.string()
@@ -41,10 +44,18 @@ const validationSchema = Yup.object().shape({
     .required("Please confirm your password"),
 });
 
-function Signup({ navigation }) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    set_token: (token) => dispatch(set_token(token)),
+    get_user: () => dispatch(get_user()),
+  };
+};
+
+function Signup({ navigation, set_token, get_user }) {
   const [page, setPage] = useState(0);
   const [processing, set_processing] = useState(false);
   const [errors, set_errors] = useState({});
+  const [username, set_username] = useState("");
 
   const componentSwitcher = () => {
     switch (page) {
@@ -55,8 +66,41 @@ function Signup({ navigation }) {
     }
   };
 
-  const handle_signup = ({ email, password }) => {
+  const handle_signup = ({ email, password, confirm_pass }) => {
     console.log({ email, password });
+    set_processing(true);
+
+    let newUserData = {
+      username: username, // must run regex for correct pattern
+      email: email,
+      password: password,
+      rep_password: confirm_pass,
+    };
+
+    axios
+      .post("/signup", newUserData)
+      .then((res) => {
+        set_token(res.data.token);
+        console.log(res.data);
+
+        store.dispatch(get_user());
+        // set_processing(false);
+      })
+      .catch((err) => {
+        set_processing(false);
+
+        if (err.response) {
+          console.log(err.response.data);
+          let errors = err.response.data;
+          set_errors({ ...errors });
+
+          if (errors.username) {
+            return setPage(0);
+          } else {
+            return setPage(1);
+          }
+        }
+      });
   };
 
   const signupform = () => {
@@ -71,6 +115,7 @@ function Signup({ navigation }) {
           }}
           onSubmit={handle_signup}
         >
+          <ErrorMessage error={errors.error} visible={errors.error} />
           <Field
             autoCapitalize="none"
             autoCorrect={false}
@@ -83,7 +128,7 @@ function Signup({ navigation }) {
             }}
             placeholder="Enter your email"
           />
-          <ErrorMessage error={errors.username} visible={errors.username} />
+          <ErrorMessage error={errors.email} visible={errors.email} />
 
           <Field
             autoCapitalize="none"
@@ -132,11 +177,13 @@ function Signup({ navigation }) {
   const check_username = ({ username }) => {
     set_processing(true);
     set_errors({});
+    set_username("");
     axios
       .get(`/checkusername/${username}`)
       .then((data) => {
         console.log(data.data);
         set_processing(false);
+        set_username(username);
         setPage(1);
       })
       .catch((err) => {
@@ -271,4 +318,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Signup;
+export default connect(null, mapDispatchToProps)(Signup);

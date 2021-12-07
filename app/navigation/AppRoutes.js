@@ -12,6 +12,16 @@ import RIcon from "react-native-remix-icon";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import PostPage from "../screens/PostPage";
 import Profile from "../screens/Profile";
+import SetupUniversity from "../screens/SetupUniversity";
+
+import { connect } from "react-redux";
+import WelcomeScreen from "../screens/WelcomeScreen";
+
+const mapStateToProps = (state) => {
+  return {
+    core: state.core,
+  };
+};
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -30,7 +40,33 @@ const TabBar = (props) => {
   );
 };
 
-const AppRoutes = () => {
+const AppRoutes = ({ core }) => {
+  if (core.accData.accountStatus === "pending-setup") {
+    return (
+      <Stack.Navigator
+        screenOptions={{
+          animation: "slide_from_right",
+        }}
+        initialRouteName="WelcomeScreen"
+      >
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="WelcomeScreen"
+          component={WelcomeScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="SetupUniversity"
+          component={SetupUniversity}
+        />
+      </Stack.Navigator>
+    );
+  }
+
   return (
     <Stack.Navigator initialRouteName="AppNavigator">
       <Stack.Screen
@@ -148,4 +184,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppRoutes;
+export default connect(mapStateToProps, null)(AppRoutes);

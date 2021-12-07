@@ -1,0 +1,132 @@
+[
+  {
+    "name": "University of Cape Town",
+    "short_name": "UCT",
+    "city": "Cape Town"
+  },
+  {
+    "name": "University of Fort Hare",
+    "short_name": "UFH",
+    "city": "Eastern Cape"
+  },
+  {
+    "name": "University of the Free State",
+    "short_name": "UFS",
+    "city": "Alice"
+  },
+  {
+    "name": "University of Johannesburg",
+    "short_name": "UJ",
+    "city": "Johannesburg"
+  },
+  {
+    "name": "University of KwaZulu-Natal",
+    "short_name": "UJ",
+    "city": "UKZN"
+  },
+  {
+    "name": "University of Limpopo",
+    "short_name": "UL",
+    "city": "Limpopo"
+  },
+  {
+    "name": "University of Mpumalanga",
+    "short_name": "UM",
+    "city": "Mpumalanga"
+  },
+  {
+    "name": "Nelson Mandela University",
+    "short_name": "UM",
+    "city": "NMMU"
+  },
+  {
+    "name": "North West University",
+    "short_name": "NWU",
+    "city": "North West"
+  },
+  {
+    "name": "University of Pretoria",
+    "short_name": "UP",
+    "city": "Pretoria"
+  },
+  {
+    "name": "Rhodes University",
+    "short_name": "RU",
+    "city": ""
+  },
+  {
+    "name": "Sefako Makgatho Health Sciences University",
+    "short_name": "SMU",
+    "city": ""
+  },
+  {
+    "name": "Sol Plaatje University",
+    "short_name": "SPU",
+    "city": ""
+  },
+  {
+    "name": "University of South Africa",
+    "short_name": "UNISA",
+    "city": ""
+  },
+  {
+    "name": "University of Stellenbosch",
+    "short_name": "SUN",
+    "city": ""
+  },
+  {
+    "name": "Walter Sisulu University for Technology",
+    "short_name": "WSU",
+    "city": ""
+  },
+  {
+    "name": "University of Venda",
+    "short_name": "UNIVEN",
+    "city": ""
+  },
+  {
+    "name": "University of the Western Cape",
+    "short_name": "UWC",
+    "city": ""
+  },
+  {
+    "name": "University of the Witwatersrand",
+    "short_name": "WITS",
+    "city": ""
+  },
+  {
+    "name": "University of Zululand",
+    "short_name": "UZULU",
+    "city": ""
+  },
+  {
+    "name": "Cape Peninsula",
+    "short_name": "CPUT",
+    "city": ""
+  },
+  {
+    "name": "Central University of Technology Free State",
+    "short_name": "CUT",
+    "city": ""
+  },
+  {
+    "name": "Durban Institute of Technology",
+    "short_name": "DUT",
+    "city": ""
+  },
+  {
+    "name": "Mangosuthu University of Technology",
+    "short_name": "MANTEC",
+    "city": ""
+  },
+  {
+    "name": "Tshwane University of Technology",
+    "short_name": "TUT",
+    "city": ""
+  },
+  {
+    "name": "Vaal University of Technology",
+    "short_name": "VUT",
+    "city": ""
+  }
+]

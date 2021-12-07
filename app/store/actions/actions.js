@@ -3,6 +3,27 @@ import axios from "axios";
 import auth_storage from "../../auth/auth_storage";
 import store from "../store";
 
+export const get_user = () => (dispatch) => {
+  axios
+    .get("/get/account")
+    .then((data) => {
+      console.log(data.data);
+
+      dispatch({
+        type: "SET_USER_DATA",
+        payload: data.data,
+      });
+
+      dispatch({
+        type: "SET_AUTH_STATE",
+        payload: true,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const set_user = (user) => (dispatch) => {
   dispatch({
     type: "SET_USER_DATA",
