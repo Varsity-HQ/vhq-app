@@ -7,7 +7,11 @@ import Signup from "../screens/Signup";
 const Stack = createNativeStackNavigator();
 
 const AuthNavigator = () => (
-  <Stack.Navigator>
+  <Stack.Navigator
+    screenOptions={{
+      animation: "slide_from_right",
+    }}
+  >
     <Stack.Screen
       options={{
         headerShown: false,

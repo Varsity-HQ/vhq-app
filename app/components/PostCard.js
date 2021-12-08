@@ -53,8 +53,7 @@ function PostCard({ navigation }) {
           onPress={() => nav.navigate("PostPage")}
           style={{ fontSize: 16, color: colors.light }}
         >
-          Ever fell in love with someone that doesn't below to you ? Its
-          actuaally really say but im testing this
+          Post content here [...]
         </Text>
       </View>
       <View

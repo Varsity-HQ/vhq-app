@@ -64,7 +64,7 @@ function Home({ navigation }) {
               <Image
                 style={styles.profilepic}
                 source={{
-                  uri: "https://varsityhq.imgix.net/vhq_img202130693415.jpeg",
+                  uri: "https://varsityhq.imgix.net/vhq_img202122286166.jpeg",
                 }}
               />
             </TouchableWithoutFeedback>

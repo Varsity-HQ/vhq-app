@@ -3,7 +3,24 @@ import { View, TextInput, StyleSheet } from "react-native";
 import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
 import colors from "../config/colors";
 
-function AppTextInput({ icon, cstyles, width = "100%", ...otherProps }) {
+function AppTextInput({
+  type,
+  style,
+  icon,
+  cstyles,
+  width = "100%",
+  ...otherProps
+}) {
+  if (type === 2) {
+    return (
+      <TextInput
+        placeholderTextColor={colors.secondary}
+        style={[styles.TextInput, style]}
+        {...otherProps}
+      />
+    );
+  }
+
   return (
     <View style={[styles.container, { width: width }, cstyles]}>
       {icon && (
@@ -25,6 +42,19 @@ function AppTextInput({ icon, cstyles, width = "100%", ...otherProps }) {
 }
 
 const styles = StyleSheet.create({
+  TextInput: {
+    borderLeftWidth: 4,
+    borderLeftColor: colors.primary,
+    borderRightWidth: 4,
+    borderRightColor: colors.primary,
+    borderColor: "#2f6286",
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 7,
+    paddingVertical: 12,
+    fontSize: 16,
+    color: colors.white,
+  },
   text: {
     width: "100%",
     color: colors.white,

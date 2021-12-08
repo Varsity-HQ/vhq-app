@@ -1,11 +1,15 @@
 import React from "react";
 import Constants from "expo-constants";
-import { StyleSheet, SafeAreaView, View } from "react-native";
+import { StyleSheet, SafeAreaView, View, ScrollView } from "react-native";
 
-function Screen({ children, style }) {
+function Screen({ children, style, scroll, avoidkeyboard }) {
   return (
     <SafeAreaView style={[styles.screen, style]}>
-      <View style={[style, styles.view]}>{children}</View>
+      {scroll ? (
+        <ScrollView style={[style, styles.view]}>{children}</ScrollView>
+      ) : (
+        <View style={[style, styles.view]}>{children}</View>
+      )}
     </SafeAreaView>
   );
 }

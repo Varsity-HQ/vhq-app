@@ -16,6 +16,8 @@ import SetupUniversity from "../screens/SetupUniversity";
 
 import { connect } from "react-redux";
 import WelcomeScreen from "../screens/WelcomeScreen";
+import OverlayLoader from "../components/OverlayLoader";
+import SetupPersonalInformation from "../screens/SetupPersonalInformation";
 
 const mapStateToProps = (state) => {
   return {
@@ -42,28 +44,45 @@ const TabBar = (props) => {
 
 const AppRoutes = ({ core }) => {
   if (core.accData.accountStatus === "pending-setup") {
+    // console.log("pending setup");
     return (
-      <Stack.Navigator
-        screenOptions={{
-          animation: "slide_from_right",
-        }}
-        initialRouteName="WelcomeScreen"
-      >
-        <Stack.Screen
-          options={{
-            headerShown: false,
+      <>
+        <OverlayLoader />
+        <Stack.Navigator
+          screenOptions={{
+            animation: "slide_from_right",
           }}
-          name="WelcomeScreen"
-          component={WelcomeScreen}
-        />
-        <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
-          name="SetupUniversity"
-          component={SetupUniversity}
-        />
-      </Stack.Navigator>
+          initialRouteName={
+            core.accData.university && core.accData.yearOfStudy
+              ? "SetupPersonalInformation"
+              : "SetupUniversity"
+          }
+        >
+          {/* <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="WelcomeScreen"
+            component={WelcomeScreen}
+          /> */}
+
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="SetupUniversity"
+            component={SetupUniversity}
+          />
+
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="SetupPersonalInformation"
+            component={SetupPersonalInformation}
+          />
+        </Stack.Navigator>
+      </>
     );
   }
 

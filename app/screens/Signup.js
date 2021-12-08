@@ -265,8 +265,8 @@ function Signup({ navigation, set_token, get_user }) {
             }}
           >
             <Text style={styles.text}>
-              Already have an account ? Login here{" "}
-              <Text onPress={() => navigation.navigate("Register")}>
+              Already have an account ?&nbsp;
+              <Text onPress={() => navigation.navigate("Login")}>
                 Click Here
               </Text>
             </Text>

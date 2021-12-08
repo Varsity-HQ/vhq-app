@@ -3,6 +3,26 @@ import axios from "axios";
 import auth_storage from "../../auth/auth_storage";
 import store from "../store";
 
+export const set_overlay_state = (state) => (dispatch) => {
+  dispatch({
+    type: "SET_OVERLAY_STATE",
+    payload: state,
+  });
+};
+
+export const set_university = (uni) => (dispatch) => {
+  dispatch({
+    type: "SET_UNIVERSITY",
+    payload: uni,
+  });
+};
+export const set_yearofstudy = (yos) => (dispatch) => {
+  dispatch({
+    type: "SET_YEAR_OF_STUDY",
+    payload: yos,
+  });
+};
+
 export const get_user = () => (dispatch) => {
   axios
     .get("/get/account")

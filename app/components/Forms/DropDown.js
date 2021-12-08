@@ -5,9 +5,9 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { color } from "react-native-elements/dist/helpers";
 import colors from "../../config/colors";
 
-function DropDown({ items, style, ...props }) {
+function DropDown({ items, value, setValue, style, ...props }) {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  //   const [value, setValue] = useState(null);
 
   return (
     <View style={[styles.container, style]}>
@@ -15,6 +15,7 @@ function DropDown({ items, style, ...props }) {
         {...props}
         open={open}
         value={value}
+        dropDownDirection="BOTTOM"
         items={items}
         setOpen={setOpen}
         setValue={setValue}
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
   },
   container: {
     zIndex: 1,
+    height: "100%",
   },
   containerStyle: {
     backgroundColor: colors.dark,

@@ -17,7 +17,7 @@ import {
 } from "./store/actions/actions";
 import store from "./store/store";
 
-axios.defaults.baseURL = "http://172.20.10.4:5000";
+axios.defaults.baseURL = "http://192.168.8.100:5000";
 
 const mapStateToProps = (state) => {
   return {

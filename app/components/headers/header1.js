@@ -16,9 +16,16 @@ function header1({ backPress, title, buttonText }) {
       />
       <View style={styles.content}>
         <View style={styles.left_container}>
-          <TouchableOpacity onPress={backPress}>
-            <Ionicons name="arrow-back-sharp" color={colors.white} size={30} />
-          </TouchableOpacity>
+          {backPress && (
+            <TouchableOpacity onPress={backPress}>
+              <Ionicons
+                name="arrow-back-sharp"
+                color={colors.white}
+                size={30}
+              />
+            </TouchableOpacity>
+          )}
+
           <AppText style={[styles.text, { marginLeft: 10 }]}>{title}</AppText>
         </View>
         <View>
@@ -43,7 +50,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 10,
+    paddingHorizontal: 0,
     paddingVertical: 20,
   },
   grandient: {
@@ -54,7 +61,6 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: colors.primary,
-
     borderBottomWidth: 0,
   },
 });
