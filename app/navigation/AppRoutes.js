@@ -52,7 +52,7 @@ const AppRoutes = ({ core }) => {
           screenOptions={{
             animation: "slide_from_right",
           }}
-          initialRouteName={
+          initialRsouteName={
             core.accData.university && core.accData.yearOfStudy
               ? "SetupPersonalInformation"
               : "SetupUniversity"

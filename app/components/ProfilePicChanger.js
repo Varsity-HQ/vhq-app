@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
 function ProfilePicChanger({ image, onChangeImage }) {
+  //
   const requestPermission = async () => {
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!granted) alert("You need to enable permission to access the library");
@@ -32,10 +33,14 @@ function ProfilePicChanger({ image, onChangeImage }) {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         quality: 0.5,
+        aspect: [1, 1],
+        allowsEditing: true,
+        base64: true,
       });
       //
       if (!result.cancelled) {
-        onChangeImage(result.uri);
+        // onChangeImage(result.uri);
+        console.log(result.uri);
       } else {
         console.log(result);
       }

@@ -15,9 +15,10 @@ import {
   set_token,
   set_user,
 } from "./store/actions/actions";
-import store from "./store/store";
+// import Screen from "./components/Screen";
+import WelcomeScreen from "./screens/WelcomeScreen";
 
-axios.defaults.baseURL = "http://192.168.8.100:5000";
+axios.defaults.baseURL = "http://172.20.10.4:5000";
 
 const mapStateToProps = (state) => {
   return {
@@ -45,7 +46,7 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
         .then((data) => {
           console.log(data.data);
           set_user(data.data);
-          setAuthState(true);
+          return setAuthState(true);
         })
         .catch((err) => {
           console.log(err);
@@ -66,9 +67,11 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
   }
 
   return (
-    <NavigationContainer theme={vhqTheme}>
-      {authenticated ? <AppNavigator /> : <AuthRoutes />}
-    </NavigationContainer>
+    <View>{/* <WelcomeScreen /> */}</View>
+
+    // <NavigationContainer theme={vhqTheme}>
+    //   {authenticated ? <AppNavigator /> : <AuthRoutes />}
+    // </NavigationContainer>
   );
 }
 

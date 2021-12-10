@@ -114,8 +114,10 @@ function SetupUniversity({
         <Text>
           Which university or college are you currently doing your studies
         </Text>
+
         <ErrorMessage error={errors.university} visible={errors.university} />
         <DropDown
+          id="1"
           value={university}
           zIndex={2}
           setValue={(callback) => set_university(callback())}
@@ -128,6 +130,7 @@ function SetupUniversity({
 
         <Text>Year of current study</Text>
         <DropDown
+          id="2"
           setValue={(callback) => set_yearofstudy(callback())}
           value={yearOfStudy}
           placeholder="Select year of study"
