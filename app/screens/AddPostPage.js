@@ -1,21 +1,42 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+} from "react-native";
 import colors from "../config/colors";
 import Header from "../components/headers/header2";
 import AddPostH2 from "../components/AddPost/AddPostH2";
 import RTextEditor from "../components/RTextEditor";
+import Button from "../components/Button";
 
 export default function AddPostPage({ navigation }) {
   return (
     <View style={styles.container}>
-      <Header
-        backPress={() => console.log("back")}
-        buttonText="Cancel"
-        title="Create Post"
-      />
-      <AddPostH2 />
-      <RTextEditor />
-      <Text>AddPostPage</Text>
+      <ScrollView>
+        <Header
+          backPress={() => console.log("back")}
+          buttonText="Cancel"
+          title="Create Post"
+        />
+        <AddPostH2 />
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <RTextEditor />
+        </KeyboardAvoidingView>
+        <View>
+          <View>
+            <ScrollView></ScrollView>
+          </View>
+
+          <Button style={{ fontWeight: "700" }} type={4} title="Post" />
+        </View>
+        <Text>AddPostPages</Text>
+      </ScrollView>
     </View>
   );
 }

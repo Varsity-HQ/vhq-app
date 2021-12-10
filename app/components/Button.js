@@ -5,6 +5,18 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import colors from "../config/colors";
 
 function AppButton({ title, loading, style, onPress, type = 1, ...props }) {
+  if (type === 4) {
+    return (
+      <TouchableOpacity
+        {...props}
+        style={[styles.button_t4, style]}
+        onPress={onPress}
+      >
+        <Text style={styles.text_t3}>{title}</Text>
+      </TouchableOpacity>
+    );
+  }
+
   if (type === 3) {
     return (
       <TouchableOpacity
@@ -43,6 +55,16 @@ function AppButton({ title, loading, style, onPress, type = 1, ...props }) {
 }
 
 const styles = StyleSheet.create({
+  button_t4: {
+    position: "relative",
+    backgroundColor: colors.primary,
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 12,
+    // width: "100%",
+    marginVertical: 10,
+  },
   button_t3: {
     position: "relative",
     backgroundColor: colors.darkish3,
