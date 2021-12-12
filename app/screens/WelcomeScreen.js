@@ -15,7 +15,7 @@ function WelcomeScreen({ navigation }) {
           style={styles.logo}
           source={require("../assets/logo-small.png")}
         />
-        <AppText style={styles.header_heading}>Welcome</AppText>
+        <AppText style={styles.header_heading}>Welcomexport default </AppText>
         <AppText style={styles.supHeading}>
           Before you continue, we just need to know a bit about you. Please
           press "continue" to proceed with setup

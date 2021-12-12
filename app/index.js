@@ -18,7 +18,7 @@ import {
 // import Screen from "./components/Screen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 
-axios.defaults.baseURL = "http://172.20.10.4:5000";
+axios.defaults.baseURL = "http://192.168.8.106:5000";
 
 const mapStateToProps = (state) => {
   return {
@@ -67,11 +67,11 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
   }
 
   return (
-    <View>{/* <WelcomeScreen /> */}</View>
+    // <View>{/* <WelcomeScreen /> */}</View>
 
-    // <NavigationContainer theme={vhqTheme}>
-    //   {authenticated ? <AppNavigator /> : <AuthRoutes />}
-    // </NavigationContainer>
+    <NavigationContainer theme={vhqTheme}>
+      {authenticated ? <AppNavigator /> : <AuthRoutes />}
+    </NavigationContainer>
   );
 }
 

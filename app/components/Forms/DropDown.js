@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
   },
   container: {
     zIndex: 1,
-    height: "100%",
   },
   containerStyle: {
     backgroundColor: colors.dark,
@@ -59,6 +58,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dark,
     borderColor: "#2f6286",
     borderWidth: 1,
+    // display: "none",
     borderLeftColor: colors.primary,
     borderLeftWidth: 4,
     borderRightColor: colors.primary,

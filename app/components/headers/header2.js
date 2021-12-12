@@ -23,9 +23,9 @@ function header1({ backPress, title, buttonText }) {
           <AppText style={[styles.text, { marginLeft: 10 }]}>{title}</AppText>
         </View>
         <View>
-          <AppText style={[styles.text, { marginLeft: 10 }]}>
-            {buttonText}
-          </AppText>
+          <TouchableOpacity style={styles.button_right}>
+            <AppText style={[styles.text]}>{buttonText}</AppText>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -34,6 +34,12 @@ function header1({ backPress, title, buttonText }) {
 
 const styles = StyleSheet.create({
   grandient: {},
+  button_right: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 30,
+    paddingVertical: 8,
+    borderRadius: 5,
+  },
   left_container: {
     flexDirection: "row",
     alignItems: "center",
@@ -46,7 +52,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 20,
+    paddingVertical: 10,
     paddingHorizontal: 10,
   },
   grandient: {

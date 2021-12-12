@@ -6,42 +6,99 @@ import {
   Text,
   View,
   ScrollView,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
 } from "react-native";
 import colors from "../config/colors";
 import Header from "../components/headers/header2";
 import AddPostH2 from "../components/AddPost/AddPostH2";
 import RTextEditor from "../components/RTextEditor";
 import Button from "../components/Button";
+import { MaterialCommunityIcons, Foundation } from "@expo/vector-icons";
 
 export default function AddPostPage({ navigation }) {
   return (
-    <View style={styles.container}>
-      <ScrollView>
-        <Header
-          backPress={() => console.log("back")}
-          buttonText="Cancel"
-          title="Create Post"
-        />
-        <AddPostH2 />
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
-          <RTextEditor />
-        </KeyboardAvoidingView>
-        <View>
+    <>
+      <View style={styles.container}>
+        <ScrollView>
           <View>
-            <ScrollView></ScrollView>
+            <Header
+              backPress={() => console.log("back")}
+              buttonText="Post"
+              title="Create Post"
+            />
+            <AddPostH2 />
           </View>
 
-          <Button style={{ fontWeight: "700" }} type={4} title="Post" />
-        </View>
-        <Text>AddPostPages</Text>
-      </ScrollView>
-    </View>
+          <View
+            style={{
+              flex: 1,
+              // zIndex: 3,
+            }}
+          >
+            <RTextEditor />
+          </View>
+        </ScrollView>
+
+        <KeyboardAvoidingView
+          style={{
+            // flex: 1,
+            paddingBottom: 20,
+          }}
+          behavior="position"
+        >
+          <View>
+            <View>
+              <ScrollView
+                horizontal
+                style={{
+                  marginTop: 20,
+                  paddingVertical: 10,
+                }}
+              >
+                <View style={styles.obutton}>
+                  <MaterialCommunityIcons
+                    name="image-plus"
+                    color={colors.secondary}
+                    size={30}
+                  />
+                </View>
+                <View style={styles.obutton}>
+                  <Foundation
+                    name="graph-bar"
+                    color={colors.secondary}
+                    size={30}
+                  />
+                </View>
+                <View style={styles.obutton}>
+                  <Text style={styles.eventtext}>Event</Text>
+                </View>
+              </ScrollView>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
+  eventtext: {
+    color: colors.secondary,
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  obutton: {
+    height: 90,
+    width: 90,
+    borderWidth: 2,
+    borderColor: colors.secondary,
+    backgroundColor: colors.dark,
+    borderRadius: 15,
+    marginLeft: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     backgroundColor: colors.dark,

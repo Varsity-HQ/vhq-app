@@ -18,6 +18,8 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.varsityheadquarters.varsityhq",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#15202b"

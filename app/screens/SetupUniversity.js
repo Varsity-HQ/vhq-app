@@ -119,11 +119,11 @@ function SetupUniversity({
         <DropDown
           id="1"
           value={university}
-          zIndex={2}
-          setValue={(callback) => set_university(callback())}
+          // zIndex={2}
+          // setValue={(callback) => set_university(callback())}
           searchPlaceholder="Search University or college"
           placeholder="Select your university or college"
-          searchable
+          // searchable
           items={universities}
           style={{ paddingBottom: 20, paddingTop: 10, zIndex: 2 }}
         />
@@ -160,7 +160,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 30,
   },
-  container: {},
+  container: {
+    flex: 1,
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetupUniversity);
