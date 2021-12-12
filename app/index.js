@@ -18,6 +18,8 @@ import {
 // import Screen from "./components/Screen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 
+import { useFonts } from "expo-font";
+
 import { initializeApp, getApps } from "firebase/app";
 import { firebaseConfig } from "./util/fb_config";
 
@@ -44,6 +46,11 @@ const mapDispatchToProps = (dispatch) => {
 
 function App({ authenticated, set_user, setAuthState, set_token }) {
   const [isReady, setisReady] = useState();
+
+  let [fontsLoaded] = useFonts({
+    "Lobster-Regular": require("./Fonts/Lobster-Regular.ttf"),
+  });
+
   const restoreToken = async () => {
     const token = await auth_storage.getToken();
     if (token) {
@@ -64,7 +71,7 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
     }
   };
 
-  if (!isReady) {
+  if (!isReady || !fontsLoaded) {
     return (
       <AppLoading
         startAsync={restoreToken}

@@ -14,7 +14,7 @@ import { useFonts } from "expo-font";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import PostCard from "../components/PostCard";
-
+import { connect } from "react-redux";
 import TabNavigator from "../components/TabNavigator";
 
 const home_tabs = [
@@ -44,15 +44,14 @@ const home_tabs = [
   },
 ];
 
-function Home({ navigation }) {
-  const [index, setTab] = useState(1);
-  const [loaded] = useFonts({
-    Lobster: require("../Fonts/Lobster-Regular.ttf"),
-  });
+const mapStateToProps = (state) => {
+  return {
+    profilepic: state.core.accData.profilepic,
+  };
+};
 
-  if (!loaded) {
-    return null;
-  }
+function Home({ navigation, profilepic }) {
+  const [index, setTab] = useState(1);
   return (
     <Screen>
       <ScrollView>
@@ -64,7 +63,9 @@ function Home({ navigation }) {
               <Image
                 style={styles.profilepic}
                 source={{
-                  uri: "https://varsityhq.imgix.net/vhq_img202122286166.jpeg",
+                  uri: profilepic
+                    ? profilepic
+                    : require("../assets/avatar.png"),
                 }}
               />
             </TouchableWithoutFeedback>
@@ -173,10 +174,12 @@ const styles = StyleSheet.create({
     borderTopColor: colors.primary,
   },
   profilepic: {
-    height: 45,
-    width: 45,
+    height: 50,
+    width: 50,
     marginLeft: 15,
     borderRadius: 100,
+    borderWidth: 3,
+    borderColor: colors.dark_opacity_2,
   },
   header_uni_text: {
     marginLeft: 7,
@@ -210,7 +213,7 @@ const styles = StyleSheet.create({
     fontSize: 38,
     fontWeight: "700",
     color: colors.white,
-    fontFamily: "Lobster",
+    fontFamily: "Lobster-Regular",
     width: "40%",
   },
 
@@ -224,4 +227,4 @@ const styles = StyleSheet.create({
   container: {},
 });
 
-export default Home;
+export default connect(mapStateToProps, null)(Home);
