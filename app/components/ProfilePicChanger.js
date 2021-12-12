@@ -3,10 +3,11 @@ import { Alert, Image, TouchableOpacity } from "react-native";
 import { View, StyleSheet } from "react-native";
 import colors from "../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
 import * as ImagePicker from "expo-image-picker";
 
-function ProfilePicChanger({ image, onChangeImage }) {
+import Resizer from "react-image-file-resizer";
+
+function ProfilePicChanger({ image, onImgChange }) {
   //
   const requestPermission = async () => {
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -17,17 +18,6 @@ function ProfilePicChanger({ image, onChangeImage }) {
     requestPermission();
   }, []);
 
-  const handlePress = () => {
-    if (!image) selectImage();
-    else {
-      Alert.alert(
-        "Delete Image",
-        "Are you sure you want to delete this image",
-        [{ text: "Yes", onPress: () => onChangeImage(null) }, { text: "No" }],
-      );
-    }
-  };
-
   const selectImage = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -35,12 +25,13 @@ function ProfilePicChanger({ image, onChangeImage }) {
         quality: 0.5,
         aspect: [1, 1],
         allowsEditing: true,
-        base64: true,
+        // base64: true,
       });
       //
       if (!result.cancelled) {
-        // onChangeImage(result.uri);
-        console.log(result.uri);
+        onImgChange(result.uri);
+
+        console.log({ result });
       } else {
         console.log(result);
       }
@@ -52,7 +43,7 @@ function ProfilePicChanger({ image, onChangeImage }) {
 
   if (!image) {
     return (
-      <TouchableOpacity onPress={handlePress} style={styles.container}>
+      <TouchableOpacity onPress={selectImage} style={styles.container}>
         <MaterialCommunityIcons
           name="camera"
           size={45}
@@ -64,13 +55,17 @@ function ProfilePicChanger({ image, onChangeImage }) {
   }
 
   return (
-    <View style={styles.container}>
-      <Image source="" />
-    </View>
+    <TouchableOpacity onPress={selectImage} style={styles.container}>
+      <Image style={styles.image} source={{ uri: image }} />
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
+  image: {
+    height: "100%",
+    width: "100%",
+  },
   camera: {},
   container: {
     borderColor: colors.primary,

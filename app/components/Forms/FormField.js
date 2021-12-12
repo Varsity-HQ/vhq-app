@@ -5,7 +5,7 @@ import AppTextInput from "../Input";
 
 import ErrorMessage from "../Forms/ErrorMessage";
 
-function AppFormField({ name, width, ...otherProps }) {
+function AppFormField({ name, width, type, ...otherProps }) {
   const {
     setFieldTouched,
     setFieldValue,
@@ -18,6 +18,7 @@ function AppFormField({ name, width, ...otherProps }) {
   return (
     <>
       <AppTextInput
+        type={type}
         value={values[name]}
         onBlur={() => setFieldTouched(name)}
         onChangeText={(text) => setFieldValue(name, text)}
