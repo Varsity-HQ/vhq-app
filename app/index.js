@@ -18,6 +18,14 @@ import {
 // import Screen from "./components/Screen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 
+import { initializeApp, getApps } from "firebase/app";
+import { firebaseConfig } from "./util/fb_config";
+
+// Editing this file with fast refresh will reinitialize the app on every refresh, let's not do that
+if (!getApps().length) {
+  initializeApp(firebaseConfig);
+}
+
 axios.defaults.baseURL = "http://192.168.8.106:5000";
 
 const mapStateToProps = (state) => {

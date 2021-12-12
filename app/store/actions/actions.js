@@ -2,6 +2,63 @@ import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 import auth_storage from "../../auth/auth_storage";
 import store from "../store";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
+import uuid from "uuid";
+
+export const save_profileDefaults = (uObj) => async (dispatch) => {
+  dispatch({
+    type: "SET_OVERLAY_STATE",
+    payload: true,
+  });
+  console.log({ uObj });
+  let uploaded = await uploadImageAsync(uObj.profilepic);
+  console.log(uploaded);
+
+  axios
+    .post("/changeprofilepic/byurl", {
+      newUrl: uploaded,
+    })
+    .then((data) => {
+      console.log(data.data);
+      dispatch({
+        type: "UPDATE_PROFILE_PIC",
+        payload: uploaded,
+      });
+      return axios.post("/account/update/pinfo", {
+        firstname: uObj.firstname,
+        surname: uObj.surname,
+      });
+    })
+    .then(() => {
+      dispatch({
+        type: "UPDATE_FIRSTNAME_N_SURNAME",
+        payload: {
+          firstname: uObj.firstname,
+          surname: uObj.surname,
+        },
+      });
+      return axios.get("/account/activate");
+    })
+    .then(() => {
+      dispatch({
+        type: "SET_OVERLAY_STATE",
+        payload: false,
+      });
+
+      dispatch({
+        type: "SET_ACC_ACTIVATED",
+      });
+      return;
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "SET_OVERLAY_STATE",
+        payload: false,
+      });
+    });
+};
 
 export const set_overlay_state = (state) => (dispatch) => {
   dispatch({
@@ -83,4 +140,31 @@ const setAuthorizationHeader = async (token) => {
   } catch (error) {
     console.log("failed to set token", error);
   }
+};
+
+const uploadImageAsync = async (uri) => {
+  // Why are we using XMLHttpRequest? See:
+  // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+  const blob = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      resolve(xhr.response);
+    };
+    xhr.onerror = function (e) {
+      console.log(e);
+      reject(new TypeError("Network request failed"));
+    };
+    xhr.responseType = "blob";
+    xhr.open("GET", uri, true);
+    xhr.send(null);
+  });
+
+  const fileRef = ref(getStorage(), `vhq_${uuid.v4()}.jpeg`);
+  const result = await uploadBytes(fileRef, blob);
+  // console.log({ result });
+
+  // We're done with the blob, close and release it
+  blob.close();
+
+  return await getDownloadURL(fileRef);
 };

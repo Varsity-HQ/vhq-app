@@ -31,9 +31,9 @@ function ProfilePicChanger({ image, onImgChange }) {
       if (!result.cancelled) {
         onImgChange(result.uri);
 
-        console.log({ result });
+        // console.log({ result });
       } else {
-        console.log(result);
+        // console.log(result);
       }
       //
     } catch (error) {

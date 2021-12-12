@@ -8,6 +8,28 @@ const initialData = {
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "SET_ACC_ACTIVATED":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          accountStatus: "active",
+        },
+      };
+    case "UPDATE_FIRSTNAME_N_SURNAME":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          firstname: actions.payload.firstname,
+          surname: actions.payload.surname,
+        },
+      };
+    case "UPDATE_PROFILE_PIC":
+      return {
+        ...state,
+        accData: { ...state.accData, profilepic: actions.payload },
+      };
     case "SET_OVERLAY_STATE":
       return {
         ...state,

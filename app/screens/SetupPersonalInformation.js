@@ -18,79 +18,45 @@ import {
 } from "../components/Forms";
 import axios from "axios";
 
+import { save_profileDefaults } from "../store/actions/actions";
+import { connect } from "react-redux";
+
 const validationSchema = Yup.object().shape({
   firstname: Yup.string().required().min(4).label("First name"),
   surname: Yup.string().required().min(4).label("Last name"),
 });
 
-function SetupPersonalInformation(props) {
-  const [image_selected, set_image] = useState(null);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    save_profileDefaults: (uObj) => dispatch(save_profileDefaults(uObj)),
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    core: state.core.accData,
+  };
+};
+
+function SetupPersonalInformation({ save_profileDefaults, core }) {
+  const [image_selected, set_image] = useState(core.profilepic);
   const [image_error, set_image_error] = useState("");
 
-  class RNBlob extends Blob {
-    get [Symbol.toStringTag]() {
-      return "Blob";
-    }
-  }
-
-  const generateUploadUrl = async (uri) => {
-    const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function (e) {
-        console.log(e);
-        reject(new TypeError("Network request failed"));
-      };
-      xhr.responseType = "blob";
-      xhr.open("GET", uri, true);
-      xhr.send(null);
-    });
-
-    const blobObj = blob;
-    // convert(blob);
-    // blob.close();
-
-    return blobObj;
-  };
-
-  const handle_submit = async (e) => {
-    console.log(e);
+  const handle_submit = ({ firstname, surname }) => {
     set_image_error("");
 
     if (!image_selected) {
       return set_image_error("Please set your profile picture");
     }
 
-    let image_blob = await generateUploadUrl(image_selected);
-
-    console.log(image_blob);
-    console.log("next");
-    console.log(image_blob);
-
-    let formData = new FormData();
-    formData.append("file", new RNBlob([image_blob]), "jpeg");
-
-    // formData.append("image", {
-    //   uri: image_blob,
-    //   name: image_blob.name,
-    //   type: "image/jpg",
-    // });
-
-    axios
-      .post("/account/updatepimage", formData)
-      .then((data) => {
-        // store.dispatch(overlayLoader(false));
-        // changePPLink(ci);
-        // setImageSrc(null);
-        console.log(data.data);
-        console.log("done");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    save_profileDefaults({
+      profilepic: image_selected,
+      firstname: firstname,
+      surname: surname,
+    });
   };
+
+  console.log(image_selected);
 
   return (
     <Screen scroll style={styles.container}>
@@ -128,8 +94,8 @@ function SetupPersonalInformation(props) {
             validationSchema={validationSchema}
             onSubmit={handle_submit}
             initialValues={{
-              firstname: "",
-              surname: "",
+              firstname: core.firstname,
+              surname: core.surname,
             }}
           >
             <View style={styles.formgroup}>
@@ -177,4 +143,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SetupPersonalInformation;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SetupPersonalInformation);

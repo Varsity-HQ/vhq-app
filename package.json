@@ -31,12 +31,14 @@
     "expo-permissions": "~12.1.1",
     "expo-secure-store": "~10.2.0",
     "expo-status-bar": "~1.0.4",
+    "firebase": "^9.6.1",
     "formik": "2.1.4",
     "jwt-decode": "^3.1.2",
     "lottie-react-native": "4.0.2",
     "moment": "^2.29.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-firebase-hooks": "^4.0.1",
     "react-image-file-resizer": "^0.4.7",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-dropdown-picker": "^5.2.3",
@@ -58,6 +60,7 @@
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
     "rn-fetch-blob": "^0.12.0",
+    "uuid": "3.4.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
