@@ -3,12 +3,13 @@ import { View, StyleSheet, Text } from "react-native";
 import PostCard from "../PostCard";
 import { connect } from "react-redux";
 import { get_home_posts } from "../../store/actions/actions";
-import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import SkeletonPost from "../Skeletons/Post";
 
 const mapStateToProps = (state) => {
   return {
-    home_data: state.data.home_data,
+    loading: state.data.home_data.loading,
+    posts: state.data.home_data.posts,
+    error: state.data.home_data.error,
   };
 };
 
@@ -18,21 +19,27 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-function postsTab({ home_data, get_home_posts }) {
+function postsTab({ loading, posts, get_home_posts }) {
   useEffect(() => {
-    // get_home_posts();
+    get_home_posts();
   }, []);
-  if (home_data) {
+
+  if (loading) {
     return (
       <View>
         <SkeletonPost />
+        <SkeletonPost />
+        <SkeletonPost />
+        {/* <PostCard /> */}
       </View>
     );
   }
-  console.log(home_data);
+
   return (
     <View style={styles.container}>
-      <PostCard />
+      {posts.map((x) => (
+        <PostCard data={x} key={x.id} />
+      ))}
     </View>
   );
 }

@@ -6,6 +6,7 @@ const initialData = {
     loading: true,
     page_cursor: null,
     posts: [],
+    error: false,
   },
 
   //home
@@ -36,6 +37,19 @@ const initialData = {
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "SET_HOME_POSTS":
+      let updated_home_data = {
+        loading: false,
+        page_cursor: actions.payload.cursor,
+        posts: actions.payload.posts,
+        error: false,
+      };
+
+      return {
+        ...state,
+        home_data: updated_home_data,
+      };
+
     default:
       return state;
   }

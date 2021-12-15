@@ -3,15 +3,33 @@ import {
   View,
   StyleSheet,
   Text,
-  Image,
   TouchableWithoutFeedback,
+  Image,
 } from "react-native";
 import colors from "../config/colors";
 import { FontAwesome, Ionicons, Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import SkeletonComponent from "./Skeletons/SkeletonComponent";
+import SkeletonPost from "./Skeletons/Post";
+import dayjs from "dayjs";
+import Localize from "dayjs/plugin/relativeTime";
 
-function PostCard({ navigation }) {
+// import { Image } from "react-native-expo-image-cache";
+
+dayjs.extend(Localize);
+
+function PostCard({ data }) {
   const nav = useNavigation();
+  console.log(data);
+
+  const profilepic = (uri) => {
+    if (uri) return { uri: data.profilepic };
+
+    return require("../assets/avatar.png");
+  };
+
+  if (!data) return <SkeletonPost />;
+
   return (
     <View style={styles.container}>
       <View
@@ -25,17 +43,17 @@ function PostCard({ navigation }) {
           <View style={{ flexDirection: "row" }}>
             <Image
               style={styles.p_avatar}
-              source={{
-                uri: "https://varsityhq.imgix.net/vhq_img202122286166.jpeg",
-              }}
+              source={profilepic(data.profilepic)}
             />
             <View style={{ marginLeft: 10 }}>
               <Text style={styles.u_name}>
-                Paballo M{" "}
-                <Text style={styles.date_posted}>&nbsp;11 days ago</Text>
+                {data.firstname}&nbsp;{data.surname.charAt(0)}
+                <Text style={styles.date_posted}>
+                  &nbsp;{dayjs(data.created_at).fromNow()}
+                </Text>
               </Text>
               <Text style={styles.username}>
-                @pabie - <FontAwesome name="university" size={12} />
+                @{data.username} - <FontAwesome name="university" size={12} />
               </Text>
             </View>
           </View>
@@ -53,7 +71,7 @@ function PostCard({ navigation }) {
           onPress={() => nav.navigate("PostPage")}
           style={{ fontSize: 16, color: colors.light }}
         >
-          Post content here [...]
+          {JSON.stringify(data.caption)}
         </Text>
       </View>
       <View
@@ -64,7 +82,8 @@ function PostCard({ navigation }) {
         }}
       >
         <Text style={{ fontSize: 14, color: colors.secondary }}>
-          3 interactions
+          {parseInt(data.likes_count) + parseInt(data.comments_count)}{" "}
+          interactions
         </Text>
         <View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -77,7 +96,7 @@ function PostCard({ navigation }) {
               source={require("../assets/vhqcat-small.png")}
             />
             <Text style={{ fontSize: 13, color: "#4f708a" }}>
-              VarsityHQ - Iphone
+              {data.application}
             </Text>
           </View>
         </View>
@@ -97,7 +116,7 @@ function PostCard({ navigation }) {
         >
           <View style={styles.button}>
             <Ionicons name="heart" size={26} color={colors.white} />
-            <Text style={styles.button_text}>2</Text>
+            <Text style={styles.button_text}>{data.likes_count}</Text>
           </View>
           <View style={styles.button}>
             <Ionicons
@@ -105,7 +124,7 @@ function PostCard({ navigation }) {
               size={25}
               color={colors.white}
             />
-            <Text style={styles.button_text}>2</Text>
+            <Text style={styles.button_text}>{data.comments_count}</Text>
           </View>
           <View style={styles.button}>
             <Ionicons

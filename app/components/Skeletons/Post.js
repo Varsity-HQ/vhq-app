@@ -1,72 +1,73 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, Dimensions, Animated, Easing } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { View, StyleSheet } from "react-native";
 import colors from "../../config/colors";
-// import { Easing } from "react-native-reanimated";
-
-const { width } = Dimensions.get("window");
-
-const AnimatedLG = Animated.createAnimatedComponent(LinearGradient);
+import SkeletonComponent from "./SkeletonComponent";
 
 function Post(props) {
-  const animatedValue = new Animated.Value(0);
-
-  useEffect(() => {
-    Animated.loop(
-      Animated.timing(animatedValue, {
-        toValue: 1,
-        duration: 2000,
-        easing: Easing.inOut(Easing.ease),
-        useNativeDriver: true,
-      }),
-    ).start();
-
-    //   ()
-    //   .start();
-  });
-
-  const translateX = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-width, width],
-  });
-
   return (
-    <View
-      style={{
-        margin: 10,
-        backgroundColor: colors.darkish2,
-        borderColor: "#b0b0b0",
-        height: 100,
-        width: 100,
-        borderRadius: 100,
-        overflow: "hidden",
-      }}
-    >
-      <AnimatedLG
-        start={[0, 0]}
-        end={[1, 0]}
-        style={{
-          ...StyleSheet.absoluteFill,
-          transform: [{ translateX: translateX }],
-        }}
-        colors={[
-          colors.darkish2,
-          colors.darkish3,
-          colors.darkish3,
-          colors.darkish3,
-          colors.darkish3,
-          colors.darkish2,
-        ]}
-      />
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <SkeletonComponent style={styles.p_avatar} />
+        <View style={{ marginLeft: 10 }}>
+          <SkeletonComponent style={styles.u_name} />
+          {/* <SkeletonComponent style={styles.u_us} /> */}
+        </View>
+      </View>
+      <View>
+        <SkeletonComponent
+          style={{
+            height: 18,
+            width: "100%",
+            marginTop: 10,
+          }}
+        />
+
+        <SkeletonComponent
+          style={{
+            height: 18,
+            width: "75%",
+            marginTop: 5,
+          }}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  u_us: {
+    height: 18,
+    width: 100,
+    marginTop: 6,
+  },
+  u_name: {
+    height: 18,
+    width: 150,
+  },
+  p_avatar: {
+    height: 45,
+    width: 45,
+    borderRadius: 50,
+  },
+  header: {
+    flexDirection: "row",
+  },
+  con_inner: {
+    // margin: 10,
+    backgroundColor: colors.darkish2,
+    borderColor: "#b0b0b0",
+    height: 100,
+    width: "100%",
+    borderRadius: 100,
+    overflow: "hidden",
+  },
   container: {
+    padding: 10,
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    marginBottom: 15,
+    // borderTopColor: colors.darkish2,
+    // borderTopWidth: 2,
+    // backgroundColor: "#eff4f7",
   },
 });
 
