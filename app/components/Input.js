@@ -27,7 +27,7 @@ function AppTextInput({
         <FontAwesome
           //   name={icon}
           name={icon}
-          size={20}
+          size={16}
           color={colors.secondary}
           style={styles.icon}
         />
@@ -65,7 +65,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20,
     flexDirection: "row",
-    padding: 15,
+    paddingHorizontal: 15,
+    height: 45,
+    alignItems: "center",
     marginVertical: 10,
   },
   icon: {

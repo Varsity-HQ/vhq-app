@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import Screen from "../components/Screen";
 import Header from "../components/headers/header1";
 import AppButton from "../components/Button";
@@ -119,11 +119,16 @@ function SetupUniversity({
         <DropDown
           id="1"
           value={university}
-          // zIndex={2}
-          // setValue={(callback) => set_university(callback())}
+          zIndex={2}
+          setValue={
+            Platform.OS === "ios"
+              ? (callback) => set_university(callback())
+              : (u) => set_university(u)
+          }
           searchPlaceholder="Search University or college"
           placeholder="Select your university or college"
           // searchable
+
           items={universities}
           style={{ paddingBottom: 20, paddingTop: 10, zIndex: 2 }}
         />
@@ -131,7 +136,11 @@ function SetupUniversity({
         <Text>Year of current study</Text>
         <DropDown
           id="2"
-          setValue={(callback) => set_yearofstudy(callback())}
+          setValue={
+            Platform.OS === "ios"
+              ? (callback) => set_yearofstudy(callback())
+              : (y) => set_yearofstudy(y)
+          }
           value={yearOfStudy}
           placeholder="Select year of study"
           items={uniYears}

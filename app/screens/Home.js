@@ -16,6 +16,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import PostCard from "../components/PostCard";
 import { connect } from "react-redux";
 import TabNavigator from "../components/TabNavigator";
+import PostsTab from "../components/Home/postsTab";
 
 const home_tabs = [
   {
@@ -121,11 +122,7 @@ function Home({ navigation, profilepic }) {
           />
         </View>
         <View>
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
+          <PostsTab />
         </View>
       </ScrollView>
     </Screen>
@@ -171,6 +168,7 @@ const styles = StyleSheet.create({
   },
   tabbar_container: {
     borderTopWidth: 3,
+    borderRadius: 0,
     borderTopColor: colors.primary,
   },
   profilepic: {

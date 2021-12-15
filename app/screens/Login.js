@@ -5,6 +5,7 @@ import {
   Text,
   ImageBackground,
   TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
 import Screen from "../components/Screen";
 import { Ionicons } from "@expo/vector-icons";
@@ -27,6 +28,8 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().required("Provide a username, phone number or email"),
   password: Yup.string().required().min(4).label("Password"),
 });
+
+const d = Dimensions.get("window");
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -63,6 +66,7 @@ function Login({ navigation, set_user_token }) {
     <ImageBackground
       // blurRadius={4}
       style={styles.background}
+      resizeMode="cover"
       source={require("../assets/signup-img-1.jpg")}
     >
       <Screen>

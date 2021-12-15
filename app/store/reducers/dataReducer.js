@@ -1,10 +1,18 @@
 const initialData = {
   profilesData: [],
   sidebar_data: {},
+
+  home_data: {
+    loading: true,
+    page_cursor: null,
+    posts: [],
+  },
+
   //home
   homePosts: [],
   homePosts_cursor: null,
   homePosts_loading: true,
+
   home_market_items: [],
   //search
   search_page_data: {},

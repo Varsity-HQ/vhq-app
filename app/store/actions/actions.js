@@ -3,8 +3,39 @@ import axios from "axios";
 import auth_storage from "../../auth/auth_storage";
 import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
 import uuid from "uuid";
+
+export const get_home_posts = () => (dispatch) => {
+  let lastVisible = store.getState().data.home_data.page_cursor;
+
+  axios
+    .get(`/get/home${lastVisible ? "?pt_ad=" + lastVisible : ""}`)
+    .then((data) => {
+      // console.log("home=>", data.data);
+
+      let currentPosts = store.getState().data.home_data.posts;
+      let new_posts = currentPosts.concat(data.data.posts);
+
+      // console.log("updated home");
+
+      console.log(data.data);
+
+      dispatch({
+        type: "SET_HOME_MARKET_ITEMS",
+        payload: data.data.items,
+      });
+
+      dispatch({
+        type: "SET_HOME_POSTS",
+        payload: {
+          posts: new_posts,
+          cursor: data.data.lastVisible,
+        },
+      });
+      //
+    })
+    .catch((err) => console.log(err));
+};
 
 export const save_profileDefaults = (uObj) => async (dispatch) => {
   dispatch({

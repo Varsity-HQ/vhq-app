@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     borderTopColor: colors.primary,
     borderWidth: 3,
+    borderRadius: 0,
   },
   tab_Container: {
     paddingHorizontal: 20,
