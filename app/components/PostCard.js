@@ -57,7 +57,6 @@ function PostCard({ data }) {
 
   return (
     <>
-      <PostMenu />
       <View style={styles.container}>
         <View
           style={{
@@ -98,11 +97,7 @@ function PostCard({ data }) {
             </View>
           </TouchableWithoutFeedback>
           <View style={{ marginRight: 10 }}>
-            <Ionicons
-              color={colors.white}
-              name="ios-ellipsis-horizontal-outline"
-              size={30}
-            />
+            <PostMenu />
           </View>
         </View>
         <View style={styles.content_container}>
