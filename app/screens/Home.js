@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   ScrollView,
-  Image,
+  Image as LocalImage,
   TouchableWithoutFeedback,
 } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
@@ -17,6 +17,8 @@ import PostCard from "../components/PostCard";
 import { connect } from "react-redux";
 import TabNavigator from "../components/TabNavigator";
 import PostsTab from "../components/Home/postsTab";
+
+import { Image } from "react-native-expo-image-cache";
 
 const home_tabs = [
   {
@@ -61,14 +63,18 @@ function Home({ navigation, profilepic }) {
             <TouchableWithoutFeedback
               onPress={() => navigation.navigate("Profile", {})}
             >
-              <Image
-                style={styles.profilepic}
-                source={{
-                  uri: profilepic
-                    ? profilepic
-                    : require("../assets/avatar.png"),
-                }}
-              />
+              {profilepic ? (
+                <Image
+                  transitionDuration={300}
+                  style={styles.profilepic}
+                  uri={profilepic}
+                />
+              ) : (
+                <LocalImage
+                  style={styles.profilepic}
+                  source={require("../assets/avatar.png")}
+                />
+              )}
             </TouchableWithoutFeedback>
           </View>
           <Text style={styles.vhq_title}>VarsityHQ</Text>
