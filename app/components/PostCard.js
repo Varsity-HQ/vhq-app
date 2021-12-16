@@ -85,7 +85,9 @@ function PostCard({ data }) {
         </View>
       </View>
       <View style={styles.content_container}>
-        <Content html={preparedContent} />
+        <TouchableWithoutFeedback onPress={() => console.log("clicked")}>
+          <Content html={preparedContent} />
+        </TouchableWithoutFeedback>
 
         {/* <Text
           onPress={() => nav.navigate("PostPage")}
@@ -96,7 +98,7 @@ function PostCard({ data }) {
       </View>
       <View
         style={{
-          marginTop: 15,
+          // marginTop: 15,
           justifyContent: "space-between",
           flexDirection: "row",
         }}
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   content_container: {
-    paddingTop: 20,
+    // paddingTop: 20,
   },
   date_posted: {
     fontSize: 12,

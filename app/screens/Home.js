@@ -55,7 +55,7 @@ function Home({ navigation, profilepic }) {
   const [index, setTab] = useState(1);
   return (
     <Screen>
-      <ScrollView>
+      <ScrollView stickyHeaderIndices={[1]}>
         <View style={styles.header}>
           <View style={{ width: "30%" }}>
             <TouchableWithoutFeedback
@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 3,
     borderRadius: 0,
     borderTopColor: colors.primary,
+    backgroundColor: colors.dark,
   },
   profilepic: {
     height: 50,
