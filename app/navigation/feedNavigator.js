@@ -5,6 +5,7 @@ const Stack = createNativeStackNavigator();
 
 import Home from "../screens/Home";
 import Profile from "../screens/Profile";
+import FloatingButton from "../components/FloatingButton";
 // import PostPage from "../screens/PostPage";
 
 const FeedNavigator = () => (

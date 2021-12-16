@@ -23,7 +23,6 @@ import { useFonts } from "expo-font";
 import { initializeApp, getApps } from "firebase/app";
 import { firebaseConfig } from "./util/fb_config";
 
-// Editing this file with fast refresh will reinitialize the app on every refresh, let's not do that
 if (!getApps().length) {
   initializeApp(firebaseConfig);
 }

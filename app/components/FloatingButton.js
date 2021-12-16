@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     width: 90,
     borderRadius: 100,
     position: "absolute",
-    bottom: 80,
+    bottom: 40,
     right: 20,
     zIndex: 2,
     backgroundColor: colors.darkish2,

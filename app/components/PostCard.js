@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -13,14 +13,30 @@ import SkeletonComponent from "./Skeletons/SkeletonComponent";
 import SkeletonPost from "./Skeletons/Post";
 import dayjs from "dayjs";
 import Localize from "dayjs/plugin/relativeTime";
+import { convertToHTML, convertFromHTML } from "draft-convert";
+import { EditorState, convertFromRaw, Editor } from "draft-js";
+import Content from "./Post/content";
 
 // import { Image } from "react-native-expo-image-cache";
 
 dayjs.extend(Localize);
 
 function PostCard({ data }) {
+  const [postContent, setPostContent] = useState(EditorState.createEmpty());
+  const [preparedContent, setPreparedContent] = useState("<p></p>");
+
+  useEffect(() => {
+    let rawContent = JSON.parse(data.caption);
+    let blocks = EditorState.createWithContent(
+      convertFromRaw(rawContent.content),
+    );
+    let curr_content = blocks.getCurrentContent();
+    let converted_toHTML = convertToHTML(curr_content);
+    console.log({ converted_toHTML });
+    setPreparedContent(converted_toHTML);
+  }, []);
+
   const nav = useNavigation();
-  console.log(data);
 
   const profilepic = (uri) => {
     if (uri) return { uri: data.profilepic };
@@ -29,6 +45,8 @@ function PostCard({ data }) {
   };
 
   if (!data) return <SkeletonPost />;
+
+  console.log();
 
   return (
     <View style={styles.container}>
@@ -67,12 +85,14 @@ function PostCard({ data }) {
         </View>
       </View>
       <View style={styles.content_container}>
-        <Text
+        <Content html={preparedContent} />
+
+        {/* <Text
           onPress={() => nav.navigate("PostPage")}
           style={{ fontSize: 16, color: colors.light }}
         >
           {JSON.stringify(data.caption)}
-        </Text>
+        </Text> */}
       </View>
       <View
         style={{
