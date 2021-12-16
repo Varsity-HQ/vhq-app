@@ -17,8 +17,8 @@ import PostCard from "../components/PostCard";
 import { connect } from "react-redux";
 import TabNavigator from "../components/TabNavigator";
 import PostsTab from "../components/Home/postsTab";
-
 import { Image } from "react-native-expo-image-cache";
+import universityShortName from "../util/universityShortName";
 
 const home_tabs = [
   {
@@ -50,10 +50,12 @@ const home_tabs = [
 const mapStateToProps = (state) => {
   return {
     profilepic: state.core.accData.profilepic,
+    username: state.core.accData.username,
+    university: state.core.accData.university,
   };
 };
 
-function Home({ navigation, profilepic }) {
+function Home({ navigation, profilepic, username, university }) {
   const [index, setTab] = useState(1);
   return (
     <Screen>
@@ -61,7 +63,9 @@ function Home({ navigation, profilepic }) {
         <View style={styles.header}>
           <View style={{ width: "30%" }}>
             <TouchableWithoutFeedback
-              onPress={() => navigation.navigate("Profile", {})}
+              onPress={() =>
+                navigation.navigate("Profile", { username: username })
+              }
             >
               {profilepic ? (
                 <Image
@@ -85,7 +89,9 @@ function Home({ navigation, profilepic }) {
                 color={colors.secondary}
                 size={15}
               />
-              <Text style={styles.header_uni_text}>UJ</Text>
+              <Text style={styles.header_uni_text}>
+                {universityShortName(university)}
+              </Text>
             </View>
           </View>
         </View>
@@ -216,7 +222,7 @@ const styles = StyleSheet.create({
   },
   vhq_title: {
     fontSize: 38,
-    fontWeight: "700",
+    fontWeight: "800",
     color: colors.white,
     fontFamily: "Lobster-Regular",
     width: "40%",

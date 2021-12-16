@@ -5,7 +5,7 @@ import colors from "../../config/colors";
 import Button from "../Button";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
-const iconSize = 30;
+const iconSize = 28;
 
 const options = [
   {
@@ -43,7 +43,7 @@ const options = [
     icon: (
       <MaterialCommunityIcons
         color={colors.secondary}
-        name="clipboard-outline"
+        name="clipboard-file-outline"
         size={iconSize}
       />
     ),

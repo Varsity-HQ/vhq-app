@@ -27,6 +27,7 @@ function PostCard({ data }) {
   const [preparedContent, setPreparedContent] = useState("<p></p>");
 
   useEffect(() => {
+    if (!data) return;
     let rawContent = JSON.parse(data.caption);
     let blocks = EditorState.createWithContent(
       convertFromRaw(rawContent.content),
@@ -125,7 +126,7 @@ function PostCard({ data }) {
           </Text>
           <View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Image
+              <ImageLocal
                 style={{
                   height: 18,
                   width: 18,
