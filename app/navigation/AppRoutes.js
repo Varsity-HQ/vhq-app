@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import OverlayLoader from "../components/OverlayLoader";
 import SetupPersonalInformation from "../screens/SetupPersonalInformation";
+import ProfileMenu from "../components/Profile/ProfileMenu";
 
 const mapStateToProps = (state) => {
   return {
@@ -87,29 +88,33 @@ const AppRoutes = ({ core }) => {
   }
 
   return (
-    <Stack.Navigator initialRouteName="AppNavigator">
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name="AppNavigator"
-        component={AppNavigator}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name="Profile"
-        component={Profile}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name="PostPage"
-        component={PostPage}
-      />
-    </Stack.Navigator>
+    <>
+      <OverlayLoader />
+      <ProfileMenu username={"chikx"} />
+      <Stack.Navigator initialRouteName="AppNavigator">
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="AppNavigator"
+          component={AppNavigator}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="Profile"
+          component={Profile}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="PostPage"
+          component={PostPage}
+        />
+      </Stack.Navigator>
+    </>
   );
 };
 

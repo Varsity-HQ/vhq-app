@@ -54,7 +54,7 @@ function PostsTab({ profile_page, get_auth_user_posts }) {
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       {posts.map((x, index) => (
         <PostCard key={index} data={x} />
       ))}

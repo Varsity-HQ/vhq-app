@@ -227,7 +227,9 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   container: {
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingTop: 15,
+    paddingBottom: 10,
     borderBottomColor: colors.black,
     borderBottomWidth: 2,
   },

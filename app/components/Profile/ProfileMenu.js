@@ -1,63 +1,105 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  Alert,
+} from "react-native";
 import Modal from "react-native-modal";
 import colors from "../../config/colors";
 import Button from "../Button";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+//|
 
-const iconSize = 32;
+import { logOutUser } from "../../store/actions/actions";
+import { connect } from "react-redux";
 
-const options = [
-  {
-    title: "Delete Post",
-    icon: (
-      <Ionicons
-        color={colors.secondary}
-        name="trash-bin-outline"
-        size={iconSize}
-      />
-    ),
-  },
-  {
-    title: "Go to post",
-    icon: (
-      <Ionicons
-        color={colors.secondary}
-        name="arrow-forward-outline"
-        size={iconSize}
-      />
-    ),
-  },
-  {
-    title: "See profile",
-    icon: (
-      <Ionicons color={colors.secondary} name="eye-outline" size={iconSize} />
-    ),
-  },
-  {
-    title: "Copy Link",
-    icon: (
-      <Ionicons color={colors.secondary} name="copy-outline" size={iconSize} />
-    ),
-  },
-  {
-    title: "Report",
-    icon: (
-      <Ionicons color={colors.secondary} name="flag-outline" size={iconSize} />
-    ),
-  },
-];
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logOutUser: () => dispatch(logOutUser()),
+  };
+};
 
-function PostMenu() {
+const iconSize = 35;
+//|
+
+//|
+
+function ProfileMenu({ username, logOutUser }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
-
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
+  const options = [
+    {
+      title: "Administration",
+      icon: (
+        <Ionicons
+          color={colors.secondary}
+          name="shield-outline"
+          size={iconSize}
+        />
+      ),
+    },
+    {
+      title: "Qcoins & Offers",
+      icon: (
+        <Ionicons
+          color={colors.secondary}
+          name="cash-outline"
+          size={iconSize}
+        />
+      ),
+    },
+    {
+      title: "Copy Profile link",
+      icon: (
+        <Ionicons
+          color={colors.secondary}
+          name="copy-outline"
+          size={iconSize}
+        />
+      ),
+    },
+    {
+      title: "Sign out",
+      icon: (
+        <Ionicons
+          color={colors.secondary}
+          name="log-out-outline"
+          size={iconSize}
+        />
+      ),
+      onPress: () => handleSignout(),
+    },
+  ];
+
+  const handleSignout = () => {
+    Alert.alert(
+      "Confirm action",
+      `${username}, are you sure you want to sign out ?. You will need to sign in again to use this app`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Yes",
+          onPress: () => {
+            // handleModal();
+            logOutUser();
+            // console.log("logout");
+          },
+        },
+      ],
+    );
+  };
 
   return (
     <>
       {/* // <View style={styles.container}> */}
       <TouchableWithoutFeedback onPress={handleModal}>
         <Ionicons
+          style={{ paddingHorizontal: 10 }}
           color={colors.white}
           name="ios-ellipsis-horizontal-outline"
           size={30}
@@ -81,7 +123,7 @@ function PostMenu() {
               <TouchableWithoutFeedback
                 style={{ paddingVertical: 10 }}
                 key={index}
-                onPress={() => console.log("clicked")}
+                onPress={x.onPress}
               >
                 <View style={styles.touchableInner}>
                   {x.icon}
@@ -109,7 +151,7 @@ const styles = StyleSheet.create({
   touchableInner: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 10,
+    paddingVertical: 8,
   },
   text: {
     color: colors.white,
@@ -138,6 +180,7 @@ const styles = StyleSheet.create({
     // backgroundColor: colors.white,
     margin: 0,
     justifyContent: "flex-end",
+    zIndex: 99999,
   },
   container: {
     flex: 1,
@@ -145,5 +188,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
-export default PostMenu;
+export default connect(null, mapDispatchToProps)(ProfileMenu);

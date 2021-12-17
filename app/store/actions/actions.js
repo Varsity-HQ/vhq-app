@@ -187,9 +187,14 @@ export const setAuthState = (state) => (dispatch) => {
   });
 };
 
-export const logOutUser = () => (dispatch) => {
+export const logOutUser = () => async (dispatch) => {
   delete axios.defaults.headers.common[`Authorization`];
   dispatch({ type: "SET_UNAUTHENTICATED" });
+  try {
+    await auth_storage.removeToken();
+  } catch (error) {
+    console.log("failed to sign out", error);
+  }
 };
 
 export const set_token = (token) => () => {

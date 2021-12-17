@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, Text } from "react-native";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image as ImageLocal } from "react-native";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
@@ -13,6 +13,10 @@ import { get_user_page, get_auth_profile } from "../store/actions/actions";
 import { connect } from "react-redux";
 import ProfileSkeleton from "../components/Skeletons/ProfileSkeleton";
 import PostsTab from "../components/Profile/PostsTab";
+import PicturesTab from "../components/Profile/PicturesTab";
+import ProfileMenu from "../components/Profile/ProfileMenu";
+
+import { Image } from "react-native-expo-image-cache";
 
 const mapStateToProps = (state) => {
   return {
@@ -70,6 +74,8 @@ function Profile({ route, acc_data, get_auth_profile, profile_page }) {
 
   const tab_switcher = () => {
     switch (index) {
+      case 2:
+        return <PicturesTab />;
       default:
         return <PostsTab />;
     }
@@ -97,11 +103,7 @@ function Profile({ route, acc_data, get_auth_profile, profile_page }) {
             ) : null}
 
             <View>
-              <Ionicons
-                color={colors.white}
-                name="ios-ellipsis-horizontal-outline"
-                size={34}
-              />
+              <ProfileMenu username={username} />
             </View>
           </View>
         </View>
@@ -115,12 +117,16 @@ function Profile({ route, acc_data, get_auth_profile, profile_page }) {
         >
           <View style={{ flexDirection: "row" }}>
             <View>
-              <Image
-                source={{
-                  uri: user.profilepic,
-                }}
-                style={styles.profilepic}
-              />
+              {user.profilepic ? (
+                <Image uri={user.profilepic} style={styles.profilepic} />
+              ) : (
+                <ImageLocal
+                  source={{
+                    uri: require("../assets/avatar.png"),
+                  }}
+                  style={styles.profilepic}
+                />
+              )}
             </View>
             <View style={{ marginLeft: 18 }}>
               <Text style={styles.username}>{user.username}</Text>

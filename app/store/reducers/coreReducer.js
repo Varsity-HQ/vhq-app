@@ -50,6 +50,11 @@ const coreReducer = (state = initialData, actions) => {
         ...state,
         accData: actions.payload,
       };
+    case "SET_UNAUTHENTICATED":
+      return {
+        ...state,
+        authenticated: false,
+      };
     case "SET_AUTH_STATE":
       return {
         ...state,
