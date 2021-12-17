@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, Text } from "react-native";
 import { View, StyleSheet, Image } from "react-native";
 import Screen from "../components/Screen";
@@ -9,6 +9,24 @@ import Button from "../components/Button";
 import AppText from "../components/AppText";
 import PostCard from "../components/PostCard";
 import TabNavigator from "../components/TabNavigator";
+import { get_user_page, get_auth_profile } from "../store/actions/actions";
+import { connect } from "react-redux";
+import ProfileSkeleton from "../components/Skeletons/ProfileSkeleton";
+import PostsTab from "../components/Profile/PostsTab";
+
+const mapStateToProps = (state) => {
+  return {
+    acc_data: state.core.accData,
+    profile_page: state.data.profile_page,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get_user_page: () => dispatch(get_user_page()),
+    get_auth_profile: () => dispatch(get_auth_profile()),
+  };
+};
 
 const profile_tabs = [
   {
@@ -28,17 +46,56 @@ const profile_tabs = [
   },
 ];
 
-function Profile(props) {
+function Profile({ route, acc_data, get_auth_profile, profile_page }) {
   const [index, setTab] = useState(1);
+  const { username } = route.params;
+  const [auth_profile, set_auth_profile] = useState(false);
+
+  const check_if_auth_profile = () => {
+    if (username === acc_data.username) {
+      set_auth_profile(true);
+      return true;
+    } else {
+      set_auth_profile(false);
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    if (check_if_auth_profile()) {
+      get_auth_profile();
+    } else {
+    }
+  }, [username]);
+
+  const tab_switcher = () => {
+    switch (index) {
+      default:
+        return <PostsTab />;
+    }
+  };
+
+  console.log(username);
+
+  if (profile_page.loading_user) {
+    return <ProfileSkeleton username={username} />;
+  } //
+
+  const { user } = profile_page;
   return (
     <Screen>
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.header_username}>chikx_12</Text>
-            <View style={styles.toggle_anonymous}>
-              <Text style={styles.toggle_anonymous_text}>Toggle anonymous</Text>
-            </View>
+            <Text style={styles.header_username}>{username}</Text>
+            {auth_profile ? (
+              <View style={styles.toggle_anonymous}>
+                <Text style={styles.toggle_anonymous_text}>
+                  Toggle anonymous
+                </Text>
+              </View>
+            ) : null}
+
             <View>
               <Ionicons
                 color={colors.white}
@@ -60,16 +117,25 @@ function Profile(props) {
             <View>
               <Image
                 source={{
-                  uri: "https://varsityhq.imgix.net/vhq_img202130693415.jpeg",
+                  uri: user.profilepic,
                 }}
                 style={styles.profilepic}
               />
             </View>
             <View style={{ marginLeft: 18 }}>
-              <Text style={styles.username}>chikx_12</Text>
+              <Text style={styles.username}>{user.username}</Text>
               <Text style={styles.user_stream}>
-                3rd Year,{" "}
-                <Text style={{ color: colors.secondary }}>Student</Text>
+                {user.yearOfStudy === "postgraduates" ? (
+                  <>
+                    Postgraduate{" "}
+                    <Text style={{ color: colors.secondary }}>Student</Text>
+                  </>
+                ) : (
+                  <>
+                    {user.yearOfStudy} Year,{" "}
+                    <Text style={{ color: colors.secondary }}>Student</Text>
+                  </>
+                )}
               </Text>
               <View style={{ flexDirection: "row" }}>
                 <Button type={3} title="Edit Profile" />
@@ -86,22 +152,30 @@ function Profile(props) {
             </View>
           </View>
           <View style={{ marginTop: 8 }}>
-            <Text style={styles.anon_state}>Anonymous</Text>
-            <Text style={styles.user_f_name}>Harrmony Chikari</Text>
+            {auth_profile && user.anonymous_profile ? (
+              <Text style={styles.anon_state}>Anonymous</Text>
+            ) : null}
+
+            <Text style={styles.user_f_name}>
+              {user.firstname} {user.surname}
+            </Text>
             <View style={{ flexDirection: "row", marginTop: 8 }}>
               <AppText>
-                1{" "}
+                {user.followers ? user.followers : 0}{" "}
                 <AppText style={{ color: colors.secondary }}>Followers</AppText>
               </AppText>
               <AppText>&nbsp;|&nbsp;</AppText>
               <AppText>
-                1{" "}
+                {user.following}{" "}
                 <AppText style={{ color: colors.secondary }}>Following</AppText>
               </AppText>
             </View>
-            <View style={{ marginTop: 10 }}>
-              <AppText>Creater of VHQ</AppText>
-            </View>
+
+            {user.about ? (
+              <View style={{ marginTop: 10 }}>
+                <AppText>{user.about}</AppText>
+              </View>
+            ) : null}
           </View>
         </View>
         <View
@@ -113,20 +187,25 @@ function Profile(props) {
             style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}
           >
             <FontAwesome color={colors.secondary} name="university" size={15} />
-            <AppText style={{ marginLeft: 8 }}>
-              University of Johannesburg
-            </AppText>
+            <AppText style={{ marginLeft: 8 }}>{user.university}</AppText>
           </View>
-          <View
-            style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}
-          >
-            <FontAwesome
-              color={colors.secondary}
-              name="graduation-cap"
-              size={15}
-            />
-            <AppText style={{ marginLeft: 8 }}>Computer Science</AppText>
-          </View>
+          {user?.degree ? (
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 5,
+              }}
+            >
+              <FontAwesome
+                color={colors.secondary}
+                name="graduation-cap"
+                size={15}
+              />
+              <AppText style={{ marginLeft: 8 }}>{user.degree}</AppText>
+            </View>
+          ) : null}
+
           <View style={{ marginTop: 8 }}>
             <Button
               type={3}
@@ -148,12 +227,7 @@ function Profile(props) {
             }}
           />
         </View>
-        <View>
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-        </View>
+        <View>{tab_switcher()}</View>
       </ScrollView>
     </Screen>
   );
@@ -217,4 +291,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Profile;
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

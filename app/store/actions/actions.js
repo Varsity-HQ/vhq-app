@@ -5,6 +5,39 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const get_auth_user_posts = () => (dispatch) => {
+  axios
+    .get("/profile/posts")
+    .then((data) => {
+      dispatch({
+        type: "SET_PROFILE_POSTS",
+        payload: data.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const get_auth_profile = () => (dispatch) => {
+  let profile = store.getState().core.accData;
+  dispatch({
+    type: "SET_PROFILE_DATA",
+    payload: profile,
+  });
+};
+
+export const get_user_page = (username) => {
+  axios
+    .get(`/user/${username}/get`)
+    .then((data) => {
+      console.log(data.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const get_home_posts = () => (dispatch) => {
   let lastVisible = store.getState().data.home_data.page_cursor;
 

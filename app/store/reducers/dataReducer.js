@@ -9,6 +9,23 @@ const initialData = {
     error: false,
   },
 
+  profile_page: {
+    //
+    loading_user: true,
+    loading_post: true,
+    loading_pictures: true,
+    loading_bookmarks: true,
+    //
+    page_cursor: null,
+    posts: [],
+    pictures: [],
+    bookmarks: [],
+    //
+    errors: {},
+    //
+    user: {},
+  },
+
   //home
   homePosts: [],
   homePosts_cursor: null,
@@ -37,6 +54,26 @@ const initialData = {
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "SET_PROFILE_POSTS":
+      return {
+        ...state,
+        profile_page: {
+          ...state.profile_page,
+          loading_post: false,
+          posts: actions.payload,
+        },
+      };
+    case "SET_PROFILE_DATA":
+      return {
+        ...state,
+        profile_page: {
+          ...state.profile_page,
+          loading_user: false,
+          user: actions.payload,
+          errors: {},
+        },
+      };
+
     case "SET_HOME_POSTS":
       let updated_home_data = {
         loading: false,

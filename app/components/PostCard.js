@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
+  TouchableHighlight,
   Image as ImageLocal,
 } from "react-native";
 import colors from "../config/colors";

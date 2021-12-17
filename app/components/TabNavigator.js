@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     borderTopColor: colors.primary,
     borderWidth: 3,
     borderRadius: 0,
+    // paddingBottom: 5,
   },
   tab_Container: {
     paddingHorizontal: 20,
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
     height: 7,
     backgroundColor: colors.primary,
     borderRadius: 10,
+    bottom: 5,
   },
   tab_indicator_1: {
     width: "100%",
