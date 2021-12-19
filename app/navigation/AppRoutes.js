@@ -43,7 +43,7 @@ const TabBar = (props) => {
       start={[1, 0]}
       end={[1, 1]}
     >
-      <View style={styles.bottomNav}></View>
+      {/* <View style={styles.bottomNav}></View> */}
       <BottomTabBar {...props} style={[{ backgroundColor: "transparent" }]} />
     </LinearGradient>
   );

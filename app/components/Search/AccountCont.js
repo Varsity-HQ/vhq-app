@@ -8,20 +8,20 @@ import colors from "../../config/colors";
 
 import { useNavigation } from "@react-navigation/native";
 
-function AccountCont(props) {
+function AccountCont({ data }) {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <View style={styles.leftsec}>
-        <Image
-          style={styles.profilepic}
-          uri="https://firebasestorage.googleapis.com/v0/b/varsityhq-bd225.appspot.com/o/vhq_img202156726730.jpeg?alt=media"
-        />
+        <Image style={styles.profilepic} uri={data.profilepic} />
         <View>
-          <Text style={styles.name}>Thendo P</Text>
+          <Text style={styles.name}>
+            {data.firstname}&nbsp;{data.surname}
+          </Text>
           <Text style={styles.uname}>
-            @dopeeasy&nbsp;&nbsp;<Text style={styles.yostudy}>4th year</Text>
+            @{data.username}&nbsp;&nbsp;
+            <Text style={styles.yostudy}>4th year</Text>
           </Text>
         </View>
       </View>

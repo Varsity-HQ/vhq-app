@@ -5,6 +5,22 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const get_search_data = () => (dispatch) => {
+  axios
+    .get("/get/search")
+    .then((data) => {
+      dispatch({
+        type: "SET_SEARCH_DATA",
+        payload: data.data,
+      });
+
+      console.log(data.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const get_auth_user_posts = () => (dispatch) => {
   axios
     .get("/profile/posts")

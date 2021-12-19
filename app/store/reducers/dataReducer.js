@@ -1,6 +1,5 @@
 const initialData = {
   profilesData: [],
-  sidebar_data: {},
 
   home_data: {
     loading: true,
@@ -10,31 +9,22 @@ const initialData = {
   },
 
   profile_page: {
-    //
     loading_user: true,
     loading_post: true,
     loading_pictures: true,
     loading_bookmarks: true,
-    //
     page_cursor: null,
     posts: [],
     pictures: [],
     bookmarks: [],
-    //
     errors: {},
-    //
     user: {},
   },
-
-  //home
-  homePosts: [],
-  homePosts_cursor: null,
-  homePosts_loading: true,
-
   home_market_items: [],
-  //search
-  search_page_data: {},
-  search_page_loading: true,
+  search_page: {
+    loading: true,
+    data: {},
+  },
   //profile
   myPosts: [],
   myPosts_loading: true,
@@ -54,6 +44,16 @@ const initialData = {
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "SET_SEARCH_DATA":
+      return {
+        ...state,
+        search_page: {
+          ...state.search_page,
+          data: actions.payload,
+          loading: false,
+        },
+      };
+
     case "SET_PROFILE_POSTS":
       return {
         ...state,

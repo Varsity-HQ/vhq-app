@@ -2,11 +2,18 @@ import React from "react";
 import { ScrollView } from "react-native";
 import { View, StyleSheet } from "react-native";
 import colors from "../../config/colors";
-
 import Text from "../AppText";
 import TopPost from "./TopPost";
+import { connect } from "react-redux";
+import universityShortName from "../../util/universityShortName";
 
-function TopPosts(props) {
+const mapStateToPropsToProps = (state) => {
+  return {
+    university: state.core.accData.university,
+  };
+};
+
+function TopPosts({ university, posts }) {
   return (
     <View style={styles.container}>
       <View
@@ -15,13 +22,15 @@ function TopPosts(props) {
           borderBottomWidth: 1,
         }}
       >
-        <Text style={styles.header}>Top at UJ</Text>
+        <Text style={styles.header}>
+          Top at {universityShortName(university)}
+        </Text>
       </View>
       <View>
         <ScrollView horizontal>
-          <TopPost />
-          <TopPost />
-          <TopPost />
+          {posts.map((x) => (
+            <TopPost x={x} key={x.id} />
+          ))}
         </ScrollView>
       </View>
     </View>
@@ -40,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TopPosts;
+export default connect(mapStateToPropsToProps, null)(TopPosts);

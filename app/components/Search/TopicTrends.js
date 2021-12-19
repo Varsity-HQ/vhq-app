@@ -4,15 +4,18 @@ import colors from "../../config/colors";
 import Text from "../AppText";
 import { Ionicons } from "@expo/vector-icons";
 
-function TopicTrends(props) {
+import ShortenUniName from "../../util/universityShortName";
+
+function TopicTrends({ trends }) {
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.header}>Topic Trends</Text>
       </View>
-      <Trend />
-      <Trend />
-      <Trend />
+      {trends.map((x, index) => (
+        <Trend x={x} key={index} />
+      ))}
+
       <TouchableOpacity style={styles.footer}>
         <Text>See all trends</Text>
       </TouchableOpacity>
@@ -20,7 +23,7 @@ function TopicTrends(props) {
   );
 }
 
-function Trend() {
+function Trend({ x }) {
   return (
     <TouchableOpacity>
       <View style={styles.trend}>
@@ -38,9 +41,13 @@ function Trend() {
           }}
         >
           <View>
-            <Text style={styles.tr_t1}>Tagged at UJ</Text>
-            <Text style={styles.tr_t2}>#boysaskgirls</Text>
-            <Text style={styles.tr_t3}>3 Posts</Text>
+            <Text style={styles.tr_t1}>
+              {x.hashtag_weight > 50 ? "Trending at" : "Tagged at"}
+              &nbsp;
+              {ShortenUniName(x.target_university)}
+            </Text>
+            <Text style={styles.tr_t2}>{x.hashtag_name}</Text>
+            <Text style={styles.tr_t3}>{x.hashtag_count_last48} Posts</Text>
           </View>
         </View>
         <View>

@@ -17,9 +17,7 @@ import dayjs from "dayjs";
 import Localize from "dayjs/plugin/relativeTime";
 import Content from "./Post/content";
 import PostMenu from "./Post/PostMenu";
-
 import { Image } from "react-native-expo-image-cache";
-import AppText from "./AppText";
 
 dayjs.extend(Localize);
 

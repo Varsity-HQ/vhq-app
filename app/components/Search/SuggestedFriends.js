@@ -5,7 +5,7 @@ import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import AccountCont from "./AccountCont";
 
-function SuggestedFriends(props) {
+function SuggestedFriends({ accounts }) {
   return (
     <View style={styles.container}>
       <View style={styles.header_container}>
@@ -17,9 +17,9 @@ function SuggestedFriends(props) {
           padding: 10,
         }}
       >
-        <AccountCont />
-        <AccountCont />
-        <AccountCont />
+        {accounts.map((x) => (
+          <AccountCont data={x} key={x.userID} />
+        ))}
       </View>
     </View>
   );
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: colors.darkish,
+    marginTop: 10,
   },
 });
 

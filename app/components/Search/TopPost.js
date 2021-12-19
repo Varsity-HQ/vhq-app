@@ -1,25 +1,38 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image as ImageLocal } from "react-native";
 import Text from "../AppText";
 import colors from "../../config/colors";
 import { Image } from "react-native-expo-image-cache";
 
-function TopPost(props) {
+function TopPost({ x }) {
+  const returnPicture = () => {
+    if (!x.profilepic)
+      return (
+        <ImageLocal
+          style={styles.image}
+          source={{ uri: require("../../assets/avatar.png") }}
+        />
+      );
+
+    if (x.attachments.length > 0)
+      return <Image style={styles.image} uri={x.attachments[0]} />;
+    return <Image style={styles.image} uri={x.profilepic} />;
+  };
+
   return (
     <View style={styles.container}>
-      <View>
-        <Image
-          style={styles.image}
-          uri="https://firebasestorage.googleapis.com/v0/b/varsityhq-bd225.appspot.com/o/vhq_img202156726730.jpeg?alt=media"
-        />
-      </View>
+      <View>{returnPicture()}</View>
       <View style={styles.content}>
-        <Text style={styles.name}>Harmony Chikari</Text>
+        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.name}>
+          {x.firstname}&nbsp;{x.surname}
+        </Text>
         <Text numberOfLines={2} ellipsizeMode="tail" style={styles.text}>
-          This is the post that will apear first to show the othrs
+          {x.postText}
         </Text>
         <View style={styles.date_container}>
-          <Text style={styles.date}>2 November 2021</Text>
+          <Text style={styles.date}>
+            {x.likes_count} Likes | {x.comments_count} Comments
+          </Text>
         </View>
       </View>
     </View>
@@ -39,6 +52,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: colors.secondary,
+    height: 50,
   },
   name: {
     fontSize: 16,
@@ -60,10 +74,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.darkish2,
     marginVertical: 20,
     borderRadius: 10,
-    height: 110,
+    height: 115,
     width: 300,
     flexDirection: "row",
-    // overflow: "hidden",
+    overflow: "hidden",
   },
 });
 
