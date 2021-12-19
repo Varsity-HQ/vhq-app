@@ -15,9 +15,6 @@ import SkeletonComponent from "./Skeletons/SkeletonComponent";
 import SkeletonPost from "./Skeletons/Post";
 import dayjs from "dayjs";
 import Localize from "dayjs/plugin/relativeTime";
-// import { convertToHTML } from "draft-convert";
-// import { EditorState, convertFromRaw } from "draft-js";
-
 import Content from "./Post/content";
 import PostMenu from "./Post/PostMenu";
 
@@ -27,20 +24,8 @@ import AppText from "./AppText";
 dayjs.extend(Localize);
 
 function PostCard({ data }) {
-  const [postContent, setPostContent] = useState();
-  const [preparedContent, setPreparedContent] = useState("<p></p>");
-
   useEffect(() => {
     return;
-    // if (!data) return;
-    // let rawContent = JSON.parse(data.caption);
-    // let blocks = EditorState.createWithContent(
-    //   convertFromRaw(rawContent.content),
-    // );
-    // let curr_content = blocks.getCurrentContent();
-    // let converted_toHTML = convertToHTML(curr_content);
-    // console.log({ converted_toHTML });
-    // setPreparedContent(converted_toHTML);
   }, []);
 
   const nav = useNavigation();
@@ -58,8 +43,6 @@ function PostCard({ data }) {
   };
 
   if (!data) return <SkeletonPost />;
-
-  console.log();
 
   return (
     <>
@@ -108,15 +91,7 @@ function PostCard({ data }) {
         </View>
         <View style={styles.content_container}>
           <TouchableWithoutFeedback onPress={() => console.log("clicked")}>
-            <AppText
-              style={{
-                paddingVertical: 10,
-              }}
-            >
-              {JSON.stringify(data.caption)}
-            </AppText>
-
-            {/* <Content html={preparedContent} /> */}
+            <Content html={data.postHtmlText} />
           </TouchableWithoutFeedback>
 
           {/* <Text
