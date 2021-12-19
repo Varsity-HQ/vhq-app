@@ -15,7 +15,7 @@ export const follow_account = (uid) => (dispatch) => {
 
   axios
     .get(`/follow/${uid}`)
-    .then(() => {
+    .then((data) => {
       dispatch({
         type: "ADD_FOLLOWED_ACCOUNT",
         payload: { ...account, id: data.data.followID },

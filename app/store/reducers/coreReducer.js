@@ -8,6 +8,33 @@ const initialData = {
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "REMOVE_FOLLOWED_ACCOUNT":
+      let filtered_following = [];
+
+      state.accData.user_following.forEach((x) => {
+        if (x.userID !== actions.payload) {
+          filtered_following.push(x);
+        }
+      });
+
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          user_following: filtered_following,
+          following: filtered_following.length,
+        },
+      };
+    case "ADD_FOLLOWED_ACCOUNT":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          user_following: [...actions.payload, ...state.accData.user_following],
+          following: parseInt(state.accData.following) + 1,
+        },
+      };
+
     case "SET_ACC_ACTIVATED":
       return {
         ...state,

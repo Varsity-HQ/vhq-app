@@ -3,11 +3,14 @@ const init_accdata = {
   firstname: "",
   surname: "",
   profilepic: "",
-  following: 0,
   friends: 0,
 
   user_following: [],
-  followers: [],
+  user_followers: [],
+
+  following: 0,
+  followers: 0,
+
   bookmarks: [],
   liked_posts: [],
   poll_votes: [],
