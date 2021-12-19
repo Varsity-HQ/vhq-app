@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   TouchableHighlight,
   Image as ImageLocal,
+  Platform,
 } from "react-native";
 import colors from "../config/colors";
 import { FontAwesome, Ionicons, Feather } from "@expo/vector-icons";
@@ -14,29 +15,32 @@ import SkeletonComponent from "./Skeletons/SkeletonComponent";
 import SkeletonPost from "./Skeletons/Post";
 import dayjs from "dayjs";
 import Localize from "dayjs/plugin/relativeTime";
-import { convertToHTML, convertFromHTML } from "draft-convert";
-import { EditorState, convertFromRaw, Editor } from "draft-js";
+// import { convertToHTML } from "draft-convert";
+// import { EditorState, convertFromRaw } from "draft-js";
+
 import Content from "./Post/content";
 import PostMenu from "./Post/PostMenu";
 
 import { Image } from "react-native-expo-image-cache";
+import AppText from "./AppText";
 
 dayjs.extend(Localize);
 
 function PostCard({ data }) {
-  const [postContent, setPostContent] = useState(EditorState.createEmpty());
+  const [postContent, setPostContent] = useState();
   const [preparedContent, setPreparedContent] = useState("<p></p>");
 
   useEffect(() => {
-    if (!data) return;
-    let rawContent = JSON.parse(data.caption);
-    let blocks = EditorState.createWithContent(
-      convertFromRaw(rawContent.content),
-    );
-    let curr_content = blocks.getCurrentContent();
-    let converted_toHTML = convertToHTML(curr_content);
-    console.log({ converted_toHTML });
-    setPreparedContent(converted_toHTML);
+    return;
+    // if (!data) return;
+    // let rawContent = JSON.parse(data.caption);
+    // let blocks = EditorState.createWithContent(
+    //   convertFromRaw(rawContent.content),
+    // );
+    // let curr_content = blocks.getCurrentContent();
+    // let converted_toHTML = convertToHTML(curr_content);
+    // console.log({ converted_toHTML });
+    // setPreparedContent(converted_toHTML);
   }, []);
 
   const nav = useNavigation();
@@ -104,7 +108,15 @@ function PostCard({ data }) {
         </View>
         <View style={styles.content_container}>
           <TouchableWithoutFeedback onPress={() => console.log("clicked")}>
-            <Content html={preparedContent} />
+            <AppText
+              style={{
+                paddingVertical: 10,
+              }}
+            >
+              {JSON.stringify(data.caption)}
+            </AppText>
+
+            {/* <Content html={preparedContent} /> */}
           </TouchableWithoutFeedback>
 
           {/* <Text
@@ -136,7 +148,13 @@ function PostCard({ data }) {
                 source={require("../assets/vhqcat-small.png")}
               />
               <Text style={{ fontSize: 13, color: "#4f708a" }}>
-                {data.application}
+                {/* {data.application} */}
+                VarsityHQ ~{""}
+                {Platform.OS === "ios" && " iPhone"}
+                {Platform.OS === "android" && " Android"}
+                {Platform.OS === "web" && " Web"}
+                {Platform.OS === "macos" && " Mac"}
+                {Platform.OS === "windows" && " Windows"}
               </Text>
             </View>
           </View>

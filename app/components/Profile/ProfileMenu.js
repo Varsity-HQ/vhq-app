@@ -10,8 +10,6 @@ import Modal from "react-native-modal";
 import colors from "../../config/colors";
 import Button from "../Button";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-//|
-
 import { logOutUser } from "../../store/actions/actions";
 import { connect } from "react-redux";
 
