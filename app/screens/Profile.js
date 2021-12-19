@@ -17,6 +17,7 @@ import PicturesTab from "../components/Profile/PicturesTab";
 import ProfileMenu from "../components/Profile/ProfileMenu";
 
 import { Image } from "react-native-expo-image-cache";
+import { useFocusEffect } from "@react-navigation/native";
 
 const mapStateToProps = (state) => {
   return {
@@ -65,12 +66,19 @@ function Profile({ route, acc_data, get_auth_profile, profile_page }) {
     }
   };
 
-  useEffect(() => {
-    if (check_if_auth_profile()) {
-      get_auth_profile();
-    } else {
-    }
-  }, [username]);
+  useFocusEffect(
+    React.useCallback(
+      () => {
+        if (check_if_auth_profile()) {
+          get_auth_profile();
+        } else {
+        }
+      },
+      [
+        // username
+      ],
+    ),
+  );
 
   const tab_switcher = () => {
     switch (index) {
