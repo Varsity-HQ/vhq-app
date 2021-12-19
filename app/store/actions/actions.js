@@ -5,6 +5,41 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const follow_account = (uid) => (dispatch) => {
+  let account = {
+    id: "",
+    follower_id: store.getState().core.accData.userID,
+    following_user: uid,
+    follow_date: new Date().toISOString(),
+  };
+
+  axios
+    .get(`/follow/${uid}`)
+    .then(() => {
+      dispatch({
+        type: "ADD_FOLLOWED_ACCOUNT",
+        payload: { ...account, id: data.data.followID },
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const unfollow_account = (uid) => (dispatch) => {
+  dispatch({
+    type: "REMOVE_FOLLOWED_ACCOUNT",
+    payload: uid,
+  });
+
+  axios
+    .get(`/unfollow/${uid}`)
+    .then(() => {})
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const get_search_data = () => (dispatch) => {
   axios
     .get("/get/search")

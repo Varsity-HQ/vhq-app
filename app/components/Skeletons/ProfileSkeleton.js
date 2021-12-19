@@ -31,9 +31,7 @@ function ProfileSkeleton({ username = "User" }) {
             <SkeletonComponent style={styles.profilepic} />
           </View>
           <View style={{ marginLeft: 18, width: "100%" }}>
-            <SkeletonComponent style={styles.username}>
-              {username}
-            </SkeletonComponent>
+            <SkeletonComponent style={styles.username} />
             <SkeletonComponent style={styles.user_stream} />
             <View style={{ flexDirection: "row" }}>
               <View type={3} title="Edit Profile" />

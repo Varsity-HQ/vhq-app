@@ -50,7 +50,7 @@ function SearchScreen({ search_page, get_search_data }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      //   get_search_data();
+      get_search_data();
     }, []),
   );
 
