@@ -29,7 +29,7 @@ function TabNavigator({ active = 1, style, items = [], onPress }) {
                 ]}
               ></View>
               <View style={styles.tab_Container}>
-                {x.icon}
+                {x.icon && x.icon}
                 <Text style={styles.text}>{x.title}</Text>
               </View>
               <View

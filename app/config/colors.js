@@ -5,7 +5,7 @@ export default {
   dark: "#15202b",
   dark_opacity: "#15202b8a",
   dark_opacity_2: "#374e64ad",
-  darkish: "#15202b",
+  darkish: "#1a2c3f",
   darkish2: "#163952",
   darkish3: "#105d83e7",
   white: "#fff",
