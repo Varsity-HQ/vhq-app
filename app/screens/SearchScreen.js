@@ -8,6 +8,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { colors } from "react-native-elements";
 import Loader from "../components/Loaders/Loader";
 import TopicTrends from "../components/Search/TopicTrends";
+import SuggestedFriends from "../components/Search/SuggestedFriends";
+import TopPosts from "../components/Search/TopPosts";
 
 const iconSize = 20;
 
@@ -32,17 +34,12 @@ function SearchScreen(props) {
     <Screen style={styles.container}>
       <ScrollView>
         <SearchHeader />
-        <View>
-          <TabNavigator
-            onPress={(i) => setTab(i)}
-            active={activeTab}
-            items={tabs}
-          />
-        </View>
         <View style={styles.devider} />
 
         <View>
           <TopicTrends />
+          <TopPosts />
+          <SuggestedFriends />
         </View>
       </ScrollView>
     </Screen>

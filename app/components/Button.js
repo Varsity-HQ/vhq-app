@@ -4,7 +4,59 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import colors from "../config/colors";
 
-function AppButton({ title, loading, style, onPress, type = 1, ...props }) {
+function AppButton({
+  title,
+  loading,
+  disabled,
+  style,
+  onPress,
+  type = 1,
+  ...props
+}) {
+  if (type === 8) {
+    return (
+      <TouchableOpacity
+        {...props}
+        style={[styles.button_8, style]}
+        onPress={onPress}
+      >
+        <Text style={styles.text_t8}>{title}</Text>
+      </TouchableOpacity>
+    );
+  }
+  if (type === 7) {
+    return (
+      <TouchableOpacity
+        {...props}
+        style={[styles.button_7, style]}
+        onPress={onPress}
+      >
+        <Text style={styles.text_t7}>{title}</Text>
+      </TouchableOpacity>
+    );
+  }
+  if (type === 6) {
+    return (
+      <TouchableOpacity
+        {...props}
+        style={[styles.button_t6, style]}
+        onPress={onPress}
+      >
+        <Text style={styles.text_t3}>{title}</Text>
+      </TouchableOpacity>
+    );
+  }
+  if (type === 5) {
+    return (
+      <TouchableOpacity
+        {...props}
+        style={[styles.button_t5, style]}
+        onPress={onPress}
+      >
+        <Text style={styles.text_t3}>{title}</Text>
+      </TouchableOpacity>
+    );
+  }
   if (type === 4) {
     return (
       <TouchableOpacity
@@ -55,6 +107,52 @@ function AppButton({ title, loading, style, onPress, type = 1, ...props }) {
 }
 
 const styles = StyleSheet.create({
+  button_8: {
+    position: "relative",
+    backgroundColor: colors.dark,
+    borderColor: colors.secondary,
+    borderWidth: 1,
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 12,
+    // width: "100%",
+    marginVertical: 10,
+  },
+  button_7: {
+    position: "relative",
+    backgroundColor: colors.dark,
+    borderColor: colors.primary,
+    borderWidth: 1,
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 12,
+    // width: "100%",
+    marginVertical: 10,
+  },
+  button_t6: {
+    position: "relative",
+    backgroundColor: colors.dark,
+    borderColor: colors.white,
+    borderWidth: 1,
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 12,
+    // width: "100%",
+    marginVertical: 10,
+  },
+  button_t5: {
+    position: "relative",
+    backgroundColor: colors.dark,
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 12,
+    // width: "100%",
+    marginVertical: 10,
+  },
   button_t4: {
     position: "relative",
     backgroundColor: colors.primary,
@@ -98,6 +196,16 @@ const styles = StyleSheet.create({
     padding: 15,
     width: "100%",
     marginVertical: 10,
+  },
+  text_t8: {
+    color: colors.secondary,
+    fontSize: 15,
+    fontWeight: "600",
+  },
+  text_t7: {
+    color: colors.primary,
+    fontSize: 15,
+    fontWeight: "600",
   },
   text_t3: {
     color: colors.white,
