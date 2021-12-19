@@ -22,6 +22,7 @@ import { useFonts } from "expo-font";
 
 import { initializeApp, getApps } from "firebase/app";
 import { firebaseConfig } from "./util/fb_config";
+import { StatusBar } from "react-native";
 
 if (!getApps().length) {
   initializeApp(firebaseConfig);
@@ -83,9 +84,19 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
   return (
     // <View>{/* <WelcomeScreen /> */}</View>
 
-    <NavigationContainer theme={vhqTheme}>
-      {authenticated ? <AppNavigator /> : <AuthRoutes />}
-    </NavigationContainer>
+    <>
+      <StatusBar
+        translucent
+        animated={true}
+        backgroundColor="transparent"
+        barStyle="light-content"
+        showHideTransition="fade"
+        hidden={false}
+      />
+      <NavigationContainer theme={vhqTheme}>
+        {authenticated ? <AppNavigator /> : <AuthRoutes />}
+      </NavigationContainer>
+    </>
   );
 }
 

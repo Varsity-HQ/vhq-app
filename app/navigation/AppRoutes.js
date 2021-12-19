@@ -3,22 +3,28 @@ import {
   createBottomTabNavigator,
   BottomTabBar,
 } from "@react-navigation/bottom-tabs";
-import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
-import FeedNavigator from "./feedNavigator";
-import colors from "../config/colors";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, Text, View } from "react-native";
+import { connect } from "react-redux";
+
+import { FontAwesome } from "@expo/vector-icons";
 import RIcon from "react-native-remix-icon";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+//Navigators
+import FeedNavigator from "./feedNavigator";
+import SearchNavigator from "./SearchNavigator";
+
+// Screens
 import PostPage from "../screens/PostPage";
 import Profile from "../screens/Profile";
 import SetupUniversity from "../screens/SetupUniversity";
-
-import { connect } from "react-redux";
 import WelcomeScreen from "../screens/WelcomeScreen";
-import OverlayLoader from "../components/OverlayLoader";
 import SetupPersonalInformation from "../screens/SetupPersonalInformation";
-import ProfileMenu from "../components/Profile/ProfileMenu";
+
+import OverlayLoader from "../components/OverlayLoader";
+import colors from "../config/colors";
+import * as routes from "./routes";
 
 const mapStateToProps = (state) => {
   return {
@@ -71,7 +77,7 @@ const AppRoutes = ({ core }) => {
             options={{
               headerShown: false,
             }}
-            name="SetupUniversity"
+            name={routes.SETUP_UNIVERSITY}
             component={SetupUniversity}
           />
 
@@ -79,7 +85,7 @@ const AppRoutes = ({ core }) => {
             options={{
               headerShown: false,
             }}
-            name="SetupPersonalInformation"
+            name={routes.SETUP_PERSONAL_INFO}
             component={SetupPersonalInformation}
           />
         </Stack.Navigator>
@@ -90,27 +96,26 @@ const AppRoutes = ({ core }) => {
   return (
     <>
       <OverlayLoader />
-      <ProfileMenu username={"chikx"} />
       <Stack.Navigator initialRouteName="AppNavigator">
         <Stack.Screen
           options={{
             headerShown: false,
           }}
-          name="AppNavigator"
+          name={routes.APP_NAVIGATOR}
           component={AppNavigator}
         />
         <Stack.Screen
           options={{
             headerShown: false,
           }}
-          name="Profile"
+          name={routes.PROFILE}
           component={Profile}
         />
         <Stack.Screen
           options={{
             headerShown: false,
           }}
-          name="PostPage"
+          name={routes.POST_PAGE}
           component={PostPage}
         />
       </Stack.Navigator>
@@ -142,7 +147,7 @@ const AppNavigator = () => {
             <RIcon name="home-5-line" color={color} size={size} />
           ),
         }}
-        name="Feed"
+        name={routes.FEED_NAVIGATOR}
         component={FeedNavigator}
       />
 
@@ -154,8 +159,8 @@ const AppNavigator = () => {
           ),
           tabBarShowLabel: false,
         }}
-        name="MEssage"
-        component={FeedNavigator}
+        name={routes.SEARCH_NAVIGATOR}
+        component={SearchNavigator}
       />
       <Tab.Screen
         options={{
