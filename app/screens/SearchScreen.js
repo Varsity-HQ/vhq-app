@@ -10,6 +10,7 @@ import Loader from "../components/Loaders/Loader";
 import TopicTrends from "../components/Search/TopicTrends";
 import SuggestedFriends from "../components/Search/SuggestedFriends";
 import TopPosts from "../components/Search/TopPosts";
+import SearchSkeleton from "../components/Skeletons/SearchSkeleton";
 
 const iconSize = 20;
 
@@ -30,6 +31,13 @@ const tabs = [
 
 function SearchScreen(props) {
   const [activeTab, setTab] = useState(0);
+
+  return (
+    <Screen>
+      <SearchSkeleton />
+    </Screen>
+  );
+
   return (
     <Screen style={styles.container}>
       <ScrollView>

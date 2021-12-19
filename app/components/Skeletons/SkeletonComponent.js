@@ -6,7 +6,7 @@ import colors from "../../config/colors";
 
 const AnimatedLG = Animated.createAnimatedComponent(LinearGradient);
 
-function SkeletonComponent({ style }) {
+function SkeletonComponent({ style, children }) {
   const animatedValue = new Animated.Value(0);
 
   useEffect(() => {
@@ -27,6 +27,7 @@ function SkeletonComponent({ style }) {
     inputRange: [0, 1],
     outputRange: [-width, width],
   });
+
   return (
     <View
       style={[{ overflow: "hidden", backgroundColor: colors.darkish2 }, style]}
@@ -47,6 +48,7 @@ function SkeletonComponent({ style }) {
           colors.darkish2,
         ]}
       />
+      {children && children}
     </View>
   );
 }

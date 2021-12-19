@@ -6,7 +6,11 @@ import Text from "../AppText";
 import { Image } from "react-native-expo-image-cache";
 import colors from "../../config/colors";
 
+import { useNavigation } from "@react-navigation/native";
+
 function AccountCont(props) {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.leftsec}>
