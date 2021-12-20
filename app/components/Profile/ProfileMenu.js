@@ -12,6 +12,7 @@ import Button from "../Button";
 import { Ionicons, MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { logOutUser } from "../../store/actions/actions";
 import { connect } from "react-redux";
+import * as Clipboard from "expo-clipboard";
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -55,6 +56,7 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
       ),
     },
     {
+      onPress: () => copyToClipboard(),
       title: "Copy Profile link",
       icon: (
         <Ionicons
@@ -80,6 +82,7 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
   const options_2 = [
     {
       title: "Copy Profile Link",
+      onPress: () => copyToClipboard(),
       icon: (
         <Ionicons
           color={colors.secondary}
@@ -122,6 +125,11 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
     );
   };
 
+  const copyToClipboard = () => {
+    handleModal();
+    Clipboard.setString(`https://varsityhq.co.za/${username}`);
+  };
+
   return (
     <>
       {/* // <View style={styles.container}> */}
@@ -141,6 +149,7 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
       </TouchableWithoutFeedback>
 
       <Modal
+        useNativeDriver={true}
         // animationIn={"fadeIn"}
         // animationOut={"fadeOut"}
         backdropColor={colors.dark_opacity_2}
@@ -149,6 +158,8 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
         style={styles.modal_bg}
         onBackdropPress={handleModal}
         isVisible={isModalVisible}
+        // animationOutTiming={200}
+        // animationInTiming={200}
       >
         <View style={styles.content}>
           <View style={styles.notch} />
