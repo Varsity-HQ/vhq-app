@@ -12,7 +12,7 @@ const initialData = {
     loading_user: true,
     loading_post: true,
     loading_pictures: true,
-    loading_bookmarks: true,
+    loading_bookmarks: true, // for authenticated user
     page_cursor: null,
     posts: [],
     pictures: [],
@@ -44,6 +44,18 @@ const initialData = {
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "SET_LOADING_PROFILE":
+      return {
+        ...state,
+        profile_page: {
+          ...state.profile_page,
+          loading_user: true,
+          loading_post: true,
+          loading_pictures: true,
+          errors: {},
+        },
+      };
+
     case "SET_SEARCH_DATA":
       return {
         ...state,

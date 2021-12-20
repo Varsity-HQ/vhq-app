@@ -19,6 +19,8 @@ import Content from "./Post/content";
 import PostMenu from "./Post/PostMenu";
 import { Image } from "react-native-expo-image-cache";
 
+import * as routes from "../navigation/routes";
+
 dayjs.extend(Localize);
 
 function PostCard({ data }) {
@@ -26,7 +28,7 @@ function PostCard({ data }) {
     return;
   }, []);
 
-  const nav = useNavigation();
+  const navigation = useNavigation();
 
   const profilepic = (uri) => {
     let image_uri = "";
@@ -52,7 +54,11 @@ function PostCard({ data }) {
             alignItems: "center",
           }}
         >
-          <TouchableWithoutFeedback onPress={() => nav.push("Profile")}>
+          <TouchableWithoutFeedback
+            onPress={() =>
+              navigation.push(routes.PROFILE, { username: data.username })
+            }
+          >
             <View style={{ flexDirection: "row" }}>
               {data.profilepic ? (
                 <Image
@@ -70,7 +76,12 @@ function PostCard({ data }) {
 
               <View style={{ marginLeft: 10 }}>
                 <View style={styles.post_header}>
-                  <Text style={styles.u_name}>
+                  <Text
+                    ellipsizeMode="tail"
+                    numberOfLines={1}
+                    lineBreakMode="tail"
+                    style={styles.u_name}
+                  >
                     {data.firstname}&nbsp;{data.surname.charAt(0)}
                   </Text>
                   <Text style={styles.date_posted}>

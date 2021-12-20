@@ -9,7 +9,11 @@ import Button from "../components/Button";
 import AppText from "../components/AppText";
 import PostCard from "../components/PostCard";
 import TabNavigator from "../components/TabNavigator";
-import { get_user_page, get_auth_profile } from "../store/actions/actions";
+import {
+  get_user_page,
+  get_auth_profile,
+  get_user_profile,
+} from "../store/actions/actions";
 import { connect } from "react-redux";
 import ProfileSkeleton from "../components/Skeletons/ProfileSkeleton";
 import PostsTab from "../components/Profile/PostsTab";
@@ -30,6 +34,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     get_user_page: () => dispatch(get_user_page()),
     get_auth_profile: () => dispatch(get_auth_profile()),
+    get_user_profile: () => dispatch(get_user_profile()),
   };
 };
 
@@ -51,10 +56,31 @@ const profile_tabs = [
   },
 ];
 
-function Profile({ route, acc_data, get_auth_profile, profile_page }) {
+function Profile({
+  route,
+  acc_data,
+  get_auth_profile,
+  get_user_profile,
+  profile_page,
+}) {
   const [index, setTab] = useState(1);
   const { username } = route.params;
   const [auth_profile, set_auth_profile] = useState(false);
+
+  useFocusEffect(
+    React.useCallback(
+      () => {
+        if (check_if_auth_profile()) {
+          get_auth_profile();
+        } else {
+          get_user_profile(username);
+        }
+      },
+      [
+        // username
+      ],
+    ),
+  );
 
   const check_if_auth_profile = () => {
     if (username === acc_data.username) {
@@ -65,20 +91,6 @@ function Profile({ route, acc_data, get_auth_profile, profile_page }) {
       return false;
     }
   };
-
-  useFocusEffect(
-    React.useCallback(
-      () => {
-        if (check_if_auth_profile()) {
-          get_auth_profile();
-        } else {
-        }
-      },
-      [
-        // username
-      ],
-    ),
-  );
 
   const tab_switcher = () => {
     switch (index) {

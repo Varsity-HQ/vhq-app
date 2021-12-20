@@ -127,7 +127,7 @@ function Home({ navigation, profilepic, username, university }) {
           </Text>
           <LinearGradient
             colors={["#1160af", "#9e7b9b"]}
-            // colors={["red", "white"]}
+            // colors={["red", "white"]}oin
             style={styles.grad_diverder}
             start={[0, 0]}
             end={[1, 0]}

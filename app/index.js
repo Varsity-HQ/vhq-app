@@ -73,11 +73,21 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
 
   if (!isReady || !fontsLoaded) {
     return (
-      <AppLoading
-        startAsync={restoreToken}
-        onFinish={() => setisReady(true)}
-        onError={console.warn}
-      />
+      <>
+        <StatusBar
+          translucent
+          animated={true}
+          backgroundColor="transparent"
+          barStyle="light-content"
+          showHideTransition="fade"
+          hidden={true}
+        />
+        <AppLoading
+          startAsync={restoreToken}
+          onFinish={() => setisReady(true)}
+          onError={console.warn}
+        />
+      </>
     );
   }
 

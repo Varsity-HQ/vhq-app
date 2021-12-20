@@ -22,15 +22,18 @@ const coreReducer = (state = initialData, actions) => {
         accData: {
           ...state.accData,
           user_following: filtered_following,
-          following: filtered_following.length,
+          following: parseInt(state.accData.following) - 1,
         },
       };
     case "ADD_FOLLOWED_ACCOUNT":
+      let new_following = state.accData.user_following;
+      new_following.unshift(actions.payload);
+
       return {
         ...state,
         accData: {
           ...state.accData,
-          user_following: [...actions.payload, ...state.accData.user_following],
+          user_following: new_following,
           following: parseInt(state.accData.following) + 1,
         },
       };

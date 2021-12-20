@@ -7,20 +7,20 @@ import uuid from "uuid";
 
 export const follow_account = (uid) => (dispatch) => {
   let account = {
-    id: "",
+    id: uuid.v4(),
     follower_id: store.getState().core.accData.userID,
     following_user: uid,
     follow_date: new Date().toISOString(),
   };
 
+  dispatch({
+    type: "ADD_FOLLOWED_ACCOUNT",
+    payload: account,
+  });
+
   axios
     .get(`/follow/${uid}`)
-    .then((data) => {
-      dispatch({
-        type: "ADD_FOLLOWED_ACCOUNT",
-        payload: { ...account, id: data.data.followID },
-      });
-    })
+    .then((data) => {})
     .catch((err) => {
       console.log(err);
     });
@@ -76,6 +76,26 @@ export const get_auth_profile = () => (dispatch) => {
     type: "SET_PROFILE_DATA",
     payload: profile,
   });
+};
+
+export const get_user_profile = (username) => (dispatch) => {
+  let previous_id = store.getState().core.accData.userID;
+
+  if (previous_id !== username) {
+    dispatch({
+      type: "SET_LOADING_PROFILE",
+    });
+  }
+
+  axios
+    .get(`/user/${username}/get`)
+    .then((data) => {
+      let u_data = data.data;
+      console.log(u_data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export const get_user_page = (username) => {
