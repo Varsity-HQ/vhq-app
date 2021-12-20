@@ -49,7 +49,9 @@ function PostsTab({ profile_page, get_auth_user_posts, auth_user_id }) {
             }}
           >
             <Text style={{ fontWeight: "700" }}>No Posts</Text>
-            <AppButton title="Create New" type={3} />
+            {auth_user_id === profile_page.user.userID && (
+              <AppButton title="Create New" type={3} />
+            )}
           </View>
         </View>
       </View>

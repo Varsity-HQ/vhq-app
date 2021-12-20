@@ -145,9 +145,7 @@ function Profile({
                 <Image uri={user.profilepic} style={styles.profilepic} />
               ) : (
                 <ImageLocal
-                  source={{
-                    uri: require("../assets/avatar.png"),
-                  }}
+                  source={require("../assets/avatar.png")}
                   style={styles.profilepic}
                 />
               )}

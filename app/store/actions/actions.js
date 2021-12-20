@@ -79,10 +79,11 @@ export const get_auth_profile = () => (dispatch) => {
 };
 
 export const get_user_profile = (username) => (dispatch) => {
-  let previous_id = store.getState().core.accData.userID;
+  let previous_user = store.getState().data.profile_page.user.username;
   let previous_errors = store.getState().data.profile_page.errors;
 
-  if (previous_id !== username || previous_errors.notFound) {
+  if (previous_user !== username || previous_errors.notFound) {
+    console.log("set loading", { previous_user, username });
     dispatch({
       type: "SET_LOADING_PROFILE",
     });
