@@ -80,18 +80,35 @@ export const get_auth_profile = () => (dispatch) => {
 
 export const get_user_profile = (username) => (dispatch) => {
   let previous_id = store.getState().core.accData.userID;
+  let previous_errors = store.getState().data.profile_page.errors;
 
-  if (previous_id !== username) {
+  if (previous_id !== username || previous_errors.notFound) {
     dispatch({
       type: "SET_LOADING_PROFILE",
     });
   }
+
+  console.log({ username });
 
   axios
     .get(`/user/${username}/get`)
     .then((data) => {
       let u_data = data.data;
       console.log(u_data);
+
+      if (u_data.response === "user_not_found") {
+        return dispatch({
+          type: "SET_USER_NOT_FOUND",
+        });
+      }
+
+      dispatch({
+        type: "SET_OTHER_PROFILE_DATA",
+        payload: {
+          posts: u_data.user_posts,
+          user: u_data.user_data,
+        },
+      });
     })
     .catch((err) => {
       console.log(err);

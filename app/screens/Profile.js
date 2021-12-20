@@ -32,9 +32,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    get_user_page: () => dispatch(get_user_page()),
     get_auth_profile: () => dispatch(get_auth_profile()),
-    get_user_profile: () => dispatch(get_user_profile()),
+    get_user_profile: (username) => dispatch(get_user_profile(username)),
   };
 };
 
@@ -104,7 +103,12 @@ function Profile({
   console.log(username);
 
   if (profile_page.loading_user) {
-    return <ProfileSkeleton username={username} />;
+    return (
+      <ProfileSkeleton
+        notFound={profile_page.errors.notFound}
+        username={username}
+      />
+    );
   } //
 
   const { user } = profile_page;

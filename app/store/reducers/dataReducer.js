@@ -44,6 +44,30 @@ const initialData = {
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "SET_OTHER_PROFILE_DATA":
+      return {
+        ...state,
+        profile_page: {
+          ...state.profile_page,
+          loading_user: false,
+          loading_post: false,
+          posts: actions.payload.posts,
+          user: actions.payload.user,
+        },
+      };
+    case "SET_USER_NOT_FOUND":
+      return {
+        ...state,
+        profile_page: {
+          ...state.profile_page,
+          loading_user: true,
+          loading_post: true,
+          loading_pictures: true,
+          errors: {
+            notFound: true,
+          },
+        },
+      };
     case "SET_LOADING_PROFILE":
       return {
         ...state,
@@ -53,6 +77,9 @@ const dataReducer = (state = initialData, actions) => {
           loading_post: true,
           loading_pictures: true,
           errors: {},
+          user: {},
+          posts: [],
+          pictures: [],
         },
       };
 

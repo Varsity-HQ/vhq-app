@@ -3,10 +3,99 @@ import { StyleSheet, View } from "react-native";
 import colors from "../../config/colors";
 import Screen from "../Screen";
 import SkeletonComponent from "./SkeletonComponent";
-
 import Text from "../AppText";
 
-function ProfileSkeleton({ username = "User" }) {
+function ProfileSkeleton({ username = "User", notFound }) {
+  if (notFound) {
+    return (
+      <Screen>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.header_username}>{username}</Text>
+            <View style={styles.toggle_anonymous}>
+              <Text style={styles.toggle_anonymous_text}>Toggle anonymous</Text>
+            </View>
+            <View></View>
+          </View>
+        </View>
+        <View
+          style={{
+            paddingVertical: 20,
+            paddingHorizontal: 10,
+            borderBottomColor: colors.black,
+            borderBottomWidth: 4,
+          }}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <View>
+              <SkeletonComponent
+                animationOff={true}
+                style={styles.profilepic}
+              />
+            </View>
+            <View style={{ marginLeft: 18, width: "100%" }}>
+              <SkeletonComponent animationOff={true} style={styles.username} />
+              <SkeletonComponent
+                animationOff={true}
+                style={styles.user_stream}
+              />
+              <View style={{ flexDirection: "row" }}>
+                <View type={3} title="Edit Profile" />
+                <View
+                  style={{
+                    marginLeft: 8,
+                    paddingVertical: 7,
+                    paddingHorizontal: 18,
+                  }}
+                  type={3}
+                  title="Settings"
+                />
+              </View>
+            </View>
+          </View>
+          <View style={{ marginTop: 8 }}>
+            <SkeletonComponent
+              animationOff={true}
+              style={styles.anon_state}
+            ></SkeletonComponent>
+            <SkeletonComponent
+              animationOff={true}
+              style={styles.user_f_name}
+            ></SkeletonComponent>
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: 8,
+                alignItems: "center",
+              }}
+            >
+              <SkeletonComponent
+                animationOff={true}
+                style={{ height: 18, width: "20%" }}
+              ></SkeletonComponent>
+              <Text>&nbsp;|&nbsp;</Text>
+              <SkeletonComponent
+                animationOff={true}
+                style={{ height: 18, width: "20%" }}
+              ></SkeletonComponent>
+            </View>
+          </View>
+        </View>
+        <View>
+          <Text
+            style={{
+              alignSelf: "center",
+              padding: 20,
+              color: colors.white,
+            }}
+          >
+            Account @{username} not found
+          </Text>
+        </View>
+      </Screen>
+    );
+  }
+
   return (
     <Screen>
       <View style={styles.container}>

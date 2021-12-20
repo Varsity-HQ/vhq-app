@@ -6,7 +6,7 @@ import colors from "../../config/colors";
 
 const AnimatedLG = Animated.createAnimatedComponent(LinearGradient);
 
-function SkeletonComponent({ style, children }) {
+function SkeletonComponent({ style, children, animationOff }) {
   const animatedValue = new Animated.Value(0);
 
   useEffect(() => {
@@ -35,10 +35,14 @@ function SkeletonComponent({ style, children }) {
       <AnimatedLG
         start={[0, 0]}
         end={[1, 0]}
-        style={{
-          ...StyleSheet.absoluteFill,
-          transform: [{ translateX: translateX }],
-        }}
+        style={
+          animationOff
+            ? {}
+            : {
+                ...StyleSheet.absoluteFill,
+                transform: [{ translateX: translateX }],
+              }
+        }
         colors={[
           colors.darkish2,
           colors.darkish3,
