@@ -11,6 +11,7 @@ import AppButton from "../Button";
 const mapStateToProps = (state) => {
   return {
     profile_page: state.data.profile_page,
+    auth_user_id: state.core.accData.userID,
   };
 };
 
@@ -20,9 +21,11 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-function PostsTab({ profile_page, get_auth_user_posts }) {
+function PostsTab({ profile_page, get_auth_user_posts, auth_user_id }) {
   useEffect(() => {
-    get_auth_user_posts();
+    if (auth_user_id === profile_page.user.userID) {
+      get_auth_user_posts();
+    }
   }, [profile_page.user.userID]);
 
   if (profile_page.loading_post) {

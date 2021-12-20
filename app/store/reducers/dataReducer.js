@@ -78,8 +78,8 @@ const dataReducer = (state = initialData, actions) => {
           loading_pictures: true,
           errors: {},
           user: {},
-          posts: [],
-          pictures: [],
+          // posts: [],
+          // pictures: [],
         },
       };
 
