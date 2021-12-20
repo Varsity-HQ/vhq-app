@@ -44,6 +44,14 @@ const initialData = {
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "SET_PROFILE_POSTS_LOADING":
+      return {
+        ...state,
+        profile_page: {
+          ...state.profile_page,
+          loading_post: true,
+        },
+      };
     case "SET_OTHER_PROFILE_DATA":
       return {
         ...state,

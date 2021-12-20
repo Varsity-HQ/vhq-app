@@ -234,19 +234,22 @@ function Profile({
             </View>
           ) : null}
 
-          <View style={{ marginTop: 8 }}>
-            <Button
-              type={3}
-              style={{ borderRadius: 100 }}
-              title="My Shop & Services"
-            />
-          </View>
+          {user.number_of_markitems > 0 ||
+            (auth_profile && (
+              <View style={{ marginTop: 8 }}>
+                <Button
+                  type={3}
+                  style={{ borderRadius: 100 }}
+                  title="My Shop & Services"
+                />
+              </View>
+            ))}
         </View>
         <View>
           <TabNavigator
             onPress={(i) => setTab(i)}
             active={index}
-            items={profile_tabs}
+            items={auth_profile ? profile_tabs : profile_tabs.slice(0, 2)}
             style={{
               //   padding: 10,
               marginTop: 5,

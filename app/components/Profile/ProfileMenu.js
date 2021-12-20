@@ -9,7 +9,7 @@ import {
 import Modal from "react-native-modal";
 import colors from "../../config/colors";
 import Button from "../Button";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { logOutUser } from "../../store/actions/actions";
 import { connect } from "react-redux";
 
@@ -19,12 +19,18 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+const mapStateToProps = (state) => {
+  return {
+    auth_username: state.core.accData.username,
+  };
+};
+
 const iconSize = 35;
 //|
 
 //|
 
-function ProfileMenu({ username, logOutUser }) {
+function ProfileMenu({ username, auth_username, logOutUser }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
   const options = [
@@ -71,6 +77,30 @@ function ProfileMenu({ username, logOutUser }) {
     },
   ];
 
+  const options_2 = [
+    {
+      title: "Copy Profile Link",
+      icon: (
+        <Ionicons
+          color={colors.secondary}
+          name="copy-outline"
+          size={iconSize}
+        />
+      ),
+    },
+    {
+      disabled: true,
+      title: "Report",
+      icon: (
+        <Ionicons
+          color={colors.secondary}
+          name="flag-outline"
+          size={iconSize}
+        />
+      ),
+    },
+  ];
+
   const handleSignout = () => {
     Alert.alert(
       "Confirm action",
@@ -96,12 +126,18 @@ function ProfileMenu({ username, logOutUser }) {
     <>
       {/* // <View style={styles.container}> */}
       <TouchableWithoutFeedback onPress={handleModal}>
-        <Ionicons
+        <Feather
+          style={{ paddingHorizontal: 10 }}
+          color={colors.white}
+          name="menu"
+          size={30}
+        />
+        {/* <Ionicons
           style={{ paddingHorizontal: 10 }}
           color={colors.white}
           name="ios-ellipsis-horizontal-outline"
           size={30}
-        />
+        /> */}
       </TouchableWithoutFeedback>
 
       <Modal
@@ -117,18 +153,42 @@ function ProfileMenu({ username, logOutUser }) {
         <View style={styles.content}>
           <View style={styles.notch} />
           <View style={styles.inner_content}>
-            {options.map((x, index) => (
-              <TouchableWithoutFeedback
-                style={{ paddingVertical: 10 }}
-                key={index}
-                onPress={x.onPress}
-              >
-                <View style={styles.touchableInner}>
-                  {x.icon}
-                  <Text style={styles.text}>{x.title}</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            ))}
+            {auth_username !== username ? (
+              <>
+                {options_2.map((x, index) => (
+                  <TouchableWithoutFeedback
+                    style={{ paddingVertical: 10 }}
+                    key={index}
+                    onPress={x.onPress}
+                  >
+                    <View
+                      style={[
+                        styles.touchableInner,
+                        { opacity: x.disabled ? 0.5 : 1 },
+                      ]}
+                    >
+                      {x.icon}
+                      <Text style={styles.text}>{x.title}</Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                ))}
+              </>
+            ) : (
+              <>
+                {options.map((x, index) => (
+                  <TouchableWithoutFeedback
+                    style={{ paddingVertical: 10 }}
+                    key={index}
+                    onPress={x.onPress}
+                  >
+                    <View style={styles.touchableInner}>
+                      {x.icon}
+                      <Text style={styles.text}>{x.title}</Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                ))}
+              </>
+            )}
           </View>
           <Button
             type={1}
@@ -186,4 +246,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-export default connect(null, mapDispatchToProps)(ProfileMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileMenu);

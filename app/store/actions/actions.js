@@ -57,6 +57,15 @@ export const get_search_data = () => (dispatch) => {
 };
 
 export const get_auth_user_posts = () => (dispatch) => {
+  let previous_user = store.getState().data.profile_page.user.userID;
+  let auth_user_id = store.getState().core.accData.userID;
+
+  if (previous_user !== auth_user_id) {
+    dispatch({
+      type: "SET_PROFILE_POSTS_LOADING",
+    });
+  }
+
   axios
     .get("/profile/posts")
     .then((data) => {
