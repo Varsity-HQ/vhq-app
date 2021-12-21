@@ -148,14 +148,7 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
   if (!isReady || !fontsLoaded) {
     return (
       <>
-        {/* <StatusBar
-          translucent
-          animated={true}
-          backgroundColor="transparent"
-          barStyle="light-content"
-          showHideTransition="fade"
-          hidden={true}
-        /> */}
+        <StatusBar animated={true} hidden={true} />
         <AppLoading
           startAsync={restoreToken}
           onFinish={() => setisReady(true)}

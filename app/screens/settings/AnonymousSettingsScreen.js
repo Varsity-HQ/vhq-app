@@ -1,13 +1,16 @@
 import React, { useState } from "react";
+import { Alert } from "react-native";
 import { Image, ScrollView } from "react-native";
 import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
+  TouchableOpacity,
 } from "react-native";
 import AppText from "../../components/AppText";
 import Text from "../../components/AppText";
+import AppButton from "../../components/Button";
 import Header3 from "../../components/headers/header3";
 import AppTextInput from "../../components/Input";
 import Screen from "../../components/Screen";
@@ -16,12 +19,37 @@ import emoji from "../../util/emojis";
 
 function AnonymousSettingsScreen({ navigation }) {
   const [name, setName] = useState("");
-  console.log(name);
+  const [show_notes, setShowNotes] = useState(false);
+  const [saving, savingAnon] = useState(false);
+
+  const saveAnynSettings = () => {
+    savingAnon(true);
+  };
+
+  const handleSave = () => {
+    Alert.alert(
+      "Before we continue",
+      "Saving will turn on anonymous posting and commenting, do you want to continue ? ",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Yes continue",
+          onPress: saveAnynSettings,
+        },
+      ],
+    );
+  };
+
   return (
     <Screen scroll={true}>
       <KeyboardAvoidingView behavior="position">
         <Header3
+          loading={saving}
           backPress={() => navigation.goBack()}
+          rightPress={handleSave}
           title="Anonymous"
           buttonText="Save"
         />
@@ -70,14 +98,45 @@ function AnonymousSettingsScreen({ navigation }) {
               style={{ marginTop: 15 }}
               type={2}
             />
-            <Text style={{ fontWeight: "700", marginTop: 25 }}>Note</Text>
-            <Text style={{ color: colors.secondary, fontSize: 14 }}>
-              This setting will only applies when you create new posts and
-              comment on peoples posts. People will still be able to visit your
-              normal profile page but they won't be able to trace your anonymous
-              activity back to your normal profile and your old posts will
-              remain public.
-            </Text>
+
+            <TouchableOpacity onPress={() => setShowNotes(!show_notes)}>
+              <Text style={{ fontWeight: "700", marginTop: 25 }}>
+                How does this work ?
+              </Text>
+            </TouchableOpacity>
+            <View>
+              {show_notes && (
+                <Text
+                  style={{
+                    color: colors.secondary,
+                    fontSize: 14,
+                    marginTop: 5,
+                  }}
+                >
+                  This setting will only applies when you create new posts and
+                  comment on peoples posts. People will still be able to visit
+                  your normal profile page but they won't be able to trace your
+                  anonymous activity back to your normal profile and your old
+                  posts will remain public.
+                </Text>
+              )}
+            </View>
+            <View
+              style={{
+                alignItems: "center",
+                marginTop: 20,
+                paddingVertical: 20,
+                borderTopWidth: 1,
+                borderTopColor: colors.darkish2,
+              }}
+            >
+              <Text>Currently turned off</Text>
+              <AppButton
+                style={{ borderRadius: 100, paddingHorizontal: 20 }}
+                type={6}
+                title="Turn off"
+              />
+            </View>
           </View>
         </View>
       </KeyboardAvoidingView>

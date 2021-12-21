@@ -1,17 +1,32 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import colors from "../../config/colors";
 import AppText from "../AppText";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-function header1({ backPress, rightPress, title, buttonText }) {
+function header1({ backPress, rightPress, title, buttonText, loading = true }) {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <View style={styles.w33}>
-          <TouchableOpacity onPress={backPress} style={styles.button}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <TouchableOpacity
+            disabled={loading}
+            onPress={backPress}
+            style={styles.button}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                opacity: loading ? 0.5 : 1,
+              }}
+            >
               <AppText style={[styles.text]}>Cancel</AppText>
             </View>
           </TouchableOpacity>
@@ -23,17 +38,32 @@ function header1({ backPress, rightPress, title, buttonText }) {
         </View>
         <View style={[styles.w33, { alignItems: "flex-end" }]}>
           <TouchableOpacity
+            disabled={loading}
             onPress={rightPress}
             style={[styles.button, { paddingRight: 20 }]}
           >
-            <AppText
-              style={[
-                styles.text,
-                { color: colors.secondary, fontWeight: "700" },
-              ]}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                opacity: loading ? 0.5 : 1,
+              }}
             >
-              {buttonText}
-            </AppText>
+              <ActivityIndicator
+                animating={loading}
+                size="small"
+                color={colors.secondary}
+                style={{ marginRight: 10 }}
+              />
+              <AppText
+                style={[
+                  styles.text,
+                  { color: colors.secondary, fontWeight: "700" },
+                ]}
+              >
+                {buttonText}
+              </AppText>
+            </View>
           </TouchableOpacity>
         </View>
       </View>
