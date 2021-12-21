@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import AppNavigator from "./navigation/AppRoutes";
 import AuthRoutes from "./navigation/AuthRoutes";
@@ -17,6 +17,9 @@ import {
 } from "./store/actions/actions";
 // import Screen from "./components/Screen";
 import WelcomeScreen from "./screens/WelcomeScreen";
+import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
+
+import Text from "./components/AppText";
 
 import { useFonts } from "expo-font";
 
@@ -24,11 +27,82 @@ import { initializeApp, getApps } from "firebase/app";
 import { firebaseConfig } from "./util/fb_config";
 import { StatusBar } from "react-native";
 
+import colors from "./config/colors";
+import { Image } from "react-native";
+
 if (!getApps().length) {
   initializeApp(firebaseConfig);
 }
 
-axios.defaults.baseURL = "http://192.168.8.106:5000";
+axios.defaults.baseURL = "http://192.168.8.103:5000";
+
+const toastConfig = {
+  general: ({ text1, text2 }) => (
+    <View
+      style={{
+        width: "100%",
+        padding: 10,
+      }}
+    >
+      <View
+        style={{
+          borderWidth: 2,
+          borderColor: colors.primary,
+          backgroundColor: colors.darkish3,
+          padding: 10,
+          borderRadius: 10,
+          // borderLeftColor: colors.primary,
+          borderLeftWidth: 6,
+          borderRightWidth: 6,
+          shadowColor: colors.black,
+          shadowOffset: {
+            width: 0,
+            height: 6,
+          },
+          shadowOpacity: 0.37,
+          shadowRadius: 7.49,
+          elevation: 12,
+        }}
+      >
+        {/* <Text>F</Text> */}
+
+        <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <View>
+            <Image
+              style={{
+                height: 25,
+                width: 25,
+                marginRight: 7,
+              }}
+              source={require("./assets/vhqcat-small.png")}
+            />
+          </View>
+          <View>
+            {text1 ? <Text style={{ fontWeight: "700" }}>{text1}</Text> : null}
+
+            <Text style={{ fontWeight: "600" }}>
+              {text2 ? text2 : "VarsityHQ says Hi !"}
+            </Text>
+            <Text
+              style={{
+                fontSize: 10,
+                marginTop: 5,
+              }}
+            >
+              Swipe up to close
+            </Text>
+          </View>
+        </View>
+
+        {/* <Text>{props.uuid}</Text> */}
+      </View>
+    </View>
+  ),
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -106,6 +180,7 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
       <NavigationContainer theme={vhqTheme}>
         {authenticated ? <AppNavigator /> : <AuthRoutes />}
       </NavigationContainer>
+      <Toast config={toastConfig} />
     </>
   );
 }

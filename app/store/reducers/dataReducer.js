@@ -44,6 +44,32 @@ const initialData = {
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "INCREMENT_OTHER_USER_FOLLOWING":
+      return {
+        ...state,
+        profile_page: {
+          ...state.profile_page,
+          user: {
+            ...state.profile_page.user,
+            followers: state.profile_page.user.followers + 1,
+          },
+        },
+      };
+    case "DECREMENT_OTHER_USER_FOLLOWING":
+      return {
+        ...state,
+        profile_page: {
+          ...state.profile_page,
+          user: {
+            ...state.profile_page.user,
+            followers:
+              state.profile_page.user.followers > 1
+                ? state.profile_page.user.followers - 1
+                : 0,
+          },
+        },
+      };
+
     case "SET_PROFILE_POSTS_LOADING":
       return {
         ...state,

@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   Alert,
 } from "react-native";
+//
 import Modal from "react-native-modal";
 import colors from "../../config/colors";
 import Button from "../Button";
@@ -13,6 +14,8 @@ import { Ionicons, MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { logOutUser } from "../../store/actions/actions";
 import { connect } from "react-redux";
 import * as Clipboard from "expo-clipboard";
+import Toast from "react-native-toast-message";
+import { COPY_PROFILE_URL } from "../../util/toast_messages";
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -128,6 +131,11 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
   const copyToClipboard = () => {
     handleModal();
     Clipboard.setString(`https://varsityhq.co.za/${username}`);
+    Toast.show({
+      type: "general",
+      autoHide: true,
+      ...COPY_PROFILE_URL,
+    });
   };
 
   return (
@@ -140,12 +148,6 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
           name="menu"
           size={30}
         />
-        {/* <Ionicons
-          style={{ paddingHorizontal: 10 }}
-          color={colors.white}
-          name="ios-ellipsis-horizontal-outline"
-          size={30}
-        /> */}
       </TouchableWithoutFeedback>
 
       <Modal

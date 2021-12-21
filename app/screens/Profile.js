@@ -10,9 +10,10 @@ import AppText from "../components/AppText";
 import PostCard from "../components/PostCard";
 import TabNavigator from "../components/TabNavigator";
 import {
-  get_user_page,
   get_auth_profile,
   get_user_profile,
+  follow_account,
+  unfollow_account,
 } from "../store/actions/actions";
 import { connect } from "react-redux";
 import ProfileSkeleton from "../components/Skeletons/ProfileSkeleton";
@@ -22,6 +23,7 @@ import ProfileMenu from "../components/Profile/ProfileMenu";
 
 import { Image } from "react-native-expo-image-cache";
 import { useFocusEffect } from "@react-navigation/native";
+import check_if_followed from "../util/check_if_followed";
 
 const mapStateToProps = (state) => {
   return {
@@ -34,6 +36,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     get_auth_profile: () => dispatch(get_auth_profile()),
     get_user_profile: (username) => dispatch(get_user_profile(username)),
+    follow_account: (username) => dispatch(follow_account(username)),
+    unfollow_account: (username) => dispatch(unfollow_account(username)),
   };
 };
 
@@ -61,10 +65,21 @@ function Profile({
   get_auth_profile,
   get_user_profile,
   profile_page,
+  follow_account,
+  unfollow_account,
 }) {
   const [index, setTab] = useState(1);
   const { username } = route.params;
   const [auth_profile, set_auth_profile] = useState(false);
+  const [following, set_following] = useState(false);
+  const [init, setInit] = useState(false);
+
+  useEffect(() => {
+    if (!init) {
+      set_following(check_if_followed(profile_page.user.userID));
+      setInit(true);
+    }
+  }, [profile_page]);
 
   useFocusEffect(
     React.useCallback(
@@ -80,6 +95,17 @@ function Profile({
       ],
     ),
   );
+
+  const handleFollow = () => {
+    let uid = profile_page.user.userID;
+    if (following) {
+      unfollow_account(uid);
+      set_following(false);
+    } else {
+      follow_account(uid);
+      set_following(true);
+    }
+  };
 
   const check_if_auth_profile = () => {
     if (username === acc_data.username) {
@@ -109,7 +135,7 @@ function Profile({
         username={username}
       />
     );
-  } //
+  }
 
   const { user } = profile_page;
   return (
@@ -165,18 +191,47 @@ function Profile({
                   </>
                 )}
               </Text>
-              <View style={{ flexDirection: "row" }}>
-                <Button type={3} title="Edit Profile" />
-                <Button
-                  style={{
-                    marginLeft: 8,
-                    paddingVertical: 7,
-                    paddingHorizontal: 18,
-                  }}
-                  type={3}
-                  title="Settings"
-                />
-              </View>
+              {auth_profile ? (
+                <View style={{ flexDirection: "row" }}>
+                  <Button
+                    style={styles.buttonShadow}
+                    type={3}
+                    title="Edit Profile"
+                  />
+                  <Button
+                    style={{
+                      marginLeft: 8,
+                      paddingVertical: 7,
+                      paddingHorizontal: 18,
+                    }}
+                    type={3}
+                    title="Settings"
+                  />
+                </View>
+              ) : (
+                <View style={{ flexDirection: "row", flex: 1 }}>
+                  <Button
+                    type={8}
+                    style={{
+                      paddingHorizontal: 30,
+                      ...styles.buttonShadow,
+                    }}
+                    onPress={handleFollow}
+                    title={following ? "Following" : "Follow"}
+                  />
+                  <Button
+                    // onPress={()=>navigation.navigate()}
+                    style={{
+                      marginLeft: 8,
+                      paddingVertical: 7,
+                      paddingHorizontal: 18,
+                      ...styles.buttonShadow,
+                    }}
+                    type={3}
+                    title="Message"
+                  />
+                </View>
+              )}
             </View>
           </View>
           <View style={{ marginTop: 8 }}>
@@ -265,6 +320,16 @@ function Profile({
 }
 
 const styles = StyleSheet.create({
+  buttonShadow: {
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
+  },
   user_f_name: {
     fontSize: 19,
     color: colors.white,

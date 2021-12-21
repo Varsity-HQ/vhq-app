@@ -13,10 +13,18 @@ export const follow_account = (uid) => (dispatch) => {
     follow_date: new Date().toISOString(),
   };
 
+  let pp_user_id = store.getState().data.profile_page.user.userID;
+
   dispatch({
     type: "ADD_FOLLOWED_ACCOUNT",
     payload: account,
   });
+
+  if (pp_user_id === uid) {
+    dispatch({
+      type: "INCREMENT_OTHER_USER_FOLLOWING",
+    });
+  }
 
   axios
     .get(`/follow/${uid}`)
@@ -27,10 +35,18 @@ export const follow_account = (uid) => (dispatch) => {
 };
 
 export const unfollow_account = (uid) => (dispatch) => {
+  let pp_user_id = store.getState().data.profile_page.user.userID;
+
   dispatch({
     type: "REMOVE_FOLLOWED_ACCOUNT",
     payload: uid,
   });
+
+  if (pp_user_id === uid) {
+    dispatch({
+      type: "DECREMENT_OTHER_USER_FOLLOWING",
+    });
+  }
 
   axios
     .get(`/unfollow/${uid}`)
