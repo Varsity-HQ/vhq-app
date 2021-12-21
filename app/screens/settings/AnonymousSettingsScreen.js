@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Alert } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, FlatList } from "react-native";
 import { Image, ScrollView } from "react-native";
 import {
   View,
@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import AppText from "../../components/AppText";
 import Text from "../../components/AppText";
@@ -16,14 +17,52 @@ import AppTextInput from "../../components/Input";
 import Screen from "../../components/Screen";
 import colors from "../../config/colors";
 import emoji from "../../util/emojis";
+import { connect } from "react-redux";
+import {
+  set_anon_emoji_index,
+  update_anonymous_name,
+  switch_to_anonymous,
+} from "../../store/actions/actions";
+import { color } from "react-native-reanimated";
 
-function AnonymousSettingsScreen({ navigation }) {
+const mapStateToProps = (state) => {
+  return {
+    account: state.core.accData,
+  };
+};
+
+const width = Dimensions.get("window");
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    set_anon_emoji_index: (n) => dispatch(set_anon_emoji_index(n)),
+    update_anonymous_name: (name) => dispatch(update_anonymous_name(name)),
+    switch_to_anonymous: (name, index) =>
+      dispatch(switch_to_anonymous(name, index)),
+  };
+};
+
+function AnonymousSettingsScreen({ navigation, account }) {
   const [name, setName] = useState("");
   const [show_notes, setShowNotes] = useState(false);
   const [saving, savingAnon] = useState(false);
+  const flatListRef = useRef();
+  const [anonymous_name, set_anonymous_name] = useState(account.anonymous_name);
+  const [anonymous_emoji_index, set_anonymous_emoji_index] = useState(
+    account.anonymous_emoji_index,
+  );
 
   const saveAnynSettings = () => {
     savingAnon(true);
+  };
+
+  const changeEmoIndex = (index) => {
+    set_anonymous_emoji_index(index);
+    flatListRef.current.scrollToIndex({
+      animated: true,
+      index: index,
+      viewPosition: 0.5,
+    });
   };
 
   const handleSave = () => {
@@ -54,10 +93,13 @@ function AnonymousSettingsScreen({ navigation }) {
           buttonText="Save"
         />
         <View style={styles.container}>
-          <TouchableWithoutFeedback>
+          <View>
             <>
               <View style={styles.dp_container}>
-                <Image style={styles.emojidp} source={{ uri: emoji[20] }} />
+                <Image
+                  style={styles.emojidp}
+                  source={{ uri: emoji[anonymous_emoji_index] }}
+                />
               </View>
               <AppText
                 style={{
@@ -69,17 +111,34 @@ function AnonymousSettingsScreen({ navigation }) {
               >
                 Pick your mood
               </AppText>
-              <ScrollView style={styles.emojiscroll} horizontal>
-                {emoji.map((x, index) => (
-                  <Image
-                    style={styles.emojitosl}
+              <FlatList
+                horizontal
+                ref={flatListRef}
+                style={styles.emojiscroll}
+                data={emoji}
+                keyExtractor={(index) => index}
+                renderItem={({ item, index }) => (
+                  <TouchableOpacity
+                    onPress={() => changeEmoIndex(index)}
                     key={index}
-                    source={{ uri: x }}
-                  />
-                ))}
-              </ScrollView>
+                  >
+                    {index === anonymous_emoji_index ? (
+                      <View style={styles.ind} />
+                    ) : (
+                      <Text style={styles.ind_text}>{index + 1}</Text>
+                    )}
+
+                    <Image style={styles.emojitosl} source={{ uri: item }} />
+                    <View style={styles.selected_indicator}>
+                      <Text style={styles.act_text}>
+                        {index === anonymous_emoji_index && "Active"}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
+              />
             </>
-          </TouchableWithoutFeedback>
+          </View>
         </View>
 
         <View
@@ -90,11 +149,12 @@ function AnonymousSettingsScreen({ navigation }) {
           <View>
             <Text style={{ fontWeight: "700" }}>Anonymous Name</Text>
             <Text style={{ color: colors.secondary, fontSize: 14 }}>
-              Name to be shown on your posts, for example Overseas
+              Name to be shown on your posts, for example "Overseas"
             </Text>
             <AppTextInput
               onChangeText={(e) => setName(e)}
               placeholder="Anonymous"
+              value={anonymous_name}
               style={{ marginTop: 15 }}
               type={2}
             />
@@ -130,12 +190,18 @@ function AnonymousSettingsScreen({ navigation }) {
                 borderTopColor: colors.darkish2,
               }}
             >
-              <Text>Currently turned off</Text>
-              <AppButton
-                style={{ borderRadius: 100, paddingHorizontal: 20 }}
-                type={6}
-                title="Turn off"
-              />
+              <Text>
+                {account.anonymous_profile
+                  ? "Your account is currently anonymous"
+                  : "Your account is not anonymous"}
+              </Text>
+              {account.anonymous_profile && (
+                <AppButton
+                  style={{ borderRadius: 100, paddingHorizontal: 20 }}
+                  type={6}
+                  title="Turn off"
+                />
+              )}
             </View>
           </View>
         </View>
@@ -145,13 +211,38 @@ function AnonymousSettingsScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  ind_text: {
+    height: 10,
+    marginBottom: 10,
+    alignSelf: "center",
+    fontSize: 10,
+    color: colors.secondary,
+  },
+  ind: {
+    height: 10,
+    width: 10,
+    backgroundColor: colors.primary,
+    alignSelf: "center",
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  act_text: {
+    fontSize: 14,
+    marginTop: 5,
+    fontWeight: "700",
+  },
+  selected_indicator: {
+    // height: 10,
+    // width: 10,
+    // backgroundColor: colors.primary,
+    alignSelf: "center",
+  },
   emojiscroll: {
     borderTopColor: colors.dark_opacity_2,
     // borderTopWidth: 2,
     borderBottomColor: colors.dark_opacity_2,
     borderBottomWidth: 1,
     paddingVertical: 15,
-    paddingLeft: 20,
     paddingRight: 20,
     marginTop: 10,
     backgroundColor: colors.darkish,
@@ -159,7 +250,16 @@ const styles = StyleSheet.create({
   emojitosl: {
     height: 50,
     width: 50,
-    marginRight: 20,
+    marginHorizontal: 10,
+    // marginRight: 20,
+    alignSelf: "center",
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 2,
+      height: 10,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 0.97,
   },
   dp_container: {
     alignSelf: "center",
@@ -183,4 +283,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AnonymousSettingsScreen;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AnonymousSettingsScreen);
