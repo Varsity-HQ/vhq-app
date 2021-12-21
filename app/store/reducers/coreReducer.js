@@ -4,10 +4,54 @@ const initialData = {
   authenticated: false,
   accData: initialaccData,
   overlayloader: false,
+  post_anonymously: false,
+  temp_anonymous_name: "",
+  temp_anonymous_emoji_index: 20,
 };
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "UPDATE_TEMP_ANON_NAME":
+      return {
+        ...state,
+        temp_anonymous_name: actions.payload,
+      };
+    case "UPDATE_TEMP_ANON_EMOJI":
+      return {
+        ...state,
+        temp_anonymous_emoji_index: actions.payload,
+      };
+    case "TOGGLE_POST_ANONYMOUSLY":
+      return {
+        ...state,
+        post_anonymously: actions.payload,
+      };
+
+    case "SWITCH_TO_ANONYMOUS":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          anonymous_profile: true,
+        },
+      };
+    case "UPDATE_ANONYMOUS_NAME":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          anonymous_name: actions.payload,
+        },
+      };
+
+    case "SWITCH_TO_ANONYMOUS":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          anonymous_profile: true,
+        },
+      };
     case "REMOVE_FOLLOWED_ACCOUNT":
       let filtered_following = [];
 

@@ -8,6 +8,7 @@ export const SEARCH = "Search";
 export const HOME = "Home";
 export const PROFILE = "Profile";
 export const POST_PAGE = "PostPage";
+export const ANONYMOUS_SETTINGS = "AnonymousSettings";
 
 //Setup routes
 export const SETUP_PERSONAL_INFO = "SetupPersonalInformation";

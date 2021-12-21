@@ -5,6 +5,47 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const switch_to_anonymous = (name, index) => (dispatch) => {
+  dispatch({
+    type: "SET_OVERLAY_LOADER",
+    payload: true,
+  });
+  axios
+    .post("/set-anonymous", {
+      anonymous_name: name,
+      anonymous_emoji_index: index,
+    })
+    .then(() => {
+      dispatch({
+        type: "SET_OVERLAY_LOADER",
+        payload: false,
+      });
+      dispatch({
+        type: "SWITCH_TO_ANONYMOUS",
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: "SET_OVERLAY_LOADER",
+        payload: false,
+      });
+      console.log(err);
+    });
+};
+
+export const update_anonymous_name = (name) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_ANONYMOUS_NAME",
+    payload: name,
+  });
+};
+export const set_anon_emoji_index = (index) => (dispatch) => {
+  dispatch({
+    type: "SET_ANON_EMOJI_INDEX",
+    payload: index,
+  });
+};
+
 export const follow_account = (uid) => (dispatch) => {
   let account = {
     id: uuid.v4(),

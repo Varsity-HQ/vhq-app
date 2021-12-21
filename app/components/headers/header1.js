@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, StatusBar } from "react-native";
 import colors from "../../config/colors";
 import AppText from "../AppText";
 import { Ionicons } from "@expo/vector-icons";
@@ -7,32 +7,35 @@ import { LinearGradient } from "expo-linear-gradient";
 
 function header1({ backPress, title, buttonText }) {
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        start={[0, 2]}
-        end={[1, 0]}
-        colors={[colors.primary, "#1c83f9"]}
-        style={styles.grandient}
-      />
-      <View style={styles.content}>
-        <View style={styles.left_container}>
-          {backPress && (
-            <TouchableOpacity onPress={backPress}>
-              <Ionicons
-                name="arrow-back-sharp"
-                color={colors.white}
-                size={30}
-              />
-            </TouchableOpacity>
-          )}
+    <>
+      <StatusBar backgroundColor={colors.primary} />
+      <View style={styles.container}>
+        <LinearGradient
+          start={[0, 2]}
+          end={[1, 0]}
+          colors={[colors.primary, "#1c83f9"]}
+          style={styles.grandient}
+        />
+        <View style={styles.content}>
+          <View style={styles.left_container}>
+            {backPress && (
+              <TouchableOpacity onPress={backPress}>
+                <Ionicons
+                  name="arrow-back-sharp"
+                  color={colors.white}
+                  size={30}
+                />
+              </TouchableOpacity>
+            )}
 
-          <AppText style={[styles.text, { marginLeft: 10 }]}>{title}</AppText>
-        </View>
-        <View>
-          <AppText style={styles.text}>{buttonText}</AppText>
+            <AppText style={[styles.text, { marginLeft: 10 }]}>{title}</AppText>
+          </View>
+          <View>
+            <AppText style={styles.text}>{buttonText}</AppText>
+          </View>
         </View>
       </View>
-    </View>
+    </>
   );
 }
 

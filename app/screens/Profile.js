@@ -25,6 +25,8 @@ import { Image } from "react-native-expo-image-cache";
 import { useFocusEffect } from "@react-navigation/native";
 import check_if_followed from "../util/check_if_followed";
 
+import { ANONYMOUS_SETTINGS } from "../navigation/routes";
+
 const mapStateToProps = (state) => {
   return {
     acc_data: state.core.accData,
@@ -60,6 +62,7 @@ const profile_tabs = [
 ];
 
 function Profile({
+  navigation,
   route,
   acc_data,
   get_auth_profile,
@@ -145,11 +148,12 @@ function Profile({
           <View style={styles.header}>
             <Text style={styles.header_username}>{username}</Text>
             {auth_profile ? (
-              <View style={styles.toggle_anonymous}>
-                <Text style={styles.toggle_anonymous_text}>
-                  Toggle anonymous
-                </Text>
-              </View>
+              <Button
+                type={6}
+                style={styles.toggle_anonymous}
+                title="Toggle anonymous"
+                onPress={() => navigation.navigate(ANONYMOUS_SETTINGS)}
+              />
             ) : null}
 
             <View>

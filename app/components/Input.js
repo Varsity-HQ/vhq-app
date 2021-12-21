@@ -8,12 +8,14 @@ function AppTextInput({
   style,
   icon,
   cstyles,
+  onChangeText,
   width = "100%",
   ...otherProps
 }) {
   if (type === 2) {
     return (
       <TextInput
+        onChangeText={onChangeText}
         placeholderTextColor={colors.secondary}
         style={[styles.TextInput, style]}
         {...otherProps}
@@ -33,6 +35,7 @@ function AppTextInput({
         />
       )}
       <TextInput
+        onChangeText={onChangeText}
         placeholderTextColor={colors.grayer}
         style={styles.text}
         {...otherProps}
