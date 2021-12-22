@@ -43,6 +43,7 @@ function ProfileSettingsScreen({ navigation, logOutUser }) {
     <Screen scroll style={styles.container}>
       <Header backPress={() => navigation.goBack()} backIcon title="Settings" />
       <IconMenuItem
+        icon="settings-outline"
         onPress={() => navigation.navigate(PREFERENCES)}
         title="Preferences"
         desc="Set your basic and member preferences"
