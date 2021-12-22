@@ -41,31 +41,36 @@ function ProfileSettingsScreen({ navigation, logOutUser }) {
 
   return (
     <Screen scroll style={styles.container}>
-      <Header backPress={() => navigation.goBack()} backIcon title="Settings" />
-      <IconMenuItem
-        icon="settings-outline"
-        onPress={() => navigation.navigate(PREFERENCES)}
-        title="Preferences"
-        desc="Set your basic and member preferences"
+      <Header
+        bgActive
+        backPress={() => navigation.goBack()}
+        backIcon
+        title="Settings"
       />
-      <IconMenuItem
-        onPress={() => navigation.navigate(UPDATE_DEGREE)}
-        title="My course"
-        desc="Set the degree or course that you're currently studying"
-      />
-      <IconMenuItem
-        onPress={() => navigation.navigate(YEAR_OF_STUDY)}
-        title="Year of study"
-        desc="Change or update your year of study"
-      />
-      <View>
-        <Button
-          onPress={signout}
-          style={styles.lo_btn}
-          type={8}
-          title="Sign out"
+      <View style={{ backgroundColor: colors.darkish }}>
+        <IconMenuItem
+          icon="settings-outline"
+          onPress={() => navigation.navigate(PREFERENCES)}
+          title="Preferences"
+          desc="Set your basic and member preferences"
+        />
+        <IconMenuItem
+          onPress={() => navigation.navigate(UPDATE_DEGREE)}
+          title="My course"
+          desc="Set the degree or course that you're currently studying"
+        />
+        <IconMenuItem
+          onPress={() => navigation.navigate(YEAR_OF_STUDY)}
+          title="Year of study"
+          desc="Change or update your year of study"
         />
       </View>
+      <Button
+        onPress={signout}
+        style={styles.lo_btn}
+        type={8}
+        title="Sign out"
+      />
       <View>
         <Text style={styles.vhq_text}>Ⓒ Varsity Headquarters</Text>
         <Text style={styles.vhq_text2}>All rights reserved</Text>

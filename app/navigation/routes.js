@@ -15,6 +15,7 @@ export const EDIT_PROFILE = "EditProfile";
 export const PREFERENCES = "Preferences";
 export const YEAR_OF_STUDY = "YearOfStudy";
 export const UPDATE_DEGREE = "UpdateDegree";
+export const UPDATE_BIRTHDAY = "UpdateBirthday";
 
 //Setup routes
 export const SETUP_PERSONAL_INFO = "SetupPersonalInformation";

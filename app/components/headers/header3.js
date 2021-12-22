@@ -4,13 +4,16 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  StatusBar,
 } from "react-native";
 import colors from "../../config/colors";
 import AppText from "../AppText";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { color } from "react-native-reanimated";
 
 function header3({
+  bgActive,
   backBtnText = "Cancel",
   backPress,
   rightPress,
@@ -20,75 +23,95 @@ function header3({
   backIcon,
 }) {
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.w33}>
-          <TouchableOpacity
-            disabled={loading}
-            onPress={backPress}
-            style={[
-              styles.button,
-              {
-                paddingVertical: backIcon ? 0 : 8,
-              },
-            ]}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                opacity: loading ? 0.5 : 1,
-              }}
+    <>
+      {/* <StatusBar animated={true} backgroundColor={colors.primary} /> */}
+      <View
+        style={[
+          styles.container,
+          bgActive && {
+            backgroundColor: colors.primary,
+            borderBottomWidth: 0,
+          },
+        ]}
+      >
+        <View style={styles.content}>
+          <View style={styles.w33}>
+            <TouchableOpacity
+              disabled={loading}
+              onPress={backPress}
+              style={[
+                styles.button,
+                {
+                  paddingVertical: backIcon ? 0 : 8,
+                  backgroundColor: bgActive ? colors.primary : colors.dark,
+                },
+              ]}
             >
-              {backIcon ? (
-                <Ionicons
-                  name="chevron-back-outline"
-                  color={colors.white}
-                  size={35}
-                />
-              ) : (
-                <AppText style={[styles.text]}>{backBtnText}</AppText>
-              )}
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.center_container}>
-          <AppText style={[styles.text, { marginLeft: 10, fontWeight: "700" }]}>
-            {title}
-          </AppText>
-        </View>
-        <View style={[styles.w33, { alignItems: "flex-end" }]}>
-          <TouchableOpacity
-            disabled={loading}
-            onPress={rightPress}
-            style={[styles.button, { paddingRight: 20 }]}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                opacity: loading ? 0.5 : 1,
-              }}
-            >
-              <ActivityIndicator
-                animating={loading}
-                size="small"
-                color={colors.secondary}
-                style={{ marginRight: 10 }}
-              />
-              <AppText
-                style={[
-                  styles.text,
-                  { color: colors.secondary, fontWeight: "700" },
-                ]}
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  opacity: loading ? 0.5 : 1,
+                }}
               >
-                {buttonText}
-              </AppText>
-            </View>
-          </TouchableOpacity>
+                {backIcon ? (
+                  <Ionicons
+                    name="chevron-back-outline"
+                    color={colors.white}
+                    size={35}
+                  />
+                ) : (
+                  <AppText style={[styles.text]}>{backBtnText}</AppText>
+                )}
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.center_container}>
+            <AppText
+              style={[styles.text, { marginLeft: 10, fontWeight: "700" }]}
+            >
+              {title}
+            </AppText>
+          </View>
+          <View style={[styles.w33, { alignItems: "flex-end" }]}>
+            <TouchableOpacity
+              disabled={loading}
+              onPress={rightPress}
+              style={[
+                styles.button,
+                {
+                  paddingRight: 20,
+                  backgroundColor: bgActive ? colors.primary : colors.dark,
+                },
+              ]}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  opacity: loading ? 0.5 : 1,
+                }}
+              >
+                <ActivityIndicator
+                  animating={loading}
+                  size="small"
+                  color={colors.secondary}
+                  style={{ marginRight: 10 }}
+                />
+                <AppText
+                  style={[
+                    styles.text,
+                    { color: colors.secondary, fontWeight: "700" },
+                  ]}
+                >
+                  {buttonText}
+                </AppText>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+    </>
   );
 }
 

@@ -12,6 +12,7 @@ function IconMenuItem({
   icon = "chevron-forward",
   descColor = colors.white,
   onPress,
+  descCapitalize,
 }) {
   return (
     <TouchableHighlight
@@ -26,7 +27,14 @@ function IconMenuItem({
           }}
         >
           <Text style={styles.heading}>{title}</Text>
-          <Text style={[{ color: descColor }]}>{desc}</Text>
+          <Text
+            style={[
+              { color: descColor },
+              descCapitalize && { textTransform: "capitalize" },
+            ]}
+          >
+            {desc}
+          </Text>
         </View>
         <View
           style={{
@@ -45,6 +53,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
   },
+
   container: {
     paddingHorizontal: 10,
     paddingVertical: 20,
