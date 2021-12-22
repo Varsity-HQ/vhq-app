@@ -152,7 +152,7 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
         <AppLoading
           startAsync={restoreToken}
           onFinish={() => setisReady(true)}
-          onError={console.warn}
+          onError={(e) => console.log(e)}
         />
       </>
     );

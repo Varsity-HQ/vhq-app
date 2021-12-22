@@ -26,7 +26,7 @@ export const update_degree = (degree) => (dispatch) => {
       });
       dispatch({
         type: "UPDATE_DEGREE",
-        payload: yearOfStudy,
+        payload: my_degree,
       });
     })
     .catch((err) => {
