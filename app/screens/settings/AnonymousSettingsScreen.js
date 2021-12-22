@@ -22,12 +22,13 @@ import {
   set_anon_emoji_index,
   update_anonymous_name,
   switch_to_anonymous,
+  turn_off_anonymous,
 } from "../../store/actions/actions";
-import { color } from "react-native-reanimated";
 
 const mapStateToProps = (state) => {
   return {
     account: state.core.accData,
+    loading: state.core.saving_anon_settings,
   };
 };
 
@@ -39,22 +40,25 @@ const mapDispatchToProps = (dispatch) => {
     update_anonymous_name: (name) => dispatch(update_anonymous_name(name)),
     switch_to_anonymous: (name, index) =>
       dispatch(switch_to_anonymous(name, index)),
+    turn_off_anonymous: () => dispatch(turn_off_anonymous()),
   };
 };
 
-function AnonymousSettingsScreen({ navigation, account }) {
-  const [name, setName] = useState("");
+function AnonymousSettingsScreen({
+  navigation,
+  account,
+  turn_off_anonymous,
+  set_anon_emoji_index,
+  update_anonymous_name,
+  switch_to_anonymous,
+  loading,
+}) {
   const [show_notes, setShowNotes] = useState(false);
-  const [saving, savingAnon] = useState(false);
   const flatListRef = useRef();
   const [anonymous_name, set_anonymous_name] = useState(account.anonymous_name);
   const [anonymous_emoji_index, set_anonymous_emoji_index] = useState(
     account.anonymous_emoji_index,
   );
-
-  const saveAnynSettings = () => {
-    savingAnon(true);
-  };
 
   const changeEmoIndex = (index) => {
     set_anonymous_emoji_index(index);
@@ -64,29 +68,20 @@ function AnonymousSettingsScreen({ navigation, account }) {
       viewPosition: 0.5,
     });
   };
-
+  //
+  //
+  //
   const handleSave = () => {
-    Alert.alert(
-      "Before we continue",
-      "Saving will turn on anonymous posting and commenting, do you want to continue ? ",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Yes continue",
-          onPress: saveAnynSettings,
-        },
-      ],
-    );
+    set_anon_emoji_index(anonymous_emoji_index);
+    update_anonymous_name(anonymous_name);
+    switch_to_anonymous(anonymous_name, anonymous_emoji_index);
   };
 
   return (
     <Screen scroll={true}>
       <KeyboardAvoidingView behavior="position">
         <Header3
-          loading={saving}
+          loading={loading}
           backPress={() => navigation.goBack()}
           rightPress={handleSave}
           title="Anonymous"
@@ -152,7 +147,7 @@ function AnonymousSettingsScreen({ navigation, account }) {
               Name to be shown on your posts, for example "Overseas"
             </Text>
             <AppTextInput
-              onChangeText={(e) => setName(e)}
+              onChangeText={(e) => set_anonymous_name(e)}
               placeholder="Anonymous"
               value={anonymous_name}
               style={{ marginTop: 15 }}
@@ -197,7 +192,8 @@ function AnonymousSettingsScreen({ navigation, account }) {
               </Text>
               {account.anonymous_profile && (
                 <AppButton
-                  style={{ borderRadius: 100, paddingHorizontal: 20 }}
+                  onPress={() => turn_off_anonymous()}
+                  style={{ borderRadius: 100, paddingHorizontal: 40 }}
                   type={6}
                   title="Turn off"
                 />

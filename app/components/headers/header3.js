@@ -10,7 +10,15 @@ import AppText from "../AppText";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-function header1({ backPress, rightPress, title, buttonText, loading = true }) {
+function header3({
+  backBtnText = "Cancel",
+  backPress,
+  rightPress,
+  title,
+  buttonText,
+  loading = false,
+  backIcon,
+}) {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -18,7 +26,12 @@ function header1({ backPress, rightPress, title, buttonText, loading = true }) {
           <TouchableOpacity
             disabled={loading}
             onPress={backPress}
-            style={styles.button}
+            style={[
+              styles.button,
+              {
+                paddingVertical: backIcon ? 0 : 8,
+              },
+            ]}
           >
             <View
               style={{
@@ -27,7 +40,15 @@ function header1({ backPress, rightPress, title, buttonText, loading = true }) {
                 opacity: loading ? 0.5 : 1,
               }}
             >
-              <AppText style={[styles.text]}>Cancel</AppText>
+              {backIcon ? (
+                <Ionicons
+                  name="chevron-back-outline"
+                  color={colors.white}
+                  size={35}
+                />
+              ) : (
+                <AppText style={[styles.text]}>{backBtnText}</AppText>
+              )}
             </View>
           </TouchableOpacity>
         </View>
@@ -80,7 +101,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: colors.dark,
     paddingHorizontal: 10,
-    paddingVertical: 8,
+    // paddingVertical: 8,
     borderRadius: 5,
   },
   center_container: {
@@ -114,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default header1;
+export default header3;

@@ -5,11 +5,91 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
-export const switch_to_anonymous = (name, index) => (dispatch) => {
+export const update_degree = (degree) => (dispatch) => {
+  let my_degree = degree;
+  let yearOfStudy = store.getState().core.accData.yearOfStudy;
+
   dispatch({
-    type: "SET_OVERLAY_LOADER",
+    type: "UPDATE_SAVING_DEGREE_SETTINGS",
     payload: true,
   });
+
+  axios
+    .post("/account/update/yosndegree", {
+      degree: my_degree,
+      yearOfStudy: yearOfStudy,
+    })
+    .then(() => {
+      dispatch({
+        type: "UPDATE_SAVING_DEGREE_SETTINGS",
+        payload: false,
+      });
+      dispatch({
+        type: "UPDATE_DEGREE",
+        payload: yearOfStudy,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: "UPDATE_SAVING_DEGREE_SETTINGS",
+        payload: false,
+      });
+      console.log(err);
+    });
+};
+
+export const update_yearofstudy = (yos) => (dispatch) => {
+  let yearOfStudy = yos;
+  let degree = store.getState().core.accData.degree;
+
+  dispatch({
+    type: "UPDATE_SAVING_YOS_SETTINGS",
+    payload: true,
+  });
+
+  axios
+    .post("/account/update/yosndegree", {
+      degree: degree,
+      yearOfStudy: yearOfStudy,
+    })
+    .then(() => {
+      dispatch({
+        type: "UPDATE_SAVING_YOS_SETTINGS",
+        payload: false,
+      });
+      dispatch({
+        type: "UPDATE_YOS",
+        payload: yearOfStudy,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: "UPDATE_SAVING_YOS_SETTINGS",
+        payload: false,
+      });
+      console.log(err);
+    });
+};
+
+export const turn_off_anonymous = () => (dispatch) => {
+  dispatch({
+    type: "TURN_OFF_ANONYMOUS",
+  });
+
+  axios
+    .get("/set-anonymous-off")
+    .then(() => {})
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const switch_to_anonymous = (name, index) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_SAVING_ANON_SETTINGS",
+    payload: true,
+  });
+
   axios
     .post("/set-anonymous", {
       anonymous_name: name,
@@ -17,7 +97,7 @@ export const switch_to_anonymous = (name, index) => (dispatch) => {
     })
     .then(() => {
       dispatch({
-        type: "SET_OVERLAY_LOADER",
+        type: "UPDATE_SAVING_ANON_SETTINGS",
         payload: false,
       });
       dispatch({
@@ -26,7 +106,7 @@ export const switch_to_anonymous = (name, index) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({
-        type: "SET_OVERLAY_LOADER",
+        type: "UPDATE_SAVING_ANON_SETTINGS",
         payload: false,
       });
       console.log(err);

@@ -25,7 +25,11 @@ import { Image } from "react-native-expo-image-cache";
 import { useFocusEffect } from "@react-navigation/native";
 import check_if_followed from "../util/check_if_followed";
 
-import { ANONYMOUS_SETTINGS } from "../navigation/routes";
+import {
+  ANONYMOUS_SETTINGS,
+  PROFILE_SETTINGS,
+  EDIT_PROFILE,
+} from "../navigation/routes";
 
 const mapStateToProps = (state) => {
   return {
@@ -198,11 +202,13 @@ function Profile({
               {auth_profile ? (
                 <View style={{ flexDirection: "row" }}>
                   <Button
+                    onPress={() => navigation.navigate(EDIT_PROFILE)}
                     style={styles.buttonShadow}
                     type={3}
                     title="Edit Profile"
                   />
                   <Button
+                    onPress={() => navigation.navigate(PROFILE_SETTINGS)}
                     style={{
                       marginLeft: 8,
                       paddingVertical: 7,

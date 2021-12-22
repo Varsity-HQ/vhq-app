@@ -160,7 +160,6 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
 
   return (
     // <View>{/* <WelcomeScreen /> */}</View>
-
     <>
       <StatusBar
         translucent

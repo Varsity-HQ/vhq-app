@@ -3,14 +3,49 @@ import initialaccData from "../reducers/init_acc_data.init";
 const initialData = {
   authenticated: false,
   accData: initialaccData,
-  overlayloader: false,
   post_anonymously: false,
   temp_anonymous_name: "",
   temp_anonymous_emoji_index: 20,
+  //
+  overlayloader: false,
+  saving_anon_settings: false,
+  saving_yos_settings: false,
+  saving_degree_settings: false,
 };
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "UPDATE_DEGREE":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          degree: actions.payload,
+        },
+      };
+    case "UPDATE_YOS":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          yearOfStudy: actions.payload,
+        },
+      };
+    case "UPDATE_SAVING_YOS_SETTINGS":
+      return {
+        ...state,
+        saving_yos_settings: actions.payload,
+      };
+    case "UPDATE_SAVING_DEGREE_SETTINGS":
+      return {
+        ...state,
+        saving_degree_settings: actions.payload,
+      };
+    case "UPDATE_SAVING_ANON_SETTINGS":
+      return {
+        ...state,
+        saving_anon_settings: actions.payload,
+      };
     case "UPDATE_TEMP_ANON_NAME":
       return {
         ...state,
@@ -25,6 +60,15 @@ const coreReducer = (state = initialData, actions) => {
       return {
         ...state,
         post_anonymously: actions.payload,
+      };
+
+    case "TURN_OFF_ANONYMOUS":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          anonymous_profile: false,
+        },
       };
 
     case "SWITCH_TO_ANONYMOUS":

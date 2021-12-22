@@ -6,8 +6,21 @@ const Stack = createNativeStackNavigator();
 import Home from "../screens/Home";
 import Profile from "../screens/Profile";
 import FloatingButton from "../components/FloatingButton";
-import { ANONYMOUS_SETTINGS, HOME, PROFILE } from "./routes";
+import {
+  ANONYMOUS_SETTINGS,
+  HOME,
+  PROFILE,
+  PROFILE_SETTINGS,
+  PREFERENCES,
+  YEAR_OF_STUDY,
+  UPDATE_DEGREE,
+} from "./routes";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
+import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
+import PreferencesScreen from "../screens/settings/PreferencesScreen";
+import YearOfStudyScreen from "../screens/settings/YearOfStudyScreen";
+import UpdateDegreeScreen from "../screens/settings/UpdateDegreeScreen";
+
 // import PostPage from "../screens/PostPage";
 
 const FeedNavigator = () => (
@@ -39,6 +52,38 @@ const FeedNavigator = () => (
       }}
       name={ANONYMOUS_SETTINGS}
       component={AnonymousSettingsScreen}
+    />
+    <Stack.Screen
+      options={{
+        headerShown: false,
+        animation: "slide_from_right",
+      }}
+      name={PROFILE_SETTINGS}
+      component={ProfileSettingsScreen}
+    />
+    <Stack.Screen
+      options={{
+        headerShown: false,
+        animation: "slide_from_right",
+      }}
+      name={PREFERENCES}
+      component={PreferencesScreen}
+    />
+    <Stack.Screen
+      options={{
+        headerShown: false,
+        animation: "slide_from_right",
+      }}
+      name={YEAR_OF_STUDY}
+      component={YearOfStudyScreen}
+    />
+    <Stack.Screen
+      options={{
+        headerShown: false,
+        animation: "slide_from_right",
+      }}
+      name={UPDATE_DEGREE}
+      component={UpdateDegreeScreen}
     />
     {/* <Stack.Screen
       options={{
