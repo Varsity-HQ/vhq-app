@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import Header from "../../components/headers/header3";
 import Screen from "../../components/Screen";
 import IconMenuItem from "../../components/Settings/IconMenuItem";
@@ -12,8 +12,33 @@ import {
 
 import Text from "../../components/AppText";
 import colors from "../../config/colors";
+import { logOutUser } from "../../store/actions/actions";
+import { connect } from "react-redux";
 
-function ProfileSettingsScreen({ navigation }) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logOutUser: () => dispatch(logOutUser()),
+  };
+};
+
+function ProfileSettingsScreen({ navigation, logOutUser }) {
+  const signout = () => {
+    Alert.alert(
+      "Confirm",
+      "Are you sure you want to sign out ?. You will need to sign in again to use this app",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Yes, Sign out",
+          onPress: logOutUser,
+        },
+      ],
+    );
+  };
+
   return (
     <Screen scroll style={styles.container}>
       <Header backPress={() => navigation.goBack()} backIcon title="Settings" />
@@ -33,7 +58,12 @@ function ProfileSettingsScreen({ navigation }) {
         desc="Change or update your year of study"
       />
       <View>
-        <Button style={styles.lo_btn} type={8} title="Sign out" />
+        <Button
+          onPress={signout}
+          style={styles.lo_btn}
+          type={8}
+          title="Sign out"
+        />
       </View>
       <View>
         <Text style={styles.vhq_text}>Ⓒ Varsity Headquarters</Text>
@@ -62,4 +92,4 @@ const styles = StyleSheet.create({
   container: {},
 });
 
-export default ProfileSettingsScreen;
+export default connect(null, mapDispatchToProps)(ProfileSettingsScreen);
