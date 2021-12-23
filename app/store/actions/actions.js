@@ -5,6 +5,35 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const update_dob = (date, age) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_SAVING_DOB_SETTINGS",
+    payload: true,
+  });
+  axios
+    .post("/account/update/dob", {
+      dob: date,
+      age: age,
+    })
+    .then(() => {
+      dispatch({
+        type: "UPDATE_DOB",
+        payload: { dob: date, age },
+      });
+      dispatch({
+        type: "UPDATE_SAVING_DOB_SETTINGS",
+        payload: false,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "UPDATE_SAVING_DOB_SETTINGS",
+        payload: false,
+      });
+    });
+};
+
 export const update_degree = (degree) => (dispatch) => {
   let my_degree = degree;
   let yearOfStudy = store.getState().core.accData.yearOfStudy;

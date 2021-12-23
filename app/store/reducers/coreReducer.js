@@ -11,10 +11,25 @@ const initialData = {
   saving_anon_settings: false,
   saving_yos_settings: false,
   saving_degree_settings: false,
+  saving_dob_settings: false,
 };
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "UPDATE_SAVING_DOB_SETTINGS":
+      return {
+        ...state,
+        saving_dob_settings: actions.payload,
+      };
+    case "UPDATE_DOB":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          dob: actions.payload.dob,
+          age: actions.payload.age,
+        },
+      };
     case "UPDATE_DEGREE":
       return {
         ...state,
@@ -36,6 +51,7 @@ const coreReducer = (state = initialData, actions) => {
         ...state,
         saving_yos_settings: actions.payload,
       };
+
     case "UPDATE_SAVING_DEGREE_SETTINGS":
       return {
         ...state,
