@@ -12,10 +12,38 @@ const initialData = {
   saving_yos_settings: false,
   saving_degree_settings: false,
   saving_dob_settings: false,
+  saving_gender_settings: false,
+  saving_university_settings: false,
 };
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "UPDATE_SAVING_UNI_SETTINGS":
+      return {
+        ...state,
+        saving_university_settings: actions.payload,
+      };
+    case "UPDATE_SAVING_GENDER_SETTINGS":
+      return {
+        ...state,
+        saving_gender_settings: actions.payload,
+      };
+    case "UPDATE_GENDER":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          gender: actions.payload,
+        },
+      };
+    case "UPDATE_S_TARGET":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          s_target: actions.payload,
+        },
+      };
     case "UPDATE_SAVING_DOB_SETTINGS":
       return {
         ...state,

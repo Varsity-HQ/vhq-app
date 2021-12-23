@@ -5,6 +5,47 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const update_gender = (gender) => (dispatch) => {
+  let s_target = "";
+
+  dispatch({
+    type: "UPDATE_SAVING_GENDER_SETTINGS",
+    payload: true,
+  });
+
+  if (gender === "Male") {
+    s_target = "Female";
+  } else {
+    s_target = "Male";
+  }
+  axios
+    .post("/account/update/gender", {
+      gender: gender,
+      s_target: s_target,
+    })
+    .then(() => {
+      dispatch({
+        type: "UPDATE_GENDER",
+        payload: gender,
+      });
+      dispatch({
+        type: "UPDATE_S_TARGET",
+        payload: s_target,
+      });
+      dispatch({
+        type: "UPDATE_SAVING_GENDER_SETTINGS",
+        payload: false,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "UPDATE_SAVING_GENDER_SETTINGS",
+        payload: false,
+      });
+    });
+};
+
 export const update_dob = (date, age) => (dispatch) => {
   dispatch({
     type: "UPDATE_SAVING_DOB_SETTINGS",
@@ -393,6 +434,34 @@ export const set_overlay_state = (state) => (dispatch) => {
     type: "SET_OVERLAY_STATE",
     payload: state,
   });
+};
+
+export const update_university = (uni) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_SAVING_UNI_SETTINGS",
+    payload: true,
+  });
+  axios
+    .post(`/account/update/university`, {
+      university: uni,
+    })
+    .then(() => {
+      dispatch({
+        type: "SET_UNIVERSITY",
+        payload: uni,
+      });
+      dispatch({
+        type: "UPDATE_SAVING_UNI_SETTINGS",
+        payload: false,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "UPDATE_SAVING_UNI_SETTINGS",
+        payload: false,
+      });
+    });
 };
 
 export const set_university = (uni) => (dispatch) => {

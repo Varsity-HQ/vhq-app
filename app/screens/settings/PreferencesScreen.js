@@ -6,7 +6,11 @@ import IconMenuItem from "../../components/Settings/IconMenuItem";
 import Text from "../../components/AppText";
 import colors from "../../config/colors";
 import { connect } from "react-redux";
-import { UPDATE_BIRTHDAY } from "../../navigation/routes";
+import {
+  UPDATE_BIRTHDAY,
+  UPDATE_GENDER,
+  UPDATE_UNIVERSITY,
+} from "../../navigation/routes";
 
 const mapStateToProps = (state) => {
   return {
@@ -35,13 +39,13 @@ function PreferencesScreen({ navigation, account }) {
             desc={account.dob}
           />
           <IconMenuItem
-            onPress={() => navigation.navigate()}
+            onPress={() => navigation.navigate(UPDATE_GENDER)}
             title="My Gender"
             descColor={colors.secondary}
             desc={account.gender}
           />
           <IconMenuItem
-            onPress={() => navigation.navigate()}
+            onPress={() => navigation.navigate(UPDATE_UNIVERSITY)}
             title="University"
             descColor={colors.secondary}
             desc={account.university}

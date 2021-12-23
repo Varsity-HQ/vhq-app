@@ -15,6 +15,8 @@ import {
   YEAR_OF_STUDY,
   UPDATE_DEGREE,
   UPDATE_BIRTHDAY,
+  UPDATE_GENDER,
+  UPDATE_UNIVERSITY,
 } from "./routes";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
@@ -22,6 +24,8 @@ import PreferencesScreen from "../screens/settings/PreferencesScreen";
 import YearOfStudyScreen from "../screens/settings/YearOfStudyScreen";
 import UpdateDegreeScreen from "../screens/settings/UpdateDegreeScreen";
 import UpdatebirthdayScreen from "../screens/settings/UpdatebirthdayScreen";
+import UpdateGenderScreen from "../screens/settings/UpdateGenderScreen";
+import UpdateUniversityScreen from "../screens/settings/UpdateUniversityScreen";
 
 // import PostPage from "../screens/PostPage";
 
@@ -94,6 +98,22 @@ const FeedNavigator = () => (
       }}
       name={UPDATE_BIRTHDAY}
       component={UpdatebirthdayScreen}
+    />
+    <Stack.Screen
+      options={{
+        headerShown: false,
+        animation: "slide_from_right",
+      }}
+      name={UPDATE_GENDER}
+      component={UpdateGenderScreen}
+    />
+    <Stack.Screen
+      options={{
+        headerShown: false,
+        animation: "slide_from_right",
+      }}
+      name={UPDATE_UNIVERSITY}
+      component={UpdateUniversityScreen}
     />
     {/* <Stack.Screen
       options={{
