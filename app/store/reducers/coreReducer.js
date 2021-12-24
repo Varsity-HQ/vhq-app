@@ -14,10 +14,39 @@ const initialData = {
   saving_dob_settings: false,
   saving_gender_settings: false,
   saving_university_settings: false,
+  saving_rs_settings: false,
+  saving_so_settings: false,
 };
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "UPDATE_SAVING_SO_SETTINGS":
+      return {
+        ...state,
+        saving_so_settings: actions.payload,
+      };
+    case "UPDATE_SEXUAL_ORIENTATION":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          s_orientation: actions.payload.s_orientation,
+          show_sorientation: actions.payload.show_sorientation,
+        },
+      };
+    case "UPDATE_SAVING_RS_SETTINGS":
+      return {
+        ...state,
+        saving_rs_settings: actions.payload,
+      };
+    case "UPDATE_RELATIONSHIP_STATUS":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          relationshipStatus: actions.payload,
+        },
+      };
     case "UPDATE_SAVING_UNI_SETTINGS":
       return {
         ...state,

@@ -6,42 +6,50 @@ import Screen from "../../components/Screen";
 import DropDown from "../../components/Forms/DropDown";
 import colors from "../../config/colors";
 import { connect } from "react-redux";
-import { update_university } from "../../store/actions/actions";
+import { update_sexual_orientation } from "../../store/actions/actions";
 
-import UnisAndColleges from "../../util/UnisAndColleges.json";
-
-const universities = [];
-
-UnisAndColleges.forEach((x) => {
-  universities.push({
-    value: x.name,
-    label: x.name,
-  });
-});
+const so_list = [
+  {
+    value: "Straight",
+    label: "Straight",
+  },
+  {
+    value: "Gay",
+    label: "Gay",
+  },
+  {
+    value: "Lesbian",
+    label: "Lesbian",
+  },
+  {
+    value: "Bisexual",
+    label: "Bisexual",
+  },
+];
 
 const mapStateToProps = (state) => {
   return {
-    university: state.core.accData.university,
-    loading: state.core.saving_university_settings,
+    s_orientation: state.core.accData.s_orientation,
+    loading: state.core.saving_so_settings,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    update_university: (uni) => dispatch(update_university(uni)),
+    update_sexual_orientation: (so) => dispatch(update_sexual_orientation(so)),
   };
 };
 
-function UpdateUniversityScreen({
-  university,
-  update_university,
+function UpdateSexualOrientationScreen({
+  s_orientation,
+  update_sexual_orientation,
   loading,
   navigation,
 }) {
-  const [l_uni, set_uni] = useState(university);
+  const [l_so, set_so] = useState(s_orientation);
 
-  const saveUni = () => {
-    update_university(l_uni);
+  const save_so = () => {
+    update_sexual_orientation(l_so);
   };
 
   return (
@@ -51,19 +59,17 @@ function UpdateUniversityScreen({
         backPress={() => navigation.goBack()}
         backBtnText="Done"
         buttonText="Save"
-        title="University"
-        rightPress={saveUni}
+        title="Sexual Orientation"
+        rightPress={save_so}
       />
       <View style={styles.container}>
-        <Text>At which university are you currently studying ?</Text>
+        <Text>What's your sexual orientation ?</Text>
         <DropDown
-          searchable
-          searchPlaceholder="Search your university or college.."
           style={styles.dropdown}
-          value={l_uni}
-          setValue={(e) => set_uni(e())}
-          items={universities}
-          placeholder="Select your gender"
+          value={l_so}
+          setValue={(e) => set_so(e())}
+          items={so_list}
+          placeholder="Sexual orientation"
         />
         <Text style={styles.note_txt}>
           <Text
@@ -76,15 +82,27 @@ function UpdateUniversityScreen({
           >
             NOTE
           </Text>{" "}
-          : You can contact support if you can't find your university and it
-          will be added
+          : This information will be kept private by default
         </Text>
+        <View style={styles.divider} />
+        <View>
+          <Text>Show sexual orientation</Text>
+          <View>
+            <Check></Check>
+          </View>
+        </View>
       </View>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
+  divider: {
+    height: 2,
+    width: "100%",
+    backgroundColor: colors.darkish2,
+    marginVertical: 20,
+  },
   note_txt: {
     color: colors.secondary,
     marginTop: 20,
@@ -101,4 +119,4 @@ const styles = StyleSheet.create({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(UpdateUniversityScreen);
+)(UpdateSexualOrientationScreen);

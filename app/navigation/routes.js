@@ -18,6 +18,8 @@ export const UPDATE_DEGREE = "UpdateDegree";
 export const UPDATE_BIRTHDAY = "UpdateBirthday";
 export const UPDATE_GENDER = "UpdateGender";
 export const UPDATE_UNIVERSITY = "UpdateUniversity";
+export const UPDATE_RELATIONSHIP_STATUS = "UpdateRelationshipStatus";
+export const UPDATE_SO_STATUS = "UpdateSexualOrientationStatus";
 
 //Setup routes
 export const SETUP_PERSONAL_INFO = "SetupPersonalInformation";

@@ -9,6 +9,8 @@ import { connect } from "react-redux";
 import {
   UPDATE_BIRTHDAY,
   UPDATE_GENDER,
+  UPDATE_RELATIONSHIP_STATUS,
+  UPDATE_SO_STATUS,
   UPDATE_UNIVERSITY,
 } from "../../navigation/routes";
 
@@ -56,14 +58,14 @@ function PreferencesScreen({ navigation, account }) {
             <Text style={styles.sec_h_text}>Member Preferences</Text>
           </View>
           <IconMenuItem
-            onPress={() => navigation.navigate()}
+            onPress={() => navigation.navigate(UPDATE_RELATIONSHIP_STATUS)}
             title="Relationship Status"
             descColor={colors.secondary}
             descCapitalize
             desc={account.relationshipStatus}
           />
           <IconMenuItem
-            onPress={() => navigation.navigate()}
+            onPress={() => navigation.navigate(UPDATE_SO_STATUS)}
             title="Sexual Orientation"
             descColor={colors.secondary}
             desc={account.s_orientation}

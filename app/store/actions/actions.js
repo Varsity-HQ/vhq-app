@@ -5,6 +5,64 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const update_sexual_orientation = (orientation, show) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_SAVING_SO_SETTINGS",
+    payload: true,
+  });
+  axios
+    .post("/account/update/sexualori", {
+      show_sorientation: show,
+      s_orientation: orientation,
+    })
+    .then(() => {
+      dispatch({
+        type: "UPDATE_SAVING_SO_SETTINGS",
+        payload: false,
+      });
+      dispatch({
+        type: "UPDATE_SEXUAL_ORIENTATION",
+        payload: {
+          s_orientation: orientation,
+          show_sorientation: show,
+        },
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: "UPDATE_SAVING_SO_SETTINGS",
+        payload: false,
+      });
+    });
+};
+
+export const update_relationship_status = (rs) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_SAVING_RS_SETTINGS",
+    payload: true,
+  });
+  axios
+    .post("/account/update/relationshipstatus", {
+      relationshipStatus: rs,
+    })
+    .then(() => {
+      dispatch({
+        type: "UPDATE_RELATIONSHIP_STATUS",
+        payload: rs,
+      });
+      dispatch({
+        type: "UPDATE_SAVING_RS_SETTINGS",
+        payload: false,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: "UPDATE_SAVING_RS_SETTINGS",
+        payload: false,
+      });
+    });
+};
+
 export const update_gender = (gender) => (dispatch) => {
   let s_target = "";
 
@@ -441,6 +499,7 @@ export const update_university = (uni) => (dispatch) => {
     type: "UPDATE_SAVING_UNI_SETTINGS",
     payload: true,
   });
+
   axios
     .post(`/account/update/university`, {
       university: uni,
