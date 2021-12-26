@@ -12,7 +12,7 @@ export const update_profile_pic = (uri) => async (dispatch) => {
   });
 
   let uploaded = await uploadImageAsync(uri);
-
+  //
   axios
     .post("/changeprofilepic/byurl", { newUrl: uploaded })
     .then(() => {
@@ -733,6 +733,59 @@ export const set_user = (user) => (dispatch) => {
     type: "SET_USER_DATA",
     payload: user,
   });
+};
+
+export const login_user = (email, password) => (dispatch) => {
+  dispatch({
+    type: "LOGGING_IN_USER",
+    payload: true,
+  });
+
+  dispatch({
+    type: "SET_LOGGING_IN_ERROR",
+    payload: {},
+  });
+
+  console.log({ email, password });
+
+  axios
+    .post("/login", {
+      email,
+      password,
+      mobile: true,
+    })
+    .then((data) => {
+      setAuthorizationHeader(data.data.token);
+      dispatch({
+        type: "SET_USER_DATA",
+        payload: data.data.user,
+      });
+      dispatch({
+        type: "SET_AUTH_STATE",
+        payload: true,
+      });
+
+      dispatch({
+        type: "LOGGING_IN_USER",
+        payload: false,
+      });
+      dispatch({
+        type: "SET_LOGGING_IN_ERROR",
+        payload: {},
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: "LOGGING_IN_USER",
+        payload: false,
+      });
+      if (err.response) {
+        return dispatch({
+          type: "SET_LOGGING_IN_ERROR",
+          payload: { ...err.response.data },
+        });
+      }
+    });
 };
 
 export const set_user_token = (token) => (dispatch) => {

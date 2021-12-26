@@ -22,7 +22,7 @@ import axios from "axios";
 import ErrorMessage from "../components/Forms/ErrorMessage";
 import { connect } from "react-redux";
 
-import { set_user_token } from "../store/actions/actions";
+import { login_user } from "../store/actions/actions";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required("Provide a username, phone number or email"),
@@ -33,33 +33,21 @@ const d = Dimensions.get("window");
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    set_user_token: (token) => dispatch(set_user_token(token)),
+    login_user: (username, password) =>
+      dispatch(login_user(username, password)),
   };
 };
 
-function Login({ navigation, set_user_token }) {
-  const [processing, set_processing] = useState(false);
-  const [error, set_error] = useState({});
+const mapStateToProps = (state) => {
+  return {
+    logging_in_user: state.core.logging_in_user,
+    logging_in_error: state.core.logging_in_error,
+  };
+};
 
+function Login({ navigation, login_user, logging_in_user, logging_in_error }) {
   const handleSubmit = ({ email, password }) => {
-    set_processing(true);
-    set_error("");
-    axios
-      .post("/login", {
-        email,
-        password,
-      })
-      .then((data) => {
-        console.log(data.data);
-        set_processing(false);
-        return set_user_token(data.data.token);
-      })
-      .catch((err) => {
-        if (err.response) {
-          set_error({ ...err.response.data });
-        }
-        set_processing(false);
-      });
+    login_user(email, password);
   };
 
   return (
@@ -87,8 +75,14 @@ function Login({ navigation, set_user_token }) {
             <Text style={styles.subHeading}>Login to your account</Text>
           </View>
           <View style={{ marginTop: 20 }}>
-            <ErrorMessage error={error.error} visible={error.error} />
-            <ErrorMessage error={error.password} visible={error.password} />
+            <ErrorMessage
+              error={logging_in_error.error}
+              visible={logging_in_error.error}
+            />
+            <ErrorMessage
+              error={logging_in_error.password}
+              visible={logging_in_error.password}
+            />
             <Form
               validationSchema={validationSchema}
               initialValues={{
@@ -101,12 +95,14 @@ function Login({ navigation, set_user_token }) {
                 cstyles={{
                   marginBottom: 15,
                 }}
+                autoCapitalize="none"
                 name="email"
                 icon="user"
                 placeholder="Email, Username or Phonenumber"
               />
               <AppFormField
                 secureTextEntry
+                autoCapitalize="none"
                 icon="lock"
                 name="password"
                 placeholder="Password"
@@ -114,7 +110,7 @@ function Login({ navigation, set_user_token }) {
 
               <View style={{ marginTop: 20 }}>
                 <SubmitButton
-                  loading={processing}
+                  loading={logging_in_user}
                   icon=""
                   type={1}
                   title="Login"
@@ -171,4 +167,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

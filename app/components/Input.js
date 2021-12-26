@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
 import colors from "../config/colors";
 
@@ -9,6 +9,9 @@ function AppTextInput({
   icon,
   cstyles,
   onChangeText,
+  password,
+  passShow,
+  show,
   width = "100%",
   ...otherProps
 }) {
@@ -40,6 +43,17 @@ function AppTextInput({
         style={styles.text}
         {...otherProps}
       />
+      {password && (
+        <TouchableOpacity onPress={passShow}>
+          <FontAwesome
+            //   name={icon}
+            name={show ? "eye-slash" : "eye"}
+            size={18}
+            color={colors.secondary}
+            style={styles.eye_icon}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
@@ -61,6 +75,10 @@ const styles = StyleSheet.create({
   text: {
     width: "100%",
     color: colors.white,
+    flex: 1,
+    // borderColor: "red",
+    // borderWidth: 1,
+    height: "100%",
   },
   container: {
     backgroundColor: colors.dark_opacity_2,
@@ -76,6 +94,17 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
     marginLeft: 5,
+  },
+
+  eye_icon: {
+    marginRight: 0,
+    marginLeft: 5,
+    // borderWidth: 1,
+    // borderColor: "red",
+    padding: 10,
+
+    // height: "100%",
+    // alignSelf: "auto",
   },
 });
 

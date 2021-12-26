@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormikContext } from "formik";
 
 import AppTextInput from "../Input";
@@ -13,7 +13,10 @@ function AppFormField({ name, width, type, ...otherProps }) {
     handleChange,
     errors,
     touched,
+    secureTextEntry,
   } = useFormikContext();
+
+  const [passHide, setPassHide] = useState(true);
 
   return (
     <>
@@ -23,6 +26,10 @@ function AppFormField({ name, width, type, ...otherProps }) {
         onBlur={() => setFieldTouched(name)}
         onChangeText={(text) => setFieldValue(name, text)}
         {...otherProps}
+        secureTextEntry={name === "password" ? passHide : false}
+        password={name === "password"}
+        show={!passHide}
+        passShow={() => setPassHide(!passHide)}
         width={width}
       />
       <ErrorMessage error={errors[name]} visible={touched[name]} />

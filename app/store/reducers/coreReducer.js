@@ -23,6 +23,10 @@ const initialData = {
   saving_surname_settings: false,
   saving_firstname_settings: false,
   saving_profile_pic_settings: false,
+
+  //
+  logging_in_user: false,
+  logging_in_error: {},
 };
 
 const coreReducer = (state = initialData, actions) => {
@@ -313,6 +317,18 @@ const coreReducer = (state = initialData, actions) => {
       return {
         ...state,
         accData: { ...state.accData, yearOfStudy: actions.payload },
+      };
+
+    case "SET_LOGGING_IN_ERROR":
+      return {
+        ...state,
+        logging_in_error: actions.payload,
+      };
+    case "LOGGING_IN_USER":
+      return {
+        ...state,
+        logging_in_user: actions.payload,
+        logging_in_error: {},
       };
     case "SET_USER_DATA":
       return {
