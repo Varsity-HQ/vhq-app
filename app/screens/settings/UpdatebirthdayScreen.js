@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch) => {
 //
 function UpdatebirthdayScreen({ loading, dob, navigation, update_dob }) {
   //
-  const [date, setDate] = useState(new Date(dob));
+  const [date, setDate] = useState(dob ? new Date(dob) : new Date());
   const [age, setAge] = useState(0);
   const [ageError, setAgeError] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);

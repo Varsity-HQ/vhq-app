@@ -8,6 +8,7 @@ export default {
   darkish: "#1a2c3f",
   darkish2: "#163952",
   darkish3: "#105d83e7",
+  redish: "#c93a3a7a",
   white: "#fff",
   light: "#f9f9f9",
   lighish: "#7d868c",

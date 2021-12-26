@@ -36,12 +36,16 @@ function PreferencesScreen({ navigation, account }) {
             <Text style={styles.sec_h_text}>Basic Preferences</Text>
           </View>
           <IconMenuItem
+            required
+            mMessage="Your birthday hasn't been set"
             onPress={() => navigation.navigate(UPDATE_BIRTHDAY)}
             title="Birthday"
             descColor={colors.secondary}
             desc={account.dob}
           />
           <IconMenuItem
+            required
+            mMessage="Your gender hasn't been set"
             onPress={() => navigation.navigate(UPDATE_GENDER)}
             title="My Gender"
             descColor={colors.secondary}
@@ -66,6 +70,8 @@ function PreferencesScreen({ navigation, account }) {
             desc={account.relationshipStatus}
           />
           <IconMenuItem
+            required
+            mMessage="Please set your sexual orientation"
             onPress={() => navigation.navigate(UPDATE_SO_STATUS)}
             title="Sexual Orientation"
             descColor={colors.secondary}

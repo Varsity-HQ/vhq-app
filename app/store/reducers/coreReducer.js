@@ -80,7 +80,7 @@ const coreReducer = (state = initialData, actions) => {
           gender: actions.payload,
         },
       };
-    case "UPDATE_S_TARGET":
+    case "UPDATE_S_TARGET_2":
       return {
         ...state,
         accData: {

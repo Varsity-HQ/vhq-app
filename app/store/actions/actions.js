@@ -118,7 +118,7 @@ export const update_gender = (gender) => (dispatch) => {
         payload: gender,
       });
       dispatch({
-        type: "UPDATE_S_TARGET",
+        type: "UPDATE_S_TARGET_2",
         payload: s_target,
       });
       dispatch({
