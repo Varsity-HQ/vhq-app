@@ -4,6 +4,9 @@ import colors from "../../config/colors";
 import Screen from "../Screen";
 import SkeletonComponent from "./SkeletonComponent";
 import Text from "../AppText";
+import Button from "../Button";
+
+import { Feather } from "@expo/vector-icons";
 
 function ProfileSkeleton({ username = "User", notFound }) {
   if (notFound) {
@@ -97,14 +100,27 @@ function ProfileSkeleton({ username = "User", notFound }) {
   }
 
   return (
-    <Screen>
+    <Screen scroll>
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.header_username}>{username}</Text>
-          <View style={styles.toggle_anonymous}>
-            <Text style={styles.toggle_anonymous_text}>Toggle anonymous</Text>
+
+          <View style={{ opacity: 0 }}>
+            <Button
+              type={6}
+              style={[styles.toggle_anonymous]}
+              title="Toggle anonymous"
+            />
           </View>
-          <View></View>
+
+          <View>
+            <Feather
+              style={{ paddingHorizontal: 10, opacity: 0.5 }}
+              color={colors.white}
+              name="menu"
+              size={30}
+            />
+          </View>
         </View>
       </View>
       <View
@@ -205,7 +221,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   toggle_anonymous: {
-    borderColor: colors.dark,
+    borderColor: colors.secondary,
     borderWidth: 2,
     borderRadius: 50,
     paddingVertical: 8,
@@ -214,8 +230,7 @@ const styles = StyleSheet.create({
   header_username: {
     color: colors.white,
     fontWeight: "700",
-    height: 20,
-    width: "35%",
+    fontSize: 18,
   },
   container: {},
   header: {

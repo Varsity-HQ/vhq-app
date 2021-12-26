@@ -16,10 +16,25 @@ const initialData = {
   saving_university_settings: false,
   saving_rs_settings: false,
   saving_so_settings: false,
+  saving_s_target_settings: false,
 };
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "UPDATE_SAVING_S_TARGET_SETTINGS":
+      return {
+        ...state,
+        saving_s_target_settings: actions.payload,
+      };
+    case "UPDATE_S_TARGET":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          s_target: actions.payload.s_target,
+          show_s_target: actions.payload.show_s_target,
+        },
+      };
     case "UPDATE_SAVING_SO_SETTINGS":
       return {
         ...state,

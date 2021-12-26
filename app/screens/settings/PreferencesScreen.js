@@ -11,6 +11,7 @@ import {
   UPDATE_GENDER,
   UPDATE_RELATIONSHIP_STATUS,
   UPDATE_SO_STATUS,
+  UPDATE_S_TARGET,
   UPDATE_UNIVERSITY,
 } from "../../navigation/routes";
 
@@ -70,12 +71,14 @@ function PreferencesScreen({ navigation, account }) {
             descColor={colors.secondary}
             desc={account.s_orientation}
           />
-          <IconMenuItem
-            onPress={() => navigation.navigate()}
-            title="Interested In"
-            descColor={colors.secondary}
-            desc={account.s_target}
-          />
+          {account.s_target ? (
+            <IconMenuItem
+              onPress={() => navigation.navigate(UPDATE_S_TARGET)}
+              title="Interested In"
+              descColor={colors.secondary}
+              desc={account.s_target}
+            />
+          ) : null}
         </View>
       </View>
     </Screen>

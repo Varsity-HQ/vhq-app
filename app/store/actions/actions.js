@@ -5,6 +5,37 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const updates_gender_pref = (s_target, show_s_target) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_SAVING_S_TARGET_SETTINGS",
+    payload: true,
+  });
+  axios
+    .post("/account/update/s_target", {
+      show_s_target: show_s_target,
+      s_target: s_target,
+    })
+    .then(() => {
+      dispatch({
+        type: "UPDATE_S_TARGET",
+        payload: {
+          s_target: s_target,
+          show_s_target: show_s_target,
+        },
+      });
+      dispatch({
+        type: "UPDATE_SAVING_S_TARGET_SETTINGS",
+        payload: false,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "UPDATE_SAVING_S_TARGET_SETTINGS",
+        payload: false,
+      });
+    });
+};
 export const update_sexual_orientation = (orientation, show) => (dispatch) => {
   dispatch({
     type: "UPDATE_SAVING_SO_SETTINGS",

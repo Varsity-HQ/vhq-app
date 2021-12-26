@@ -146,185 +146,183 @@ function Profile({
 
   const { user } = profile_page;
   return (
-    <Screen>
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <Text style={styles.header_username}>{username}</Text>
-            {auth_profile ? (
-              <Button
-                type={6}
-                style={styles.toggle_anonymous}
-                title="Toggle anonymous"
-                onPress={() => navigation.navigate(ANONYMOUS_SETTINGS)}
-              />
-            ) : null}
-
-            <View>
-              <ProfileMenu username={username} />
-            </View>
-          </View>
-        </View>
-        <View
-          style={{
-            paddingVertical: 20,
-            paddingHorizontal: 10,
-            borderBottomColor: colors.black,
-            borderBottomWidth: 4,
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <View>
-              {user.profilepic ? (
-                <Image uri={user.profilepic} style={styles.profilepic} />
-              ) : (
-                <ImageLocal
-                  source={require("../assets/avatar.png")}
-                  style={styles.profilepic}
-                />
-              )}
-            </View>
-            <View style={{ marginLeft: 18 }}>
-              <Text style={styles.username}>{user.username}</Text>
-              <Text style={styles.user_stream}>
-                {user.yearOfStudy === "postgraduates" ? (
-                  <>
-                    Postgraduate{" "}
-                    <Text style={{ color: colors.secondary }}>Student</Text>
-                  </>
-                ) : (
-                  <>
-                    {user.yearOfStudy} Year,{" "}
-                    <Text style={{ color: colors.secondary }}>Student</Text>
-                  </>
-                )}
-              </Text>
-              {auth_profile ? (
-                <View style={{ flexDirection: "row" }}>
-                  <Button
-                    onPress={() => navigation.navigate(EDIT_PROFILE)}
-                    style={styles.buttonShadow}
-                    type={3}
-                    title="Edit Profile"
-                  />
-                  <Button
-                    onPress={() => navigation.navigate(PROFILE_SETTINGS)}
-                    style={{
-                      marginLeft: 8,
-                      paddingVertical: 7,
-                      paddingHorizontal: 18,
-                    }}
-                    type={3}
-                    title="Settings"
-                  />
-                </View>
-              ) : (
-                <View style={{ flexDirection: "row", flex: 1 }}>
-                  <Button
-                    type={8}
-                    style={{
-                      paddingHorizontal: 30,
-                      ...styles.buttonShadow,
-                    }}
-                    onPress={handleFollow}
-                    title={following ? "Following" : "Follow"}
-                  />
-                  <Button
-                    // onPress={()=>navigation.navigate()}
-                    style={{
-                      marginLeft: 8,
-                      paddingVertical: 7,
-                      paddingHorizontal: 18,
-                      ...styles.buttonShadow,
-                    }}
-                    type={3}
-                    title="Message"
-                  />
-                </View>
-              )}
-            </View>
-          </View>
-          <View style={{ marginTop: 8 }}>
-            {auth_profile && user.anonymous_profile ? (
-              <Text style={styles.anon_state}>Anonymous</Text>
-            ) : null}
-
-            <Text style={styles.user_f_name}>
-              {user.firstname} {user.surname}
-            </Text>
-            <View style={{ flexDirection: "row", marginTop: 8 }}>
-              <AppText>
-                {user.followers ? user.followers : 0}{" "}
-                <AppText style={{ color: colors.secondary }}>Followers</AppText>
-              </AppText>
-              <AppText>&nbsp;|&nbsp;</AppText>
-              <AppText>
-                {user.following}{" "}
-                <AppText style={{ color: colors.secondary }}>Following</AppText>
-              </AppText>
-            </View>
-
-            {user.about ? (
-              <View style={{ marginTop: 10 }}>
-                <AppText>{user.about}</AppText>
-              </View>
-            ) : null}
-          </View>
-        </View>
-        <View
-          style={{
-            padding: 10,
-          }}
-        >
-          <View
-            style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}
-          >
-            <FontAwesome color={colors.secondary} name="university" size={15} />
-            <AppText style={{ marginLeft: 8 }}>{user.university}</AppText>
-          </View>
-          {user?.degree ? (
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginTop: 5,
-              }}
-            >
-              <FontAwesome
-                color={colors.secondary}
-                name="graduation-cap"
-                size={15}
-              />
-              <AppText style={{ marginLeft: 8 }}>{user.degree}</AppText>
-            </View>
+    <Screen scroll>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.header_username}>{username}</Text>
+          {auth_profile ? (
+            <Button
+              type={6}
+              style={styles.toggle_anonymous}
+              title="Toggle anonymous"
+              onPress={() => navigation.navigate(ANONYMOUS_SETTINGS)}
+            />
           ) : null}
 
-          {user.number_of_markitems > 0 ||
-            (auth_profile && (
-              <View style={{ marginTop: 8 }}>
+          <View>
+            <ProfileMenu username={username} />
+          </View>
+        </View>
+      </View>
+      <View
+        style={{
+          paddingVertical: 20,
+          paddingHorizontal: 10,
+          borderBottomColor: colors.black,
+          borderBottomWidth: 4,
+        }}
+      >
+        <View style={{ flexDirection: "row" }}>
+          <View>
+            {user.profilepic ? (
+              <Image uri={user.profilepic} style={styles.profilepic} />
+            ) : (
+              <ImageLocal
+                source={require("../assets/avatar.png")}
+                style={styles.profilepic}
+              />
+            )}
+          </View>
+          <View style={{ marginLeft: 18 }}>
+            <Text style={styles.username}>{user.username}</Text>
+            <Text style={styles.user_stream}>
+              {user.yearOfStudy === "postgraduates" ? (
+                <>
+                  Postgraduate{" "}
+                  <Text style={{ color: colors.secondary }}>Student</Text>
+                </>
+              ) : (
+                <>
+                  {user.yearOfStudy} Year,{" "}
+                  <Text style={{ color: colors.secondary }}>Student</Text>
+                </>
+              )}
+            </Text>
+            {auth_profile ? (
+              <View style={{ flexDirection: "row" }}>
                 <Button
+                  onPress={() => navigation.navigate(EDIT_PROFILE)}
+                  style={styles.buttonShadow}
                   type={3}
-                  style={{ borderRadius: 100 }}
-                  title="My Shop & Services"
+                  title="Edit Profile"
+                />
+                <Button
+                  onPress={() => navigation.navigate(PROFILE_SETTINGS)}
+                  style={{
+                    marginLeft: 8,
+                    paddingVertical: 7,
+                    paddingHorizontal: 18,
+                  }}
+                  type={3}
+                  title="Settings"
                 />
               </View>
-            ))}
+            ) : (
+              <View style={{ flexDirection: "row", flex: 1 }}>
+                <Button
+                  type={8}
+                  style={{
+                    paddingHorizontal: 30,
+                    ...styles.buttonShadow,
+                  }}
+                  onPress={handleFollow}
+                  title={following ? "Following" : "Follow"}
+                />
+                <Button
+                  // onPress={()=>navigation.navigate()}
+                  style={{
+                    marginLeft: 8,
+                    paddingVertical: 7,
+                    paddingHorizontal: 18,
+                    ...styles.buttonShadow,
+                  }}
+                  type={3}
+                  title="Message"
+                />
+              </View>
+            )}
+          </View>
         </View>
-        <View>
-          <TabNavigator
-            onPress={(i) => setTab(i)}
-            active={index}
-            items={auth_profile ? profile_tabs : profile_tabs.slice(0, 2)}
+        <View style={{ marginTop: 8 }}>
+          {auth_profile && user.anonymous_profile ? (
+            <Text style={styles.anon_state}>Anonymous</Text>
+          ) : null}
+
+          <Text style={styles.user_f_name}>
+            {user.firstname} {user.surname}
+          </Text>
+          <View style={{ flexDirection: "row", marginTop: 8 }}>
+            <AppText>
+              {user.followers ? user.followers : 0}{" "}
+              <AppText style={{ color: colors.secondary }}>Followers</AppText>
+            </AppText>
+            <AppText>&nbsp;|&nbsp;</AppText>
+            <AppText>
+              {user.following}{" "}
+              <AppText style={{ color: colors.secondary }}>Following</AppText>
+            </AppText>
+          </View>
+
+          {user.about ? (
+            <View style={{ marginTop: 10 }}>
+              <AppText>{user.about}</AppText>
+            </View>
+          ) : null}
+        </View>
+      </View>
+      <View
+        style={{
+          padding: 10,
+        }}
+      >
+        <View
+          style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}
+        >
+          <FontAwesome color={colors.secondary} name="university" size={15} />
+          <AppText style={{ marginLeft: 8 }}>{user.university}</AppText>
+        </View>
+        {user?.degree ? (
+          <View
             style={{
-              //   padding: 10,
+              flexDirection: "row",
+              alignItems: "center",
               marginTop: 5,
-              borderBottomWidth: 4,
-              borderBottomColor: colors.black,
             }}
-          />
-        </View>
-        <View>{tab_switcher()}</View>
-      </ScrollView>
+          >
+            <FontAwesome
+              color={colors.secondary}
+              name="graduation-cap"
+              size={15}
+            />
+            <AppText style={{ marginLeft: 8 }}>{user.degree}</AppText>
+          </View>
+        ) : null}
+
+        {user.number_of_markitems > 0 ||
+          (auth_profile && (
+            <View style={{ marginTop: 8 }}>
+              <Button
+                type={3}
+                style={{ borderRadius: 100 }}
+                title="My Shop & Services"
+              />
+            </View>
+          ))}
+      </View>
+      <View>
+        <TabNavigator
+          onPress={(i) => setTab(i)}
+          active={index}
+          items={auth_profile ? profile_tabs : profile_tabs.slice(0, 2)}
+          style={{
+            //   padding: 10,
+            marginTop: 5,
+            borderBottomWidth: 4,
+            borderBottomColor: colors.black,
+          }}
+        />
+      </View>
+      <View>{tab_switcher()}</View>
     </Screen>
   );
 }

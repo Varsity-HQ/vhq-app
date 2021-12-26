@@ -6,62 +6,50 @@ import Screen from "../../components/Screen";
 import DropDown from "../../components/Forms/DropDown";
 import colors from "../../config/colors";
 import { connect } from "react-redux";
-import { update_sexual_orientation } from "../../store/actions/actions";
+import { updates_gender_pref } from "../../store/actions/actions";
 
 const so_list = [
   {
-    value: "Straight",
-    label: "Straight",
+    value: "Male",
+    label: "Males",
   },
   {
-    value: "Gay",
-    label: "Gay",
-  },
-  {
-    value: "Lesbian",
-    label: "Lesbian",
-  },
-  {
-    value: "Bisexual",
-    label: "Bisexual",
+    value: "Female",
+    label: "Females",
   },
 ];
 
 const mapStateToProps = (state) => {
   return {
-    s_orientation: state.core.accData.s_orientation,
-    show_sorientation: state.core.accData.show_sorientation,
-
-    loading: state.core.saving_so_settings,
+    s_target: state.core.accData.s_target,
+    show_s_target: state.core.accData.show_s_target,
+    loading: state.core.saving_s_target_settings,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    update_sexual_orientation: (so, show) =>
-      dispatch(update_sexual_orientation(so, show)),
+    updates_gender_pref: (st, show) => dispatch(updates_gender_pref(st, show)),
   };
 };
 
 function UpdateSexualOrientationScreen({
-  s_orientation,
-  show_sorientation,
-  update_sexual_orientation,
+  s_target,
+  show_s_target,
+  updates_gender_pref,
   loading,
   navigation,
 }) {
-  const [l_so, set_so] = useState(s_orientation);
-  const [isEnabled, setIsEnabled] = useState(show_sorientation);
+  const [l_st, set_st] = useState(s_target);
+  const [isEnabled, setIsEnabled] = useState(show_s_target);
 
   const toggleSwitch = () => {
     setIsEnabled(!isEnabled);
   };
 
-  const save_so = () => {
-    update_sexual_orientation(l_so, isEnabled);
+  const save_st = () => {
+    updates_gender_pref(l_st, isEnabled);
   };
-
-  console.log({ show_sorientation });
 
   return (
     <Screen>
@@ -70,15 +58,15 @@ function UpdateSexualOrientationScreen({
         backPress={() => navigation.goBack()}
         backBtnText="Done"
         buttonText="Save"
-        title="Sexual Orientation"
-        rightPress={save_so}
+        title="interested in"
+        rightPress={save_st}
       />
       <View style={styles.container}>
-        <Text>What's your sexual orientation ?</Text>
+        <Text>I'm intrested in : </Text>
         <DropDown
           style={styles.dropdown}
-          value={l_so}
-          setValue={(e) => set_so(e())}
+          value={l_st}
+          setValue={(e) => set_st(e())}
           items={so_list}
           placeholder="Sexual orientation"
         />
@@ -98,7 +86,7 @@ function UpdateSexualOrientationScreen({
         <View style={styles.divider} />
         <View style={styles.switcher_container}>
           <Text style={{ flex: 1 }}>
-            Show sexual orientation. ({isEnabled ? "Yes" : "No"})
+            Show this on my profile ({isEnabled ? "Yes" : "No"})
           </Text>
           <Switch
             style={styles.switcher}
