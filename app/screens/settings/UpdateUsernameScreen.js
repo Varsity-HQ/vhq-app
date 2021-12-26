@@ -10,8 +10,8 @@ import { update_surname } from "../../store/actions/actions";
 
 const mapStateToProps = (state) => {
   return {
-    surname: state.core.accData.surname,
-    loading: state.core.saving_surname_settings,
+    username: state.core.accData.username,
+    loading: state.core.saving_username_settings,
   };
 };
 
@@ -21,8 +21,8 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-function UpdateUsernameScreen({ navigation, update, loading, surname }) {
-  const [value, setValue] = useState(surname);
+function UpdateUsernameScreen({ navigation, update, loading, username }) {
+  const [value, setValue] = useState(username);
 
   return (
     <Screen>
@@ -31,18 +31,17 @@ function UpdateUsernameScreen({ navigation, update, loading, surname }) {
         backPress={() => navigation.goBack()}
         backIcon
         buttonText="Save"
-        title="Surname"
+        title="Username"
         rightPress={() => update(value)}
       />
       <View style={styles.container}>
         <Input
           type={2}
-          multiline
-          maxLength={150}
+          maxLength={18}
           value={value}
           onChangeText={(e) => setValue(e)}
-          style={{ marginTop: 10, minHeight: 100 }}
-          placeholder="Type your bio or about"
+          style={{ marginTop: 10 }}
+          placeholder="Username"
         />
       </View>
     </Screen>

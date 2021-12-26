@@ -37,12 +37,10 @@ function UpdateFirstnameScreen({ navigation, update, loading, firstname }) {
       <View style={styles.container}>
         <Input
           type={2}
-          multiline
-          maxLength={150}
           value={value}
           onChangeText={(e) => setValue(e)}
-          style={{ marginTop: 10, minHeight: 100 }}
-          placeholder="Type your bio or about"
+          style={{ marginTop: 10 }}
+          placeholder="First name"
         />
       </View>
     </Screen>
