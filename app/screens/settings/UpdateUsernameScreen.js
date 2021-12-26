@@ -6,7 +6,7 @@ import Text from "../../components/AppText";
 import Input from "../../components/Input";
 import colors from "../../config/colors";
 import { connect } from "react-redux";
-import { update_surname } from "../../store/actions/actions";
+import { update_username } from "../../store/actions/actions";
 
 const mapStateToProps = (state) => {
   return {
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    update: (d) => dispatch(update_surname(d)),
+    update: (d) => dispatch(update_username(d)),
   };
 };
 

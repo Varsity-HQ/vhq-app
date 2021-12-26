@@ -67,6 +67,7 @@ function UpdateProfile({ loading = false, navigation, userData }) {
               value={userData.surname}
             />
             <FieldButton
+              multi
               onPress={() => navigation.navigate(UPDATE_ABOUT)}
               title="Bio / About"
               value={userData.about}
@@ -78,10 +79,17 @@ function UpdateProfile({ loading = false, navigation, userData }) {
   );
 }
 
-function FieldButton({ title, value, onPress }) {
+function FieldButton({ title, value, onPress, multi }) {
   return (
     <TouchableHighlight underlayColor={colors.darkish2} onPress={onPress}>
-      <View style={styles.fieldbtn_container}>
+      <View
+        style={[
+          styles.fieldbtn_container,
+          multi && {
+            alignItems: "flex-start",
+          },
+        ]}
+      >
         <Text style={styles.title}>{title}</Text>
         <Text style={{ color: colors.secondary }}>{value}</Text>
       </View>
