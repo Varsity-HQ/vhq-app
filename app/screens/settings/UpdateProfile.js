@@ -16,19 +16,12 @@ import {
 
 const mapStateToProps = (state) => {
   return {
-    acc_data: state.core.accData,
+    userData: state.core.accData,
   };
 };
 
-function UpdateProfile({ loading = false, navigation, acc_data }) {
-  const [profilepic, setProfilePic] = useState(acc_data.profilepic);
-  const [userData, setUserData] = useState({
-    username: "",
-    firstname: "",
-    surname: "",
-    about: "",
-    ...acc_data,
-  });
+function UpdateProfile({ loading = false, navigation, userData }) {
+  const [profilepic, setProfilePic] = useState(userData.profilepic);
 
   return (
     <Screen scroll>
@@ -37,7 +30,7 @@ function UpdateProfile({ loading = false, navigation, acc_data }) {
         backPress={() => navigation.goBack()}
         backBtnText="Done"
         buttonText="Save"
-        title={`@${acc_data.username}`}
+        title={`@${userData.username}`}
         //    rightPress={saveGender}
       />
       <View style={styles.container}>

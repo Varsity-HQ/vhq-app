@@ -49,7 +49,7 @@ const coreReducer = (state = initialData, actions) => {
         ...state,
         accData: {
           ...state.accData,
-          username: actions.payload,
+          surname: actions.payload,
         },
       };
     case "UPDATE_SAVING_USERNAME":

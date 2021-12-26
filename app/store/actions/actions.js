@@ -72,7 +72,7 @@ export const update_username = (username) => (dispatch) => {
     .then(() => {
       dispatch({
         type: "UPDATE_USERNAME",
-        payload: about,
+        payload: username,
       });
       dispatch({
         type: "UPDATE_SAVING_USERNAME",

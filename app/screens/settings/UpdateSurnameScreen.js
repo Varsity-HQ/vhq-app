@@ -6,18 +6,18 @@ import Text from "../../components/AppText";
 import Input from "../../components/Input";
 import colors from "../../config/colors";
 import { connect } from "react-redux";
-import { update_username } from "../../store/actions/actions";
+import { update_surname } from "../../store/actions/actions";
 
 const mapStateToProps = (state) => {
   return {
     surname: state.core.accData.surname,
-    loading: state.core.saving_username_settings,
+    loading: state.core.saving_surname_settings,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    update: (d) => dispatch(update_username(d)),
+    update: (d) => dispatch(update_surname(d)),
   };
 };
 
