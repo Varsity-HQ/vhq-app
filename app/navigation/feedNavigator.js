@@ -21,6 +21,10 @@ import {
   UPDATE_SO_STATUS,
   UPDATE_S_TARGET,
   UPDATE_PROFILE_PAGE,
+  UPDATE_USERNAME,
+  UPDATE_FIRSTNAME,
+  UPDATE_SURNAME,
+  UPDATE_ABOUT,
 } from "./routes";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
@@ -153,6 +157,38 @@ const FeedNavigator = () => (
         animation: "slide_from_right",
       }}
       name={UPDATE_PROFILE_PAGE}
+      component={UpdateProfile}
+    />
+    <Stack.Screen
+      options={{
+        headerShown: false,
+        animation: "slide_from_right",
+      }}
+      name={UPDATE_USERNAME}
+      component={UpdateProfile}
+    />
+    <Stack.Screen
+      options={{
+        headerShown: false,
+        animation: "slide_from_right",
+      }}
+      name={UPDATE_FIRSTNAME}
+      component={UpdateProfile}
+    />
+    <Stack.Screen
+      options={{
+        headerShown: false,
+        animation: "slide_from_right",
+      }}
+      name={UPDATE_SURNAME}
+      component={UpdateProfile}
+    />
+    <Stack.Screen
+      options={{
+        headerShown: false,
+        animation: "slide_from_right",
+      }}
+      name={UPDATE_ABOUT}
       component={UpdateProfile}
     />
     {/* <Stack.Screen 

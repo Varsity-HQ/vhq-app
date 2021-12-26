@@ -23,6 +23,12 @@ export const UPDATE_SO_STATUS = "UpdateSexualOrientationStatus";
 export const UPDATE_S_TARGET = "UpdateSTarget";
 export const UPDATE_PROFILE_PAGE = "UpdateProfile";
 
+//Profile update routes
+export const UPDATE_USERNAME = "UpdateUsername";
+export const UPDATE_FIRSTNAME = "UpdateFirst";
+export const UPDATE_SURNAME = "UpdateSurname";
+export const UPDATE_ABOUT = "UpdateAbout";
+
 //Setup routes
 export const SETUP_PERSONAL_INFO = "SetupPersonalInformation";
 export const SETUP_UNIVERSITY = "SetupUniversity";

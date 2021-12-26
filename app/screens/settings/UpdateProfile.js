@@ -7,6 +7,12 @@ import ProfilePicChanger from "../../components/ProfilePicChanger";
 import Text from "../../components/AppText";
 import colors from "../../config/colors";
 import Input from "../../components/Input";
+import {
+  UPDATE_ABOUT,
+  UPDATE_FIRSTNAME,
+  UPDATE_SURNAME,
+  UPDATE_USERNAME,
+} from "../../navigation/routes";
 
 const mapStateToProps = (state) => {
   return {
@@ -24,7 +30,6 @@ function UpdateProfile({ loading = false, navigation, acc_data }) {
     ...acc_data,
   });
 
-  console.log({ userData });
   return (
     <Screen scroll>
       <Header
@@ -53,10 +58,26 @@ function UpdateProfile({ loading = false, navigation, acc_data }) {
         </View>
         <View>
           <View>
-            <FieldButton title="Username" value={`@${userData.username}`} />
-            <FieldButton title="Name" value={userData.firstname} />
-            <FieldButton title="Surname" value={userData.surname} />
-            <FieldButton title="Bio / About" value={userData.about} />
+            <FieldButton
+              onPress={() => navigation.navigate(UPDATE_USERNAME)}
+              title="Username"
+              value={`@${userData.username}`}
+            />
+            <FieldButton
+              onPress={() => navigation.navigate(UPDATE_FIRSTNAME)}
+              title="Name"
+              value={userData.firstname}
+            />
+            <FieldButton
+              onPress={() => navigation.navigate(UPDATE_SURNAME)}
+              title="Surname"
+              value={userData.surname}
+            />
+            <FieldButton
+              onPress={() => navigation.navigate(UPDATE_ABOUT)}
+              title="Bio / About"
+              value={userData.about}
+            />
           </View>
         </View>
       </View>
