@@ -36,6 +36,8 @@ function UpdateUsernameScreen({ navigation, update, loading, username }) {
       />
       <View style={styles.container}>
         <Input
+          editable={false}
+          focusable={false}
           type={2}
           maxLength={18}
           value={value}

@@ -46,163 +46,166 @@ import UpdateFirstnameScreen from "../screens/settings/UpdateFirstnameScreen";
 // import PostPage from "../screens/PostPage";
 
 const FeedNavigator = () => (
-  <Stack.Navigator
-    screenOptions={
-      {
-        // animation: "none",
+  <>
+    <FloatingButton />
+    <Stack.Navigator
+      screenOptions={
+        {
+          // animation: "none",
+        }
       }
-    }
-  >
-    <Stack.Screen
-      options={{
-        headerShown: false,
-      }}
-      name={HOME}
-      component={Home}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-      }}
-      name={PROFILE}
-      component={Profile}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_bottom",
-      }}
-      name={ANONYMOUS_SETTINGS}
-      component={AnonymousSettingsScreen}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={PROFILE_SETTINGS}
-      component={ProfileSettingsScreen}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={PREFERENCES}
-      component={PreferencesScreen}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={YEAR_OF_STUDY}
-      component={YearOfStudyScreen}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={UPDATE_DEGREE}
-      component={UpdateDegreeScreen}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={UPDATE_BIRTHDAY}
-      component={UpdatebirthdayScreen}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={UPDATE_GENDER}
-      component={UpdateGenderScreen}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={UPDATE_UNIVERSITY}
-      component={UpdateUniversityScreen}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={UPDATE_RELATIONSHIP_STATUS}
-      component={UpdateRelationshipStatusScreen}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={UPDATE_SO_STATUS}
-      component={UpdateSexualOrientaionScreen}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={UPDATE_S_TARGET}
-      component={UpdateSexTargetScreen}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={UPDATE_PROFILE_PAGE}
-      component={UpdateProfile}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={UPDATE_USERNAME}
-      component={UpdateUsernameScreen}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={UPDATE_FIRSTNAME}
-      component={UpdateFirstnameScreen}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={UPDATE_SURNAME}
-      component={UpdateSurnameScreen}
-    />
-    <Stack.Screen
-      options={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-      name={UPDATE_ABOUT}
-      component={UpdateAbout}
-    />
-    {/* <Stack.Screen 
+    >
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={HOME}
+        component={Home}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={PROFILE}
+        component={Profile}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_bottom",
+        }}
+        name={ANONYMOUS_SETTINGS}
+        component={AnonymousSettingsScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={PROFILE_SETTINGS}
+        component={ProfileSettingsScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={PREFERENCES}
+        component={PreferencesScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={YEAR_OF_STUDY}
+        component={YearOfStudyScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={UPDATE_DEGREE}
+        component={UpdateDegreeScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={UPDATE_BIRTHDAY}
+        component={UpdatebirthdayScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={UPDATE_GENDER}
+        component={UpdateGenderScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={UPDATE_UNIVERSITY}
+        component={UpdateUniversityScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={UPDATE_RELATIONSHIP_STATUS}
+        component={UpdateRelationshipStatusScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={UPDATE_SO_STATUS}
+        component={UpdateSexualOrientaionScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={UPDATE_S_TARGET}
+        component={UpdateSexTargetScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={UPDATE_PROFILE_PAGE}
+        component={UpdateProfile}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={UPDATE_USERNAME}
+        component={UpdateUsernameScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={UPDATE_FIRSTNAME}
+        component={UpdateFirstnameScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={UPDATE_SURNAME}
+        component={UpdateSurnameScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={UPDATE_ABOUT}
+        component={UpdateAbout}
+      />
+      {/* <Stack.Screen 
       options={{
         headerShown: false,
       }}
       name="PostPage"
       component={PostPage}
     /> */}
-  </Stack.Navigator>
+    </Stack.Navigator>
+  </>
 );
 
 export default FeedNavigator;

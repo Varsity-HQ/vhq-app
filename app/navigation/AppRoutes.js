@@ -21,6 +21,7 @@ import Profile from "../screens/Profile";
 import SetupUniversity from "../screens/SetupUniversity";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import SetupPersonalInformation from "../screens/SetupPersonalInformation";
+import AddPostPage from "../screens/AddPostPage";
 
 import OverlayLoader from "../components/OverlayLoader";
 import colors from "../config/colors";
@@ -108,8 +109,8 @@ const AppRoutes = ({ core }) => {
           options={{
             headerShown: false,
           }}
-          name={routes.PROFILE}
-          component={Profile}
+          name={routes.ADD_POST}
+          component={AddPostPage}
         />
         <Stack.Screen
           options={{

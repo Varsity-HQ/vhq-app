@@ -15,15 +15,16 @@ import AddPostH2 from "../components/AddPost/AddPostH2";
 import RTextEditor from "../components/RTextEditor";
 import Button from "../components/Button";
 import { MaterialCommunityIcons, Foundation } from "@expo/vector-icons";
+import Screen from "../components/Screen";
 
 export default function AddPostPage({ navigation }) {
   return (
     <>
-      <View style={styles.container}>
+      <Screen style={styles.container}>
         <ScrollView>
           <View>
             <Header
-              backPress={() => console.log("back")}
+              backPress={() => navigation.goBack()}
               buttonText="Post"
               title="Create Post"
             />
@@ -77,7 +78,7 @@ export default function AddPostPage({ navigation }) {
             </View>
           </View>
         </KeyboardAvoidingView>
-      </View>
+      </Screen>
     </>
   );
 }

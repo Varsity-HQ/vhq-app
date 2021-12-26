@@ -752,26 +752,27 @@ export const login_user = (email, password) => (dispatch) => {
     .post("/login", {
       email,
       password,
-      mobile: true,
     })
     .then((data) => {
       setAuthorizationHeader(data.data.token);
-      dispatch({
-        type: "SET_USER_DATA",
-        payload: data.data.user,
-      });
-      dispatch({
-        type: "SET_AUTH_STATE",
-        payload: true,
-      });
+      return axios.get("/get/account").then((user_data) => {
+        dispatch({
+          type: "SET_USER_DATA",
+          payload: user_data.data,
+        });
+        dispatch({
+          type: "SET_AUTH_STATE",
+          payload: true,
+        });
 
-      dispatch({
-        type: "LOGGING_IN_USER",
-        payload: false,
-      });
-      dispatch({
-        type: "SET_LOGGING_IN_ERROR",
-        payload: {},
+        dispatch({
+          type: "LOGGING_IN_USER",
+          payload: false,
+        });
+        dispatch({
+          type: "SET_LOGGING_IN_ERROR",
+          payload: {},
+        });
       });
     })
     .catch((err) => {

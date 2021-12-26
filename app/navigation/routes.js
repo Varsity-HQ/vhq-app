@@ -4,6 +4,8 @@ export const FEED_NAVIGATOR = "FeedNavigator";
 export const SEARCH_NAVIGATOR = "SearchNavigator";
 
 //Screens
+
+export const ADD_POST = "AddPost";
 export const SEARCH = "Search";
 export const HOME = "Home";
 export const PROFILE = "Profile";
