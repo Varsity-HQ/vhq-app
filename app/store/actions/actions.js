@@ -5,6 +5,117 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const update_firstname = (firstname) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_SAVING_FIRSTNAME",
+    payload: true,
+  });
+  axios
+    .post("/account/update/firstname", {
+      firstname: firstname,
+    })
+    .then(() => {
+      dispatch({
+        type: "UPDATE_FIRSTNAME",
+        payload: firstname,
+      });
+      dispatch({
+        type: "UPDATE_SAVING_FIRSTNAME",
+        payload: false,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "UPDATE_SAVING_FIRSTNAME",
+        payload: false,
+      });
+    });
+};
+export const update_surname = (surname) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_SAVING_SURNAME",
+    payload: true,
+  });
+  axios
+    .post("/account/update/surname", {
+      surname: surname,
+    })
+    .then(() => {
+      dispatch({
+        type: "UPDATE_SURNAME",
+        payload: surname,
+      });
+      dispatch({
+        type: "UPDATE_SAVING_SURNAME",
+        payload: false,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "UPDATE_SAVING_SURNAME",
+        payload: false,
+      });
+    });
+};
+
+export const update_username = (username) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_SAVING_USERNAME",
+    payload: true,
+  });
+  axios
+    .post("/account/update/username", {
+      username: username,
+    })
+    .then(() => {
+      dispatch({
+        type: "UPDATE_USERNAME",
+        payload: about,
+      });
+      dispatch({
+        type: "UPDATE_SAVING_USERNAME",
+        payload: false,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "UPDATE_SAVING_USERNAME",
+        payload: false,
+      });
+    });
+};
+
+export const update_about = (about) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_SAVING_ABOUT",
+    payload: true,
+  });
+  axios
+    .post("/account/update/about", {
+      about: about,
+    })
+    .then(() => {
+      dispatch({
+        type: "UPDATE_ABOUT",
+        payload: about,
+      });
+      dispatch({
+        type: "UPDATE_SAVING_ABOUT",
+        payload: false,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "UPDATE_SAVING_ABOUT",
+        payload: false,
+      });
+    });
+};
+
 export const updates_gender_pref = (s_target, show_s_target) => (dispatch) => {
   dispatch({
     type: "UPDATE_SAVING_S_TARGET_SETTINGS",

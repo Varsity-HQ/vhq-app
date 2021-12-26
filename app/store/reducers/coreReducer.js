@@ -17,10 +17,67 @@ const initialData = {
   saving_rs_settings: false,
   saving_so_settings: false,
   saving_s_target_settings: false,
+
+  saving_username_settings: false,
+  saving_about_settings: false,
+  saving_surname_settings: false,
+  saving_firstname_settings: false,
 };
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "UPDATE_SAVING_FIRSTNAME":
+      return {
+        ...state,
+        saving_firstname_settings: actions.payload,
+      };
+    case "UPDATE_FIRSTNAME":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          firstname: actions.payload,
+        },
+      };
+    case "UPDATE_SAVING_SURNAME":
+      return {
+        ...state,
+        saving_surname_settings: actions.payload,
+      };
+    case "UPDATE_SURNAME":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          username: actions.payload,
+        },
+      };
+    case "UPDATE_SAVING_USERNAME":
+      return {
+        ...state,
+        saving_username_settings: actions.payload,
+      };
+    case "UPDATE_USERNAME":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          username: actions.payload,
+        },
+      };
+    case "UPDATE_SAVING_ABOUT":
+      return {
+        ...state,
+        saving_about_settings: actions.payload,
+      };
+    case "UPDATE_ABOUT":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          about: actions.payload,
+        },
+      };
     case "UPDATE_SAVING_S_TARGET_SETTINGS":
       return {
         ...state,

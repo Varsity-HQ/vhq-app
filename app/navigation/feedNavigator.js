@@ -38,6 +38,10 @@ import UpdateRelationshipStatusScreen from "../screens/settings/UpdateRelationsh
 import UpdateSexualOrientaionScreen from "../screens/settings/UpdateSexualOrientaionScreen";
 import UpdateSexTargetScreen from "../screens/settings/UpdateSexTargetScreen";
 import UpdateProfile from "../screens/settings/UpdateProfile";
+import UpdateAbout from "../screens/settings/UpdateAbout";
+import UpdateUsernameScreen from "../screens/settings/UpdateUsernameScreen";
+import UpdateSurnameScreen from "../screens/settings/UpdateSurnameScreen";
+import UpdateFirstnameScreen from "../screens/settings/UpdateFirstnameScreen";
 
 // import PostPage from "../screens/PostPage";
 
@@ -165,7 +169,7 @@ const FeedNavigator = () => (
         animation: "slide_from_right",
       }}
       name={UPDATE_USERNAME}
-      component={UpdateProfile}
+      component={UpdateUsernameScreen}
     />
     <Stack.Screen
       options={{
@@ -173,7 +177,7 @@ const FeedNavigator = () => (
         animation: "slide_from_right",
       }}
       name={UPDATE_FIRSTNAME}
-      component={UpdateProfile}
+      component={UpdateFirstnameScreen}
     />
     <Stack.Screen
       options={{
@@ -181,7 +185,7 @@ const FeedNavigator = () => (
         animation: "slide_from_right",
       }}
       name={UPDATE_SURNAME}
-      component={UpdateProfile}
+      component={UpdateSurnameScreen}
     />
     <Stack.Screen
       options={{
@@ -189,7 +193,7 @@ const FeedNavigator = () => (
         animation: "slide_from_right",
       }}
       name={UPDATE_ABOUT}
-      component={UpdateProfile}
+      component={UpdateAbout}
     />
     {/* <Stack.Screen 
       options={{
