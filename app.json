@@ -2,8 +2,9 @@
   "expo": {
     "name": "VarsityHQ",
     "slug": "varistyhq",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
+    "description":"A social media app for students at South African universities.",
     "userInterfaceStyle": "automatic",
     "icon": "./app/assets/icon.png",
     "splash": {
@@ -21,10 +22,6 @@
     "android": {
       "package": "com.varsityheadquarters.varsityhq",
       "versionCode": 1,
-      "adaptiveIcon": {
-        "foregroundImage": "./app/assets/adaptive-icon.png",
-        "backgroundColor": "#15202b"
-      }
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
