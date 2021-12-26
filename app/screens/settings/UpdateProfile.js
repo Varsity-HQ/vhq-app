@@ -14,14 +14,29 @@ import {
   UPDATE_USERNAME,
 } from "../../navigation/routes";
 
+import { update_profile_pic } from "../../store/actions/actions";
+
 const mapStateToProps = (state) => {
   return {
     userData: state.core.accData,
+    loading: state.core.saving_profile_pic_settings,
   };
 };
 
-function UpdateProfile({ loading = false, navigation, userData }) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    update_profile_pic: (uri) => dispatch(update_profile_pic(uri)),
+  };
+};
+
+function UpdateProfile({ loading, navigation, userData, update_profile_pic }) {
   const [profilepic, setProfilePic] = useState(userData.profilepic);
+  const [changedPP, setchangedPP] = useState(false);
+
+  const update_dp = () => {
+    if (!changedPP) return;
+    update_profile_pic(profilepic);
+  };
 
   return (
     <Screen scroll>
@@ -31,13 +46,16 @@ function UpdateProfile({ loading = false, navigation, userData }) {
         backBtnText="Done"
         buttonText="Save"
         title={`@${userData.username}`}
-        //    rightPress={saveGender}
+        rightPress={update_dp}
       />
       <View style={styles.container}>
         <View style={{ marginBottom: 20 }}>
           <ProfilePicChanger
             image={profilepic}
-            onImgChange={(uri) => setProfilePic(uri)}
+            onImgChange={(uri) => {
+              setProfilePic(uri);
+              setchangedPP(true);
+            }}
           />
           <Text
             style={{
@@ -130,4 +148,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, null)(UpdateProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateProfile);

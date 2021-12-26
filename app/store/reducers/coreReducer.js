@@ -22,10 +22,16 @@ const initialData = {
   saving_about_settings: false,
   saving_surname_settings: false,
   saving_firstname_settings: false,
+  saving_profile_pic_settings: false,
 };
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "UPDATE_SAVING_PROFILE_PIC":
+      return {
+        ...state,
+        saving_profile_pic_settings: actions.payload,
+      };
     case "UPDATE_SAVING_FIRSTNAME":
       return {
         ...state,

@@ -5,6 +5,35 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const update_profile_pic = (uri) => async (dispatch) => {
+  dispatch({
+    type: "UPDATE_SAVING_PROFILE_PIC",
+    payload: true,
+  });
+
+  let uploaded = await uploadImageAsync(uri);
+
+  axios
+    .post("/changeprofilepic/byurl", { newUrl: uploaded })
+    .then(() => {
+      dispatch({
+        type: "UPDATE_SAVING_PROFILE_PIC",
+        payload: false,
+      });
+      dispatch({
+        type: "UPDATE_PROFILE_PIC",
+        payload: uploaded,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "UPDATE_SAVING_PROFILE_PIC",
+        payload: false,
+      });
+    });
+};
+
 export const update_firstname = (firstname) => (dispatch) => {
   dispatch({
     type: "UPDATE_SAVING_FIRSTNAME",
