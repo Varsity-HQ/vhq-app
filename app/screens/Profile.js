@@ -29,6 +29,7 @@ import {
   ANONYMOUS_SETTINGS,
   PROFILE_SETTINGS,
   EDIT_PROFILE,
+  UPDATE_PROFILE_PAGE,
 } from "../navigation/routes";
 
 const mapStateToProps = (state) => {
@@ -201,7 +202,7 @@ function Profile({
             {auth_profile ? (
               <View style={{ flexDirection: "row" }}>
                 <Button
-                  onPress={() => navigation.navigate(EDIT_PROFILE)}
+                  onPress={() => navigation.navigate(UPDATE_PROFILE_PAGE)}
                   style={styles.buttonShadow}
                   type={3}
                   title="Edit Profile"

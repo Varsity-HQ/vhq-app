@@ -1,14 +1,44 @@
 import React from "react";
 import Constants from "expo-constants";
-import { StyleSheet, SafeAreaView, View, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
+} from "react-native";
 
-function Screen({ children, style, scroll, avoidkeyboard }) {
+const statusBarHeight = Constants.statusBarHeight;
+
+function Screen({
+  children,
+  style,
+  scroll,
+  avoidkeyboard,
+  behavior = "position",
+}) {
   return (
     <SafeAreaView style={[styles.screen, style]}>
       {scroll ? (
-        <ScrollView style={[style, styles.view]}>{children}</ScrollView>
+        <ScrollView style={[style, styles.view]}>
+          {avoidkeyboard ? (
+            <KeyboardAvoidingView behavior={behavior}>
+              {children}
+            </KeyboardAvoidingView>
+          ) : (
+            children
+          )}
+        </ScrollView>
       ) : (
-        <View style={[style, styles.view]}>{children}</View>
+        <View style={[style, styles.view]}>
+          {avoidkeyboard ? (
+            <KeyboardAvoidingView behavior={behavior}>
+              {children}
+            </KeyboardAvoidingView>
+          ) : (
+            children
+          )}
+        </View>
       )}
     </SafeAreaView>
   );
@@ -16,7 +46,7 @@ function Screen({ children, style, scroll, avoidkeyboard }) {
 
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: Constants.statusBarHeight,
+    paddingTop: statusBarHeight,
     flex: 1,
   },
   view: {

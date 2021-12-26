@@ -5,6 +5,8 @@ import colors from "../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
+import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
+
 import Resizer from "react-image-file-resizer";
 
 function ProfilePicChanger({ image, onImgChange }) {
@@ -18,18 +20,32 @@ function ProfilePicChanger({ image, onImgChange }) {
     requestPermission();
   }, []);
 
+  const process_image = async (uri) => {
+    console.log({ uri });
+
+    const manipResult = await manipulateAsync(
+      uri,
+      [{ resize: { height: 300, width: 300 } }],
+      { compress: 0.4, format: SaveFormat.JPEG },
+    );
+    onImgChange(manipResult.uri);
+
+    // console.log({ manipResult });
+  };
+
   const selectImage = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         quality: 0.5,
         aspect: [1, 1],
+
         allowsEditing: true,
         // base64: true,
       });
       //
       if (!result.cancelled) {
-        onImgChange(result.uri);
+        process_image(result.uri);
 
         // console.log({ result });
       } else {

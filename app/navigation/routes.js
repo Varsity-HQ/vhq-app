@@ -21,6 +21,7 @@ export const UPDATE_UNIVERSITY = "UpdateUniversity";
 export const UPDATE_RELATIONSHIP_STATUS = "UpdateRelationshipStatus";
 export const UPDATE_SO_STATUS = "UpdateSexualOrientationStatus";
 export const UPDATE_S_TARGET = "UpdateSTarget";
+export const UPDATE_PROFILE_PAGE = "UpdateProfile";
 
 //Setup routes
 export const SETUP_PERSONAL_INFO = "SetupPersonalInformation";
