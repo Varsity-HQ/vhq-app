@@ -33,12 +33,11 @@ const AnimatedSpanRenderer = (props) => {
 
   function renderText(matchingString, matches) {
     // matches => ["[@michel:5455345]", "@michel", "5455345"]
-    let pattern = /\[(@[^:]+):([^\]]+)\]/i;
+    let pattern = /\[(#[^:]+):([^\]]+)\]/i;
     let match = matchingString.match(pattern);
     return `^^${match[1]}^^`;
   }
 
-  console.log({ props });
   const nativeProps = getNativePropsForTNode(props);
 
   let tNodeText = nativeProps.children.props.tnode.domNode.children[0]?.data;
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
     // height: 120,
   },
   url: {
-    color: "red",
+    color: colors.primary,
     textDecorationLine: "underline",
   },
 
@@ -149,7 +148,8 @@ const styles = StyleSheet.create({
   },
 
   hashTag: {
-    fontStyle: "italic",
+    color: colors.secondary,
+    // fontStyle: "italic",
   },
 });
 
