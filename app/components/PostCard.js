@@ -18,6 +18,7 @@ import Localize from "dayjs/plugin/relativeTime";
 import Content from "./Post/content";
 import PostMenu from "./Post/PostMenu";
 import { Image } from "react-native-expo-image-cache";
+import ParsedText from "react-native-parsed-text";
 
 import * as routes from "../navigation/routes";
 

@@ -5,6 +5,8 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  AccessibilityInfo,
+  findNodeHandle,
 } from "react-native";
 import colors from "../config/colors";
 import {
@@ -13,7 +15,6 @@ import {
   RichEditor,
   RichToolbar,
 } from "react-native-pell-rich-editor";
-import { color } from "react-native-reanimated";
 
 class RTextEditor extends Component {
   richText = React.createRef();
