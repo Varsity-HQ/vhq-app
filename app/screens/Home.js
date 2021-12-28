@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
-  Text,
   ScrollView,
   Image as LocalImage,
   TouchableWithoutFeedback,
+  FlatList,
 } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import Screen from "../components/Screen";
@@ -19,6 +19,9 @@ import TabNavigator from "../components/TabNavigator";
 import PostsTab from "../components/Home/postsTab";
 import { Image } from "react-native-expo-image-cache";
 import universityShortName from "../util/universityShortName";
+import SkeletonPost from "../components/Skeletons/Post";
+import Text from "../components/AppText";
+import { get_home_posts } from "../store/actions/actions";
 
 const home_tabs = [
   {
@@ -52,14 +55,41 @@ const mapStateToProps = (state) => {
     profilepic: state.core.accData.profilepic,
     username: state.core.accData.username,
     university: state.core.accData.university,
+
+    loading: state.data.home_data.loading,
+    posts: state.data.home_data.posts,
+    error: state.data.home_data.error,
   };
 };
 
-function Home({ navigation, profilepic, username, university }) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get_home_posts: () => dispatch(get_home_posts()),
+  };
+};
+
+function Home({
+  navigation,
+  profilepic,
+  username,
+  university,
+  loading,
+  posts,
+  get_home_posts,
+}) {
   const [index, setTab] = useState(1);
-  return (
-    <Screen>
-      <ScrollView stickyHeaderIndices={[1]}>
+
+  useEffect(() => {
+    get_home_posts();
+  }, []);
+
+  const renderItem = ({ item }) => <PostCard data={item} />;
+
+  console.log({ posts: posts.post });
+
+  const Header = () => {
+    return (
+      <View>
         <View style={styles.header}>
           <View style={{ width: "30%" }}>
             <TouchableWithoutFeedback
@@ -81,7 +111,9 @@ function Home({ navigation, profilepic, username, university }) {
               )}
             </TouchableWithoutFeedback>
           </View>
-          <Text style={styles.vhq_title}>VarsityHQ</Text>
+          <Text allowFontScaling={false} style={styles.vhq_title}>
+            VarsityHQ
+          </Text>
           <View style={styles.header_uni_container}>
             <View style={styles.header_uni_wrapper}>
               <FontAwesome
@@ -133,10 +165,27 @@ function Home({ navigation, profilepic, username, university }) {
             end={[1, 0]}
           />
         </View>
-        <View>
-          <PostsTab />
-        </View>
-      </ScrollView>
+      </View>
+    );
+  };
+
+  return (
+    <Screen>
+      <FlatList
+        ListHeaderComponent={Header}
+        data={loading ? [] : posts}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
+    </Screen>
+  );
+
+  //
+  return (
+    <Screen>
+      <View>
+        <PostsTab />
+      </View>
     </Screen>
   );
 }
@@ -238,4 +287,4 @@ const styles = StyleSheet.create({
   container: {},
 });
 
-export default connect(mapStateToProps, null)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -4,7 +4,7 @@ import colors from "../config/colors";
 
 function AppText({ children, style, ...props }) {
   return (
-    <Text {...props} style={[styles.text, style]}>
+    <Text allowFontScaling={false} {...props} style={[styles.text, style]}>
       {children}
     </Text>
   );
@@ -13,8 +13,10 @@ function AppText({ children, style, ...props }) {
 const styles = StyleSheet.create({
   text: {
     fontSize: 16,
-    // fontWeight: "500",
-    // fontFamily: "arial",
+    //|////////////////////////////|
+    //|   fontWeight: "500",    |//|
+    //|   fontFamily: "arial",  |//|
+    //|////////////////////////////|
     color: colors.white,
     fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
   },
