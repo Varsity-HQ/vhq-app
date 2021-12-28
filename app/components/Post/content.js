@@ -1,41 +1,61 @@
-import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import React, { useCallback } from "react";
+import { Alert, View, StyleSheet, Linking } from "react-native";
 import { Button, SafeAreaView, Dimensions } from "react-native";
-import { WebView } from "react-native-webview";
 import colors from "../../config/colors";
 import RenderHtml from "react-native-render-html";
 import ParsedText from "react-native-parsed-text";
-import HTML, { domNodeToHTMLString } from "react-native-render-html";
+import { getNativePropsForTNode } from "react-native-render-html";
+import * as Clipboard from "expo-clipboard";
+import Toast from "react-native-toast-message";
+import { COPY_URL_IN_POST } from "../../util/toast_messages";
+import { useNavigation } from "@react-navigation/native";
+import { PROFILE } from "../../navigation/routes";
 
-import { Animated } from "react-native";
-import {
-  CustomTextualRenderer,
-  getNativePropsForTNode,
-} from "react-native-render-html";
+const CustomTextRenderer = (props) => {
+  //
+  const handleLink = async (url) => {
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      Clipboard.setString(url);
+      Toast.show({
+        type: "general",
+        autoHide: true,
+        ...COPY_URL_IN_POST,
+      });
+    }
+  };
 
-const AnimatedSpanRenderer = (props) => {
+  const navigation = useNavigation();
+
   function handleUrlPress(url, matchIndex /*: number*/) {
-    // LinkingIOS.openURL(url);
-    alert(url);
+    handleLink(url);
+  }
+
+  function handleHashtagPress(hashtag, matchIndex) {
+    // alert(hashtag);
   }
 
   function handlePhonePress(phone, matchIndex /*: number*/) {
     AlertIOS.alert(`${phone} has been pressed!`);
   }
 
-  function handleNamePress(name, matchIndex /*: number*/) {
-    AlertIOS.alert(`Hello ${name}`);
-  }
-
-  function handleEmailPress(email, matchIndex /*: number*/) {
-    AlertIOS.alert(`send email to ${email}`);
+  function handleUsernamePress(name, matchIndex /*: number*/) {
+    let pattern = /@(\w+)/;
+    let match = name.match(pattern);
+    navigation.navigate(PROFILE, {
+      username: match[1],
+    });
   }
 
   function renderText(matchingString, matches) {
     // matches => ["[@michel:5455345]", "@michel", "5455345"]
-    let pattern = /\[(#[^:]+):([^\]]+)\]/i;
+    let pattern = /@(\w+)/;
     let match = matchingString.match(pattern);
-    return `^^${match[1]}^^`;
+    // return `^^${match[0]}^^`;
+    console.log({ match });
+    return matchingString;
   }
 
   const nativeProps = getNativePropsForTNode(props);
@@ -47,21 +67,19 @@ const AnimatedSpanRenderer = (props) => {
       style={styles.text}
       parse={[
         { type: "url", style: styles.url, onPress: handleUrlPress },
-        { type: "phone", style: styles.phone, onPress: handlePhonePress },
-        { type: "email", style: styles.email, onPress: handleEmailPress },
+        // { type: "phone", style: styles.phone, onPress: handlePhonePress },
+        // { type: "email", style: styles.email, onPress: handleEmailPress },
         {
-          pattern: /Bob|David/,
-          style: styles.name,
-          onPress: handleNamePress,
-        },
-        {
-          pattern: /\[(@[^:]+):([^\]]+)\]/i,
+          pattern: /@(\w+)/,
           style: styles.username,
-          onPress: handleNamePress,
-          renderText: renderText,
+          onPress: handleUsernamePress,
+          // renderText: renderText,
         },
-        { pattern: /42/, style: styles.magicNumber },
-        { pattern: /#(\w+)/, style: styles.hashTag },
+        {
+          pattern: /#(\w+)/,
+          onPress: handleHashtagPress,
+          style: styles.hashTag,
+        },
       ]}
       childrenProps={{ allowFontScaling: false }}
     >
@@ -71,11 +89,6 @@ const AnimatedSpanRenderer = (props) => {
   );
 };
 
-function CustomRenderer({ tnode, style, key }) {
-  const html = React.useMemo(() => domNodeToHTMLString(tnode.domNode), [tnode]);
-  console.log({ html });
-  return <Custom key={key} html={html} style={style} />;
-}
 //
 const tagsStyles = {
   body: {
@@ -93,13 +106,15 @@ function Content({ html }) {
       {/* <Text>{html}</Text> */}
       <RenderHtml
         renderers={{
-          p: (props) => <AnimatedSpanRenderer {...props} />,
+          p: (props) => <CustomTextRenderer {...props} />,
         }}
         // renderers={(props) => AnimatedSpanRenderer(props)}
         // baseStyle={{}}
         tagsStyles={tagsStyles}
         contentWidth={width}
-        source={{ html }}
+        source={{
+          html,
+        }}
       />
       {/* </ParsedText> */}
       {/* <Text style={{ color: colors.white }}>{JSON.stringify(html)}</Text> */}
@@ -113,33 +128,32 @@ const styles = StyleSheet.create({
     // borderColor: "red",
     // borderWidth: 1,
     // height: 120,
+    paddingVertical: 10,
   },
   url: {
     color: colors.primary,
-    textDecorationLine: "underline",
+    // textDecorationLine: "underline",
   },
 
   email: {
-    textDecorationLine: "underline",
+    color: colors.primary,
   },
 
   text: {
     color: colors.white,
-    fontSize: 15,
+    fontSize: 16,
   },
 
   phone: {
-    color: "blue",
-    textDecorationLine: "underline",
+    color: colors.primary,
   },
 
   name: {
-    color: "red",
+    // color: "red",
   },
 
   username: {
-    color: "green",
-    fontWeight: "bold",
+    color: colors.primary,
   },
 
   magicNumber: {
@@ -148,7 +162,7 @@ const styles = StyleSheet.create({
   },
 
   hashTag: {
-    color: colors.secondary,
+    color: colors.primary,
     // fontStyle: "italic",
   },
 });
