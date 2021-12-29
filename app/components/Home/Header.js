@@ -8,17 +8,25 @@ import {
 } from "react-native";
 import { Image } from "react-native-expo-image-cache";
 import universityShortName from "../../util/universityShortName";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import Text from "../AppText";
 import TabNavigator from "../TabNavigator";
 import colors from "../../config/colors";
 
 const home_tabs = [
   {
-    title: "All",
+    title: "Posts",
     index: 1,
     icon: (
-      <Ionicons color={colors.white} size={18} name="ios-file-tray-stacked" />
+      <MaterialCommunityIcons
+        color={colors.white}
+        size={18}
+        name="post-outline"
+      />
     ),
   },
   {

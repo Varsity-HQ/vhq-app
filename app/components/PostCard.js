@@ -17,7 +17,7 @@ import Localize from "dayjs/plugin/relativeTime";
 import Content from "./Post/content";
 import PostMenu from "./Post/PostMenu";
 import { Image } from "react-native-expo-image-cache";
-
+import PostCardFooter from "../components/Post/PostCardFooter";
 import * as routes from "../navigation/routes";
 
 dayjs.extend(Localize);
@@ -173,7 +173,7 @@ class PostCard extends PureComponent {
               }}
             >
               <View style={styles.button}>
-                <Ionicons name="heart" size={26} color={colors.white} />
+                <Ionicons name="heart-outline" size={26} color={colors.white} />
                 <Text style={styles.button_text}>{data.likes_count}</Text>
               </View>
               <View style={styles.button}>
@@ -196,6 +196,7 @@ class PostCard extends PureComponent {
               <Feather name="bookmark" size={26} color={colors.white} />
             </View>
           </View>
+          <PostCardFooter />
         </View>
       </>
     );

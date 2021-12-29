@@ -134,7 +134,7 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
       await axios
         .get("/get/account")
         .then((data) => {
-          console.log(data.data);
+          // console.log(data.data);
           set_user(data.data);
           return setAuthState(true);
         })
@@ -162,20 +162,20 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
   return (
     <>
       <View>{/* <WelcomeScreen /> */}</View>
-      <SafeAreaView style={{ flex: 1, paddingTop: 30 }}>
-        <StatusBar
-          translucent
-          animated={true}
-          backgroundColor="transparent"
-          barStyle="light-content"
-          showHideTransition="fade"
-          hidden={false}
-        />
-        <NavigationContainer theme={vhqTheme}>
-          {authenticated ? <AppNavigator /> : <AuthRoutes />}
-        </NavigationContainer>
-        <Toast config={toastConfig} />
-      </SafeAreaView>
+      {/* <SafeAreaView style={{ flex: 1, paddingTop: 30 }}> */}
+      <StatusBar
+        translucent
+        animated={true}
+        backgroundColor="transparent"
+        barStyle="light-content"
+        showHideTransition="fade"
+        hidden={false}
+      />
+      <NavigationContainer theme={vhqTheme}>
+        {authenticated ? <AppNavigator /> : <AuthRoutes />}
+      </NavigationContainer>
+      <Toast config={toastConfig} />
+      {/* </SafeAreaView> */}
     </>
   );
 }
