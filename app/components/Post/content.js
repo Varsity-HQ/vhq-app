@@ -54,7 +54,7 @@ const CustomTextRenderer = (props) => {
     let pattern = /@(\w+)/;
     let match = matchingString.match(pattern);
     // return `^^${match[0]}^^`;
-    console.log({ match });
+    // console.log({ match });
     return matchingString;
   }
 

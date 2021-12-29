@@ -1,26 +1,8 @@
-import React, { useEffect, useState, PureComponent } from "react";
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Image as LocalImage,
-  TouchableWithoutFeedback,
-  FlatList,
-} from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import React, { PureComponent } from "react";
+import { StyleSheet, FlatList } from "react-native";
 import Screen from "../components/Screen";
-import colors from "../config/colors";
-import { useFonts } from "expo-font";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import PostCard from "../components/PostCard";
 import { connect } from "react-redux";
-import TabNavigator from "../components/TabNavigator";
-import PostsTab from "../components/Home/postsTab";
-import { Image } from "react-native-expo-image-cache";
-import universityShortName from "../util/universityShortName";
-import SkeletonPost from "../components/Skeletons/Post";
-import Text from "../components/AppText";
 import { get_home_posts } from "../store/actions/actions";
 import Header from "../components/Home/Header";
 import Footer from "../components/Home/Footer";
@@ -76,10 +58,9 @@ class Home extends PureComponent {
   }
 
   render() {
-    const { navigation, profilepic, username, university, loading, posts } =
-      this.props;
-
-    const postsSet = console.log("rendered");
+    //|
+    const { navigation, posts } = this.props;
+    //|
     return (
       <Screen>
         <FlatList

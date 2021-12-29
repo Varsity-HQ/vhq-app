@@ -39,7 +39,7 @@ function ProfilePicChanger({ image, onImgChange }) {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         quality: 0.5,
         aspect: [1, 1],
-
+        presentationStyle: 0,
         allowsEditing: true,
         // base64: true,
       });

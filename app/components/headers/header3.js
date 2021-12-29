@@ -9,8 +9,6 @@ import {
 import colors from "../../config/colors";
 import AppText from "../AppText";
 import { Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
-import { color } from "react-native-reanimated";
 
 function header3({
   bgActive,

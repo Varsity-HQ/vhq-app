@@ -484,8 +484,6 @@ export const get_search_data = () => (dispatch) => {
         type: "SET_SEARCH_DATA",
         payload: data.data,
       });
-
-      console.log(data.data);
     })
     .catch((err) => {
       console.log(err);
@@ -528,19 +526,16 @@ export const get_user_profile = (username) => (dispatch) => {
   let previous_errors = store.getState().data.profile_page.errors;
 
   if (previous_user !== username || previous_errors.notFound) {
-    console.log("set loading", { previous_user, username });
+    // console.log("set loading", { previous_user, username });
     dispatch({
       type: "SET_LOADING_PROFILE",
     });
   }
 
-  console.log({ username });
-
   axios
     .get(`/user/${username}/get`)
     .then((data) => {
       let u_data = data.data;
-      console.log(u_data);
 
       if (u_data.response === "user_not_found") {
         return dispatch({
@@ -564,9 +559,7 @@ export const get_user_profile = (username) => (dispatch) => {
 export const get_user_page = (username) => {
   axios
     .get(`/user/${username}/get`)
-    .then((data) => {
-      console.log(data.data);
-    })
+    .then((data) => {})
     .catch((err) => {
       console.log(err);
     });
@@ -604,8 +597,6 @@ export const get_home_posts = (props) => (dispatch) => {
         : currentPosts.concat(data.data.posts);
 
       // console.log("updated home");
-
-      console.log(data.data);
 
       dispatch({
         type: "HOME_LOAD_REFRESH",
@@ -658,16 +649,14 @@ export const save_profileDefaults = (uObj) => async (dispatch) => {
     type: "SET_OVERLAY_STATE",
     payload: true,
   });
-  console.log({ uObj });
+
   let uploaded = await uploadImageAsync(uObj.profilepic);
-  console.log(uploaded);
 
   axios
     .post("/changeprofilepic/byurl", {
       newUrl: uploaded,
     })
     .then((data) => {
-      console.log(data.data);
       dispatch({
         type: "UPDATE_PROFILE_PIC",
         payload: uploaded,
@@ -760,8 +749,6 @@ export const get_user = () => (dispatch) => {
   axios
     .get("/get/account")
     .then((data) => {
-      console.log(data.data);
-
       dispatch({
         type: "SET_USER_DATA",
         payload: data.data,
@@ -794,9 +781,6 @@ export const login_user = (email, password) => (dispatch) => {
     type: "SET_LOGGING_IN_ERROR",
     payload: {},
   });
-
-  console.log({ email, password });
-
   axios
     .post("/login", {
       email,
