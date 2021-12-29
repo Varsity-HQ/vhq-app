@@ -612,22 +612,18 @@ export const get_home_posts = (props) => (dispatch) => {
         payload: data.data.items,
       });
 
-      let list_keys = [];
-      let items = [];
+      if (
+        data.data.lastVisible !== store.getState().data.home_data.page_cursor
+      ) {
+        dispatch({
+          type: "SET_HOME_POSTS",
+          payload: {
+            posts: [...new Set(new_posts)],
+            cursor: data.data.lastVisible,
+          },
+        });
+      }
 
-      new_posts.forEach((x) => {
-        if (!list_keys.includes(x.id)) {
-          items.push(x);
-        }
-      });
-
-      dispatch({
-        type: "SET_HOME_POSTS",
-        payload: {
-          posts: [...new Set(items)],
-          cursor: data.data.lastVisible,
-        },
-      });
       //
     })
     .catch((err) => {

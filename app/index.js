@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import AppNavigator from "./navigation/AppRoutes";
 import AuthRoutes from "./navigation/AuthRoutes";
@@ -160,20 +160,22 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
   }
 
   return (
-    // <View>{/* <WelcomeScreen /> */}</View>
     <>
-      <StatusBar
-        translucent
-        animated={true}
-        backgroundColor="transparent"
-        barStyle="light-content"
-        showHideTransition="fade"
-        hidden={false}
-      />
-      <NavigationContainer theme={vhqTheme}>
-        {authenticated ? <AppNavigator /> : <AuthRoutes />}
-      </NavigationContainer>
-      <Toast config={toastConfig} />
+      <View>{/* <WelcomeScreen /> */}</View>
+      <SafeAreaView style={{ flex: 1, paddingTop: 30 }}>
+        <StatusBar
+          translucent
+          animated={true}
+          backgroundColor="transparent"
+          barStyle="light-content"
+          showHideTransition="fade"
+          hidden={false}
+        />
+        <NavigationContainer theme={vhqTheme}>
+          {authenticated ? <AppNavigator /> : <AuthRoutes />}
+        </NavigationContainer>
+        <Toast config={toastConfig} />
+      </SafeAreaView>
     </>
   );
 }
