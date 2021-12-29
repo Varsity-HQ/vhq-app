@@ -6,6 +6,8 @@ const initialData = {
     page_cursor: null,
     posts: [],
     error: false,
+    refreshing: false,
+    loading_more: false,
   },
 
   profile_page: {
@@ -147,12 +149,30 @@ const dataReducer = (state = initialData, actions) => {
         },
       };
 
+    case "HOME_LOAD_REFRESH":
+      return {
+        ...state,
+        home_data: {
+          ...state.home_data,
+          refreshing: actions.payload,
+        },
+      };
+    case "HOME_LOADING_MORE":
+      return {
+        ...state,
+        home_data: {
+          ...state.home_data,
+          loading_more: actions.payload,
+        },
+      };
+
     case "SET_HOME_POSTS":
       let updated_home_data = {
         loading: false,
         page_cursor: actions.payload.cursor,
         posts: actions.payload.posts,
         error: false,
+        refreshing: false,
       };
 
       return {

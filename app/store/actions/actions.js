@@ -572,21 +572,51 @@ export const get_user_page = (username) => {
     });
 };
 
-export const get_home_posts = () => (dispatch) => {
-  let lastVisible = store.getState().data.home_data.page_cursor;
+export const get_home_posts = (props) => (dispatch) => {
+  let lastVisible = null;
+
+  if (props.refresh) {
+    lastVisible = null;
+    dispatch({
+      type: "HOME_LOAD_REFRESH",
+      payload: true,
+    });
+  }
+
+  if (props.init) {
+    lastVisible = null;
+  }
+
+  if (props.more) {
+    dispatch({
+      type: "HOME_LOADING_MORE",
+      payload: true,
+    });
+    lastVisible = store.getState().data.home_data.page_cursor;
+  }
 
   axios
     .get(`/get/home${lastVisible ? "?pt_ad=" + lastVisible : ""}`)
     .then((data) => {
       // console.log("home=>", data.data);
-
       let currentPosts = store.getState().data.home_data.posts;
-      let new_posts = currentPosts.concat(data.data.posts);
+      let new_posts = !lastVisible
+        ? data.data.posts
+        : currentPosts.concat(data.data.posts);
 
       // console.log("updated home");
 
       console.log(data.data);
 
+      dispatch({
+        type: "HOME_LOAD_REFRESH",
+        payload: false,
+      });
+
+      dispatch({
+        type: "HOME_LOADING_MORE",
+        payload: false,
+      });
       dispatch({
         type: "SET_HOME_MARKET_ITEMS",
         payload: data.data.items,
@@ -601,7 +631,18 @@ export const get_home_posts = () => (dispatch) => {
       });
       //
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      dispatch({
+        type: "HOME_LOAD_REFRESH",
+        payload: false,
+      });
+
+      dispatch({
+        type: "HOME_LOADING_MORE",
+        payload: false,
+      });
+      console.log(err);
+    });
 };
 
 export const save_profileDefaults = (uObj) => async (dispatch) => {

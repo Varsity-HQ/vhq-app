@@ -23,6 +23,7 @@ import SkeletonPost from "../components/Skeletons/Post";
 import Text from "../components/AppText";
 import { get_home_posts } from "../store/actions/actions";
 import Header from "../components/Home/Header";
+import Footer from "../components/Home/Footer";
 
 const mapStateToProps = (state) => {
   return {
@@ -31,6 +32,8 @@ const mapStateToProps = (state) => {
     university: state.core.accData.university,
 
     loading: state.data.home_data.loading,
+    loading_more: state.data.home_data.loading_more,
+    refreshing: state.data.home_data.refreshing,
     posts: state.data.home_data.posts,
     error: state.data.home_data.error,
   };
@@ -38,7 +41,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    get_home_posts: () => dispatch(get_home_posts()),
+    get_home_posts: (props) => dispatch(get_home_posts(props)),
   };
 };
 
@@ -47,8 +50,24 @@ class Home extends PureComponent {
     index: 1,
   };
 
+  onRefresh() {
+    this.props.get_home_posts({
+      refresh: true,
+      init: false,
+      more: false,
+    });
+  }
+
+  handleLoadMore() {
+    console.log("should load more");
+  }
+
   componentDidMount = () => {
-    this.props.get_home_posts();
+    this.props.get_home_posts({
+      refresh: false,
+      init: true,
+      more: false,
+    });
   };
 
   setTab = (index) => {
@@ -70,10 +89,17 @@ class Home extends PureComponent {
             this.flatListRef = ref;
           }}
           ListHeaderComponent={<Header {...this.props} />}
+          ListFooterComponent={<Footer loadingMore={this.props.loading_more} />}
           data={this.props.loading ? [] : postsSet}
-          renderItem={({ item }) => <PostCard data={item} />}
+          renderItem={({ item }) => (
+            <PostCard navigation={navigation} data={item} />
+          )}
           keyExtractor={(item) => item.id}
           initialNumToRender={10}
+          onRefresh={() => this.onRefresh()}
+          refreshing={this.props.refreshing}
+          onEndReached={this.handleLoadMore}
+          onEndReachedThreshold={0.8}
         />
       </Screen>
     );
