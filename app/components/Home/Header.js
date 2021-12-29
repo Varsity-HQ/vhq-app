@@ -40,10 +40,7 @@ const home_tabs = [
   },
 ];
 
-const Header = (props) => {
-  const { navigation, profilepic, username, university, loading, posts } =
-    props;
-
+const Header = ({ navigation, profilepic, username, university }) => {
   const [index, setTab] = useState(1);
 
   return (

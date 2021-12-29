@@ -41,14 +41,23 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    get_home_posts: (props) => dispatch(get_home_posts(props)),
+    get_home_posts: (c) => dispatch(get_home_posts(c)),
   };
 };
 
 class Home extends PureComponent {
   state = {
     index: 1,
+    loading: false,
   };
+
+  componentDidMount() {
+    this.props.get_home_posts({
+      refresh: false,
+      init: true,
+      more: false,
+    });
+  }
 
   onRefresh() {
     this.props.get_home_posts({
@@ -59,29 +68,18 @@ class Home extends PureComponent {
   }
 
   handleLoadMore() {
-    console.log("should load more");
-  }
-
-  componentDidMount = () => {
     this.props.get_home_posts({
-      refresh: false,
-      init: true,
-      more: false,
+      refresh: true,
+      init: false,
+      more: true,
     });
-  };
-
-  setTab = (index) => {
-    this.setState({
-      index: index,
-    });
-  };
+  }
 
   render() {
     const { navigation, profilepic, username, university, loading, posts } =
       this.props;
 
-    const postsSet = [...new Set(posts)];
-    console.log("rendered");
+    const postsSet = console.log("rendered");
     return (
       <Screen>
         <FlatList
@@ -90,7 +88,7 @@ class Home extends PureComponent {
           }}
           ListHeaderComponent={<Header {...this.props} />}
           ListFooterComponent={<Footer loadingMore={this.props.loading_more} />}
-          data={this.props.loading ? [] : postsSet}
+          data={this.props.loading ? [] : posts}
           renderItem={({ item }) => (
             <PostCard navigation={navigation} data={item} />
           )}
@@ -98,7 +96,7 @@ class Home extends PureComponent {
           initialNumToRender={10}
           onRefresh={() => this.onRefresh()}
           refreshing={this.props.refreshing}
-          onEndReached={this.handleLoadMore}
+          onEndReached={() => this.handleLoadMore()}
           onEndReachedThreshold={0.8}
         />
       </Screen>

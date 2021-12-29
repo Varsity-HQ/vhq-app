@@ -575,24 +575,24 @@ export const get_user_page = (username) => {
 export const get_home_posts = (props) => (dispatch) => {
   let lastVisible = null;
 
+  if (props.init) {
+    lastVisible = null;
+  }
+
+  if (props.more) {
+    lastVisible = store.getState().data.home_data.page_cursor;
+    dispatch({
+      type: "HOME_LOADING_MORE",
+      payload: true,
+    });
+  }
+
   if (props.refresh) {
     lastVisible = null;
     dispatch({
       type: "HOME_LOAD_REFRESH",
       payload: true,
     });
-  }
-
-  if (props.init) {
-    lastVisible = null;
-  }
-
-  if (props.more) {
-    dispatch({
-      type: "HOME_LOADING_MORE",
-      payload: true,
-    });
-    lastVisible = store.getState().data.home_data.page_cursor;
   }
 
   axios
@@ -622,10 +622,19 @@ export const get_home_posts = (props) => (dispatch) => {
         payload: data.data.items,
       });
 
+      let list_keys = [];
+      let items = [];
+
+      new_posts.forEach((x) => {
+        if (!list_keys.includes(x.id)) {
+          items.push(x);
+        }
+      });
+
       dispatch({
         type: "SET_HOME_POSTS",
         payload: {
-          posts: new_posts,
+          posts: items,
           cursor: data.data.lastVisible,
         },
       });

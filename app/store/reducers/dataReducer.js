@@ -173,6 +173,7 @@ const dataReducer = (state = initialData, actions) => {
         posts: actions.payload.posts,
         error: false,
         refreshing: false,
+        loading_more: false,
       };
 
       return {

@@ -8,16 +8,13 @@ function Footer({ loadingMore }) {
     <View
       style={{
         position: "relative",
-        //  width: width,
-        //  height: height,
-        paddingVertical: 20,
-        borderTopWidth: 1,
+        paddingVertical: 40,
         marginTop: 10,
-        marginBottom: 10,
+        marginBottom: 50,
         borderColor: colors.primary,
       }}
     >
-      <ActivityIndicator animating size="large" />
+      <ActivityIndicator color={colors.primary} animating size="large" />
     </View>
   );
 }
