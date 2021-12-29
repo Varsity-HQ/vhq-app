@@ -579,18 +579,17 @@ export const get_home_posts = (props) => (dispatch) => {
     lastVisible = null;
   }
 
-  if (props.more) {
-    lastVisible = store.getState().data.home_data.page_cursor;
-    dispatch({
-      type: "HOME_LOADING_MORE",
-      payload: true,
-    });
-  }
-
   if (props.refresh) {
     lastVisible = null;
     dispatch({
       type: "HOME_LOAD_REFRESH",
+      payload: true,
+    });
+  }
+  if (props.more) {
+    lastVisible = store.getState().data.home_data.page_cursor;
+    dispatch({
+      type: "HOME_LOADING_MORE",
       payload: true,
     });
   }
@@ -634,7 +633,7 @@ export const get_home_posts = (props) => (dispatch) => {
       dispatch({
         type: "SET_HOME_POSTS",
         payload: {
-          posts: items,
+          posts: [...new Set(items)],
           cursor: data.data.lastVisible,
         },
       });

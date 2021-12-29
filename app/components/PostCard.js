@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
   Image as ImageLocal,
   Platform,
+  Dimensions,
 } from "react-native";
 import colors from "../config/colors";
 import { FontAwesome, Ionicons, Feather } from "@expo/vector-icons";
@@ -20,6 +21,8 @@ import { Image } from "react-native-expo-image-cache";
 import * as routes from "../navigation/routes";
 
 dayjs.extend(Localize);
+
+const { width: deviceWidth } = Dimensions.get("window");
 
 class PostCard extends PureComponent {
   profilepic = (uri) => {
@@ -47,6 +50,7 @@ class PostCard extends PureComponent {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
+              ...styles.def_padding,
             }}
           >
             <TouchableWithoutFeedback
@@ -96,8 +100,22 @@ class PostCard extends PureComponent {
               <PostMenu />
             </View>
           </View>
+
           <View style={styles.content_container}>
-            <Content html={data.postHtmlText} />
+            {data.attachments.length > 0 && (
+              <Image
+                style={{
+                  marginTop: 15,
+                  height: deviceWidth,
+                  width: deviceWidth,
+                }}
+                uri={data.attachments[0]}
+              />
+            )}
+
+            <View style={styles.def_padding}>
+              <Content html={data.postHtmlText} />
+            </View>
 
             {/* <Text
             onPress={() => nav.navigate("PostPage")}
@@ -111,6 +129,7 @@ class PostCard extends PureComponent {
               // marginTop: 15,
               justifyContent: "space-between",
               flexDirection: "row",
+              ...styles.def_padding,
             }}
           >
             <Text style={{ fontSize: 14, color: colors.secondary }}>
@@ -144,6 +163,7 @@ class PostCard extends PureComponent {
               justifyContent: "space-between",
               flexDirection: "row",
               marginTop: 10,
+              ...styles.def_padding,
             }}
           >
             <View
@@ -183,6 +203,9 @@ class PostCard extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+  def_padding: {
+    paddingHorizontal: 10,
+  },
   post_header: {
     flexDirection: "row",
     alignItems: "center",
@@ -226,7 +249,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   container: {
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     paddingTop: 15,
     paddingBottom: 10,
     borderBottomColor: colors.black,
