@@ -8,6 +8,7 @@ import {
   Image as ImageLocal,
   Platform,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import colors from "../config/colors";
 import { FontAwesome, Ionicons, Feather } from "@expo/vector-icons";
@@ -25,6 +26,10 @@ dayjs.extend(Localize);
 const { width: deviceWidth } = Dimensions.get("window");
 
 class PostCard extends PureComponent {
+  state = {
+    show_comment_bar: false,
+  };
+
   profilepic = (uri) => {
     let image_uri = "";
 
@@ -158,45 +163,8 @@ class PostCard extends PureComponent {
               </View>
             </View>
           </View>
-          <View
-            style={{
-              justifyContent: "space-between",
-              flexDirection: "row",
-              marginTop: 10,
-              ...styles.def_padding,
-            }}
-          >
-            <View
-              style={{
-                justifyContent: "space-between",
-                flexDirection: "row",
-              }}
-            >
-              <View style={styles.button}>
-                <Ionicons name="heart-outline" size={26} color={colors.white} />
-                <Text style={styles.button_text}>{data.likes_count}</Text>
-              </View>
-              <View style={styles.button}>
-                <Ionicons
-                  name="ios-chatbubbles-outline"
-                  size={25}
-                  color={colors.white}
-                />
-                <Text style={styles.button_text}>{data.comments_count}</Text>
-              </View>
-              <View style={styles.button}>
-                <Ionicons
-                  name="ios-chatbox-ellipses-outline"
-                  size={26}
-                  color={colors.white}
-                />
-              </View>
-            </View>
-            <View style={styles.button}>
-              <Feather name="bookmark" size={26} color={colors.white} />
-            </View>
-          </View>
-          <PostCardFooter />
+
+          <PostCardFooter data={data} />
         </View>
       </>
     );
