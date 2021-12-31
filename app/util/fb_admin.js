@@ -1,9 +1,13 @@
 // import React from "react";
-import firebase from "firebase/app";
+import firebase, { initializeApp } from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
-// import { firebaseConfig } from "./fb_config";
+import { getFirestore } from "firebase/firestore";
+import { firebaseConfig } from "./fb_config";
 // firebase.initializeApp(firebaseConfig);
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 // const firestore = firebase.firestore();
 
@@ -11,7 +15,10 @@ import "firebase/firestore";
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 // export const auth = firebase.aut;
-// export const googleProvider = new firebase.auth.GoogleAuthProvider();
-export const fb = firebase;
+// export const googleProvider = new firebase.auth.GoogleAuthProvider()e
 
-export default firestore;
+export default db;
+
+// export const fb = firebase;
+
+// export default firestore;
