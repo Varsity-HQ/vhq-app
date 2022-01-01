@@ -31,6 +31,35 @@ const initialData = {
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "LIKE_POST": {
+      let updated_liked_posts = state.accData.liked_posts;
+      updated_liked_posts.push({
+        post_id: actions.payload,
+      });
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          liked_posts: updated_liked_posts,
+        },
+      };
+    }
+    case "UNLIKE_POST":
+      let posts_remaining_liked = [];
+      state.accData.liked_posts.forEach((x) => {
+        if (x.post_id !== actions.payload) {
+          posts_remaining_liked.push(x);
+        }
+      });
+
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          liked_posts: posts_remaining_liked,
+        },
+      };
+
     case "UPDATE_SAVING_PROFILE_PIC":
       return {
         ...state,

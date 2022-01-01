@@ -4,6 +4,41 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const unlike_post = (post_id) => (dispatch) => {
+  // console.log("unlike");
+  dispatch({ type: "UNLIKE_POST", payload: post_id });
+  dispatch({ type: "UPDATE_UNLIKED_POST", payload: post_id });
+
+  // if (store.getState().core.currentPost) {
+  //   dispatch({ type: "UPDATE_LIKED_POST_PP_DEC" });
+  // }
+
+  axios
+    .get(`/post/unlike/${post_id}`)
+    .then((data) => {
+      // console.log(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+export const like_post = (post_id) => (dispatch) => {
+  // console.log("like");
+  dispatch({ type: "LIKE_POST", payload: post_id });
+  dispatch({ type: "UPDATE_LIKED_POST", payload: post_id });
+  // if (store.getState().core.currentPost) {
+  //   dispatch({ type: "UPDATE_LIKED_POST_PP" });
+  // }
+  axios
+    .get(`/post/like/${post_id}`)
+    .then((data) => {
+      // console.log(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const update_profile_pic = (uri) => async (dispatch) => {
   dispatch({
     type: "UPDATE_SAVING_PROFILE_PIC",

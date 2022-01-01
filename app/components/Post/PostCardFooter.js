@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { PureComponent, useEffect, useRef, useState } from "react";
 import { Animated, TouchableOpacity } from "react-native";
 import {
   View,
@@ -16,6 +16,7 @@ import axios from "axios";
 import db from "../../util/fb_admin";
 import { useNavigation } from "@react-navigation/native";
 import { PROFILE } from "../../navigation/routes";
+import PostCardButtons from "./PostCardButtons";
 const {
   collection,
   getDocs,
@@ -60,184 +61,155 @@ function CommentComponent({ x }) {
   );
 }
 
-function PostCardFooter({ profilepic, data, username }) {
-  const [showExplicitly, setShowExplicitly] = useState(true);
-  const [comment, setComment] = useState("");
-  const [comments, setComments] = useState([]);
-  const [posting_comment, setPostingComment] = useState(false);
-
-  if (data.comments_count > 0 || data.comments_count > "0") {
-    //
-    async function comments_query() {
-      const _collection = collection(db, "comments");
-
-      const _query = query(
-        _collection,
-        where("post_id", "==", data.id),
-        orderBy("date_created", "desc"),
-        limit(2),
-      );
-
-      const Snapshot = await getDocs(_query);
-      const list = Snapshot.docs.map((doc) => doc.data());
-      return list;
-    }
-
-    // const query = db
-    //   .collection("comments")
-    //   .where("post_id", "==", post_id)
-    //   .orderBy("date_created", "desc")
-    //   .limit(2);
-
-    const handle_get_comments = async () => {
-      await comments_query()
-        .then((data) => {
-          setComments(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    useEffect(() => {
-      // console.log("ran");
-
-      handle_get_comments();
-
-      // query.get().then((data) => {
-      //   let __com = [];
-      //   data.forEach((x) => {
-      //     __com.push(x.data());
-      //   });
-      //   setComments(__com);
-      //   hasLoaded();
-      // });
-    }, [data.id]);
+class PostCardFooter extends PureComponent {
+  constructor(props) {
+    super(props);
+    this._isMounted = false;
   }
 
-  const handleSubmit = () => {
-    setPostingComment(true);
-    axios
-      .post(`/post/comment/${data.id}`, {
-        post_id: data.id,
-        comment: comment,
-      })
-      .then(() => {
-        setShowExplicitly(true);
-        let c_comments = comments;
-        c_comments.push({
-          comment_text: comment,
-          commenter_username: username,
-        });
-        setComments(c_comments);
-        setPostingComment(false);
-        setComment("");
+  state = {
+    showExplicitly: true,
+    comment: "",
+    comments: [],
+    posting_comment: false,
+  };
+
+  // componentDidMount() {
+  //   const data = this.props.data;
+  //   this._isMounted = true;
+
+  //   if (
+  //     data.comments_count > 0 ||
+  //     (data.comments_count > "0" && this._isMounted)
+  //   ) {
+  //     // this.handle_get_comments();
+  //   }
+  // }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  comments_query = async () => {
+    const _collection = collection(db, "comments");
+    const _query = query(
+      _collection,
+      where("post_id", "==", this.props.data.id),
+      orderBy("date_created", "desc"),
+      limit(2),
+    );
+    const Snapshot = await getDocs(_query);
+    const list = Snapshot.docs.map((doc) => doc.data());
+    return list;
+  };
+
+  handle_get_comments = () => {
+    this.comments_query()
+      .then((data) => {
+        this._isMounted &&
+          this.setState({
+            comments: data,
+          });
       })
       .catch((err) => {
         console.log(err);
-        setPostingComment(false);
       });
   };
 
-  // console.log({ comment: data.id });
-  return (
-    <>
-      <View
-        style={{
-          justifyContent: "space-between",
-          flexDirection: "row",
-          marginTop: 10,
-          ...styles.def_padding,
-        }}
-      >
-        <View
-          style={{
-            justifyContent: "space-between",
-            flexDirection: "row",
-          }}
-        >
-          <View style={styles.button}>
-            <Ionicons name="heart-outline" size={26} color={colors.white} />
-            <Text style={styles.button_text}>{data.likes_count}</Text>
-          </View>
-          <View style={styles.button}>
-            <Ionicons
-              name="ios-chatbubbles-outline"
-              size={25}
-              color={colors.white}
-            />
-            <Text style={styles.button_text}>{data.comments_count}</Text>
-          </View>
-          <TouchableOpacity style={styles.button}>
-            <Ionicons
-              name="ios-chatbox-ellipses-outline"
-              size={26}
-              color={colors.white}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.button}>
-          <Feather name="bookmark" size={26} color={colors.white} />
-        </View>
-      </View>
+  handleSubmit = () => {
+    const comment = this.state.comment;
+    this.setState({
+      posting_comment: true,
+    });
 
-      {showExplicitly && (
-        <Animatable.View duration={2000} animation="fadeIn">
-          <View style={styles.container}>
-            <View
-              style={
-                comments.length > 0 && {
-                  marginTop: 10,
+    axios
+      .post(`/post/comment/${this.props.data.id}`, {
+        post_id: this.props.data.id,
+        comment: comment,
+      })
+      .then(() => {
+        let c_comments = this.state.comments;
+
+        c_comments.push({
+          comment_text: comment,
+          commenter_username: this.props.username,
+        });
+
+        this.setState({
+          posting_comment: false,
+          comment: "",
+          comments: c_comments,
+          showExplicitly: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({
+          posting_comment: false,
+        });
+      });
+  };
+  render() {
+    return (
+      <>
+        {this.state.showExplicitly && (
+          <Animatable.View duration={2000} animation="fadeIn">
+            <View style={styles.container}>
+              {/* <View
+                style={
+                  this.state.comments.length > 0 && {
+                    marginTop: 10,
+                  }
                 }
-              }
-            >
-              {comments.map((x, index) => (
-                <CommentComponent
-                  key={x.comment_id ? x.comment_id : "c_" + index}
-                  x={x}
-                />
-              ))}
-            </View>
+              >
+                {this.state.comments.map((x, index) => (
+                  <CommentComponent
+                    key={x.comment_id ? x.comment_id : "c_" + index}
+                    x={x}
+                  />
+                ))}
+              </View> */}
 
-            <View
-              style={{
-                marginTop: 10,
-                flexDirection: "row",
-                alignItems: "center",
-                position: "relative",
-              }}
-            >
-              {posting_comment && (
-                <Animatable.View
-                  animation="fadeIn"
-                  style={styles.posting_overlay}
-                >
-                  <Text style={styles.posting_overlay_text}>Posting...</Text>
-                </Animatable.View>
-              )}
-
-              <Image style={styles.profilepic} uri={profilepic} />
-              <TextInput
-                onChangeText={(e) => setComment(e)}
-                placeholderTextColor={colors.secondary_2}
-                placeholder="Write your comment"
-                style={styles.input}
-                value={comment}
-              />
-              <TouchableOpacity
-                onPress={handleSubmit}
+              <View
                 style={{
-                  marginRight: 10,
+                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  position: "relative",
                 }}
               >
-                <Ionicons name="send" size={23} color={colors.white} />
-              </TouchableOpacity>
+                {this.state.posting_comment && (
+                  <Animatable.View
+                    animation="fadeIn"
+                    style={styles.posting_overlay}
+                  >
+                    <Text style={styles.posting_overlay_text}>Posting...</Text>
+                  </Animatable.View>
+                )}
+
+                <Image style={styles.profilepic} uri={this.props.profilepic} />
+                <TextInput
+                  onChangeText={(e) => this.setState({ comment: e })}
+                  placeholderTextColor={colors.secondary_2}
+                  placeholder="Write your comment"
+                  style={styles.input}
+                  value={this.state.comment}
+                />
+                <TouchableOpacity
+                  onPress={this.handleSubmit}
+                  style={{
+                    marginRight: 10,
+                  }}
+                >
+                  <Ionicons name="send" size={23} color={colors.white} />
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </Animatable.View>
-      )}
-    </>
-  );
+          </Animatable.View>
+        )}
+      </>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

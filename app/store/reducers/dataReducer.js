@@ -46,6 +46,72 @@ const initialData = {
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "UPDATE_UNLIKED_POST":
+      // console.log("fired with id ", actions.payload);
+
+      let updated_home_posts_unl = [];
+      let updated_profile_posts_unl = [];
+
+      state.home_data.posts.forEach((x) => {
+        if (x.id === actions.payload) {
+          let updated_liked_count = (parseInt(x.likes_count) - 1).toString();
+          let post_r = { ...x, likes_count: updated_liked_count };
+          updated_home_posts_unl.push(post_r);
+        } else {
+          updated_home_posts_unl.push(x);
+        }
+      });
+
+      state.profile_page.posts.forEach((x) => {
+        if (x.id === actions.payload) {
+          let updated_liked_count = (parseInt(x.likes_count) - 1).toString();
+          let post_r = { ...x, likes_count: updated_liked_count };
+          updated_profile_posts_unl.push(post_r);
+        } else {
+          updated_profile_posts_unl.push(x);
+        }
+      });
+
+      return {
+        ...state,
+        home_data: { ...state.home_data, posts: updated_home_posts_unl },
+        profile_page: {
+          ...state.profile_page,
+          posts: updated_profile_posts_unl,
+        },
+      };
+
+    case "UPDATE_LIKED_POST":
+      // console.log("fired with id ", actions.payload);
+
+      let updated_home_posts = [];
+      let updated_profile_posts = [];
+
+      state.home_data.posts.forEach((x) => {
+        if (x.id === actions.payload) {
+          let updated_liked_count = (parseInt(x.likes_count) + 1).toString();
+          let post_r = { ...x, likes_count: updated_liked_count };
+          updated_home_posts.push(post_r);
+        } else {
+          updated_home_posts.push(x);
+        }
+      });
+      state.profile_page.posts.forEach((x) => {
+        if (x.id === actions.payload) {
+          let updated_liked_count = (parseInt(x.likes_count) + 1).toString();
+          let post_r = { ...x, likes_count: updated_liked_count };
+          updated_profile_posts.push(post_r);
+        } else {
+          updated_profile_posts.push(x);
+        }
+      });
+
+      return {
+        ...state,
+        home_data: { ...state.home_data, posts: updated_home_posts },
+        profile_page: { ...state.profile_page, posts: updated_profile_posts },
+      };
+
     case "INCREMENT_OTHER_USER_FOLLOWING":
       return {
         ...state,

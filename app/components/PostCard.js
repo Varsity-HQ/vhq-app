@@ -20,6 +20,7 @@ import PostMenu from "./Post/PostMenu";
 import { Image } from "react-native-expo-image-cache";
 import PostCardFooter from "../components/Post/PostCardFooter";
 import * as routes from "../navigation/routes";
+import PostCardButtons from "./Post/PostCardButtons";
 
 dayjs.extend(Localize);
 
@@ -164,7 +165,9 @@ class PostCard extends PureComponent {
             </View>
           </View>
 
-          <PostCardFooter data={data} />
+          <PostCardButtons data={data} />
+
+          {/* <PostCardFooter data={data} /> */}
         </View>
       </>
     );
