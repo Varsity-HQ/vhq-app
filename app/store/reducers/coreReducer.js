@@ -31,6 +31,40 @@ const initialData = {
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "REMOVE_BOOKMARKED_POST_CORE":
+      let bookmarks_br = state.accData.bookmarks;
+
+      let bookmarks_af = [];
+      bookmarks_br.forEach((x) => {
+        if (x.post_id !== actions.payload) {
+          bookmarks_af.push(x);
+        }
+      });
+
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          bookmarks: bookmarks_af,
+        },
+      };
+    case "ADD_BOOKMARKED_POST_CORE":
+      let bookmarks = state.accData.bookmarks;
+
+      bookmarks.push({
+        post_id: actions.payload,
+        user_id: state.accData.userID,
+      });
+
+      // console.log({ bookmarks });
+
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          bookmarks: bookmarks,
+        },
+      };
     case "LIKE_POST": {
       let updated_liked_posts = state.accData.liked_posts;
       updated_liked_posts.push({

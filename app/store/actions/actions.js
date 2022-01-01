@@ -4,6 +4,32 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const remove_bookmark = (post_id) => (dispatch) => {
+  dispatch({
+    type: "REMOVE_BOOKMARKED_POST_CORE",
+    payload: post_id,
+  });
+  axios
+    .get(`/post/${post_id}/removebookmark`)
+    .then((data) => {})
+    .catch((err) => {
+      console.log(err.response);
+    });
+};
+
+export const bookmark_post = (post_id) => (dispatch) => {
+  dispatch({
+    type: "ADD_BOOKMARKED_POST_CORE",
+    payload: post_id,
+  });
+  axios
+    .get(`/post/${post_id}/bookmark`)
+    .then((data) => {})
+    .catch((err) => {
+      console.log(err.response);
+    });
+};
+
 export const unlike_post = (post_id) => (dispatch) => {
   // console.log("unlike");
   dispatch({ type: "UNLIKE_POST", payload: post_id });
