@@ -1,57 +1,114 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  TouchableHighlight,
+} from "react-native";
 import Modal from "react-native-modal";
 import colors from "../../config/colors";
 import Button from "../Button";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native";
+import { POST_PAGE, PROFILE } from "../../navigation/routes";
+import * as Clipboard from "expo-clipboard";
+import Toast from "react-native-toast-message";
+import { COPY_POST_URL } from "../../util/toast_messages";
+
+const mapStateToProps = (state) => {
+  return {
+    auth_acc_id: state.core.accData.userID,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
 
 const iconSize = 32;
 
-const options = [
-  {
-    title: "Delete Post",
-    icon: (
-      <Ionicons
-        color={colors.secondary}
-        name="trash-bin-outline"
-        size={iconSize}
-      />
-    ),
-  },
-  {
-    title: "Go to post",
-    icon: (
-      <Ionicons
-        color={colors.secondary}
-        name="arrow-forward-outline"
-        size={iconSize}
-      />
-    ),
-  },
-  {
-    title: "See profile",
-    icon: (
-      <Ionicons color={colors.secondary} name="eye-outline" size={iconSize} />
-    ),
-  },
-  {
-    title: "Copy Link",
-    icon: (
-      <Ionicons color={colors.secondary} name="copy-outline" size={iconSize} />
-    ),
-  },
-  {
-    title: "Report",
-    icon: (
-      <Ionicons color={colors.secondary} name="flag-outline" size={iconSize} />
-    ),
-  },
-];
-
-function PostMenu() {
+function PostMenu({ data, auth_acc_id }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
-
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
+  const navigation = useNavigation();
+
+  const handleCopyLink = () => {
+    handleModal();
+    setTimeout(() => {
+      Clipboard.setString(`https://varsityhq.co.za/p/${data.id}`);
+      Toast.show({
+        type: "general",
+        autoHide: true,
+        ...COPY_POST_URL,
+      });
+    }, 200);
+  };
+
+  const options = [
+    {
+      hide: data.posted_by !== auth_acc_id,
+      title: "Delete Post",
+      icon: (
+        <Ionicons
+          color={colors.secondary}
+          name="trash-bin-outline"
+          size={iconSize}
+        />
+      ),
+    },
+    {
+      onPress: () => {
+        handleModal();
+        navigation.navigate(POST_PAGE, {
+          post_id: data.id,
+        });
+      },
+      title: "Go to post",
+      icon: (
+        <Ionicons
+          color={colors.secondary}
+          name="arrow-forward-outline"
+          size={iconSize}
+        />
+      ),
+    },
+    {
+      onPress: () => {
+        handleModal();
+        navigation.navigate(PROFILE, {
+          username: data.username,
+        });
+      },
+      title: "See profile",
+      icon: (
+        <Ionicons color={colors.secondary} name="eye-outline" size={iconSize} />
+      ),
+    },
+    {
+      onPress: () => handleCopyLink(),
+      title: "Copy post",
+      icon: (
+        <Ionicons
+          color={colors.secondary}
+          name="copy-outline"
+          size={iconSize}
+        />
+      ),
+    },
+    {
+      title: "Report",
+      icon: (
+        <Ionicons
+          color={colors.secondary}
+          name="flag-outline"
+          size={iconSize}
+        />
+      ),
+    },
+  ];
 
   return (
     <>
@@ -77,18 +134,22 @@ function PostMenu() {
         <View style={styles.content}>
           <View style={styles.notch} />
           <View style={styles.inner_content}>
-            {options.map((x, index) => (
-              <TouchableWithoutFeedback
-                style={{ paddingVertical: 10 }}
-                key={index}
-                onPress={() => console.log("clicked")}
-              >
-                <View style={styles.touchableInner}>
-                  {x.icon}
-                  <Text style={styles.text}>{x.title}</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            ))}
+            {options.map((x, index) => {
+              if (!x.hide) {
+                return (
+                  <TouchableOpacity
+                    style={styles.menuButton}
+                    key={index}
+                    onPress={x.onPress ? x.onPress : null}
+                  >
+                    <View style={styles.touchableInner}>
+                      {x.icon}
+                      <Text style={styles.text}>{x.title}</Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              }
+            })}
           </View>
           <Button
             type={1}
@@ -117,6 +178,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     fontWeight: "400",
   },
+  menuButton: {},
   inner_content: {
     marginVertical: 20,
   },
@@ -146,4 +208,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostMenu;
+export default connect(mapStateToProps, mapDispatchToProps)(PostMenu);

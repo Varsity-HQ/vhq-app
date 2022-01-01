@@ -4,6 +4,7 @@ export default {
   secondary_2: "#5c809c",
   skblue: "#4682ac",
   dark: "#15202b",
+  dark_2: "#1c2e42",
   dark_opacity: "#15202b8a",
   dark_opacity_2: "#374e64ad",
   darkish: "#1a2c3f",

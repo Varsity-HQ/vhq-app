@@ -103,7 +103,7 @@ class PostCard extends PureComponent {
               </View>
             </TouchableWithoutFeedback>
             <View style={{ marginRight: 10 }}>
-              <PostMenu />
+              <PostMenu data={data} />
             </View>
           </View>
 
@@ -119,9 +119,17 @@ class PostCard extends PureComponent {
               />
             )}
 
-            <View style={styles.def_padding}>
-              <Content html={data.postHtmlText} />
-            </View>
+            <TouchableWithoutFeedback
+              onPress={() =>
+                this.props.navigation.push(routes.POST_PAGE, {
+                  post_id: data.id,
+                })
+              }
+            >
+              <View style={styles.def_padding}>
+                <Content html={data.postHtmlText} />
+              </View>
+            </TouchableWithoutFeedback>
 
             {/* <Text
             onPress={() => nav.navigate("PostPage")}

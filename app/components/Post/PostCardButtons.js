@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginRight: 15,
-    backgroundColor: colors.dark,
+    // backgroundColor: colors.dark,
   },
   button_f: {
     flexDirection: "row",

@@ -115,7 +115,7 @@ const AppRoutes = ({ core }) => {
         <Stack.Screen
           options={{
             headerShown: false,
-            animation: "slide_from_bottom",
+            animation: "slide_from_right",
           }}
           name={routes.POST_PAGE}
           component={PostPage}
