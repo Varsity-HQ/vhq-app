@@ -27,10 +27,27 @@ const initialData = {
   //
   logging_in_user: false,
   logging_in_error: {},
+  deleting_post: false,
 };
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "DELETING_POST":
+      return {
+        ...state,
+        deleting_post: actions.payload,
+      };
+
+    case "DECREMENT_POST_COUNT":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          number_of_posts: parseInt(
+            state.accData.number_of_posts - 1,
+          ).toString(),
+        },
+      };
     case "REMOVE_BOOKMARKED_POST_CORE":
       let bookmarks_br = state.accData.bookmarks;
 

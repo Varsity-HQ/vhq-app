@@ -4,6 +4,32 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const delete_post = (p_id) => (dispatch) => {
+  dispatch({
+    type: "DELETING_POST",
+    payload: true,
+  });
+  axios
+    .get(`/post/${p_id}/delete`)
+    .then(() => {
+      dispatch({ type: "REMOVE_DELETED_POST", payload: p_id });
+      dispatch({
+        type: "DECREMENT_POST_COUNT",
+      });
+      dispatch({
+        type: "DELETING_POST",
+        payload: false,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "DELETING_POST",
+        payload: false,
+      });
+    });
+};
+
 export const remove_bookmark = (post_id) => (dispatch) => {
   dispatch({
     type: "REMOVE_BOOKMARKED_POST_CORE",

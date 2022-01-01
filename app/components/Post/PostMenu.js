@@ -16,21 +16,25 @@ import { TouchableOpacity } from "react-native";
 import { POST_PAGE, PROFILE } from "../../navigation/routes";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
-import { COPY_POST_URL } from "../../util/toast_messages";
+import { COPY_POST_URL, POST_TO_BE_DELETED } from "../../util/toast_messages";
+import { delete_post } from "../../store/actions/actions";
 
 const mapStateToProps = (state) => {
   return {
     auth_acc_id: state.core.accData.userID,
+    deleting_post: state.core.deleting_post,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    delete_post: (pid) => dispatch(delete_post(pid)),
+  };
 };
 
 const iconSize = 32;
 
-function PostMenu({ data, auth_acc_id }) {
+function PostMenu({ data, auth_acc_id, delete_post, deleting_post }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
   const navigation = useNavigation();
@@ -47,8 +51,31 @@ function PostMenu({ data, auth_acc_id }) {
     }, 200);
   };
 
+  const handleDeletePost = () => {
+    if (deleting_post) {
+      return Toast.show({
+        type: "general",
+        autoHide: false,
+        ...ANOTHER_POST_CURRENTLY_DELETING,
+      });
+    }
+
+    if (data.posted_by === auth_acc_id && !deleting_post) {
+      delete_post(data.id);
+      handleModal();
+      setTimeout(() => {
+        Toast.show({
+          type: "general",
+          autoHide: true,
+          ...POST_TO_BE_DELETED,
+        });
+      }, 200);
+    }
+  };
+
   const options = [
     {
+      onPress: () => handleDeletePost(),
       hide: data.posted_by !== auth_acc_id,
       title: "Delete Post",
       icon: (

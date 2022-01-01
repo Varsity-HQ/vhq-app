@@ -82,11 +82,19 @@ const toastConfig = {
             />
           </View>
           <View>
-            {text1 ? <Text style={{ fontWeight: "700" }}>{text1}</Text> : null}
-
-            <Text style={{ fontWeight: "600" }}>
-              {text2 ? text2 : "VarsityHQ says Hi !"}
+            <Text>
+              {text1 ? <Text style={{ fontWeight: "700" }}>{text1}</Text> : ""}
             </Text>
+            <Text>
+              {text2 ? (
+                <Text style={{ fontWeight: "600" }}>
+                  {text2 ? text2 : "VarsityHQ says Hi !"}
+                </Text>
+              ) : (
+                ""
+              )}
+            </Text>
+
             <Text
               style={{
                 fontSize: 10,

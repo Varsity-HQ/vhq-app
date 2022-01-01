@@ -18,3 +18,11 @@ export const BOOKMARKED_POST = {
   text1: "",
   text2: "Bookmarked post successfully",
 };
+export const POST_TO_BE_DELETED = {
+  text1: "Deleting post..",
+  text2: "",
+};
+export const ANOTHER_POST_CURRENTLY_DELETING = {
+  text1: "Warning",
+  text2: "Slow down ! Another post currently deleting, try again in a moment.",
+};

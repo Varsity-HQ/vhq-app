@@ -46,6 +46,41 @@ const initialData = {
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "REMOVE_DELETED_POST":
+      let homePosts = state.home_data.posts;
+      let myPosts = state.profile_page.posts;
+
+      let filtered_home_posts = [];
+      let filtered_my_posts = [];
+
+      homePosts.forEach((x) => {
+        if (x.id !== actions.payload) {
+          filtered_home_posts.push(x);
+        }
+      });
+      myPosts.forEach((x) => {
+        if (x.id !== actions.payload) {
+          filtered_my_posts.push(x);
+        }
+      });
+      // console.group("Post filtering");
+      // console.log({
+      //   ...state,
+      //   homePosts: filtered_home_posts,
+      //   myPosts: filtered_my_posts,
+      // });
+      // console.groupEnd();
+      return {
+        ...state,
+        home_data: {
+          ...state.home_data,
+          posts: filtered_home_posts,
+        },
+        profile_page: {
+          ...state.profile_page,
+          posts: filtered_my_posts,
+        },
+      };
     case "UPDATE_UNLIKED_POST":
       // console.log("fired with id ", actions.payload);
 
