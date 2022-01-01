@@ -10,10 +10,18 @@ import {
   unlike_post,
   bookmark_post,
   remove_bookmark,
+  follow_account,
 } from "../../store/actions/actions";
 import Toast from "react-native-toast-message";
 import Commenticon from "./commentIcon";
-import { BOOKMARKED_POST, REMOVE_BOOKMARK } from "../../util/toast_messages";
+import {
+  BOOKMARKED_POST,
+  COPY_POST_URL,
+  COPY_URL_IN_POST,
+  REMOVE_BOOKMARK,
+} from "../../util/toast_messages";
+import * as Clipboard from "expo-clipboard";
+import check_if_followed from "../../util/check_if_followed";
 
 const mapStateToProps = (state) => {
   return {
@@ -27,6 +35,7 @@ const mapDispatchToProps = (dispatch) => {
     unlike_post: (pid) => dispatch(unlike_post(pid)),
     remove_bookmark: (pid) => dispatch(remove_bookmark(pid)),
     bookmark_post: (pid) => dispatch(bookmark_post(pid)),
+    follow_account: (uid) => dispatch(follow_account(uid)),
   };
 };
 
@@ -35,12 +44,32 @@ class PostCardButtons extends PureComponent {
     bookmarked: false,
     post_liked: false,
     myPost: false,
+    following_poster: false,
   };
 
   componentDidMount = () => {
     this.setState({
       post_liked: check_post_liked(this.props.data.id),
       bookmarked: check_post_bookmarked(this.props.data.id),
+      following_poster: check_if_followed(this.props.data.posted_by),
+    });
+  };
+
+  handleFollowPoster = () => {
+    if (!check_if_followed(this.props.data.posted_by)) {
+      this.props.follow_account(this.props.data.posted_by);
+      this.setState({
+        following_poster: true,
+      });
+    }
+  };
+
+  handleCopyPost = () => {
+    Clipboard.setString(`https://varsityhq.co.za/p/${this.props.data.id}`);
+    Toast.show({
+      type: "general",
+      autoHide: true,
+      ...COPY_POST_URL,
     });
   };
 
@@ -108,13 +137,24 @@ class PostCardButtons extends PureComponent {
             <Commenticon fill={colors.white} size={25} />
             <Text style={styles.button_text}>{data.comments_count}</Text>
           </View>
-          <TouchableOpacity style={styles.button}>
-            <Ionicons
-              name="ios-chatbox-ellipses-outline"
-              size={26}
-              color={colors.white}
-            />
+          <TouchableOpacity onPress={this.handleCopyPost} style={styles.button}>
+            <Ionicons name="copy-outline" size={25} color={colors.white} />
           </TouchableOpacity>
+          {!this.state.following_poster && (
+            <TouchableOpacity
+              onPress={this.handleFollowPoster}
+              style={styles.button_f}
+            >
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={styles.button_text_2}
+              >
+                <Feather name="user-plus" size={12} color={colors.secondary} />
+                &nbsp;Follow @{data.username}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
         <TouchableOpacity
           onPress={this.handleBookmarkPress}
@@ -137,10 +177,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 5,
   },
+  button_text_2: {
+    color: colors.secondary,
+    fontSize: 13,
+    // paddingLeft: 5,
+  },
   button: {
     flexDirection: "row",
     alignItems: "center",
     marginRight: 15,
+    backgroundColor: colors.dark,
+  },
+  button_f: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: 15,
+    backgroundColor: colors.darkish,
+    paddingHorizontal: 10,
+    borderRadius: 100,
+    borderWidth: 1,
+    borderColor: colors.secondary_2,
   },
   container: {},
   def_padding: {

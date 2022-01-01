@@ -6,6 +6,10 @@ export const COPY_URL_IN_POST = {
   text1: "",
   text2: "Link copied to clipboard",
 };
+export const COPY_POST_URL = {
+  text1: "",
+  text2: "Post has been copied to clipboard",
+};
 export const REMOVE_BOOKMARK = {
   text1: "",
   text2: "Removed post from bookmarks",

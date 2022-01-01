@@ -4,6 +4,10 @@ function check_if_followed(userid) {
   let followed = false;
   let account = store.getState().core.accData;
 
+  if (userid === account.userID) {
+    return true;
+  }
+
   account.user_following.forEach((x) => {
     if (x.following_user === userid) {
       return (followed = true);
