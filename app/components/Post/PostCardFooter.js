@@ -14,6 +14,8 @@ import { Ionicons, Feather } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import axios from "axios";
 import db from "../../util/fb_admin";
+import { useNavigation } from "@react-navigation/native";
+import { PROFILE } from "../../navigation/routes";
 const {
   collection,
   getDocs,
@@ -29,6 +31,34 @@ const mapStateToProps = (state) => {
     username: state.core.accData.username,
   };
 };
+
+function CommentComponent({ x }) {
+  const navigation = useNavigation();
+
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        marginBottom: 5,
+        alignItems: "center",
+      }}
+    >
+      <Text
+        onPress={() =>
+          navigation.navigate(PROFILE, {
+            username: x.commenter_username,
+          })
+        }
+        style={styles.c_username}
+      >
+        - {x.commenter_username}
+      </Text>
+      <Text numberOfLines={1} ellipsizeMode="tail" style={styles.c_comment}>
+        {x.comment_text}
+      </Text>
+    </View>
+  );
+}
 
 function PostCardFooter({ profilepic, data, username }) {
   const [showExplicitly, setShowExplicitly] = useState(true);
@@ -162,25 +192,10 @@ function PostCardFooter({ profilepic, data, username }) {
               }
             >
               {comments.map((x, index) => (
-                <View
+                <CommentComponent
                   key={x.comment_id ? x.comment_id : "c_" + index}
-                  style={{
-                    flexDirection: "row",
-                    marginBottom: 5,
-                    alignItems: "center",
-                  }}
-                >
-                  <Text style={styles.c_username}>
-                    - {x.commenter_username}
-                  </Text>
-                  <Text
-                    numberOfLines={1}
-                    ellipsizeMode="tail"
-                    style={styles.c_comment}
-                  >
-                    {x.comment_text}
-                  </Text>
-                </View>
+                  x={x}
+                />
               ))}
             </View>
 

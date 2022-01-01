@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 import AppNavigator from "./navigation/AppRoutes";
 import AuthRoutes from "./navigation/AuthRoutes";
 import vhqTheme from "./navigation/navigationTheme";
@@ -15,9 +15,8 @@ import {
   set_token,
   set_user,
 } from "./store/actions/actions";
-// import Screen from "./components/Screen";
-import WelcomeScreen from "./screens/WelcomeScreen";
-import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
+
+import Toast from "react-native-toast-message";
 
 import Text from "./components/AppText";
 
@@ -161,8 +160,6 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
 
   return (
     <>
-      <View>{/* <WelcomeScreen /> */}</View>
-      {/* <SafeAreaView style={{ flex: 1, paddingTop: 30 }}> */}
       <StatusBar
         translucent
         animated={true}
@@ -175,7 +172,6 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
         {authenticated ? <AppNavigator /> : <AuthRoutes />}
       </NavigationContainer>
       <Toast config={toastConfig} />
-      {/* </SafeAreaView> */}
     </>
   );
 }

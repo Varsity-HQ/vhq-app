@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 import auth_storage from "../../auth/auth_storage";
 import store from "../store";
