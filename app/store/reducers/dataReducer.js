@@ -51,6 +51,16 @@ const initialData = {
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "CLEAR_POST_PAGE":
+      return {
+        ...state,
+        post_page: {
+          post: null,
+          post_loading: true,
+          comments: null,
+          comments_loading: true,
+        },
+      };
     case "LOAD_POST_COMMENTS":
       return {
         ...state,

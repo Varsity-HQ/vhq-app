@@ -45,7 +45,13 @@ function HeaderPostContent({
           {loading ? (
             <Text style={styles.h_username}>Loading post...</Text>
           ) : (
-            <Text style={styles.h_username}>Posted by {post.username}</Text>
+            <Text style={styles.h_username}>
+              {post.anonymous_post ? (
+                "Posted by anonymous"
+              ) : (
+                <>Posted by {post.username}</>
+              )}
+            </Text>
           )}
         </View>
         <View>

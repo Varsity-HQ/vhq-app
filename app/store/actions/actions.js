@@ -4,6 +4,12 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const clear_post_page = () => (dispatch) => {
+  dispatch({
+    type: "CLEAR_POST_PAGE",
+  });
+};
+
 export const save_local_post = (post) => (dispatch) => {
   dispatch({
     type: "SAVE_LOCAL_POST",

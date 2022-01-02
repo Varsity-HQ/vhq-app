@@ -23,7 +23,7 @@ import KeyboardEventListener from "../components/KeyboardEventListener";
 import { connect } from "react-redux";
 import CommentTextInput from "../components/PostPage/CommentTextInput";
 import HeaderPostContent from "../components/PostPage/Header";
-import { get_post_page } from "../store/actions/actions";
+import { get_post_page, clear_post_page } from "../store/actions/actions";
 
 const mapStateToProps = (state) => {
   return {
@@ -35,6 +35,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     get_post_page: (pid) => dispatch(get_post_page(pid)),
+    clear_post_page: () => dispatch(clear_post_page()),
   };
 };
 
@@ -52,6 +53,10 @@ class PostPage extends React.PureComponent {
         <ImageLocal source={require("../assets/avatar.png")} style={style} />
       );
     }
+  };
+
+  componentWillUnmount = () => {
+    this.props.clear_post_page();
   };
 
   componentDidMount = () => {
