@@ -21,7 +21,7 @@ export default function AddPostPage({ navigation }) {
   return (
     <>
       <Screen style={styles.container}>
-        <ScrollView>
+        <ScrollView keyboardDismissMode="on-drag">
           <View>
             <Header
               backPress={() => navigation.goBack()}

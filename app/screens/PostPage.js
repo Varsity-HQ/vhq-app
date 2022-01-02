@@ -9,6 +9,8 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
+  InputAccessoryView,
+  Platform,
 } from "react-native";
 
 import Screen from "../components/Screen";
@@ -73,14 +75,20 @@ class PostPage extends React.PureComponent {
         </Screen>
         {/* <KeyboardShift> */}
 
-        <View
-          style={[
-            styles.comment_box_container,
-            { bottom: this.state.keyboardHeight },
-          ]}
-        >
-          <CommentTextInput returnProfilePicture={this.returnProfilePicture} />
-        </View>
+        <InputAccessoryView backgroundColor="#fffffff7">
+          <View
+            style={[
+              styles.comment_box_container,
+              Platform.OS === "android" && {
+                bottom: this.state.keyboardHeight,
+              },
+            ]}
+          >
+            <CommentTextInput
+              returnProfilePicture={this.returnProfilePicture}
+            />
+          </View>
+        </InputAccessoryView>
         {/* </KeyboardShift> */}
       </>
     );
