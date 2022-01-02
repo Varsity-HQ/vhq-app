@@ -33,7 +33,7 @@ if (!getApps().length) {
   initializeApp(firebaseConfig);
 }
 
-axios.defaults.baseURL = "http://192.168.8.101:5000";
+axios.defaults.baseURL = "http://192.168.8.100:5000";
 // axios.defaults.baseURL = "https://api.varsityhq.co.za";
 
 const toastConfig = {
@@ -82,17 +82,19 @@ const toastConfig = {
             />
           </View>
           <View>
-            <Text>
-              {text1 ? <Text style={{ fontWeight: "700" }}>{text1}</Text> : ""}
+            <Text
+              style={[
+                { fontWeight: "700" },
+                !text1 && {
+                  height: 0,
+                },
+              ]}
+            >
+              {text1 ? text1 : ""}
             </Text>
-            <Text>
-              {text2 ? (
-                <Text style={{ fontWeight: "600" }}>
-                  {text2 ? text2 : "VarsityHQ says Hi !"}
-                </Text>
-              ) : (
-                ""
-              )}
+
+            <Text style={{ fontWeight: "600" }}>
+              {text2 ? text2 : "VarsityHQ says Hi !"}
             </Text>
 
             <Text

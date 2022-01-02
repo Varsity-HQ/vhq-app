@@ -57,9 +57,13 @@ class Home extends PureComponent {
     });
   }
 
+  handleListRendering = ({ item }) => (
+    <PostCard navigation={this.props.navigation} data={item} />
+  );
+
   render() {
     //|
-    const { navigation, posts } = this.props;
+    const { posts } = this.props;
     //|
     return (
       <Screen>
@@ -70,9 +74,7 @@ class Home extends PureComponent {
           ListHeaderComponent={<Header {...this.props} />}
           ListFooterComponent={<Footer loadingMore={this.props.loading_more} />}
           data={this.props.loading ? [] : posts}
-          renderItem={({ item }) => (
-            <PostCard navigation={navigation} data={item} />
-          )}
+          renderItem={this.handleListRendering}
           keyExtractor={(item) => item.id}
           initialNumToRender={10}
           onRefresh={() => this.onRefresh()}

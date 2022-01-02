@@ -7,7 +7,18 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest",
+    "watch": "jest --watch --coverage=false --changedSince=origin/master",
+    "testDebug": "jest -o --watch --coverage=false",
+    "testFinal": "jest",
+    "updateSnapshots": "jest -u --coverage=false"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
+    ]
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.15.0",
@@ -39,6 +50,8 @@
     "expo-status-bar": "~1.2.0",
     "firebase": "^9.6.1",
     "formik": "^2.2.9",
+    "jest": "^26.6.3",
+    "jest-expo": "^44.0.1",
     "jwt-decode": "^3.1.2",
     "lottie-react-native": "5.0.1",
     "moment": "^2.29.1",
@@ -73,7 +86,8 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "react-test-renderer": "17"
   },
   "private": true
 }
