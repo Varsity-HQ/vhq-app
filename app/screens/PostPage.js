@@ -99,18 +99,20 @@ class PostPage extends React.PureComponent {
         {/* <KeyboardShift> */}
 
         <InputAccessoryView backgroundColor="#000">
-          <View
-            style={[
-              styles.comment_box_container,
-              Platform.OS === "android" && {
-                bottom: this.state.keyboardHeight,
-              },
-            ]}
-          >
-            <CommentTextInput
-              returnProfilePicture={this.returnProfilePicture}
-            />
-          </View>
+          {!this.props.post_page.comments_loading && (
+            <View
+              style={[
+                styles.comment_box_container,
+                Platform.OS === "android" && {
+                  bottom: this.state.keyboardHeight,
+                },
+              ]}
+            >
+              <CommentTextInput
+                returnProfilePicture={this.returnProfilePicture}
+              />
+            </View>
+          )}
         </InputAccessoryView>
         {/* </KeyboardShift> */}
       </>
