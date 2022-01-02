@@ -12,12 +12,17 @@ export const save_local_post = (post) => (dispatch) => {
 };
 
 export const get_post_page = (id) => (dispatch) => {
-  const local_post = store.getState().core.local_post;
+  const saved_post_id = store.getState().data.post_page.post?.post?.id;
 
-  if (local_post) {
+  console.log({
+    saved_post_id,
+    id,
+  });
+
+  if (saved_post_id === id) {
     dispatch({
-      type: "SET_POST_PAGE_DATA",
-      payload: { state: true, postdata: local_post },
+      type: "POST_DATA_LOADING",
+      payload: false,
     });
     axios
       .get(`/post/comments/${id}`)

@@ -5,15 +5,36 @@ import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import { TouchableWithoutFeedback } from "react-native";
 import Text from "../AppText";
+import { connect } from "react-redux";
+import Content from "../Post/content";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+dayjs.extend(localizedFormat);
 
-function HeaderPostContent({ returnProfilePicture, loading = true }) {
+const mapStateToProps = (state) => {
+  return {
+    post_page: state.data.post_page,
+    post: state.data.post_page.post?.post,
+  };
+};
+
+function HeaderPostContent({
+  returnProfilePicture,
+  post_page,
+  loading = post_page.post_loading,
+  post,
+}) {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.h_left_sec}>
           <Ionicons name="arrow-back-outline" color={colors.white} size={30} />
-          <Text style={styles.h_username}>Loading post...</Text>
+          {loading ? (
+            <Text style={styles.h_username}>Loading post...</Text>
+          ) : (
+            <Text style={styles.h_username}>Posted by {post.username}</Text>
+          )}
         </View>
         <View>
           <Ionicons
@@ -50,18 +71,17 @@ function HeaderPostContent({ returnProfilePicture, loading = true }) {
               onPress={() => navigation.navigate("Profile")}
             >
               <View style={{ flexDirection: "row" }}>
-                {returnProfilePicture(
-                  "https://varsityhq.imgix.net/vhq_img202122286166.jpeg",
-                  styles.p_avatar,
-                )}
+                {returnProfilePicture(post.profilepic, styles.p_avatar)}
                 <View style={{ marginLeft: 10 }}>
-                  <Text style={styles.u_name}>Paballo M </Text>
-                  <Text style={styles.username}>@pabie</Text>
+                  <Text style={styles.u_name}>
+                    {post.firstname} {post.surname}{" "}
+                  </Text>
+                  <Text style={styles.username}>@{post.username}</Text>
                 </View>
               </View>
             </TouchableWithoutFeedback>
-            <View style={{ paddingVertical: 20 }}>
-              <AppText>Ole left the group</AppText>
+            <View style={{ paddingVertical: 5 }}>
+              <Content html={post.postHtmlText} />
             </View>
             <View
               style={{
@@ -70,17 +90,20 @@ function HeaderPostContent({ returnProfilePicture, loading = true }) {
                 borderBottomColor: colors.lighish,
               }}
             >
-              <AppText style={styles.post_meta}>
-                November 21, 2021 3:09PM ~ VasityHQ Iphone
-              </AppText>
-              <AppText style={styles.post_meta}>
+              <Text style={styles.post_meta}>
+                {dayjs(post.created_at).format("LLL")} ~ by{" "}
+                <Text style={{ color: colors.secondary }}>
+                  VasityHQ &nbsp;{post.application}
+                </Text>
+              </Text>
+              <Text style={[styles.post_meta, { marginTop: 5 }]}>
                 <FontAwesome
                   style={{ marginRight: 10 }}
                   name="university"
                   size={12}
                 />
-                &nbsp;University of Johannesburg
-              </AppText>
+                &nbsp;{post.university}
+              </Text>
             </View>
             <View
               style={{
@@ -103,7 +126,9 @@ function HeaderPostContent({ returnProfilePicture, loading = true }) {
                   }}
                 >
                   <FontAwesome color={colors.white} name="heart-o" size={20} />
-                  <AppText style={{ fontSize: 15 }}>&nbsp;2 Likes</AppText>
+                  <Text style={{ fontSize: 15 }}>
+                    &nbsp;{post.likes_count} Likes
+                  </Text>
                 </View>
                 <View
                   style={{
@@ -112,7 +137,9 @@ function HeaderPostContent({ returnProfilePicture, loading = true }) {
                     flexDirection: "row",
                   }}
                 >
-                  <AppText style={{ fontSize: 15 }}>&nbsp;1 Comment</AppText>
+                  <Text style={{ fontSize: 15 }}>
+                    &nbsp;{post.comments_count} Comment
+                  </Text>
                 </View>
               </View>
               <View
@@ -175,4 +202,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HeaderPostContent;
+export default connect(mapStateToProps, null)(HeaderPostContent);

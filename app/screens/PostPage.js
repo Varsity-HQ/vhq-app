@@ -23,16 +23,25 @@ import KeyboardEventListener from "../components/KeyboardEventListener";
 import { connect } from "react-redux";
 import CommentTextInput from "../components/PostPage/CommentTextInput";
 import HeaderPostContent from "../components/PostPage/Header";
+import { get_post_page } from "../store/actions/actions";
 
 const mapStateToProps = (state) => {
   return {
     account: state.core.accData,
+    post_page: state.data.post_page,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get_post_page: (pid) => dispatch(get_post_page(pid)),
   };
 };
 
 class PostPage extends React.PureComponent {
   state = {
     keyboardHeight: 0,
+    post_id: "",
   };
 
   returnProfilePicture = (profilepic, style) => {
@@ -46,6 +55,15 @@ class PostPage extends React.PureComponent {
   };
 
   componentDidMount = () => {
+    const { post_id } = this.props.route.params;
+
+    this.setState({
+      post_id,
+    });
+
+    console.log("post page loaded");
+
+    this.props.get_post_page(post_id);
     KeyboardEventListener.subscribe(
       ({ keyboardHeight, layoutAnimationConfig }) => {
         LayoutAnimation.configureNext(layoutAnimationConfig);
@@ -67,9 +85,13 @@ class PostPage extends React.PureComponent {
             data={[]}
             ListFooterComponent={() => (
               <View>
-                <PostPageComment skeleton />
-                <PostPageComment skeleton />
-                <PostPageComment skeleton />
+                {this.props.post_page.comments_loading && (
+                  <>
+                    <PostPageComment skeleton />
+                    <PostPageComment skeleton />
+                    <PostPageComment skeleton />
+                  </>
+                )}
               </View>
             )}
           />
@@ -123,4 +145,4 @@ const styles = StyleSheet.create({
   container: {},
 });
 
-export default connect(mapStateToProps, null)(PostPage);
+export default connect(mapStateToProps, mapDispatchToProps)(PostPage);

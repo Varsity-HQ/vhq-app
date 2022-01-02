@@ -51,6 +51,26 @@ const initialData = {
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "LOAD_POST_COMMENTS":
+      return {
+        ...state,
+        post_page: {
+          ...state.post_page,
+          post_loading: false,
+          comments: data.data,
+          comments_loading: false,
+        },
+      };
+    case "POST_DATA_LOADING":
+      return {
+        ...state,
+        post_page: {
+          ...state.post_page,
+          post_loading: false,
+          comments: null,
+          comments_loading: true,
+        },
+      };
     case "SAVE_LOCAL_POST":
       let l_post = { ...actions.payload };
       let l_account = {
