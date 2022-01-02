@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { get_home_posts } from "../store/actions/actions";
 import Header from "../components/Home/Header";
 import Footer from "../components/Home/Footer";
+import Post from "../components/Skeletons/Post";
 
 const mapStateToProps = (state) => {
   return {
@@ -72,7 +73,17 @@ class Home extends PureComponent {
             this.flatListRef = ref;
           }}
           ListHeaderComponent={<Header {...this.props} />}
-          ListFooterComponent={<Footer loadingMore={this.props.loading_more} />}
+          ListFooterComponent={
+            this.props.loading
+              ? () => (
+                  <>
+                    <Post />
+                    <Post />
+                    <Post />
+                  </>
+                )
+              : () => <Footer loadingMore={this.props.loading_more} />
+          }
           data={this.props.loading ? [] : posts}
           renderItem={this.handleListRendering}
           keyExtractor={(item) => item.id}
