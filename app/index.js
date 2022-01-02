@@ -133,6 +133,10 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
 
   let [fontsLoaded] = useFonts({
     "Lobster-Regular": require("./Fonts/Lobster-Regular.ttf"),
+    "Ubuntu-regular": require("./Fonts/Ubuntu-Regular.ttf"),
+    "Ubuntu-bold": require("./Fonts/Ubuntu-Bold.ttf"),
+    "Ubuntu-italic": require("./Fonts/Ubuntu-Italic.ttf"),
+    "Ubuntu-medium": require("./Fonts/Ubuntu-Medium.ttf"),
   });
 
   const restoreToken = async () => {

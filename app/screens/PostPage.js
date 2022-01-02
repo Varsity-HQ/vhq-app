@@ -20,6 +20,7 @@ import { Image } from "react-native-expo-image-cache";
 import KeyboardEventListener from "../components/KeyboardEventListener";
 import { connect } from "react-redux";
 import Header from "../components/PostPage/Header";
+import CommentTextInput from "../components/PostPage/CommentTextInput";
 
 const mapStateToProps = (state) => {
   return {
@@ -62,9 +63,9 @@ class PostPage extends React.PureComponent {
             data={[]}
             ListFooterComponent={() => (
               <View>
-                <PostPageComment />
-                <PostPageComment />
-                <PostPageComment />
+                <PostPageComment skeleton />
+                <PostPageComment skeleton />
+                <PostPageComment skeleton />
               </View>
             )}
             style={{ borderColor: "red", borderWidth: 1 }}
@@ -78,20 +79,7 @@ class PostPage extends React.PureComponent {
             { bottom: this.state.keyboardHeight },
           ]}
         >
-          <View style={[styles.repy_container]}>
-            {this.returnProfilePicture(
-              this.props.account.profilepic,
-              styles.profilepic,
-            )}
-            <TextInput
-              placeholderTextColor={colors.secondary_2}
-              style={styles.comment_input}
-              placeholder="Write comment"
-            />
-            <TouchableOpacity style={styles.send_btn}>
-              <Text style={styles.sendBtnText}>Send</Text>
-            </TouchableOpacity>
-          </View>
+          <CommentTextInput returnProfilePicture={this.returnProfilePicture} />
         </View>
         {/* </KeyboardShift> */}
       </>
@@ -100,32 +88,6 @@ class PostPage extends React.PureComponent {
 }
 
 const styles = StyleSheet.create({
-  send_btn: {
-    borderLeftColor: "#dee2e6",
-    borderLeftWidth: 2,
-    paddingHorizontal: 12,
-    height: "70%",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  sendBtnText: {
-    fontSize: 16,
-    color: "#dee2e6",
-    fontWeight: "700",
-  },
-  profilepic: {
-    height: 40,
-    width: 40,
-    borderRadius: 100,
-  },
-  comment_input: {
-    borderColor: "red",
-    borderWidth: 0,
-    height: "100%",
-    flex: 1,
-    marginHorizontal: 7,
-    color: colors.white,
-  },
   comment_box_container: {
     paddingHorizontal: 10,
     paddingVertical: 5,
@@ -134,20 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dark,
     bottom: 0,
   },
-  repy_container: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 100,
-    borderColor: colors.skblue,
-    borderWidth: 2,
-    paddingHorizontal: 7,
-    paddingVertical: 7,
-    // height: "100%",
-    // left: 0,
-    // position: "absolute",
-    // top: 0,
-    // width: "100%",
-  },
+
   p_avatar: {
     height: 45,
     width: 45,

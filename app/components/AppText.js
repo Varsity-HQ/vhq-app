@@ -2,9 +2,49 @@ import React from "react";
 import { Text, StyleSheet, Platform } from "react-native";
 import colors from "../config/colors";
 
-function AppText({ children, style, ...props }) {
+function AppText({ children, style, regular = true, ...props }) {
+  let font_styles = {};
+  if (Array.isArray(style)) {
+    style.forEach((x) => {
+      font_styles = { ...font_styles, ...x };
+    });
+  } else {
+    font_styles = style;
+  }
+
+  if (
+    font_styles?.fontWeight === "700" ||
+    (font_styles?.fontWeight === "bold" && !font_styles?.fontFamily)
+  ) {
+    return (
+      <Text
+        allowFontScaling={false}
+        {...props}
+        style={[styles.text, font_styles, { fontFamily: "Ubuntu-bold" }]}
+      >
+        {children}
+      </Text>
+    );
+  }
+
+  if (font_styles?.fontWeight === "600" && !font_styles?.fontFamily) {
+    return (
+      <Text
+        allowFontScaling={false}
+        {...props}
+        style={[styles.text, font_styles, { fontFamily: "Ubuntu-medium" }]}
+      >
+        {children}
+      </Text>
+    );
+  }
+
   return (
-    <Text allowFontScaling={false} {...props} style={[styles.text, style]}>
+    <Text
+      allowFontScaling={false}
+      {...props}
+      style={[styles.text, font_styles]}
+    >
       {children}
     </Text>
   );
@@ -12,13 +52,9 @@ function AppText({ children, style, ...props }) {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 16,
-    //|////////////////////////////|
-    //|   fontWeight: "500",    |//|
-    //|   fontFamily: "arial",  |//|
-    //|////////////////////////////|
+    fontSize: 15,
     color: colors.white,
-    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+    fontFamily: "Ubuntu-regular",
   },
 });
 

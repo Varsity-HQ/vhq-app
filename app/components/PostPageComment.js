@@ -5,7 +5,7 @@ import colors from "../config/colors";
 import AppText from "./AppText";
 import { FontAwesome } from "@expo/vector-icons";
 
-function PostPageComment(props) {
+function PostPageComment({ skeleton = false }) {
   return (
     <View style={styles.container}>
       <View
@@ -52,11 +52,12 @@ function PostPageComment(props) {
 
 const styles = StyleSheet.create({
   date_posted: {
-    fontSize: 15,
+    fontSize: 14,
     color: colors.secondary,
   },
   u_name: {
     fontSize: 15,
+    fontWeight: "700",
   },
   p_avatar: {
     height: 45,
