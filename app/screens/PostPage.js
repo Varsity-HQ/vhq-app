@@ -8,8 +8,9 @@ import {
   LayoutAnimation,
   TextInput,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
-import { Ionicons, FontAwesome } from "@expo/vector-icons";
+
 import Screen from "../components/Screen";
 import colors from "../config/colors";
 import AppText from "../components/AppText";
@@ -18,6 +19,7 @@ import { Image } from "react-native-expo-image-cache";
 // import KeyboardShift from "../components/KeyboardShift";
 import KeyboardEventListener from "../components/KeyboardEventListener";
 import { connect } from "react-redux";
+import Header from "../components/PostPage/Header";
 
 const mapStateToProps = (state) => {
   return {
@@ -53,127 +55,20 @@ class PostPage extends React.PureComponent {
     return (
       <>
         <Screen style={styles.container}>
-          <View style={styles.header}>
-            <View style={styles.h_left_sec}>
-              <Ionicons
-                name="arrow-back-outline"
-                color={colors.white}
-                size={30}
-              />
-              <Text style={styles.h_username}>Posted by chikx_12</Text>
-            </View>
-            <View>
-              <Ionicons
-                name="ellipsis-horizontal-outline"
-                color={colors.white}
-                size={35}
-              />
-            </View>
-          </View>
-
-          <View>
-            <View
-              style={{
-                paddingHorizontal: 10,
-                marginTop: 15,
-                borderBottomColor: colors.lighish,
-                borderBottomWidth: 1,
-              }}
-            >
-              <TouchableWithoutFeedback
-                onPress={() => this.props.navigation.navigate("Profile")}
-              >
-                <View style={{ flexDirection: "row" }}>
-                  {this.returnProfilePicture(
-                    "https://varsityhq.imgix.net/vhq_img202122286166.jpeg",
-                    styles.p_avatar,
-                  )}
-                  <View style={{ marginLeft: 10 }}>
-                    <Text style={styles.u_name}>Paballo M </Text>
-                    <Text style={styles.username}>@pabie</Text>
-                  </View>
-                </View>
-              </TouchableWithoutFeedback>
-              <View style={{ paddingVertical: 20 }}>
-                <AppText>Ole left the group</AppText>
+          <FlatList
+            ListHeaderComponent={
+              <Header returnProfilePicture={this.returnProfilePicture} />
+            }
+            data={[]}
+            ListFooterComponent={() => (
+              <View>
+                <PostPageComment />
+                <PostPageComment />
+                <PostPageComment />
               </View>
-              <View
-                style={{
-                  paddingBottom: 10,
-                  borderBottomWidth: 1,
-                  borderBottomColor: colors.lighish,
-                }}
-              >
-                <AppText style={styles.post_meta}>
-                  November 21, 2021 3:09PM ~ VasityHQ Iphone
-                </AppText>
-                <AppText style={styles.post_meta}>
-                  <FontAwesome
-                    style={{ marginRight: 10 }}
-                    name="university"
-                    size={12}
-                  />
-                  &nbsp;University of Johannesburg
-                </AppText>
-              </View>
-              <View
-                style={{
-                  paddingVertical: 10,
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  flexDirection: "row",
-                }}
-              >
-                <View
-                  style={{
-                    alignItems: "center",
-                    flexDirection: "row",
-                  }}
-                >
-                  <View
-                    style={{
-                      alignItems: "center",
-                      flexDirection: "row",
-                    }}
-                  >
-                    <FontAwesome
-                      color={colors.white}
-                      name="heart-o"
-                      size={20}
-                    />
-                    <AppText style={{ fontSize: 15 }}>&nbsp;2 Likes</AppText>
-                  </View>
-                  <View
-                    style={{
-                      marginLeft: 10,
-                      alignItems: "center",
-                      flexDirection: "row",
-                    }}
-                  >
-                    <AppText style={{ fontSize: 15 }}>&nbsp;1 Comment</AppText>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    marginLeft: 10,
-                    alignItems: "center",
-                    flexDirection: "row",
-                  }}
-                >
-                  <FontAwesome
-                    color={colors.white}
-                    name="bookmark-o"
-                    size={25}
-                  />
-                </View>
-              </View>
-            </View>
-            <View>
-              <PostPageComment />
-              <PostPageComment />
-              <PostPageComment />
-            </View>
-          </View>
+            )}
+            style={{ borderColor: "red", borderWidth: 1 }}
+          />
         </Screen>
         {/* <KeyboardShift> */}
 
@@ -253,46 +148,13 @@ const styles = StyleSheet.create({
     // top: 0,
     // width: "100%",
   },
-  post_meta: {
-    color: colors.secondary,
-    fontSize: 14,
-  },
-  u_name: {
-    fontWeight: "700",
-    fontSize: 18,
-    color: colors.white,
-    flexDirection: "row",
-    alignItems: "center",
-    display: "flex",
-  },
-  username: {
-    fontSize: 17,
-    color: colors.secondary,
-  },
   p_avatar: {
     height: 45,
     width: 45,
     borderRadius: 50,
   },
-  h_username: {
-    fontSize: 17,
-    color: colors.white,
-    marginLeft: 5,
-    fontWeight: "700",
-  },
-  h_left_sec: {
-    alignItems: "center",
-    flexDirection: "row",
-  },
+
   container: {},
-  header: {
-    padding: 10,
-    borderBottomColor: colors.lighish,
-    borderBottomWidth: 1,
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexDirection: "row",
-  },
 });
 
 export default connect(mapStateToProps, null)(PostPage);
