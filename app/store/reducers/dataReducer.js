@@ -22,14 +22,19 @@ const initialData = {
     errors: {},
     user: {},
   },
+  post_page: {
+    post: null,
+    post_loading: true,
+    comments: null,
+    comments_loading: true,
+  },
   home_market_items: [],
   search_page: {
     loading: true,
     data: {},
   },
   //profile
-  myPosts: [],
-  myPosts_loading: true,
+
   comment_replies: [
     // {
     //   parent_comment_id: "bAaRufZFxLHGQyTs1yfq",
@@ -46,6 +51,29 @@ const initialData = {
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "SAVE_LOCAL_POST":
+      let l_post = { ...actions.payload };
+      let l_account = {
+        surname: actions.payload.surname,
+        firstname: actions.payload.firstname,
+        username: actions.payload.username,
+        profilepic: actions.payload.profilepic,
+        userID: actions.payload.userID,
+      };
+      // let l_comments = [];
+
+      let local_post = { post: l_post, account: l_account };
+
+      return {
+        ...state,
+        post_page: {
+          ...state.post_page,
+          post: local_post,
+          post_loading: true,
+          comments: null,
+        },
+      };
+
     case "REMOVE_DELETED_POST":
       let homePosts = state.home_data.posts;
       let myPosts = state.profile_page.posts;

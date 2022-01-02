@@ -21,14 +21,30 @@ import { Image } from "react-native-expo-image-cache";
 import PostCardFooter from "../components/Post/PostCardFooter";
 import * as routes from "../navigation/routes";
 import PostCardButtons from "./Post/PostCardButtons";
+import { connect } from "react-redux";
+import { save_local_post } from "../store/actions/actions";
 
 dayjs.extend(Localize);
 
 const { width: deviceWidth } = Dimensions.get("window");
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    save_local_post: (post) => dispatch(save_local_post(post)),
+  };
+};
+
 class PostCard extends PureComponent {
   state = {
     show_comment_bar: false,
+  };
+
+  handleOpenPost = () => {
+    const data = this.props.data;
+    this.props.save_local_post(data);
+    this.props.navigation.push(routes.POST_PAGE, {
+      post_id: data.id,
+    });
   };
 
   profilepic = (uri) => {
@@ -119,13 +135,7 @@ class PostCard extends PureComponent {
               />
             )}
 
-            <TouchableWithoutFeedback
-              onPress={() =>
-                this.props.navigation.push(routes.POST_PAGE, {
-                  post_id: data.id,
-                })
-              }
-            >
+            <TouchableWithoutFeedback onPress={() => this.handleOpenPost()}>
               <View style={styles.def_padding}>
                 <Content html={data.postHtmlText} />
               </View>
@@ -237,4 +247,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostCard;
+export default connect(null, mapDispatchToProps)(PostCard);

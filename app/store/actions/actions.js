@@ -4,6 +4,47 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const save_local_post = (post) => (dispatch) => {
+  dispatch({
+    type: "SAVE_LOCAL_POST",
+    payload: post,
+  });
+};
+
+export const get_post_page = (id) => (dispatch) => {
+  const local_post = store.getState().core.local_post;
+
+  if (local_post) {
+    dispatch({
+      type: "SET_POST_PAGE_DATA",
+      payload: { state: true, postdata: local_post },
+    });
+    axios
+      .get(`/post/comments/${id}`)
+      .then((data) => {
+        dispatch({
+          type: "LOAD_POST_COMMENTS",
+          payload: data.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    axios
+      .get(`/post/${id}`)
+      .then((data) => {
+        dispatch({
+          type: "SET_POST_PAGE_DATA",
+          payload: { state: true, postdata: data.data },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+};
+
 export const delete_post = (p_id) => (dispatch) => {
   dispatch({
     type: "DELETING_POST",
