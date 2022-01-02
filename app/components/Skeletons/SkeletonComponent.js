@@ -6,14 +6,14 @@ import colors from "../../config/colors";
 
 const AnimatedLG = Animated.createAnimatedComponent(LinearGradient);
 
-function SkeletonComponent({ style, children, animationOff }) {
+function SkeletonComponent({ style, children, animationOff, duration = 1000 }) {
   const animatedValue = new Animated.Value(0);
 
   useEffect(() => {
     Animated.loop(
       Animated.timing(animatedValue, {
         toValue: 1,
-        duration: 1000,
+        duration: duration,
         easing: Easing.inOut(Easing.ease),
         useNativeDriver: true,
       }),

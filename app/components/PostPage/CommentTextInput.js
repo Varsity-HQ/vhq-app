@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
 function CommentTextInput({ returnProfilePicture, profilepic }) {
   return (
     <>
-      <View style={styles.reply_box_container}>
+      {/* <View style={styles.reply_box_container}>
         <View style={styles.reply_top_header}>
           <Text style={[styles.reply_text, { marginBottom: 3 }]}>
             Replying to @pabie
@@ -32,7 +32,7 @@ function CommentTextInput({ returnProfilePicture, profilepic }) {
           Tot tot you see them post but dololo yours aiii... That's why people
           block people aii
         </Text>
-      </View>
+      </View> */}
       <View style={[styles.comment_box_container]}>
         {returnProfilePicture(profilepic, styles.profilepic)}
         <TextInput

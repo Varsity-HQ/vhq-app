@@ -4,8 +4,10 @@ import { View, StyleSheet } from "react-native";
 import colors from "../config/colors";
 import AppText from "./AppText";
 import { FontAwesome } from "@expo/vector-icons";
+import CommentSkeleton from "./Skeletons/CommentSkeleton";
 
 function PostPageComment({ skeleton = false }) {
+  if (skeleton) return <CommentSkeleton />;
   return (
     <View style={styles.container}>
       <View

@@ -21,8 +21,8 @@ import { Image } from "react-native-expo-image-cache";
 // import KeyboardShift from "../components/KeyboardShift";
 import KeyboardEventListener from "../components/KeyboardEventListener";
 import { connect } from "react-redux";
-import Header from "../components/PostPage/Header";
 import CommentTextInput from "../components/PostPage/CommentTextInput";
+import HeaderPostContent from "../components/PostPage/Header";
 
 const mapStateToProps = (state) => {
   return {
@@ -60,7 +60,9 @@ class PostPage extends React.PureComponent {
         <Screen style={styles.container}>
           <FlatList
             ListHeaderComponent={
-              <Header returnProfilePicture={this.returnProfilePicture} />
+              <HeaderPostContent
+                returnProfilePicture={this.returnProfilePicture}
+              />
             }
             data={[]}
             ListFooterComponent={() => (
@@ -70,12 +72,11 @@ class PostPage extends React.PureComponent {
                 <PostPageComment skeleton />
               </View>
             )}
-            style={{ borderColor: "red", borderWidth: 1 }}
           />
         </Screen>
         {/* <KeyboardShift> */}
 
-        <InputAccessoryView backgroundColor="#fffffff7">
+        <InputAccessoryView backgroundColor="#000">
           <View
             style={[
               styles.comment_box_container,
@@ -99,10 +100,18 @@ const styles = StyleSheet.create({
   comment_box_container: {
     paddingHorizontal: 10,
     paddingVertical: 5,
-    borderTopColor: colors.black,
-    borderTopWidth: 2,
+    // borderTopColor: colors.black,
+    // borderTopWidth: 2,
     backgroundColor: colors.dark,
     bottom: 0,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: -3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4.68,
+    elevation: 12,
   },
 
   p_avatar: {
