@@ -1,14 +1,20 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import colors from "../../config/colors";
-import { TouchableWithoutFeedback } from "react-native";
+import { TouchableWithoutFeedback, Image } from "react-native";
 import Text from "../AppText";
 import { connect } from "react-redux";
 import Content from "../Post/content";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
+import emojis from "../../util/emojis";
 dayjs.extend(localizedFormat);
 
 const mapStateToProps = (state) => {
@@ -29,7 +35,13 @@ function HeaderPostContent({
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.h_left_sec}>
-          <Ionicons name="arrow-back-outline" color={colors.white} size={30} />
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons
+              name="arrow-back-outline"
+              color={colors.white}
+              size={30}
+            />
+          </TouchableOpacity>
           {loading ? (
             <Text style={styles.h_username}>Loading post...</Text>
           ) : (
@@ -71,12 +83,34 @@ function HeaderPostContent({
               onPress={() => navigation.navigate("Profile")}
             >
               <View style={{ flexDirection: "row" }}>
-                {returnProfilePicture(post.profilepic, styles.p_avatar)}
+                {post.anonymous_post ? (
+                  <>
+                    <Image
+                      source={{ uri: emojis[post.anonymous_emoji_index] }}
+                      style={styles.p_avatar}
+                    />
+                  </>
+                ) : (
+                  <>{returnProfilePicture(post.profilepic, styles.p_avatar)}</>
+                )}
+
                 <View style={{ marginLeft: 10 }}>
                   <Text style={styles.u_name}>
-                    {post.firstname} {post.surname}{" "}
+                    {post.anonymous_post
+                      ? post.anonymous_name
+                      : post.firstname + " " + post.surname}
                   </Text>
-                  <Text style={styles.username}>@{post.username}</Text>
+                  <Text style={styles.username}>
+                    {post.anonymous_post ? (
+                      <Text
+                        style={[styles.username, { color: colors.secondary_2 }]}
+                      >
+                        anonymous account
+                      </Text>
+                    ) : (
+                      <>@{post.username}</>
+                    )}
+                  </Text>
                 </View>
               </View>
             </TouchableWithoutFeedback>
@@ -164,6 +198,7 @@ const styles = StyleSheet.create({
     height: 45,
     width: 45,
     borderRadius: 50,
+    overflow: "hidden",
   },
   post_meta: {
     color: colors.secondary,

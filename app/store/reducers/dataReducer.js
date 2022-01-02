@@ -57,7 +57,7 @@ const dataReducer = (state = initialData, actions) => {
         post_page: {
           ...state.post_page,
           post_loading: false,
-          comments: data.data,
+          comments: actions.payload,
           comments_loading: false,
         },
       };

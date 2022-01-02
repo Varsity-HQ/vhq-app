@@ -5,9 +5,15 @@ import colors from "../config/colors";
 import AppText from "./AppText";
 import { FontAwesome } from "@expo/vector-icons";
 import CommentSkeleton from "./Skeletons/CommentSkeleton";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
-function PostPageComment({ skeleton = false }) {
+function PostPageComment({ data, returnProfilePicture, skeleton = false }) {
   if (skeleton) return <CommentSkeleton />;
+
+  console.log({ data });
+
   return (
     <View style={styles.container}>
       <View
@@ -19,21 +25,21 @@ function PostPageComment({ skeleton = false }) {
           paddingBottom: 5,
         }}
       >
-        <Image
-          style={styles.p_avatar}
-          source={{
-            uri: "https://varsityhq.imgix.net/vhq_img202156726730.jpeg",
-          }}
-        />
-        <View style={{ marginLeft: 10 }}>
+        {returnProfilePicture(data.commenter_profilepic, styles.p_avatar)}
+        <View style={{ marginLeft: 10, flex: 1 }}>
           <AppText style={styles.u_name}>
-            Paballo M
+            {data.commenter_username}
             <AppText style={styles.date_posted}>
-              &nbsp;•&nbsp;14 days ago
+              &nbsp;•&nbsp;{dayjs(data.date_created).fromNow()}
             </AppText>
           </AppText>
-          <View style={{ paddingVertical: 5 }}>
-            <AppText>Lol finally</AppText>
+          <View
+            style={{
+              paddingVertical: 5,
+              marginRight: 0,
+            }}
+          >
+            <AppText>{data.comment_text}</AppText>
           </View>
           <View
             style={{

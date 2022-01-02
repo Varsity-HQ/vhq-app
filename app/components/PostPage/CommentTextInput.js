@@ -9,10 +9,27 @@ import { Ionicons } from "@expo/vector-icons";
 const mapStateToProps = (state) => {
   return {
     profilepic: state.core.accData.profilepic,
+    post_page: state.data.post_page,
+    post: state.data.post_page?.post?.post,
   };
 };
 
-function CommentTextInput({ returnProfilePicture, profilepic }) {
+function CommentTextInput({
+  returnProfilePicture,
+  profilepic,
+  post_page,
+  post,
+}) {
+  if (!post_page.post) return null;
+
+  const returnPostOwner = () => {
+    let poster = post_page.post.account.firstname;
+    if (post.anonymous_post) {
+      poster = post.anonymous_name;
+    }
+    return poster;
+  };
+
   return (
     <>
       {/* <View style={styles.reply_box_container}>
@@ -38,7 +55,7 @@ function CommentTextInput({ returnProfilePicture, profilepic }) {
         <TextInput
           placeholderTextColor={colors.secondary_2}
           style={styles.comment_input}
-          placeholder="Write comment"
+          placeholder={`Respond to ${returnPostOwner()}`}
         />
         <TouchableOpacity style={styles.send_btn}>
           <Text style={styles.sendBtnText}>Send</Text>

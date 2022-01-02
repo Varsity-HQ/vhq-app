@@ -140,7 +140,7 @@ class PostCardButtons extends PureComponent {
           <TouchableOpacity onPress={this.handleCopyPost} style={styles.button}>
             <Ionicons name="copy-outline" size={25} color={colors.white} />
           </TouchableOpacity>
-          {!this.state.following_poster && (
+          {!this.state.following_poster && !data.anonymous_post && (
             <TouchableOpacity
               onPress={this.handleFollowPoster}
               style={styles.button_f}

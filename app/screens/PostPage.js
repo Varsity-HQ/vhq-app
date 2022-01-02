@@ -72,6 +72,13 @@ class PostPage extends React.PureComponent {
     );
   };
 
+  renderComments = ({ item }) => (
+    <PostPageComment
+      returnProfilePicture={this.returnProfilePicture}
+      data={item}
+    />
+  );
+
   render() {
     return (
       <>
@@ -82,7 +89,13 @@ class PostPage extends React.PureComponent {
                 returnProfilePicture={this.returnProfilePicture}
               />
             }
-            data={[]}
+            data={
+              this.props.post_page.comments_loading
+                ? []
+                : this.props.post_page.comments
+            }
+            renderItem={this.renderComments}
+            keyExtractor={(item) => item.comment_id}
             ListFooterComponent={() => (
               <View>
                 {this.props.post_page.comments_loading && (

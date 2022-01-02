@@ -23,6 +23,7 @@ import * as routes from "../navigation/routes";
 import PostCardButtons from "./Post/PostCardButtons";
 import { connect } from "react-redux";
 import { save_local_post } from "../store/actions/actions";
+import emojis from "../util/emojis";
 
 dayjs.extend(Localize);
 
@@ -77,24 +78,35 @@ class PostCard extends PureComponent {
           >
             <TouchableWithoutFeedback
               onPress={() =>
-                this.props.navigation.push(routes.PROFILE, {
-                  username: data.username,
-                })
+                data.anonymous_post
+                  ? null
+                  : this.props.navigation.push(routes.PROFILE, {
+                      username: data.username,
+                    })
               }
             >
               <View style={{ flexDirection: "row" }}>
-                {data.profilepic ? (
-                  <Image
-                    style={styles.p_avatar}
-                    uri={this.profilepic(data.profilepic)}
-                    transitionDuration={300}
-                  />
-                ) : (
+                {data.anonymous_post ? (
                   <ImageLocal
                     style={styles.p_avatar}
-                    uri={this.profilepic(data.profilepic)}
-                    source={require("../assets/avatar.png")}
+                    source={{ uri: emojis[data.anonymous_emoji_index] }}
                   />
+                ) : (
+                  <>
+                    {data.profilepic ? (
+                      <Image
+                        style={styles.p_avatar}
+                        uri={this.profilepic(data.profilepic)}
+                        transitionDuration={300}
+                      />
+                    ) : (
+                      <ImageLocal
+                        style={styles.p_avatar}
+                        uri={this.profilepic(data.profilepic)}
+                        source={require("../assets/avatar.png")}
+                      />
+                    )}
+                  </>
                 )}
 
                 <View style={{ marginLeft: 10 }}>
@@ -105,14 +117,22 @@ class PostCard extends PureComponent {
                       lineBreakMode="tail"
                       style={styles.u_name}
                     >
-                      {data.firstname}&nbsp;{data.surname.charAt(0)}
+                      {data.anonymous_post
+                        ? data.anonymous_name
+                        : data.firstname + " " + data.surname.charAt(0)}
                     </Text>
                     <Text style={styles.date_posted}>
                       {dayjs(data.created_at).fromNow()}
                     </Text>
                   </View>
                   <Text style={styles.username}>
-                    @{data.username} -{" "}
+                    {data.anonymous_post ? (
+                      <>anonymous - </>
+                    ) : (
+                      <>@{data.username} - </>
+                    )}
+
+                    {/* @{data.username} -{" "} */}
                     <FontAwesome name="university" size={12} />
                   </Text>
                 </View>
