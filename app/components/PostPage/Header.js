@@ -15,6 +15,10 @@ import Content from "../Post/content";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import emojis from "../../util/emojis";
+
+import { PROFILE } from "../../navigation/routes";
+import PostMenu from "../Post/PostMenu";
+
 dayjs.extend(localizedFormat);
 
 const mapStateToProps = (state) => {
@@ -55,11 +59,12 @@ function HeaderPostContent({
           )}
         </View>
         <View>
-          <Ionicons
+          <PostMenu post_page data={post} />
+          {/* <Ionicons
             name="ellipsis-horizontal-outline"
             color={colors.white}
             size={35}
-          />
+          /> */}
         </View>
       </View>
       {loading ? (
@@ -86,7 +91,14 @@ function HeaderPostContent({
             }}
           >
             <TouchableWithoutFeedback
-              onPress={() => navigation.navigate("Profile")}
+              onPress={
+                !post.anonymous_post
+                  ? () =>
+                      navigation.navigate(PROFILE, {
+                        username: post.username,
+                      })
+                  : null
+              }
             >
               <View style={{ flexDirection: "row" }}>
                 {post.anonymous_post ? (

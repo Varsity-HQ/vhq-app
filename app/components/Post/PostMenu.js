@@ -34,10 +34,18 @@ const mapDispatchToProps = (dispatch) => {
 
 const iconSize = 32;
 
-function PostMenu({ data, auth_acc_id, delete_post, deleting_post }) {
+function PostMenu({
+  data,
+  auth_acc_id,
+  delete_post,
+  deleting_post,
+  post_page,
+}) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
   const navigation = useNavigation();
+
+  if (!data) return null;
 
   const handleCopyLink = () => {
     handleModal();
@@ -94,6 +102,7 @@ function PostMenu({ data, auth_acc_id, delete_post, deleting_post }) {
         });
       },
       title: "Go to post",
+      hide: post_page,
       icon: (
         <Ionicons
           color={colors.secondary}
@@ -157,6 +166,7 @@ function PostMenu({ data, auth_acc_id, delete_post, deleting_post }) {
         style={styles.modal_bg}
         onBackdropPress={handleModal}
         isVisible={isModalVisible}
+        useNativeDriver={true}
       >
         <View style={styles.content}>
           <View style={styles.notch} />
