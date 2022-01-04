@@ -5,14 +5,13 @@ import SearchHeader from "../components/Search/SearchHeader";
 import TabNavigator from "../components/TabNavigator";
 
 import { Ionicons } from "@expo/vector-icons";
-import { colors } from "react-native-elements";
 import Loader from "../components/Loaders/Loader";
 import TopicTrends from "../components/Search/TopicTrends";
 import SuggestedFriends from "../components/Search/SuggestedFriends";
 import TopPosts from "../components/Search/TopPosts";
 import SearchSkeleton from "../components/Skeletons/SearchSkeleton";
 import { connect } from "react-redux";
-
+import colors from "../config/colors";
 import { get_search_data } from "../store/actions/actions";
 import { useFocusEffect } from "@react-navigation/native";
 

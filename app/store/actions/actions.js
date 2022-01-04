@@ -42,12 +42,13 @@ export const get_post_page = (id) => (dispatch) => {
         console.log(err);
       });
   } else {
+    console.log("fetch whole post");
     axios
       .get(`/post/${id}`)
       .then((data) => {
         dispatch({
           type: "SET_POST_PAGE_DATA",
-          payload: { state: true, postdata: data.data },
+          payload: data.data,
         });
       })
       .catch((err) => {

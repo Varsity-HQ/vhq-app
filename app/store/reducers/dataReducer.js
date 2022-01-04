@@ -81,6 +81,24 @@ const dataReducer = (state = initialData, actions) => {
           comments_loading: true,
         },
       };
+
+    case "SET_POST_PAGE_DATA":
+      let post_to_save = {
+        post: actions.payload.post,
+        account: actions.payload.account,
+      };
+
+      return {
+        ...state,
+        post_page: {
+          ...state.post_page,
+          post: post_to_save,
+          post_loading: false,
+          comments: actions.payload.comments,
+          comments_loading: false,
+        },
+      };
+
     case "SAVE_LOCAL_POST":
       let l_post = { ...actions.payload };
       let l_account = {
@@ -101,6 +119,7 @@ const dataReducer = (state = initialData, actions) => {
           post: local_post,
           post_loading: true,
           comments: null,
+          comments_loading: true,
         },
       };
 

@@ -86,7 +86,9 @@ const styles = StyleSheet.create({
     height: 45,
     width: 45,
     borderRadius: 50,
+    backgroundColor: colors.darkish3,
   },
+
   container: {
     paddingHorizontal: 10,
     backgroundColor: colors.dark,

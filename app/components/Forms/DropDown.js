@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Text, Platform } from "react-native";
 import { View, StyleSheet } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { color } from "react-native-elements/dist/helpers";
 import colors from "../../config/colors";
 import { Picker } from "@react-native-picker/picker";
 

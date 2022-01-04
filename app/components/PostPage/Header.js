@@ -25,6 +25,7 @@ const mapStateToProps = (state) => {
   return {
     post_page: state.data.post_page,
     post: state.data.post_page.post?.post,
+    account: state.data.post_page.post?.account,
   };
 };
 
@@ -33,6 +34,7 @@ function HeaderPostContent({
   post_page,
   loading = post_page.post_loading,
   post,
+  account,
 }) {
   const navigation = useNavigation();
   return (
@@ -53,13 +55,13 @@ function HeaderPostContent({
               {post.anonymous_post ? (
                 "Posted by anonymous"
               ) : (
-                <>Posted by {post.username}</>
+                <>Posted by {account.username}</>
               )}
             </Text>
           )}
         </View>
         <View>
-          <PostMenu post_page data={post} />
+          <PostMenu post_page data={{ ...post, ...account }} />
           {/* <Ionicons
             name="ellipsis-horizontal-outline"
             color={colors.white}
@@ -95,7 +97,7 @@ function HeaderPostContent({
                 !post.anonymous_post
                   ? () =>
                       navigation.navigate(PROFILE, {
-                        username: post.username,
+                        username: account.username,
                       })
                   : null
               }
@@ -109,14 +111,16 @@ function HeaderPostContent({
                     />
                   </>
                 ) : (
-                  <>{returnProfilePicture(post.profilepic, styles.p_avatar)}</>
+                  <>
+                    {returnProfilePicture(account.profilepic, styles.p_avatar)}
+                  </>
                 )}
 
                 <View style={{ marginLeft: 10 }}>
                   <Text style={styles.u_name}>
                     {post.anonymous_post
                       ? post.anonymous_name
-                      : post.firstname + " " + post.surname}
+                      : account.firstname + " " + account.surname}
                   </Text>
                   <Text style={styles.username}>
                     {post.anonymous_post ? (
@@ -126,7 +130,7 @@ function HeaderPostContent({
                         anonymous account
                       </Text>
                     ) : (
-                      <>@{post.username}</>
+                      <>@{account.username}</>
                     )}
                   </Text>
                 </View>
@@ -217,6 +221,7 @@ const styles = StyleSheet.create({
     width: 45,
     borderRadius: 50,
     overflow: "hidden",
+    backgroundColor: colors.darkish3,
   },
   post_meta: {
     color: colors.secondary,

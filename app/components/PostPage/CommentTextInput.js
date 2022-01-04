@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 100,
+    backgroundColor: colors.darkish3,
   },
   comment_box_container: {
     flexDirection: "row",

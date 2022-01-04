@@ -6,7 +6,6 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
 } from "react-native";
-import { color } from "react-native-elements/dist/helpers";
 import colors from "../config/colors";
 
 function TabNavigator({ active = 1, style, items = [], onPress }) {
