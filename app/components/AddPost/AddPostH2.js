@@ -1,20 +1,39 @@
-import React from "react";
-import { Image, StyleSheet, View, ScrollView } from "react-native";
-
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, ScrollView } from "react-native";
 import colors from "../../config/colors";
 import Text from "../AppText";
 import { FontAwesome } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import Image from "../Image";
+import emojis from "../../util/emojis";
 
-export default function AddPostH2({ core }) {
+const mapStateToProps = (state) => {
+  return {
+    account: state.core.accData,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+function AddPostH2({ core, account }) {
+  const [isAnonymous, seIsAnonymous] = useState(false);
+
+  useEffect(() => {
+    console.log("es");
+  });
+
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
         <View style={[styles.button, { backgroundColor: colors.darkish3 }]}>
           <Image
+            uri={account.profilepic}
             style={styles.avatar}
-            source={{
-              uri: "https://varsityhq.imgix.net/vhq_img202130693415.jpeg",
-            }}
+            // source={{
+            //   uri: account.profilepic,
+            // }}
           />
           <Text style={styles.text}>As myself</Text>
         </View>
@@ -61,3 +80,5 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPostH2);

@@ -35,14 +35,6 @@ class RTextEditor extends Component {
   render() {
     return (
       <>
-        <View style={styles.modal_container}>
-          <TouchableOpacity
-            onPress={() => console.log("click")}
-            style={styles.moda_inner_t}
-          >
-            <View></View>
-          </TouchableOpacity>
-        </View>
         <View style={styles.container}>
           <ScrollView
             ref={this.scrollview}
@@ -131,9 +123,8 @@ const styles = StyleSheet.create({
     borderTopColor: colors.secondary,
     borderTopWidth: 1,
     maxHeight: 200,
-
     borderBottomColor: colors.secondary,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0,
     // padding: 10,
   },
 });

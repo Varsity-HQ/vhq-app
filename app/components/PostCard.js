@@ -249,8 +249,8 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 18,
     color: colors.white,
-    flexDirection: "row",
     alignItems: "center",
+    flexDirection: "row",
     display: "flex",
   },
   p_avatar: {

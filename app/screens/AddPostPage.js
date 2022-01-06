@@ -16,6 +16,7 @@ import RTextEditor from "../components/RTextEditor";
 import Button from "../components/Button";
 import { MaterialCommunityIcons, Foundation } from "@expo/vector-icons";
 import Screen from "../components/Screen";
+import PostFrom from "../components/AddPost/PostFrom";
 
 export default function AddPostPage({ navigation }) {
   return (
