@@ -33,8 +33,8 @@ if (!getApps().length) {
   initializeApp(firebaseConfig);
 }
 
-axios.defaults.baseURL = "http://192.168.8.101:5000";
-// axios.defaults.baseURL = "https://api.varsityhq.co.za";
+// axios.defaults.baseURL = "http://192.168.8.101:5000";
+axios.defaults.baseURL = "https://api.varsityhq.co.za";
 
 const toastConfig = {
   general: ({ text1, text2 }) => (
@@ -117,6 +117,7 @@ const toastConfig = {
 const mapStateToProps = (state) => {
   return {
     authenticated: state.core.authenticated,
+    userID: state.core.accData?.userID,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -128,7 +129,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-function App({ authenticated, set_user, setAuthState, set_token }) {
+function App({ authenticated, set_user, setAuthState, set_token, userID }) {
   const [isReady, setisReady] = useState();
 
   let [fontsLoaded] = useFonts({
@@ -183,7 +184,7 @@ function App({ authenticated, set_user, setAuthState, set_token }) {
         hidden={false}
       />
       <NavigationContainer theme={vhqTheme}>
-        {authenticated ? <AppNavigator /> : <AuthRoutes />}
+        {authenticated && userID ? <AppNavigator /> : <AuthRoutes />}
       </NavigationContainer>
       <Toast config={toastConfig} />
     </>

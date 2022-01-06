@@ -281,21 +281,6 @@ const coreReducer = (state = initialData, actions) => {
         ...state,
         saving_anon_settings: actions.payload,
       };
-    case "UPDATE_TEMP_ANON_NAME":
-      return {
-        ...state,
-        temp_anonymous_name: actions.payload,
-      };
-    case "UPDATE_TEMP_ANON_EMOJI":
-      return {
-        ...state,
-        temp_anonymous_emoji_index: actions.payload,
-      };
-    case "TOGGLE_POST_ANONYMOUSLY":
-      return {
-        ...state,
-        post_anonymously: actions.payload,
-      };
 
     case "TURN_OFF_ANONYMOUS":
       return {
@@ -312,6 +297,15 @@ const coreReducer = (state = initialData, actions) => {
         accData: {
           ...state.accData,
           anonymous_profile: true,
+        },
+      };
+
+    case "SET_ANON_EMOJI_INDEX":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          anonymous_emoji_index: actions.payload,
         },
       };
     case "UPDATE_ANONYMOUS_NAME":
@@ -416,10 +410,7 @@ const coreReducer = (state = initialData, actions) => {
         accData: actions.payload,
       };
     case "SET_UNAUTHENTICATED":
-      return {
-        ...state,
-        authenticated: false,
-      };
+      return (state = initialData);
     case "SET_AUTH_STATE":
       return {
         ...state,

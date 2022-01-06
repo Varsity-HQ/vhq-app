@@ -1,5 +1,5 @@
 const init_accdata = {
-  userID: "NO_ID",
+  userID: null,
   firstname: "",
   surname: "",
   profilepic: "",

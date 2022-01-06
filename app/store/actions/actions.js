@@ -4,6 +4,41 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
+export const initializePostAnonData = () => (dispatch) => {
+  let auth_acc = store.getState().core.accData;
+  dispatch({
+    type: "UPDATE_TEMP_ANON_EMOJI",
+    payload: auth_acc.anonymous_emoji_index,
+  });
+  dispatch({
+    type: "UPDATE_TEMP_ANON_NAME",
+    payload: auth_acc.anonymous_name,
+  });
+  dispatch({
+    type: "TOGGLE_TEMP_POST_ANONYMOUSLY",
+    payload: auth_acc.anonymous_profile,
+  });
+};
+
+export const update_temp_anon_emoji = (index) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_TEMP_ANON_EMOJI",
+    payload: index,
+  });
+};
+export const update_temp_anon_name = (name) => (dispatch) => {
+  dispatch({
+    type: "UPDATE_TEMP_ANON_NAME",
+    payload: name,
+  });
+};
+export const toggle_temp_post_anonymous = (isOn) => (dispatch) => {
+  dispatch({
+    type: "TOGGLE_TEMP_POST_ANONYMOUSLY",
+    payload: isOn,
+  });
+};
+
 export const clear_post_page = () => (dispatch) => {
   dispatch({
     type: "CLEAR_POST_PAGE",
@@ -907,6 +942,8 @@ export const set_user = (user) => (dispatch) => {
 };
 
 export const login_user = (email, password) => (dispatch) => {
+  log_out_function();
+  dispatch({ type: "SET_UNAUTHENTICATED" });
   dispatch({
     type: "LOGGING_IN_USER",
     payload: true,
@@ -922,25 +959,45 @@ export const login_user = (email, password) => (dispatch) => {
       password,
     })
     .then((data) => {
-      setAuthorizationHeader(data.data.token);
-      return axios.get("/get/account").then((user_data) => {
-        dispatch({
-          type: "SET_USER_DATA",
-          payload: user_data.data,
-        });
-        dispatch({
-          type: "SET_AUTH_STATE",
-          payload: true,
-        });
+      console.log({ token: data.data.token });
 
-        dispatch({
-          type: "LOGGING_IN_USER",
-          payload: false,
-        });
-        dispatch({
-          type: "SET_LOGGING_IN_ERROR",
-          payload: {},
-        });
+      //
+      setAuthorizationHeader(data.data.token);
+
+      return axios.get("/get/account").then((user_data) => {
+        console.log({ res: user_data.data });
+
+        if (user_data.data.userID) {
+          dispatch({
+            type: "SET_USER_DATA",
+            payload: user_data.data,
+          });
+
+          dispatch({
+            type: "SET_AUTH_STATE",
+            payload: true,
+          });
+
+          dispatch({
+            type: "LOGGING_IN_USER",
+            payload: false,
+          });
+          dispatch({
+            type: "SET_LOGGING_IN_ERROR",
+            payload: {},
+          });
+        } else {
+          dispatch({
+            type: "LOGGING_IN_USER",
+            payload: false,
+          });
+          dispatch({
+            type: "SET_LOGGING_IN_ERROR",
+            payload: {
+              error: "Something happened. Please try again or report issue.",
+            },
+          });
+        }
       });
     })
     .catch((err) => {
@@ -972,9 +1029,14 @@ export const setAuthState = (state) => (dispatch) => {
   });
 };
 
-export const logOutUser = () => async (dispatch) => {
-  delete axios.defaults.headers.common[`Authorization`];
+export const logOutUser = () => (dispatch) => {
+  log_out_function();
   dispatch({ type: "SET_UNAUTHENTICATED" });
+};
+
+const log_out_function = async () => {
+  console.log("logging out");
+  delete axios.defaults.headers.common[`Authorization`];
   try {
     await auth_storage.removeToken();
   } catch (error) {

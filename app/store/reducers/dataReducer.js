@@ -1,6 +1,13 @@
 const initialData = {
   profilesData: [],
 
+  new_post: {
+    anonymous: false,
+    anonymous_name: "Anonymous",
+    anonymous_emoji_index: 1,
+    post: "",
+  },
+
   home_data: {
     loading: true,
     page_cursor: null,
@@ -51,6 +58,33 @@ const initialData = {
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "TOGGLE_TEMP_POST_ANONYMOUSLY":
+      return {
+        ...state,
+        new_post: {
+          ...state.new_post,
+          anonymous: actions.payload,
+        },
+      };
+
+    case "UPDATE_TEMP_ANON_NAME":
+      return {
+        ...state,
+        new_post: {
+          ...state.new_post,
+          anonymous_name: actions.payload,
+        },
+      };
+
+    case "UPDATE_TEMP_ANON_EMOJI":
+      return {
+        ...state,
+        new_post: {
+          ...state.new_post,
+          anonymous_emoji_index: actions.payload,
+        },
+      };
+
     case "CLEAR_POST_PAGE":
       return {
         ...state,

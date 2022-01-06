@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   obutton: {
-    height: 90,
-    width: 90,
+    height: 70,
+    width: 70,
     borderWidth: 2,
     borderColor: colors.secondary,
     backgroundColor: colors.dark,
