@@ -168,12 +168,13 @@ function AddPostH2({
           >
             {emojis.map((x, index) => (
               <View
+                key={index}
                 style={{
                   margin: 5,
                 }}
               >
                 <TouchableOpacity onPress={() => handlePickEmoji(index)}>
-                  <Image style={styles.emoji_pic} key={index} local uri={x} />
+                  <Image style={styles.emoji_pic} local uri={x} />
                 </TouchableOpacity>
               </View>
             ))}

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   View,
   StyleSheet,
-  Text,
   ScrollView,
   TouchableOpacity,
   AccessibilityInfo,
@@ -15,6 +14,7 @@ import {
   RichEditor,
   RichToolbar,
 } from "react-native-pell-rich-editor";
+import Text from "../components/AppText";
 
 class RTextEditor extends Component {
   richText = React.createRef();
@@ -23,13 +23,16 @@ class RTextEditor extends Component {
   insertHTML = () => {};
 
   onBlur = (e) => {
-    // this.richText.current.
-    // console.log({ e });
     this.richText.blurContentEditor();
   };
 
   onInput = (e) => {
-    console.log(e);
+    // console.log({ input: e });
+  };
+
+  handleChange = (e) => {
+    // console.log({ e });
+    this.props.handleChange(e);
   };
 
   render() {
@@ -41,6 +44,11 @@ class RTextEditor extends Component {
             onContentSizeChange={() => this.scrollview.current.scrollToEnd()}
           >
             <RichEditor
+              renderLoading={
+                <View>
+                  <Text>loading</Text>
+                </View>
+              }
               // initialFocus={true}
               //  editorStyle={contentStyle} // default light style
               ref={this.richText}
@@ -59,7 +67,7 @@ class RTextEditor extends Component {
               }}
               //  initialContentHTML={initHTML}
               //  editorInitializedCallback={that.editorInitializedCallback}
-              // onChange={that.handleChange}
+              onChange={this.handleChange}
               //  onHeightChange={that.handleHeightChange}
               //  onPaste={that.handlePaste}
 
