@@ -14,10 +14,10 @@ export const initializePostAnonData = () => (dispatch) => {
     type: "UPDATE_TEMP_ANON_NAME",
     payload: auth_acc.anonymous_name,
   });
-  dispatch({
-    type: "TOGGLE_TEMP_POST_ANONYMOUSLY",
-    payload: auth_acc.anonymous_profile,
-  });
+  // dispatch({
+  //   type: "TOGGLE_TEMP_POST_ANONYMOUSLY",
+  //   payload: auth_acc.anonymous_profile,
+  // });
 };
 
 export const update_temp_anon_emoji = (index) => (dispatch) => {

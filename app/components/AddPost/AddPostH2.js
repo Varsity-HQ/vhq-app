@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -20,6 +20,7 @@ import {
   update_temp_anon_emoji,
   update_temp_anon_name,
 } from "../../store/actions/actions";
+import Popover from "react-native-popover-view";
 
 const mapStateToProps = (state) => {
   return {
@@ -47,10 +48,19 @@ function AddPostH2({
   new_post,
   toggle_temp_post_anonymous,
   update_temp_anon_name,
+  update_temp_anon_emoji,
 }) {
+  const touchable = useRef();
+  const [showPopover, setShowPopover] = useState(false);
+
   useEffect(() => {
     initializePostAnonData();
   }, []);
+
+  const handlePickEmoji = (index) => {
+    update_temp_anon_emoji(index);
+    setShowPopover(false);
+  };
 
   const seIsAnonymous = (isSet) => {
     toggle_temp_post_anonymous(isSet);
@@ -119,6 +129,58 @@ function AddPostH2({
 
   return (
     <>
+      <Popover
+        animationConfig={{
+          duration: 150,
+          delay: 0,
+        }}
+        from={touchable}
+        isVisible={showPopover}
+        onRequestClose={() => setShowPopover(false)}
+        arrowStyle={{
+          backgroundColor: colors.primary,
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: colors.dark_2,
+            borderColor: colors.primary,
+            borderWidth: 2,
+            padding: 10,
+          }}
+        >
+          <View style={{ marginBottom: 10 }}>
+            <Text
+              style={{
+                fontWeight: "700",
+                fontSize: 17,
+                alignSelf: "center",
+              }}
+            >
+              Pick your mood
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+            }}
+          >
+            {emojis.map((x, index) => (
+              <View
+                style={{
+                  margin: 5,
+                }}
+              >
+                <TouchableOpacity onPress={() => handlePickEmoji(index)}>
+                  <Image style={styles.emoji_pic} key={index} local uri={x} />
+                </TouchableOpacity>
+              </View>
+            ))}
+          </View>
+        </View>
+      </Popover>
+
       {/* <Modal>
         <Text>es</Text>
       </Modal> */}
@@ -137,16 +199,34 @@ function AddPostH2({
             }}
           >
             <View style={{ alignSelf: "center" }}>
-              <Image local uri={emojis[2]} style={[styles.emojipp]} />
-              <Text
-                style={{
-                  color: colors.primary,
-                  marginTop: 3,
-                  // fontSize: 12,
-                }}
+              <TouchableOpacity
+                ref={touchable}
+                onPress={() => setShowPopover(true)}
               >
-                Change
-              </Text>
+                <View
+                  style={{
+                    flexDirection: "column",
+                    alignItems: "center",
+                    marginRight: 10,
+                  }}
+                >
+                  <Image
+                    local
+                    uri={emojis[new_post.anonymous_emoji_index]}
+                    style={[styles.emojipp]}
+                  />
+                  <Text
+                    style={{
+                      color: colors.secondary_2,
+                      marginTop: 3,
+                      fontSize: 12,
+                      fontWeight: "600",
+                    }}
+                  >
+                    Change
+                  </Text>
+                </View>
+              </TouchableOpacity>
             </View>
             <View style={{ flex: 1, marginLeft: 10 }}>
               <Input
@@ -173,11 +253,16 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     fontSize: 16,
   },
+  emoji_pic: {
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+    backgroundColor: colors.darkish3,
+  },
   emojipp: {
     height: 50,
     width: 50,
     borderRadius: 100,
-    marginRight: 10,
     backgroundColor: colors.darkish3,
   },
   avatar: {
