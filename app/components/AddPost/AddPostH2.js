@@ -46,13 +46,14 @@ function AddPostH2({
   initializePostAnonData,
   new_post,
   toggle_temp_post_anonymous,
+  update_temp_anon_name,
 }) {
   useEffect(() => {
     initializePostAnonData();
-  });
+  }, []);
 
-  const seIsAnonymous = () => {
-    toggle_temp_post_anonymous(true);
+  const seIsAnonymous = (isSet) => {
+    toggle_temp_post_anonymous(isSet);
   };
 
   const asMe = () => {
@@ -148,7 +149,12 @@ function AddPostH2({
               </Text>
             </View>
             <View style={{ flex: 1, marginLeft: 10 }}>
-              <Input type={2} placeholder="Your anonymous name here" />
+              <Input
+                value={new_post.anonymous_name}
+                onChangeText={(txt) => update_temp_anon_name(txt)}
+                type={2}
+                placeholder="Your anonymous name here"
+              />
             </View>
           </View>
         )}

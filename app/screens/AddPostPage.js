@@ -31,7 +31,6 @@ export default function AddPostPage({ navigation }) {
             />
             <AddPostH2 />
           </View>
-
           <View
             style={{
               flex: 1,
