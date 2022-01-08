@@ -203,12 +203,9 @@ const AppNavigator = () => {
 
 const styles = StyleSheet.create({
   bottomNav: {
-    shadowColor: colors.black,
-    shadowOpacity: 25,
-    shadowRadius: 5,
     borderTopColor: colors.dark,
     padding: 5,
-    marginTop: 0,
+    marginTop: -6,
     height: 1,
     width: "100%",
     backgroundColor: colors.dark,

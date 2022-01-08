@@ -16,6 +16,9 @@ import {
 import Text from "../AppText";
 import TabNavigator from "../TabNavigator";
 import colors from "../../config/colors";
+import { ProgressBar } from "react-native-paper";
+import HomeUploading from "../Loaders/HomeUploading";
+import { connect } from "react-redux";
 
 const home_tabs = [
   {
@@ -48,7 +51,19 @@ const home_tabs = [
   },
 ];
 
-const Header = ({ navigation, profilepic, username, university }) => {
+const mapStateToProps = (state) => {
+  return {
+    uploading: state.data.new_post.uploading,
+  };
+};
+
+const Header = ({
+  uploading,
+  navigation,
+  profilepic,
+  username,
+  university,
+}) => {
   const [index, setTab] = useState(1);
 
   return (
@@ -93,37 +108,70 @@ const Header = ({ navigation, profilepic, username, university }) => {
           items={home_tabs}
         />
       </View>
-      <View
-        style={{
-          // padding: 10,
-          borderBottomColor: "black",
-          position: "relative",
-          borderTopWidth: 2,
-          // marginTop: 10,
-        }}
-      >
-        <Text
+
+      {uploading ? (
+        <View
           style={{
-            padding: 18,
-            fontSize: 18,
-            color: "#fff",
-            zIndex: 1,
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
+            // padding: 10,
+            borderBottomColor: "black",
+            position: "relative",
+            borderTopWidth: 2,
+            // marginTop: 10,
           }}
         >
-          <Text style={{ fontWeight: "700" }}>Timeline | </Text>
-          <Text style={{ fontSize: 14 }}>showing recent posts</Text>
-        </Text>
-        <LinearGradient
-          colors={["#1160af", "#9e7b9b"]}
-          // colors={["red", "white"]}oin
-          style={styles.grad_diverder}
-          start={[0, 0]}
-          end={[1, 0]}
-        />
-      </View>
+          <View
+            style={{
+              padding: 18,
+              zIndex: 1,
+              alignItems: "center",
+              flexDirection: "row",
+            }}
+          >
+            {/* <HomeUploading /> */}
+            <Text style={{ fontWeight: "700" }}>Posting post ... </Text>
+            {/* <Text style={{ fontSize: 14 }}>showing recent posts</Text> */}
+          </View>
+          <LinearGradient
+            colors={["#1160af", "#9e7b9b"]}
+            // colors={["red", "white"]}oin
+            style={styles.grad_diverder}
+            start={[0, 0]}
+            end={[1, 0]}
+          />
+        </View>
+      ) : (
+        <View
+          style={{
+            // padding: 10,
+            borderBottomColor: "black",
+            position: "relative",
+            borderTopWidth: 2,
+            // marginTop: 10,
+          }}
+        >
+          <Text
+            style={{
+              padding: 18,
+              fontSize: 18,
+              color: "#fff",
+              zIndex: 1,
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Text style={{ fontWeight: "700" }}>Timeline | </Text>
+            <Text style={{ fontSize: 14 }}>showing recent posts</Text>
+          </Text>
+          <LinearGradient
+            colors={["#1160af", "#9e7b9b"]}
+            // colors={["red", "white"]}oin
+            style={styles.grad_diverder}
+            start={[0, 0]}
+            end={[1, 0]}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -199,8 +247,9 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-between",
     paddingVertical: 20,
+    overflow: "hidden",
   },
   container: {},
 });
 
-export default Header;
+export default connect(mapStateToProps, null)(Header);

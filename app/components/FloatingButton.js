@@ -7,10 +7,17 @@ import { LinearGradient } from "expo-linear-gradient";
 import Ricons from "react-native-remix-icon";
 import { useNavigation } from "@react-navigation/native";
 import { ADD_POST } from "../navigation/routes";
+import { connect } from "react-redux";
+import HomeUploading from "../components/Loaders/HomeUploading.js";
 
-// import {} from "@expo/vector-icons"
+const mapStateToProps = (state) => {
+  return {
+    uploading: false,
+    // uploading: state.data.new_post.uploading,
+  };
+};
 
-function FloatingButton(props) {
+function FloatingButton({ uploading }) {
   const navigation = useNavigation();
   return (
     <>
@@ -27,9 +34,13 @@ function FloatingButton(props) {
           end={[1, 0]}
         />
         <View style={styles.inner_container}>
-          <Text style={{ color: colors.white, zIndex: 2 }}>
-            <Ricons size={40} color={colors.white} name="quill-pen-fill" />
-          </Text>
+          {uploading ? (
+            <HomeUploading />
+          ) : (
+            <Text style={{ color: colors.white, zIndex: 2 }}>
+              <Ricons size={40} color={colors.white} name="quill-pen-fill" />
+            </Text>
+          )}
         </View>
       </TouchableOpacity>
     </>
@@ -89,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FloatingButton;
+export default connect(mapStateToProps, null)(FloatingButton);

@@ -158,7 +158,7 @@ function HeaderPostContent({
                   name="university"
                   size={12}
                 />
-                &nbsp;{post.university}
+                &nbsp;{post.fromUniversity}
               </Text>
             </View>
             <View

@@ -5,7 +5,7 @@ import AppText from "../AppText";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-function header1({ backPress, title, buttonText }) {
+function header1({ backPress, title, buttonText, buttonRightPress }) {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -23,7 +23,10 @@ function header1({ backPress, title, buttonText }) {
           <AppText style={[styles.text, { marginLeft: 10 }]}>{title}</AppText>
         </View>
         <View>
-          <TouchableOpacity style={styles.button_right}>
+          <TouchableOpacity
+            onPress={buttonRightPress}
+            style={styles.button_right}
+          >
             <AppText style={[styles.text]}>{buttonText}</AppText>
           </TouchableOpacity>
         </View>
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: colors.dark,
-    borderBottomColor: colors.secondary,
+    borderBottomColor: colors.secondary_2,
     borderBottomWidth: 1,
   },
 });

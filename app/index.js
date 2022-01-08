@@ -28,6 +28,7 @@ import { StatusBar } from "react-native";
 
 import colors from "./config/colors";
 import { Image } from "react-native";
+import AppToast from "./components/AppToast";
 
 if (!getApps().length) {
   initializeApp(firebaseConfig);
@@ -37,81 +38,7 @@ if (!getApps().length) {
 axios.defaults.baseURL = "https://api.varsityhq.co.za";
 
 const toastConfig = {
-  general: ({ text1, text2 }) => (
-    <View
-      style={{
-        width: "100%",
-        padding: 10,
-      }}
-    >
-      <View
-        style={{
-          borderWidth: 2,
-          borderColor: colors.primary,
-          backgroundColor: colors.darkish3,
-          padding: 10,
-          borderRadius: 10,
-          // borderLeftColor: colors.primary,
-          borderLeftWidth: 6,
-          borderRightWidth: 6,
-          shadowColor: colors.black,
-          shadowOffset: {
-            width: 0,
-            height: 6,
-          },
-          shadowOpacity: 0.37,
-          shadowRadius: 7.49,
-          elevation: 12,
-        }}
-      >
-        {/* <Text>F</Text> */}
-
-        <View
-          style={{
-            flexDirection: "row",
-          }}
-        >
-          <View>
-            <Image
-              style={{
-                height: 25,
-                width: 25,
-                marginRight: 7,
-              }}
-              source={require("./assets/vhqcat-small.png")}
-            />
-          </View>
-          <View>
-            <Text
-              style={[
-                { fontWeight: "700" },
-                !text1 && {
-                  height: 0,
-                },
-              ]}
-            >
-              {text1 ? text1 : ""}
-            </Text>
-
-            <Text style={{ fontWeight: "600" }}>
-              {text2 ? text2 : "VarsityHQ says Hi !"}
-            </Text>
-
-            <Text
-              style={{
-                fontSize: 10,
-                marginTop: 5,
-              }}
-            >
-              Swipe up to close
-            </Text>
-          </View>
-        </View>
-
-        {/* <Text>{props.uuid}</Text> */}
-      </View>
-    </View>
-  ),
+  general: ({ text1, text2 }) => <AppToast text1={text1} text2={text2} />,
 };
 //
 const mapStateToProps = (state) => {
@@ -120,6 +47,7 @@ const mapStateToProps = (state) => {
     userID: state.core.accData?.userID,
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     set_user_token: (state) => dispatch(set_user_token(state)),

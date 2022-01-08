@@ -49,10 +49,9 @@ class RTextEditor extends Component {
                   <Text>loading</Text>
                 </View>
               }
-              // initialFocus={true}
+              initialFocus={true}
               //  editorStyle={contentStyle} // default light style
               ref={this.richText}
-              // style={styles.rich}
               //   useContainer={true}
               onBlur={this.onBlur}
               initialHeight={150}
@@ -64,6 +63,8 @@ class RTextEditor extends Component {
                 color: colors.white,
                 placeholderColor: colors.secondary,
                 caretColor: colors.primary,
+                fontSize: 30,
+                cssText: "* {font-size : 19px}",
               }}
               //  initialContentHTML={initHTML}
               //  editorInitializedCallback={that.editorInitializedCallback}
@@ -124,12 +125,11 @@ const styles = StyleSheet.create({
   re_container: {
     borderColor: colors.secondary,
     // borderWidth: 1,
-
     backgroundColor: colors.dark,
   },
   container: {
     borderTopColor: colors.secondary,
-    borderTopWidth: 1,
+    borderTopWidth: 0,
     maxHeight: 200,
     borderBottomColor: colors.secondary,
     borderBottomWidth: 0,

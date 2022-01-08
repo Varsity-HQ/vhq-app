@@ -6,6 +6,7 @@ const initialData = {
     anonymous_name: "Anonymous",
     anonymous_emoji_index: 1,
     post: "",
+    uploading: false,
   },
 
   home_data: {
@@ -58,6 +59,25 @@ const initialData = {
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "ADD_NEW_POST":
+      let cur_home_posts = state.home_data.posts;
+      cur_home_posts.unshift(actions.payload);
+
+      return {
+        ...state,
+        home_data: {
+          ...state.home_data,
+          posts: cur_home_posts,
+        },
+      };
+    case "SET_POST_UPLOADING":
+      return {
+        ...state,
+        new_post: {
+          ...state.new_post,
+          uploading: actions.payload,
+        },
+      };
     case "TOGGLE_TEMP_POST_ANONYMOUSLY":
       return {
         ...state,

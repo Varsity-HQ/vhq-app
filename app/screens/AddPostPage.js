@@ -1,14 +1,13 @@
 import React, { PureComponent } from "react";
 import {
-  KeyboardAvoidingView,
   Platform,
   StyleSheet,
   Text,
   View,
   ScrollView,
-  TouchableWithoutFeedback,
   TouchableOpacity,
   LayoutAnimation,
+  Alert,
 } from "react-native";
 import colors from "../config/colors";
 import Header from "../components/headers/header2";
@@ -17,15 +16,22 @@ import RTextEditor from "../components/RTextEditor";
 import Button from "../components/Button";
 import { MaterialCommunityIcons, Foundation } from "@expo/vector-icons";
 import Screen from "../components/Screen";
-
+import AddPictureIcon from "../components/AddPost/AddPictureIcon";
 import KeyboardEventListener from "../components/KeyboardEventListener";
-
+import { HOME } from "../navigation/routes";
 import { connect } from "react-redux";
 import he from "he";
+import { post_new } from "../store/actions/actions";
 
 const mapStateToProps = (state) => {
   return {
     account: state.core.accData,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    post_new: (post, attachments) => dispatch(post_new(post, attachments)),
   };
 };
 
@@ -94,6 +100,40 @@ class AddPostPage extends PureComponent {
     });
   };
 
+  handleSubmit = () => {
+    if (this.state.postText.length < 10)
+      return Alert.alert(
+        "Too short",
+        "Please write more content on your post.",
+        [
+          {
+            text: "Alright bet",
+          },
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+        ],
+      );
+    let postObj = {
+      application: Platform.OS === "ios" ? "iPhone" : "Android",
+      can_reply_privately: this.state.can_reply_privately,
+      postHtmlText: this.state.postHtmlText,
+      postText: this.state.postText,
+      is_eligible_for_promotion: "true",
+      tagged_users: this.state.tagged_users,
+      postHashTags: this.state.postHashTags,
+      postType: this.state.postType,
+      fromUniversity: this.state.fromUniversity,
+      attachments: this.state.attachments,
+      image_dimensions: this.state.image_dimensions,
+      poll_fields: this.state.poll_fields,
+    };
+
+    this.props.post_new(postObj, this.state.local_attachments_blob[0]);
+    this.props.navigation.navigate(HOME);
+  };
+
   render() {
     return (
       <>
@@ -101,6 +141,7 @@ class AddPostPage extends PureComponent {
           <ScrollView keyboardDismissMode="on-drag">
             <View>
               <Header
+                buttonRightPress={this.handleSubmit}
                 backPress={() => this.props.navigation.goBack()}
                 buttonText="Post"
                 title="Create Post"
@@ -131,23 +172,26 @@ class AddPostPage extends PureComponent {
                     paddingVertical: 10,
                   }}
                 >
-                  <View style={styles.obutton}>
-                    <MaterialCommunityIcons
+                  <TouchableOpacity
+                    onPress={() => console.log("_harmony")}
+                    style={styles.obutton}
+                  >
+                    <AddPictureIcon
                       name="image-plus"
                       color={colors.secondary}
-                      size={30}
+                      size={32}
                     />
-                  </View>
-                  <View style={styles.obutton}>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.obutton}>
                     <Foundation
                       name="graph-bar"
                       color={colors.secondary}
                       size={30}
                     />
-                  </View>
-                  <View style={styles.obutton}>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.obutton}>
                     <Text style={styles.eventtext}>Event</Text>
-                  </View>
+                  </TouchableOpacity>
                 </ScrollView>
               </View>
             </View>
@@ -157,8 +201,6 @@ class AddPostPage extends PureComponent {
     );
   }
 }
-
-export default connect(mapStateToProps, null)(AddPostPage);
 
 const styles = StyleSheet.create({
   eventtext: {
@@ -182,3 +224,5 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dark,
   },
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPostPage);

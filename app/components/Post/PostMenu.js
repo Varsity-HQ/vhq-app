@@ -72,10 +72,12 @@ function PostMenu({
       delete_post(data.id);
       handleModal();
       setTimeout(() => {
+        // console.log(POST_TO_BE_DELETED);
         Toast.show({
           type: "general",
           autoHide: true,
-          ...POST_TO_BE_DELETED,
+          text1: POST_TO_BE_DELETED.text1,
+          text2: POST_TO_BE_DELETED.text2,
         });
       }, 200);
     }
