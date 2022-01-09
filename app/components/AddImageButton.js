@@ -6,7 +6,14 @@ import colors from "../config/colors";
 import AddPictureIcon from "../components/AddPost/AddPictureIcon";
 import { Image } from "react-native";
 
-function AddImageButton({ style, add_post, onImgChange, max, length }) {
+function AddImageButton({
+  style,
+  add_post,
+  onImgChange,
+  max,
+  length,
+  disabled,
+}) {
   const requestPermission = async () => {
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!granted) alert("You need to enable permission to access the library");
@@ -54,7 +61,11 @@ function AddImageButton({ style, add_post, onImgChange, max, length }) {
 
   if (add_post) {
     return (
-      <TouchableOpacity onPress={selectImage} style={[style]}>
+      <TouchableOpacity
+        disabled={disabled}
+        onPress={selectImage}
+        style={[style]}
+      >
         <AddPictureIcon name="image-plus" color={colors.secondary} size={32} />
       </TouchableOpacity>
     );

@@ -21,23 +21,15 @@ function Screen({
     <SafeAreaView style={[styles.screen, style]}>
       {scroll ? (
         <ScrollView style={[style, styles.view]}>
-          {avoidkeyboard ? (
-            <KeyboardAvoidingView behavior={behavior}>
-              {children}
-            </KeyboardAvoidingView>
-          ) : (
-            children
-          )}
+          <KeyboardAvoidingView enabled={avoidkeyboard} behavior={behavior}>
+            {children}
+          </KeyboardAvoidingView>
         </ScrollView>
       ) : (
         <View style={[style, styles.view]}>
-          {avoidkeyboard ? (
-            <KeyboardAvoidingView behavior={behavior}>
-              {children}
-            </KeyboardAvoidingView>
-          ) : (
-            children
-          )}
+          <KeyboardAvoidingView enabled={avoidkeyboard} behavior={behavior}>
+            {children}
+          </KeyboardAvoidingView>
         </View>
       )}
     </SafeAreaView>

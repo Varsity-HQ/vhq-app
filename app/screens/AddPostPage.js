@@ -247,7 +247,7 @@ class AddPostPage extends Component {
     console.log(this.state);
     return (
       <>
-        <Screen style={styles.container}>
+        <Screen avoidkeyboard={this.state.pollCreate} style={styles.container}>
           <ScrollView keyboardDismissMode="on-drag">
             <View>
               <Header
@@ -299,10 +299,7 @@ class AddPostPage extends Component {
         </Screen>
         <View
           style={{
-            bottom:
-              this.state.postHtmlText || this.state.pollCreate
-                ? 0
-                : this.state.keyboardHeight,
+            bottom: this.state.pollCreate ? 0 : this.state.keyboardHeight,
           }}
         >
           <View>
@@ -323,6 +320,7 @@ class AddPostPage extends Component {
                   ]}
                 >
                   <AddImageButton
+                    disabled={this.state.pollCreate}
                     max={4}
                     length={this.state.local_attachments.length}
                     onImgChange={this.handleImageAdd}
@@ -354,7 +352,10 @@ class AddPostPage extends Component {
                     },
                   ]}
                 >
-                  <TouchableOpacity style={styles.obutton}>
+                  <TouchableOpacity
+                    disabled={this.state.pollCreate}
+                    style={styles.obutton}
+                  >
                     <Text style={styles.eventtext}>Event</Text>
                   </TouchableOpacity>
                 </View>
@@ -412,6 +413,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.dark,
+    borderBottomColor: colors.secondary_2,
+    borderBottomWidth: 1,
   },
 });
 
