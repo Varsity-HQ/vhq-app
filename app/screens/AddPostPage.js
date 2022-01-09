@@ -10,6 +10,7 @@ import {
   LayoutAnimation,
   Alert,
   Dimensions,
+  KeyboardAvoidingView,
 } from "react-native";
 import colors from "../config/colors";
 import Header from "../components/headers/header2";
@@ -245,7 +246,10 @@ class AddPostPage extends Component {
   render() {
     console.log(this.state);
     return (
-      <>
+      <KeyboardAvoidingView
+        style={{ borderColor: "red", borderWidth: 1, flex: 1 }}
+        behavior="height"
+      >
         <Screen style={styles.container}>
           <ScrollView keyboardDismissMode="on-drag">
             <View>
@@ -289,45 +293,44 @@ class AddPostPage extends Component {
               ))}
             </View>
           </ScrollView>
-
-          <View
-            style={{
-              bottom: this.state.keyboardHeight,
-            }}
-          >
+        </Screen>
+        <View
+          style={{
+            bottom: this.state.postHtmlText ? 0 : this.state.keyboardHeight,
+          }}
+        >
+          <View>
             <View>
-              <View>
-                <ScrollView
-                  horizontal
-                  style={{
-                    marginTop: 20,
-                    paddingVertical: 10,
-                    backgroundColor: "transparent",
-                  }}
-                >
-                  <AddImageButton
-                    max={4}
-                    length={this.state.local_attachments.length}
-                    onImgChange={this.handleImageAdd}
-                    add_post
-                    style={styles.obutton}
+              <ScrollView
+                horizontal
+                style={{
+                  marginTop: 20,
+                  paddingVertical: 10,
+                  backgroundColor: "transparent",
+                }}
+              >
+                <AddImageButton
+                  max={4}
+                  length={this.state.local_attachments.length}
+                  onImgChange={this.handleImageAdd}
+                  add_post
+                  style={styles.obutton}
+                />
+                <TouchableOpacity style={styles.obutton}>
+                  <Foundation
+                    name="graph-bar"
+                    color={colors.secondary}
+                    size={30}
                   />
-                  <TouchableOpacity style={styles.obutton}>
-                    <Foundation
-                      name="graph-bar"
-                      color={colors.secondary}
-                      size={30}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.obutton}>
-                    <Text style={styles.eventtext}>Event</Text>
-                  </TouchableOpacity>
-                </ScrollView>
-              </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.obutton}>
+                  <Text style={styles.eventtext}>Event</Text>
+                </TouchableOpacity>
+              </ScrollView>
             </View>
           </View>
-        </Screen>
-      </>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 }
