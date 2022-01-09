@@ -246,10 +246,7 @@ class AddPostPage extends Component {
   render() {
     console.log(this.state);
     return (
-      <KeyboardAvoidingView
-        style={{ borderColor: "red", borderWidth: 1, flex: 1 }}
-        behavior="height"
-      >
+      <>
         <Screen style={styles.container}>
           <ScrollView keyboardDismissMode="on-drag">
             <View>
@@ -267,15 +264,21 @@ class AddPostPage extends Component {
                 // zIndex: 3,
               }}
             >
-              <RTextEditor handleChange={this.handleEditorChange} />
+              <RTextEditor
+                // hasContent={this.state.pollCreate}
+                pollCreate={this.state.pollCreate}
+                handleChange={this.handleEditorChange}
+              />
             </View>
 
-            <PollCreate
-              removePollField={this.removePollField}
-              updatePollName={this.updatePollName}
-              addPollField={this.addPollField}
-              poll_fields={this.state.poll_fields}
-            />
+            {this.state.pollCreate && (
+              <PollCreate
+                removePollField={this.removePollField}
+                updatePollName={this.updatePollName}
+                addPollField={this.addPollField}
+                poll_fields={this.state.poll_fields}
+              />
+            )}
 
             <View style={styles.images_container}>
               {this.state.local_attachments.map((x, index) => (
@@ -296,7 +299,10 @@ class AddPostPage extends Component {
         </Screen>
         <View
           style={{
-            bottom: this.state.postHtmlText ? 0 : this.state.keyboardHeight,
+            bottom:
+              this.state.postHtmlText || this.state.pollCreate
+                ? 0
+                : this.state.keyboardHeight,
           }}
         >
           <View>
@@ -309,28 +315,54 @@ class AddPostPage extends Component {
                   backgroundColor: "transparent",
                 }}
               >
-                <AddImageButton
-                  max={4}
-                  length={this.state.local_attachments.length}
-                  onImgChange={this.handleImageAdd}
-                  add_post
-                  style={styles.obutton}
-                />
-                <TouchableOpacity style={styles.obutton}>
+                <View
+                  style={[
+                    this.state.pollCreate && {
+                      opacity: 0.3,
+                    },
+                  ]}
+                >
+                  <AddImageButton
+                    max={4}
+                    length={this.state.local_attachments.length}
+                    onImgChange={this.handleImageAdd}
+                    add_post
+                    style={[styles.obutton]}
+                  />
+                </View>
+
+                <TouchableOpacity
+                  disabled={this.state.local_attachments.length > 0}
+                  onPress={this.switchToPollPost}
+                  style={[
+                    styles.obutton,
+                    this.state.pollCreate && {
+                      backgroundColor: colors.darkish3,
+                    },
+                  ]}
+                >
                   <Foundation
                     name="graph-bar"
                     color={colors.secondary}
                     size={30}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.obutton}>
-                  <Text style={styles.eventtext}>Event</Text>
-                </TouchableOpacity>
+                <View
+                  style={[
+                    this.state.pollCreate && {
+                      opacity: 0.3,
+                    },
+                  ]}
+                >
+                  <TouchableOpacity style={styles.obutton}>
+                    <Text style={styles.eventtext}>Event</Text>
+                  </TouchableOpacity>
+                </View>
               </ScrollView>
             </View>
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </>
     );
   }
 }

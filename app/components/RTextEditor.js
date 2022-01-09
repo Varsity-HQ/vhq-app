@@ -38,7 +38,19 @@ class RTextEditor extends Component {
   render() {
     return (
       <>
-        <View style={styles.container}>
+        <View
+          style={
+            (styles.container,
+            !this.props.pollCreate
+              ? {
+                  maxHeight: 200,
+                  minHeight: 150,
+                }
+              : {
+                  maxHeight: 200,
+                })
+          }
+        >
           <ScrollView
             ref={this.scrollview}
             onContentSizeChange={() => this.scrollview.current.scrollToEnd()}
@@ -56,7 +68,7 @@ class RTextEditor extends Component {
               ref={this.richText}
               // useContainer={true}
               onBlur={this.onBlur}
-              initialHeight={150}
+              // initialHeight={this.props.pollCreate ? null : 150}
               containerStyle={styles.re_container}
               placeholder={"Tell a story..."}
               editorStyle={{
@@ -132,7 +144,6 @@ const styles = StyleSheet.create({
   container: {
     borderTopColor: colors.secondary,
     borderTopWidth: 0,
-    maxHeight: 200,
     borderBottomColor: colors.secondary,
     borderBottomWidth: 0,
     // padding: 10,
