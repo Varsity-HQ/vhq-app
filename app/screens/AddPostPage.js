@@ -347,7 +347,7 @@ class AddPostPage extends Component {
                 </View>
 
                 <TouchableOpacity
-                  disabled={this.state.local_attachments.length > 0}
+                  // disabled={this.state.local_attachments.length > 0}
                   onPress={this.switchToPollPost}
                   style={[
                     styles.obutton,
