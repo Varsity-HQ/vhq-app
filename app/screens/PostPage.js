@@ -110,12 +110,18 @@ class PostPage extends React.PureComponent {
             keyExtractor={(item) => item.comment_id}
             ListFooterComponent={() => (
               <View>
-                {this.props.post_page.comments_loading && (
+                {this.props.post_page.comments_loading ? (
                   <>
                     <PostPageComment skeleton />
                     <PostPageComment skeleton />
                     <PostPageComment skeleton />
                   </>
+                ) : (
+                  <View
+                    style={{
+                      marginBottom: 200,
+                    }}
+                  />
                 )}
               </View>
             )}
@@ -170,7 +176,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.darkish3,
   },
 
-  container: {},
+  container: {
+    paddingBottom: 30,
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostPage);

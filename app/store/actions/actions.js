@@ -3,6 +3,11 @@ import auth_storage from "../../auth/auth_storage";
 import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
+import Toast from "react-native-toast-message";
+import {
+  POST_DELETED,
+  POST_POST_SUCCESS_POSTED,
+} from "../../util/toast_messages";
 
 export const post_new = (post, attach) => async (dispatch) => {
   dispatch({
@@ -49,6 +54,11 @@ export const post_new = (post, attach) => async (dispatch) => {
           type: "SET_ANON_EMOJI_INDEX",
           payload: anonymous_emoji_index,
         });
+        Toast.show({
+          type: "general",
+          autoHide: false,
+          ...POST_POST_SUCCESS_POSTED,
+        });
       })
       .catch((err) => {
         dispatch({
@@ -85,6 +95,11 @@ export const post_new = (post, attach) => async (dispatch) => {
         dispatch({
           type: "SET_ANON_EMOJI_INDEX",
           payload: anonymous_emoji_index,
+        });
+        Toast.show({
+          type: "general",
+          autoHide: false,
+          ...POST_POST_SUCCESS_POSTED,
         });
       })
 
@@ -201,6 +216,11 @@ export const delete_post = (p_id) => (dispatch) => {
       dispatch({
         type: "DELETING_POST",
         payload: false,
+      });
+      Toast.show({
+        type: "general",
+        autoHide: false,
+        ...POST_DELETED,
       });
     })
     .catch((err) => {

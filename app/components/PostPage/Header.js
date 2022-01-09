@@ -18,6 +18,7 @@ import emojis from "../../util/emojis";
 
 import { PROFILE } from "../../navigation/routes";
 import PostMenu from "../Post/PostMenu";
+import PostPictures from "../Post/PostPictures";
 
 dayjs.extend(localizedFormat);
 
@@ -86,7 +87,7 @@ function HeaderPostContent({
         <View>
           <View
             style={{
-              paddingHorizontal: 10,
+              paddingHorizontal: 0,
               marginTop: 15,
               borderBottomColor: colors.lighish,
               borderBottomWidth: 1,
@@ -102,7 +103,7 @@ function HeaderPostContent({
                   : null
               }
             >
-              <View style={{ flexDirection: "row" }}>
+              <View style={{ flexDirection: "row", paddingHorizontal: 10 }}>
                 {post.anonymous_post ? (
                   <>
                     <Image
@@ -137,11 +138,19 @@ function HeaderPostContent({
               </View>
             </TouchableWithoutFeedback>
             <View style={{ paddingVertical: 5 }}>
-              <Content html={post.postHtmlText} />
+              <PostPictures images={post.attachments} />
+              <View
+                style={{
+                  paddingHorizontal: 10,
+                }}
+              >
+                <Content html={post.postHtmlText} />
+              </View>
             </View>
             <View
               style={{
                 paddingBottom: 10,
+                marginHorizontal: 10,
                 borderBottomWidth: 1,
                 borderBottomColor: colors.lighish,
               }}
@@ -164,6 +173,7 @@ function HeaderPostContent({
             <View
               style={{
                 paddingVertical: 10,
+                paddingHorizontal: 10,
                 justifyContent: "space-between",
                 alignItems: "center",
                 flexDirection: "row",
@@ -201,6 +211,7 @@ function HeaderPostContent({
               <View
                 style={{
                   marginLeft: 10,
+                  marginRight: 10,
                   alignItems: "center",
                   flexDirection: "row",
                 }}

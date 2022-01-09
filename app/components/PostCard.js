@@ -24,6 +24,7 @@ import PostCardButtons from "./Post/PostCardButtons";
 import { connect } from "react-redux";
 import { save_local_post } from "../store/actions/actions";
 import emojis from "../util/emojis";
+import PostPictures from "./Post/PostPictures";
 
 dayjs.extend(Localize);
 
@@ -144,16 +145,7 @@ class PostCard extends PureComponent {
           </View>
 
           <View style={styles.content_container}>
-            {data.attachments.length > 0 && (
-              <Image
-                style={{
-                  marginTop: 15,
-                  height: deviceWidth,
-                  width: deviceWidth,
-                }}
-                uri={data.attachments[0]}
-              />
-            )}
+            <PostPictures images={data.attachments} />
 
             <TouchableWithoutFeedback onPress={() => this.handleOpenPost()}>
               <View style={styles.def_padding}>
