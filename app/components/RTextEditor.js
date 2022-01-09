@@ -49,7 +49,7 @@ class RTextEditor extends Component {
                   <Text>loading</Text>
                 </View>
               }
-              initialFocus={true}
+              // initialFocus={true}
               //  editorStyle={contentStyle} // default light style
               ref={this.richText}
               //   useContainer={true}

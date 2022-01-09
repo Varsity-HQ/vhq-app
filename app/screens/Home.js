@@ -1,4 +1,10 @@
-import React, { Component, PureComponent } from "react";
+import React, {
+  Component,
+  PureComponent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { StyleSheet, FlatList } from "react-native";
 import Screen from "../components/Screen";
 import PostCard from "../components/PostCard";
@@ -7,6 +13,9 @@ import { get_home_posts } from "../store/actions/actions";
 import Header from "../components/Home/Header";
 import Footer from "../components/Home/Footer";
 import Post from "../components/Skeletons/Post";
+import { useFocusEffect } from "@react-navigation/native";
+import uuid from "uuid";
+import Text from "../components/AppText";
 
 const mapStateToProps = (state) => {
   return {
@@ -28,85 +37,84 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-class Home extends Component {
-  state = {
-    index: 1,
-    loading: false,
-  };
+const Home = ({
+  navigation,
+  refreshing,
+  loading,
+  loading_more,
+  get_home_posts,
+  posts,
+  ...props
+}) => {
+  const flatListRef = useRef();
 
-  componentDidMount() {
-    this.props.get_home_posts({
-      refresh: false,
-      init: true,
-      more: false,
-    });
-  }
+  const [render_id, set_render] = useState(uuid.v4());
 
-  onRefresh() {
-    this.props.get_home_posts({
+  // useEffect(() => {
+
+  // }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("back home");
+      get_home_posts({
+        refresh: false,
+        init: true,
+        more: false,
+      });
+      set_render(uuid.v4());
+    }, []),
+  );
+
+  const onRefresh = () => {
+    get_home_posts({
       refresh: true,
       init: false,
       more: false,
     });
-  }
+  };
 
-  handleLoadMore() {
-    this.props.get_home_posts({
+  const handleLoadMore = () => {
+    get_home_posts({
       refresh: true,
       init: false,
       more: true,
     });
-  }
-
-  handleListRendering = ({ item }) => (
-    <PostCard navigation={this.props.navigation} data={item} />
+  };
+  const handleListRendering = ({ item }) => (
+    <PostCard navigation={navigation} data={item} />
   );
-
-  shouldComponentUpdate(nextProps, nextState) {
-    // console.log("Previous", this.props, this.state);
-    console.log("Next", nextProps, nextState);
-
-    if (nextProps === this.props) {
-      return false;
-    } else {
-      console.log("update home");
-      return true;
-    }
-  }
-
-  render() {
-    return (
-      <Screen>
-        <FlatList
-          ref={(ref) => {
-            this.flatListRef = ref;
-          }}
-          extraData={this.props.posts}
-          ListHeaderComponent={<Header {...this.props} />}
-          ListFooterComponent={
-            this.props.loading
-              ? () => (
-                  <>
-                    <Post />
-                    <Post />
-                    <Post />
-                  </>
-                )
-              : () => <Footer loadingMore={this.props.loading_more} />
-          }
-          data={this.props.loading ? [] : this.props.posts}
-          renderItem={this.handleListRendering}
-          keyExtractor={(item) => item.id}
-          initialNumToRender={10}
-          onRefresh={() => this.onRefresh()}
-          refreshing={this.props.refreshing}
-          onEndReached={() => this.handleLoadMore()}
-          onEndReachedThreshold={0.8}
-        />
-      </Screen>
-    );
-  }
-}
+  console.log("render");
+  console.log(render_id);
+  return (
+    <Screen>
+      <FlatList
+        ref={flatListRef}
+        extraData={posts}
+        ListHeaderComponent={<Header navigation={navigation} {...props} />}
+        ListFooterComponent={
+          loading
+            ? () => (
+                <>
+                  <Post />
+                  <Post />
+                  <Post />
+                </>
+              )
+            : () => <Footer loadingMore={loading_more} />
+        }
+        data={loading ? [] : posts}
+        renderItem={handleListRendering}
+        keyExtractor={(item) => item.id}
+        initialNumToRender={10}
+        onRefresh={() => onRefresh()}
+        refreshing={refreshing}
+        onEndReached={() => handleLoadMore()}
+        onEndReachedThreshold={0.8}
+      />
+    </Screen>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {},

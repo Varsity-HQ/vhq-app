@@ -19,6 +19,7 @@ import colors from "../../config/colors";
 import { ProgressBar } from "react-native-paper";
 import HomeUploading from "../Loaders/HomeUploading";
 import { connect } from "react-redux";
+import { useFocusEffect } from "@react-navigation/native";
 
 const home_tabs = [
   {

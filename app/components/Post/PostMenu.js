@@ -16,7 +16,11 @@ import { TouchableOpacity } from "react-native";
 import { POST_PAGE, PROFILE } from "../../navigation/routes";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
-import { COPY_POST_URL, POST_TO_BE_DELETED } from "../../util/toast_messages";
+import {
+  ANOTHER_POST_CURRENTLY_DELETING,
+  COPY_POST_URL,
+  POST_TO_BE_DELETED,
+} from "../../util/toast_messages";
 import { delete_post } from "../../store/actions/actions";
 
 const mapStateToProps = (state) => {
