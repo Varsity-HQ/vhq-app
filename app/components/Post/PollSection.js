@@ -6,8 +6,12 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { set_poll_vote } from "../../store/actions/actions";
 import colors from "../../config/colors";
-import { View } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Dimensions } from "react-native";
 import Text from "../AppText";
+
+const { width } = Dimensions.get("window");
+
+const deviceWidth = width - 25;
 
 const mapStateToProps = (state) => {
   return {
@@ -91,7 +95,7 @@ class PostPollSection extends Component {
         100
       ).toString();
     } else {
-      width = ((choice_votes / (this.state.total_votes + 1)) * 100).toString();
+      width = (choice_votes / (this.state.total_votes + 1)) * 100;
     }
 
     // console.log({ width });
@@ -104,7 +108,7 @@ class PostPollSection extends Component {
 
     if (this.state.selected) {
       return (
-        <View className="px-2 mt-2 v-poll-section">
+        <View style={styles.poll_section}>
           {this.props.choices.map((x, index) => (
             <View
               onClick={
@@ -113,24 +117,36 @@ class PostPollSection extends Component {
                   : null
               }
               key={index}
-              className="v-poll-choice- w-100 mb-2 py-2 px-3"
+              style={styles.poll_choice_2}
             >
               <View
-                style={{
-                  width: `${this.calcWidth(x.choiceIndex)}%`,
-                }}
-                className="v-poll-selected-progress"
+                style={[
+                  styles.poll_selected_progress,
+                  {
+                    width: (deviceWidth * this.calcWidth(x.choiceIndex)) / 100,
+                  },
+                ]}
               ></View>
-              <View className="d-flex justify-content-between">
-                <View className="d-flex align-items-center">
-                  <Text>{x.choiceName}&nbsp;</Text>
-                  {this.state.selected === x.choiceIndex && (
-                    <MaterialCommunityIcons
-                      color={colors.secondary}
-                      size={20}
-                      name="check-circle-outline"
-                    />
-                  )}
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <View>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text style={{ fontSize: 16 }}>{x.choiceName}&nbsp;</Text>
+                    {this.state.selected === x.choiceIndex && (
+                      <MaterialCommunityIcons
+                        color={colors.secondary}
+                        size={20}
+                        name="check-circle-outline"
+                      />
+                    )}
+                  </View>
                 </View>
                 <View>
                   <Text>{Math.round(this.calcWidth(x.choiceIndex))}%</Text>
@@ -143,20 +159,61 @@ class PostPollSection extends Component {
     }
 
     return (
-      <View className="px-2 mt-2 v-poll-section">
+      <View style={styles.poll_section}>
         {this.props.choices.map((x, index) => (
-          <View
+          <TouchableOpacity
             onClick={() => this.selectPoll_choice(x.choiceIndex)}
             key={index}
-            className="v-poll-choice text-center w-100 mb-2 p-2"
+            style={styles.poll_choice}
           >
-            <View className="v-poll-"></View>
-            <Text>{x.choiceName}</Text>
-          </View>
+            <Text style={styles.poll_text}>{x.choiceName}</Text>
+          </TouchableOpacity>
         ))}
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  poll_selected_progress: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: "100%",
+    width: 0,
+    backgroundColor: "#81c7de70",
+    borderLeftColor: "#81c7de70",
+    borderLeftWidth: 5,
+    borderRadius: 5,
+  },
+  poll_choice_2: {
+    height: 40,
+    marginTop: 10,
+    paddingHorizontal: 10,
+    position: "relative",
+    flexDirection: "row",
+    width: "100%",
+
+    alignItems: "center",
+  },
+  poll_text: {
+    fontWeight: "600",
+    alignSelf: "center",
+    fontSize: 17,
+  },
+  poll_choice: {
+    borderColor: colors.secondary_2,
+    borderWidth: 1,
+    marginTop: 10,
+    padding: 15,
+    borderRadius: 5,
+    backgroundColor: "#24435a",
+  },
+  poll_section: {
+    paddingHorizontal: 10,
+  },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostPollSection);
