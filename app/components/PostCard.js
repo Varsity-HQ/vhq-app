@@ -25,6 +25,7 @@ import { connect } from "react-redux";
 import { save_local_post } from "../store/actions/actions";
 import emojis from "../util/emojis";
 import PostPictures from "./Post/PostPictures";
+import PollSection from "./Post/PollSection";
 
 dayjs.extend(Localize);
 
@@ -146,6 +147,8 @@ class PostCard extends PureComponent {
 
           <View style={styles.content_container}>
             <PostPictures images={data.attachments} />
+
+            <PollSection poll_id={data.id} choices={data.poll_fields} />
 
             <TouchableWithoutFeedback onPress={() => this.handleOpenPost()}>
               <View style={styles.def_padding}>

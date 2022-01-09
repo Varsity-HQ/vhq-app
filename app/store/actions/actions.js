@@ -9,6 +9,8 @@ import {
   POST_POST_SUCCESS_POSTED,
 } from "../../util/toast_messages";
 
+export const set_poll_vote = (choice) => (dispatch) => {};
+
 export const post_new = (post, attach) => async (dispatch) => {
   dispatch({
     type: "INCREMENT_POST_COUNT",
