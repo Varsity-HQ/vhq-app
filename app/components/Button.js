@@ -9,6 +9,7 @@ function AppButton({
   loading,
   disabled,
   style,
+  textStyle,
   onPress,
   type = 1,
   ...props
@@ -20,7 +21,7 @@ function AppButton({
         style={[styles.button_8, style]}
         onPress={onPress}
       >
-        <Text style={styles.text_t8}>{title}</Text>
+        <Text style={[styles.text_t8, textStyle]}>{title}</Text>
       </TouchableOpacity>
     );
   }
@@ -31,7 +32,7 @@ function AppButton({
         style={[styles.button_7, style]}
         onPress={onPress}
       >
-        <Text style={styles.text_t7}>{title}</Text>
+        <Text style={[styles.text_t7, textStyle]}>{title}</Text>
       </TouchableOpacity>
     );
   }
@@ -42,7 +43,7 @@ function AppButton({
         style={[styles.button_t6, style]}
         onPress={onPress}
       >
-        <Text style={styles.text_t3}>{title}</Text>
+        <Text style={[styles.text_t3, textStyle]}>{title}</Text>
       </TouchableOpacity>
     );
   }
@@ -53,7 +54,7 @@ function AppButton({
         style={[styles.button_t5, style]}
         onPress={onPress}
       >
-        <Text style={styles.text_t3}>{title}</Text>
+        <Text style={[styles.text_t3, textStyle]}>{title}</Text>
       </TouchableOpacity>
     );
   }
@@ -64,7 +65,7 @@ function AppButton({
         style={[styles.button_t4, style]}
         onPress={onPress}
       >
-        <Text style={styles.text_t3}>{title}</Text>
+        <Text style={[styles.text_t3, textStyle]}>{title}</Text>
       </TouchableOpacity>
     );
   }
@@ -76,7 +77,7 @@ function AppButton({
         style={[styles.button_t3, style]}
         onPress={onPress}
       >
-        <Text style={styles.text_t3}>{title}</Text>
+        <Text style={[styles.text_t3, textStyle]}>{title}</Text>
       </TouchableOpacity>
     );
   }
@@ -87,7 +88,7 @@ function AppButton({
         style={[styles.button_t2, style]}
         onPress={onPress}
       >
-        <Text style={styles.text_t2}>{title}</Text>
+        <Text style={[styles.text_t2, textStyle]}>{title}</Text>
       </TouchableOpacity>
     );
   }
@@ -98,7 +99,7 @@ function AppButton({
         style={[styles.button, style]}
         onPress={onPress}
       >
-        <Text style={styles.text}>{title}</Text>
+        <Text style={[styles.text, textStyle]}>{title}</Text>
       </TouchableOpacity>
     );
   }

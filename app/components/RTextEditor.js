@@ -49,10 +49,12 @@ class RTextEditor extends Component {
                   <Text>loading</Text>
                 </View>
               }
+              // hideKeyboardAccessoryView={false}
               // initialFocus={true}
+
               //  editorStyle={contentStyle} // default light style
               ref={this.richText}
-              //   useContainer={true}
+              // useContainer={true}
               onBlur={this.onBlur}
               initialHeight={150}
               containerStyle={styles.re_container}

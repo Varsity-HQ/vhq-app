@@ -39,7 +39,7 @@ class PostPictures extends PureComponent {
 
     return (
       <SwiperFlatList
-        index={2}
+        index={0}
         showPagination
         paginationStyle={{
           bottom: 50,

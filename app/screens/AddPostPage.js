@@ -1,4 +1,4 @@
-import React, { Component, PureComponent } from "react";
+import React, { Component } from "react";
 import {
   Platform,
   StyleSheet,
@@ -25,6 +25,7 @@ import { connect } from "react-redux";
 import he from "he";
 import { post_new } from "../store/actions/actions";
 import AddImageButton from "../components/AddImageButton";
+import PollCreate from "../components/Poll/PollCreate";
 const { width: deviceWidth } = Dimensions.get("window");
 
 const mapStateToProps = (state) => {
@@ -82,6 +83,79 @@ class AddPostPage extends Component {
         choiceName: "",
       },
     ],
+  };
+
+  switchToPollPost = () => {
+    let postType = this.state.postType;
+
+    if (postType === "normal_post") {
+      postType = "poll_post";
+    } else {
+      postType = "normal_post";
+    }
+    this.setState({
+      local_attachments: [],
+      pollCreate: !this.state.pollCreate,
+      postType: postType,
+    });
+  };
+
+  removePollField = (e) => {
+    let poll_fields = this.state.poll_fields;
+    let filtered_fields = [];
+
+    poll_fields.forEach((x) => {
+      if (x.choiceIndex !== e) {
+        filtered_fields.push(x);
+      }
+    });
+
+    this.setState({
+      poll_fields: filtered_fields,
+    });
+  };
+
+  updatePollName = (index, text) => {
+    let current_poll_fields = this.state.poll_fields;
+    let updated_poll_fields = [];
+    current_poll_fields.forEach((x) => {
+      if (x.choiceIndex === parseInt(index)) {
+        let new_value = text;
+        if (new_value.length <= 25) {
+          updated_poll_fields.push({
+            choiceIndex: parseInt(index),
+            choiceName: new_value,
+          });
+        } else {
+          updated_poll_fields.push(x);
+        }
+      } else {
+        updated_poll_fields.push(x);
+      }
+    });
+    this.setState({
+      poll_fields: updated_poll_fields,
+    });
+  };
+
+  addPollField = () => {
+    let current_poll_fields = this.state.poll_fields;
+
+    let new_Index = 0;
+
+    this.state.poll_fields.forEach((x) => {
+      if (x.choiceIndex > new_Index) {
+        new_Index = x.choiceIndex;
+      }
+    });
+
+    current_poll_fields.push({
+      choiceIndex: new_Index + 1,
+      choiceName: "",
+    });
+    this.setState({
+      poll_fields: current_poll_fields,
+    });
   };
 
   componentDidMount = () => {
@@ -191,6 +265,14 @@ class AddPostPage extends Component {
             >
               <RTextEditor handleChange={this.handleEditorChange} />
             </View>
+
+            <PollCreate
+              removePollField={this.removePollField}
+              updatePollName={this.updatePollName}
+              addPollField={this.addPollField}
+              poll_fields={this.state.poll_fields}
+            />
+
             <View style={styles.images_container}>
               {this.state.local_attachments.map((x, index) => (
                 <TouchableWithoutFeedback key={index}>

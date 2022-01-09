@@ -13,11 +13,14 @@ function AppTextInput({
   passShow,
   show,
   width = "100%",
+  value,
   ...otherProps
 }) {
   if (type === 2) {
     return (
       <TextInput
+        value={value}
+        selectionColor={colors.primary}
         onChangeText={onChangeText}
         placeholderTextColor={colors.secondary}
         style={[styles.TextInput, style]}
@@ -38,9 +41,11 @@ function AppTextInput({
         />
       )}
       <TextInput
+        selectionColor={colors.primary}
         onChangeText={onChangeText}
         placeholderTextColor={colors.grayer}
         style={styles.text}
+        value={value}
         {...otherProps}
       />
       {password && (
