@@ -154,6 +154,7 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
         useNativeDriver={true}
         // animationIn={"fadeIn"}
         // animationOut={"fadeOut"}
+        hideModalContentWhileAnimating={true}
         backdropColor={colors.dark_opacity_2}
         onSwipeComplete={handleModal}
         swipeDirection={["down"]}

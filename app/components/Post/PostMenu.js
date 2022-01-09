@@ -162,6 +162,7 @@ function PostMenu({
       <Modal
         // animationIn={"fadeIn"}
         // animationOut={"fadeOut"}
+        hideModalContentWhileAnimating={true}
         backdropColor={colors.dark_opacity_2}
         onSwipeComplete={handleModal}
         swipeDirection={["down"]}
