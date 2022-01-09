@@ -239,6 +239,17 @@ class AddPostPage extends Component {
       poll_fields: this.state.poll_fields,
     };
 
+    if (postObj.postType === "poll_post") {
+      postObj.poll_fields.forEach((x) => {
+        if (x.choiceName === "") {
+          return Alert.alert(
+            "Poll warning",
+            "One or more poll fields have an empty name. Make sure your fields have been named before posting",
+          );
+        }
+      });
+    }
+
     this.props.post_new(postObj, this.state.local_attachments);
     this.props.navigation.navigate(HOME);
   };
@@ -248,7 +259,13 @@ class AddPostPage extends Component {
     return (
       <>
         <Screen avoidkeyboard={this.state.pollCreate} style={styles.container}>
-          <ScrollView keyboardDismissMode="on-drag">
+          <ScrollView
+            style={{
+              // flex: 1,
+              height: "100%",
+            }}
+            keyboardDismissMode="on-drag"
+          >
             <View>
               <Header
                 buttonRightPress={this.handleSubmit}
