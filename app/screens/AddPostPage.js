@@ -36,6 +36,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 class AddPostPage extends PureComponent {
+  _isMounted = false;
+
   state = {
     keyboardHeight: 0,
     id: "",
@@ -80,13 +82,18 @@ class AddPostPage extends PureComponent {
   };
 
   componentDidMount = () => {
+    this._isMounted = true;
     KeyboardEventListener.subscribe(
       ({ keyboardHeight, layoutAnimationConfig }) => {
         LayoutAnimation.configureNext(layoutAnimationConfig);
-        this.setState({ keyboardHeight });
+        if (this._isMounted) this.setState({ keyboardHeight });
       },
     );
   };
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
 
   handleEditorChange = (html) => {
     let receivedTxt = he.decode(html.replace(/<[^>]+>/g, ""));

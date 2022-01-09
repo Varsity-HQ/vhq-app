@@ -1,7 +1,5 @@
 // import React from "react";
-import firebase, { initializeApp } from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
+import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { firebaseConfig } from "./fb_config";
 // firebase.initializeApp(firebaseConfig);

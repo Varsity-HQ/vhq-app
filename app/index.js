@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import AppNavigator from "./navigation/AppRoutes";
 import AuthRoutes from "./navigation/AuthRoutes";
@@ -7,7 +6,6 @@ import vhqTheme from "./navigation/navigationTheme";
 import axios from "axios";
 import { connect } from "react-redux";
 import auth_storage from "./auth/auth_storage";
-
 import AppLoading from "expo-app-loading";
 import {
   setAuthState,
@@ -15,19 +13,11 @@ import {
   set_token,
   set_user,
 } from "./store/actions/actions";
-
 import Toast from "react-native-toast-message";
-
-import Text from "./components/AppText";
-
 import { useFonts } from "expo-font";
-
 import { initializeApp, getApps } from "firebase/app";
 import { firebaseConfig } from "./util/fb_config";
 import { StatusBar } from "react-native";
-
-import colors from "./config/colors";
-import { Image } from "react-native";
 import AppToast from "./components/AppToast";
 
 if (!getApps().length) {

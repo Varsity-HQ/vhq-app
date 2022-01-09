@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component, PureComponent } from "react";
 import { StyleSheet, FlatList } from "react-native";
 import Screen from "../components/Screen";
 import PostCard from "../components/PostCard";
@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-class Home extends PureComponent {
+class Home extends Component {
   state = {
     index: 1,
     loading: false,
@@ -62,16 +62,26 @@ class Home extends PureComponent {
     <PostCard navigation={this.props.navigation} data={item} />
   );
 
+  shouldComponentUpdate(nextProps, nextState) {
+    // console.log("Previous", this.props, this.state);
+    console.log("Next", nextProps, nextState);
+
+    if (nextProps === this.props) {
+      return false;
+    } else {
+      console.log("update home");
+      return true;
+    }
+  }
+
   render() {
-    //|
-    const { posts } = this.props;
-    //|
     return (
       <Screen>
         <FlatList
           ref={(ref) => {
             this.flatListRef = ref;
           }}
+          extraData={this.props.posts}
           ListHeaderComponent={<Header {...this.props} />}
           ListFooterComponent={
             this.props.loading
@@ -84,7 +94,7 @@ class Home extends PureComponent {
                 )
               : () => <Footer loadingMore={this.props.loading_more} />
           }
-          data={this.props.loading ? [] : posts}
+          data={this.props.loading ? [] : this.props.posts}
           renderItem={this.handleListRendering}
           keyExtractor={(item) => item.id}
           initialNumToRender={10}

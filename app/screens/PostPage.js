@@ -40,6 +40,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 class PostPage extends React.PureComponent {
+  _isMounted = false;
   state = {
     keyboardHeight: 0,
     post_id: "",
@@ -60,6 +61,8 @@ class PostPage extends React.PureComponent {
   };
 
   componentDidMount = () => {
+    this._isMounted = true;
+
     const { post_id } = this.props.route.params;
 
     this.setState({
@@ -72,10 +75,14 @@ class PostPage extends React.PureComponent {
     KeyboardEventListener.subscribe(
       ({ keyboardHeight, layoutAnimationConfig }) => {
         LayoutAnimation.configureNext(layoutAnimationConfig);
-        this.setState({ keyboardHeight });
+        if (this._isMounted) this.setState({ keyboardHeight });
       },
     );
   };
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
 
   renderComments = ({ item }) => (
     <PostPageComment
