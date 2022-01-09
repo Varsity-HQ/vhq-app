@@ -165,7 +165,7 @@ class AddPostPage extends Component {
     };
 
     this.props.post_new(postObj, this.state.local_attachments);
-    // this.props.navigation.navigate(HOME);
+    this.props.navigation.navigate(HOME);
   };
 
   render() {
@@ -224,6 +224,8 @@ class AddPostPage extends Component {
                   }}
                 >
                   <AddImageButton
+                    max={4}
+                    length={this.state.local_attachments.length}
                     onImgChange={this.handleImageAdd}
                     add_post
                     style={styles.obutton}

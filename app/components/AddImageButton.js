@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
 import colors from "../config/colors";
 import AddPictureIcon from "../components/AddPost/AddPictureIcon";
 import { Image } from "react-native";
 
-function AddImageButton({ style, add_post, onImgChange }) {
+function AddImageButton({ style, add_post, onImgChange, max, length }) {
   const requestPermission = async () => {
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!granted) alert("You need to enable permission to access the library");
@@ -27,6 +27,13 @@ function AddImageButton({ style, add_post, onImgChange }) {
   };
 
   const selectImage = async () => {
+    if (max <= length) {
+      return Alert.alert(
+        "Limit reached",
+        `You can only post up to ${max} images`,
+      );
+    }
+
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
