@@ -4,126 +4,37 @@ import store from "../store";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
 
-export const post_new = (post, attach) => (dispatch) => {
+export const post_new = (post, attach) => async (dispatch) => {
   dispatch({
     type: "INCREMENT_POST_COUNT",
   });
   let postObj = post;
-  let file;
-
-  if (attach) {
-    file = attach;
-  } else {
-    file = undefined;
-  }
-
-  let url = file;
 
   let post_anonymously = store.getState().data.new_post.anonymous;
   let anonymous_name = store.getState().data.new_post.anonymous_name;
   let anonymous_emoji_index =
     store.getState().data.new_post.anonymous_emoji_index;
 
-  // console.log({
-  //   post_anonymously,
-  //   anonymous_name,
-  //   anonymous_emoji_index,
-  // });
-
   dispatch({
     type: "SET_POST_UPLOADING",
     payload: true,
   });
 
-  if (file) {
-    var returnedBlob = url;
-    // console.log(returnedBlob);
-    let formData = new FormData();
-    formData.append("file", returnedBlob, "jpeg");
-    let imageToUpload = null;
-    axios
-      .post("/upload/image/forpost", formData)
-      .then((data) => {
-        imageToUpload = data.data.imageURL;
-        // console.log(data.data);
-        return axios
-          .post("/post/new", {
-            ...postObj,
-            attachments: [imageToUpload],
-            post_anonymously,
-            anonymous_name,
-            anonymous_emoji_index,
-          })
-          .then((data) => {
-            console.log(data.data);
-            dispatch({
-              type: "ADD_NEW_POST",
-              payload: data.data.post,
-            });
-
-            // localStorage.removeItem("local_attachments");
-            dispatch({
-              type: "SET_UPLOADING",
-              payload: false,
-            });
-            dispatch({
-              type: "SET_DONE_UPLOADING_POST",
-              payload: true,
-            });
-
-            dispatch({
-              type: "UPDATE_ANONYMOUS_NAME",
-              payload: anonymous_name,
-            });
-
-            dispatch({
-              type: "SET_ANON_EMOJI_INDEX",
-              payload: anonymous_emoji_index,
-            });
-          })
-          .catch((err) => {
-            dispatch({
-              type: "SET_UPLOADING",
-              payload: false,
-            });
-
-            console.log(err);
-          });
-      })
-      .then(() => {
-        let refferalcode = localStorage.getItem("_546789325");
-        if (refferalcode) {
-          return axios
-            .get(`/account/usereferral/${refferalcode}`)
-            .then(() => {
-              localStorage.removeItem("_546789325");
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  } else {
-    axios
+  if (attach.length > 0) {
+    let attachment_urls = await uploadMultipleImagesAsync(attach);
+    return axios
       .post("/post/new", {
         ...postObj,
-        attachments: [],
+        attachments: attachment_urls,
         post_anonymously,
         anonymous_name,
         anonymous_emoji_index,
       })
       .then((data) => {
-        console.log(data.data);
-
         dispatch({
           type: "ADD_NEW_POST",
           payload: data.data.post,
         });
-
-        // localStorage.removeItem("local_attachments");
         dispatch({
           type: "SET_POST_UPLOADING",
           payload: false,
@@ -139,17 +50,44 @@ export const post_new = (post, attach) => (dispatch) => {
           payload: anonymous_emoji_index,
         });
       })
-      // .then(() => {
-      //   let refferalcode = localStorage.getItem("_546789325");
-      //   if (refferalcode) {
-      //     return axios
-      //       .get(`/account/usereferral/${refferalcode}`)
-      //       .then(() => {})
-      //       .catch((err) => {
-      //         console.log(err);
-      //       });
-      //   }
-      // })
+      .catch((err) => {
+        dispatch({
+          type: "SET_UPLOADING",
+          payload: false,
+        });
+
+        console.log(err);
+      });
+  } else {
+    axios
+      .post("/post/new", {
+        ...postObj,
+        attachments: [],
+        post_anonymously,
+        anonymous_name,
+        anonymous_emoji_index,
+      })
+      .then((data) => {
+        dispatch({
+          type: "ADD_NEW_POST",
+          payload: data.data.post,
+        });
+        dispatch({
+          type: "SET_POST_UPLOADING",
+          payload: false,
+        });
+
+        dispatch({
+          type: "UPDATE_ANONYMOUS_NAME",
+          payload: anonymous_name,
+        });
+
+        dispatch({
+          type: "SET_ANON_EMOJI_INDEX",
+          payload: anonymous_emoji_index,
+        });
+      })
+
       .catch((err) => {
         console.log(err);
         dispatch({
@@ -1214,29 +1152,44 @@ const setAuthorizationHeader = async (token) => {
   }
 };
 
-const uploadImageAsync = async (uri) => {
-  // Why are we using XMLHttpRequest? See:
-  // https://github.com/expo/expo/issues/2402#issuecomment-443726662
-  const blob = await new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-      resolve(xhr.response);
-    };
-    xhr.onerror = function (e) {
-      console.log(e);
-      reject(new TypeError("Network request failed"));
-    };
-    xhr.responseType = "blob";
-    xhr.open("GET", uri, true);
-    xhr.send(null);
+const uploadMultipleImagesAsync = async (images) => {
+  let promises = [];
+  await images.forEach((x) => {
+    promises.push(uploadImageAsync(x));
   });
+  return Promise.all(promises)
+    .then((upload_res) => {
+      return upload_res;
+    })
+    .catch((err) => console.log(err.code));
+};
 
-  const fileRef = ref(getStorage(), `vhq_${uuid.v4()}.jpeg`);
-  const result = await uploadBytes(fileRef, blob);
-  // console.log({ result });
+const uploadImageAsync = async (uri) => {
+  return await new Promise(async (resolve, reject) => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
 
-  // We're done with the blob, close and release it
-  blob.close();
+    const fileRef = ref(getStorage(), `vhq_${uuid.v4()}.jpeg`);
+    const result = await uploadBytes(fileRef, blob);
+    // console.log({ result });
 
-  return await getDownloadURL(fileRef);
+    // We're done with the blob, close and release it
+    blob.close();
+
+    let downloadUrl = await getDownloadURL(fileRef);
+
+    resolve(downloadUrl); // peviously return;
+    reject("failed to upload");
+  });
 };

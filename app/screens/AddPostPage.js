@@ -164,8 +164,8 @@ class AddPostPage extends Component {
       poll_fields: this.state.poll_fields,
     };
 
-    this.props.post_new(postObj, this.state.local_attachments[0]);
-    this.props.navigation.navigate(HOME);
+    this.props.post_new(postObj, this.state.local_attachments);
+    // this.props.navigation.navigate(HOME);
   };
 
   render() {
