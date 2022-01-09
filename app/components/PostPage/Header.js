@@ -19,6 +19,7 @@ import emojis from "../../util/emojis";
 import { PROFILE } from "../../navigation/routes";
 import PostMenu from "../Post/PostMenu";
 import PostPictures from "../Post/PostPictures";
+import PollSection from "../Post/PollSection";
 
 dayjs.extend(localizedFormat);
 
@@ -138,6 +139,7 @@ function HeaderPostContent({
               </View>
             </TouchableWithoutFeedback>
             <View style={{ paddingVertical: 5 }}>
+              <PollSection poll_id={post.id} choices={post.poll_fields} />
               <PostPictures images={post.attachments} />
               <View
                 style={{
