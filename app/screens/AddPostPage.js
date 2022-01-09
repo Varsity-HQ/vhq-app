@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component, PureComponent } from "react";
 import {
   Platform,
   StyleSheet,
@@ -6,22 +6,26 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   LayoutAnimation,
   Alert,
+  Dimensions,
 } from "react-native";
 import colors from "../config/colors";
 import Header from "../components/headers/header2";
 import AddPostH2 from "../components/AddPost/AddPostH2";
 import RTextEditor from "../components/RTextEditor";
 import Button from "../components/Button";
-import { MaterialCommunityIcons, Foundation } from "@expo/vector-icons";
+import { Ionicons, Foundation } from "@expo/vector-icons";
 import Screen from "../components/Screen";
-import AddPictureIcon from "../components/AddPost/AddPictureIcon";
+import Image from "../components/Image";
 import KeyboardEventListener from "../components/KeyboardEventListener";
 import { HOME } from "../navigation/routes";
 import { connect } from "react-redux";
 import he from "he";
 import { post_new } from "../store/actions/actions";
+import AddImageButton from "../components/AddImageButton";
+const { width: deviceWidth } = Dimensions.get("window");
 
 const mapStateToProps = (state) => {
   return {
@@ -35,7 +39,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-class AddPostPage extends PureComponent {
+class AddPostPage extends Component {
   _isMounted = false;
 
   state = {
@@ -65,7 +69,6 @@ class AddPostPage extends PureComponent {
     link: "",
     attachments: [],
     local_attachments: [],
-    local_attachments_blob: [],
     uploading: false,
     image_dimensions: null,
     pollCreate: false,
@@ -107,6 +110,30 @@ class AddPostPage extends PureComponent {
     });
   };
 
+  handleImageAdd = (uri) => {
+    let new_image_arr = this.state.local_attachments;
+    new_image_arr.unshift(uri);
+    console.log({ new_image_arr });
+    this.setState({
+      local_attachments: new_image_arr,
+    });
+  };
+
+  removeImage = (index) => {
+    let cur_images = this.state.local_attachments;
+    let new_array = [];
+
+    cur_images.forEach((x, i) => {
+      if (index !== i) {
+        new_array.push(x);
+      }
+    });
+
+    this.setState({
+      local_attachments: new_array,
+    });
+  };
+
   handleSubmit = () => {
     if (this.state.postText.length < 10)
       return Alert.alert(
@@ -137,11 +164,12 @@ class AddPostPage extends PureComponent {
       poll_fields: this.state.poll_fields,
     };
 
-    this.props.post_new(postObj, this.state.local_attachments_blob[0]);
+    this.props.post_new(postObj, this.state.local_attachments[0]);
     this.props.navigation.navigate(HOME);
   };
 
   render() {
+    console.log(this.state);
     return (
       <>
         <Screen style={styles.container}>
@@ -163,6 +191,21 @@ class AddPostPage extends PureComponent {
             >
               <RTextEditor handleChange={this.handleEditorChange} />
             </View>
+            <View style={styles.images_container}>
+              {this.state.local_attachments.map((x, index) => (
+                <TouchableWithoutFeedback key={index}>
+                  <View style={styles.selected_image_container}>
+                    <TouchableOpacity
+                      onPress={() => this.removeImage(index)}
+                      style={styles.remove_button}
+                    >
+                      <Ionicons name="close" size={30} color={colors.primary} />
+                    </TouchableOpacity>
+                    <Image local uri={x} style={styles.selected_image} />
+                  </View>
+                </TouchableWithoutFeedback>
+              ))}
+            </View>
           </ScrollView>
 
           <View
@@ -177,18 +220,14 @@ class AddPostPage extends PureComponent {
                   style={{
                     marginTop: 20,
                     paddingVertical: 10,
+                    backgroundColor: "transparent",
                   }}
                 >
-                  <TouchableOpacity
-                    onPress={() => console.log("_harmony")}
+                  <AddImageButton
+                    onImgChange={this.handleImageAdd}
+                    add_post
                     style={styles.obutton}
-                  >
-                    <AddPictureIcon
-                      name="image-plus"
-                      color={colors.secondary}
-                      size={32}
-                    />
-                  </TouchableOpacity>
+                  />
                   <TouchableOpacity style={styles.obutton}>
                     <Foundation
                       name="graph-bar"
@@ -210,14 +249,38 @@ class AddPostPage extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+  remove_button: {
+    position: "absolute",
+    zIndex: 1,
+    right: 30,
+    top: 25,
+    backgroundColor: colors.dark,
+    height: 40,
+    width: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 100,
+    borderColor: colors.primary,
+    borderWidth: 1,
+  },
+  selected_image_container: {
+    position: "relative",
+    padding: 10,
+  },
+  images_container: {},
+  selected_image: {
+    height: deviceWidth - 20,
+    width: deviceWidth - 25,
+    borderRadius: 10,
+  },
   eventtext: {
     color: colors.secondary,
     fontSize: 14,
     fontWeight: "700",
   },
   obutton: {
-    height: 70,
-    width: 70,
+    height: 80,
+    width: 80,
     borderWidth: 2,
     borderColor: colors.secondary,
     backgroundColor: colors.dark,
@@ -225,6 +288,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     alignItems: "center",
     justifyContent: "center",
+    overflow: "hidden",
   },
   container: {
     flex: 1,

@@ -7,8 +7,6 @@ import * as ImagePicker from "expo-image-picker";
 
 import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
 
-import Resizer from "react-image-file-resizer";
-
 function ProfilePicChanger({ image, onImgChange }) {
   //
   const requestPermission = async () => {
