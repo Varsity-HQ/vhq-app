@@ -14,9 +14,9 @@ const store = createStore(
   ),
 );
 
-// const store = createStore(
+//  const store = createStore(
 //   rootReducer,
-//   applyMiddleware(...middleware, thunkMiddleware),
-// );
+//    applyMiddleware(...middleware, thunkMiddleware),
+//  );
 
 export default store;

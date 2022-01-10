@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, PureComponent } from "react";
 import { Alert, View, StyleSheet, Linking } from "react-native";
 import { Button, SafeAreaView, Dimensions } from "react-native";
 import colors from "../../config/colors";
@@ -100,26 +100,29 @@ const tagsStyles = {
 //
 const { width } = Dimensions.get("window");
 
-function Content({ html }) {
-  return (
-    <View style={styles.container}>
-      {/* <Text>{html}</Text> */}
-      <RenderHtml
-        renderers={{
-          p: (props) => <CustomTextRenderer {...props} />,
-        }}
-        // renderers={(props) => AnimatedSpanRenderer(props)}
-        // baseStyle={{}}
-        tagsStyles={tagsStyles}
-        contentWidth={width}
-        source={{
-          html,
-        }}
-      />
-      {/* </ParsedText> */}
-      {/* <Text style={{ color: colors.white }}>{JSON.stringify(html)}</Text> */}
-    </View>
-  );
+class Content extends PureComponent {
+  render() {
+    const html = this.props.html;
+    return (
+      <View style={styles.container}>
+        {/* <Text>{html}</Text> */}
+        <RenderHtml
+          renderers={{
+            p: (props) => <CustomTextRenderer {...props} />,
+          }}
+          // renderers={(props) => AnimatedSpanRenderer(props)}
+          // baseStyle={{}}
+          tagsStyles={tagsStyles}
+          contentWidth={width}
+          source={{
+            html,
+          }}
+        />
+        {/* </ParsedText> */}
+        {/* <Text style={{ color: colors.white }}>{JSON.stringify(html)}</Text> */}
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

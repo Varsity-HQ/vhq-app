@@ -84,8 +84,8 @@ const Home = ({
   const handleListRendering = ({ item }) => (
     <PostCard navigation={navigation} data={item} />
   );
-  console.log("render");
-  console.log(render_id);
+  // console.log("render");
+  // console.log(render_id);
   return (
     <Screen>
       <FlatList

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import post_vote_counter from "../../util/post_vote_counter";
 import { set_poll_vote } from "../../store/actions/actions";
 import colors from "../../config/colors";
 import { StyleSheet, TouchableOpacity, View, Dimensions } from "react-native";
@@ -45,16 +45,18 @@ class PostPollSection extends Component {
       }
     });
 
-    let total_votes = 0;
-    this.props.choices.forEach((x) => {
-      total_votes = total_votes + x.vote_count;
-    });
+    let total_votes = post_vote_counter(this.props.choices);
+
     this.setState({
       total_votes,
       acc_poll_votes,
       poll_voted,
       selected: v_choice,
     });
+
+    // console.log({ total_votes });
+    // this.props?.update_total_votes &&
+    //   this.props?.update_total_votes(total_votes);
   };
 
   selectPoll_choice = (c) => {
@@ -162,7 +164,7 @@ class PostPollSection extends Component {
       <View style={styles.poll_section}>
         {this.props.choices.map((x, index) => (
           <TouchableOpacity
-            onClick={() => this.selectPoll_choice(x.choiceIndex)}
+            onPress={() => this.selectPoll_choice(x.choiceIndex)}
             key={index}
             style={styles.poll_choice}
           >
@@ -185,8 +187,8 @@ const styles = StyleSheet.create({
     width: 0,
     backgroundColor: "#81c7de70",
     borderLeftColor: "#81c7de70",
-    borderLeftWidth: 5,
-    borderRadius: 5,
+    borderLeftWidth: 6,
+    borderRadius: 7,
   },
   poll_choice_2: {
     height: 40,

@@ -26,6 +26,8 @@ import { save_local_post } from "../store/actions/actions";
 import emojis from "../util/emojis";
 import PostPictures from "./Post/PostPictures";
 import PollSection from "./Post/PollSection";
+import post_vote_counter from "../util/post_vote_counter";
+import universityShortName from "../util/universityShortName";
 
 dayjs.extend(Localize);
 
@@ -40,6 +42,19 @@ const mapDispatchToProps = (dispatch) => {
 class PostCard extends PureComponent {
   state = {
     show_comment_bar: false,
+    total_votes: 0,
+  };
+
+  update_total_votes = (t_votes) => {
+    this.setState({
+      total_votes: t_votes,
+    });
+  };
+
+  componentDidMount = () => {
+    this.setState({
+      total_votes: post_vote_counter(this.props.data.poll_fields),
+    });
   };
 
   handleOpenPost = () => {
@@ -64,6 +79,8 @@ class PostCard extends PureComponent {
 
   render() {
     const data = this.props.data;
+
+    console.log({ data });
 
     if (!data) return <SkeletonPost />;
 
@@ -148,7 +165,11 @@ class PostCard extends PureComponent {
           <View style={styles.content_container}>
             <PostPictures images={data.attachments} />
 
-            <PollSection poll_id={data.id} choices={data.poll_fields} />
+            <PollSection
+              update_total_votes={this.update_total_votes}
+              poll_id={data.id}
+              choices={data.poll_fields}
+            />
 
             <TouchableWithoutFeedback onPress={() => this.handleOpenPost()}>
               <View style={styles.def_padding}>
@@ -171,10 +192,18 @@ class PostCard extends PureComponent {
               ...styles.def_padding,
             }}
           >
-            <Text style={{ fontSize: 14, color: colors.secondary }}>
-              {parseInt(data.likes_count) + parseInt(data.comments_count)}{" "}
-              interactions
-            </Text>
+            {data.postType === "poll_post" ? (
+              <Text style={{ fontSize: 14, color: colors.secondary }}>
+                {this.state.total_votes} votes at{" "}
+                {universityShortName(data.university)}
+              </Text>
+            ) : (
+              <Text style={{ fontSize: 14, color: colors.secondary }}>
+                {parseInt(data.likes_count) + parseInt(data.comments_count)}{" "}
+                interactions
+              </Text>
+            )}
+
             <View>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <ImageLocal
