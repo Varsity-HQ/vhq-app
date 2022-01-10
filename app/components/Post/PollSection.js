@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import post_vote_counter from "../../util/post_vote_counter";
+import { poll_life_time_left, post_vote_counter } from "../../util/poll_utils";
 import { set_poll_vote } from "../../store/actions/actions";
 import colors from "../../config/colors";
 import { StyleSheet, TouchableOpacity, View, Dimensions } from "react-native";
@@ -31,6 +31,8 @@ class PostPollSection extends Component {
     total_votes: 0,
     acc_poll_votes: [],
     poll_voted: false,
+    time_left: poll_life_time_left(this.props.created),
+    timer_on: false,
   };
 
   componentDidMount = () => {
@@ -54,10 +56,24 @@ class PostPollSection extends Component {
       selected: v_choice,
     });
 
-    // console.log({ total_votes });
-    // this.props?.update_total_votes &&
-    //   this.props?.update_total_votes(total_votes);
+    if (poll_life_time_left(this.props.created) !== "Votes closed") {
+      this.intervalID = setInterval(() => this.tick(), 1000);
+      this.setState({
+        timer_on: true,
+      });
+    }
   };
+
+  tick = () => {
+    this.setState({
+      time_left: poll_life_time_left(this.props.created),
+    });
+  };
+  componentWillUnmount() {
+    if (this.state.timer_on) {
+      clearInterval(this.intervalID);
+    }
+  }
 
   selectPoll_choice = (c) => {
     this.setState({
@@ -108,7 +124,7 @@ class PostPollSection extends Component {
   render() {
     // console.log(this.state);
 
-    if (this.state.selected) {
+    if (this.state.selected || this.state.time_left === "Votes closed") {
       return (
         <View style={styles.poll_section}>
           {this.props.choices.map((x, index) => (
@@ -156,6 +172,18 @@ class PostPollSection extends Component {
               </View>
             </View>
           ))}
+          <View
+            style={{
+              marginTop: 10,
+              paddingBottom: 10,
+              borderColor: colors.secondary_2,
+              borderBottomWidth: 0.3,
+            }}
+          >
+            <Text style={{ color: colors.secondary_2 }}>
+              {this.state.time_left}
+            </Text>
+          </View>
         </View>
       );
     }
@@ -171,6 +199,18 @@ class PostPollSection extends Component {
             <Text style={styles.poll_text}>{x.choiceName}</Text>
           </TouchableOpacity>
         ))}
+        <View
+          style={{
+            marginTop: 10,
+            paddingBottom: 10,
+            borderColor: colors.secondary_2,
+            borderBottomWidth: 0.3,
+          }}
+        >
+          <Text style={{ color: colors.secondary_2 }}>
+            {this.state.time_left}
+          </Text>
+        </View>
       </View>
     );
   }

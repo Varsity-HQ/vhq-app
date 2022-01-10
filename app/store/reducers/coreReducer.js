@@ -32,6 +32,29 @@ const initialData = {
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "SET_POLL_VOTE":
+      let poll_votes = state.accData.poll_votes;
+
+      let updated_votes = [];
+      poll_votes.forEach((x) => {
+        if (x.poll_id === actions.payload.poll_id) {
+          updated_votes.push({
+            ...x,
+            voted_choice: actions.payload.voted_choice,
+          });
+        } else {
+          updated_votes.push(x);
+        }
+      });
+
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          poll_votes: updated_votes,
+        },
+      };
+
     case "DELETING_POST":
       return {
         ...state,

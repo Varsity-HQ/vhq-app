@@ -9,7 +9,12 @@ import {
   POST_POST_SUCCESS_POSTED,
 } from "../../util/toast_messages";
 
-export const set_poll_vote = (choice) => (dispatch) => {};
+export const set_poll_vote = (c) => (dispatch) => {
+  dispatch({
+    type: "SET_POLL_VOTE",
+    payload: c,
+  });
+};
 
 export const post_new = (post, attach) => async (dispatch) => {
   dispatch({

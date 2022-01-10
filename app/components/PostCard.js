@@ -26,8 +26,9 @@ import { save_local_post } from "../store/actions/actions";
 import emojis from "../util/emojis";
 import PostPictures from "./Post/PostPictures";
 import PollSection from "./Post/PollSection";
-import post_vote_counter from "../util/post_vote_counter";
+import { post_vote_counter } from "../util/poll_utils";
 import universityShortName from "../util/universityShortName";
+import moment from "moment";
 
 dayjs.extend(Localize);
 
@@ -80,7 +81,7 @@ class PostCard extends PureComponent {
   render() {
     const data = this.props.data;
 
-    console.log({ data });
+    // console.log({ data });
 
     if (!data) return <SkeletonPost />;
 
@@ -165,11 +166,14 @@ class PostCard extends PureComponent {
           <View style={styles.content_container}>
             <PostPictures images={data.attachments} />
 
-            <PollSection
-              update_total_votes={this.update_total_votes}
-              poll_id={data.id}
-              choices={data.poll_fields}
-            />
+            {data.postType === "poll_post" && (
+              <PollSection
+                update_total_votes={this.update_total_votes}
+                poll_id={data.id}
+                choices={data.poll_fields}
+                created={data.created_at}
+              />
+            )}
 
             <TouchableWithoutFeedback onPress={() => this.handleOpenPost()}>
               <View style={styles.def_padding}>
@@ -193,10 +197,24 @@ class PostCard extends PureComponent {
             }}
           >
             {data.postType === "poll_post" ? (
-              <Text style={{ fontSize: 14, color: colors.secondary }}>
-                {this.state.total_votes} votes at{" "}
-                {universityShortName(data.university)}
-              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ fontSize: 14, color: colors.secondary }}>
+                  {this.state.total_votes} votes at{" "}
+                  {universityShortName(data.university)}
+                </Text>
+                <Text style={{ fontSize: 14, color: colors.secondary }}>
+                  &nbsp;•&nbsp;
+                  {moment(data.created_at).format("LT")}
+                  &nbsp;
+                  {moment(data.created_at).format("L")}
+                  &nbsp;
+                </Text>
+              </View>
             ) : (
               <Text style={{ fontSize: 14, color: colors.secondary }}>
                 {parseInt(data.likes_count) + parseInt(data.comments_count)}{" "}

@@ -139,7 +139,15 @@ function HeaderPostContent({
               </View>
             </TouchableWithoutFeedback>
             <View style={{ paddingVertical: 5 }}>
-              <PollSection poll_id={post.id} choices={post.poll_fields} />
+              {post.postType === "poll_post" && (
+                <PollSection
+                  // update_total_votes={update_total_votes}
+                  created={post.created_at}
+                  poll_id={post.id}
+                  choices={post.poll_fields}
+                />
+              )}
+
               <PostPictures images={post.attachments} />
               <View
                 style={{
