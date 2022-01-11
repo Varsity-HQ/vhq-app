@@ -4,6 +4,7 @@ import { View, StyleSheet } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import colors from "../../config/colors";
 import { Picker } from "@react-native-picker/picker";
+import ModalPicker from "../ModalPicker";
 
 function DropDown({ items, value, setValue, style, ...props }) {
   const [open, setOpen] = useState(false);
@@ -12,20 +13,15 @@ function DropDown({ items, value, setValue, style, ...props }) {
 
   if (Platform.OS === "android") {
     return (
-      <View style={[styles.container, style]}>
-        <Picker
-          style={styles.dropdown}
-          onValueChange={(itemValue) => setValue(itemValue)}
-        >
-          {items.map((x, index) => (
-            <Picker.Item
-              key={index}
-              style={{ color: colors.secondary }}
-              label={x.label}
-              value={x.value}
-            />
-          ))}
-        </Picker>
+      <View style={style}>
+        <ModalPicker
+          onSelectItem={setValue}
+          headerText="Select Universites"
+          items={items}
+          value={value}
+          placeholder={props.placeholder}
+          input_style={styles.dropdown}
+        />
       </View>
     );
   }

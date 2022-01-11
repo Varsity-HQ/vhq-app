@@ -13,6 +13,7 @@ export const POST_PAGE = "PostPage";
 export const ANONYMOUS_SETTINGS = "AnonymousSettings";
 export const PROFILE_SETTINGS = "ProfileSettings";
 export const EDIT_PROFILE = "EditProfile";
+export const POLL_DETAILS = "VotesDetails";
 //
 export const PREFERENCES = "Preferences";
 export const YEAR_OF_STUDY = "YearOfStudy";

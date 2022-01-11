@@ -75,6 +75,11 @@ function PostMenu({
     if (data.posted_by === auth_acc_id && !deleting_post) {
       delete_post(data.id);
       handleModal();
+      return Toast.show({
+        type: "general",
+        autoHide: false,
+        ...POST_TO_BE_DELETED,
+      });
     }
   };
 

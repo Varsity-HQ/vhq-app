@@ -145,6 +145,7 @@ function HeaderPostContent({
                   created={post.created_at}
                   poll_id={post.id}
                   choices={post.poll_fields}
+                  created_by={account.userID}
                 />
               )}
 

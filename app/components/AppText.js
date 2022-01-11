@@ -2,6 +2,8 @@ import React from "react";
 import { Text, StyleSheet, Platform } from "react-native";
 import colors from "../config/colors";
 
+const allowFontScaling = false;
+
 function AppText({ children, style, regular = true, ...props }) {
   let font_styles = {};
   if (Array.isArray(style)) {
@@ -18,7 +20,7 @@ function AppText({ children, style, regular = true, ...props }) {
   ) {
     return (
       <Text
-        allowFontScaling={false}
+        allowFontScaling={allowFontScaling}
         {...props}
         style={[styles.text, font_styles, { fontFamily: "Ubuntu-bold" }]}
       >
@@ -30,7 +32,7 @@ function AppText({ children, style, regular = true, ...props }) {
   if (font_styles?.fontWeight === "600" && !font_styles?.fontFamily) {
     return (
       <Text
-        allowFontScaling={false}
+        allowFontScaling={allowFontScaling}
         {...props}
         style={[styles.text, font_styles, { fontFamily: "Ubuntu-medium" }]}
       >
@@ -41,9 +43,10 @@ function AppText({ children, style, regular = true, ...props }) {
 
   return (
     <Text
-      allowFontScaling={false}
+      adjustsFontSizeToFit
+      allowFontScaling={allowFontScaling}
       {...props}
-      style={[styles.text, font_styles]}
+      style={[styles.text, font_styles, { fontFamily: "Ubuntu-regular" }]}
     >
       {children}
     </Text>
@@ -52,7 +55,7 @@ function AppText({ children, style, regular = true, ...props }) {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 15,
+    fontSize: Platform.OS === "android" ? 14 : 15,
     color: colors.white,
     fontFamily: "Ubuntu-regular",
   },

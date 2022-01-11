@@ -74,8 +74,8 @@ function SetupUniversity({
   const [errors, setErrors] = useState({});
 
   const handleUpdate = () => {
+    set_overlay_state(true);
     if (university === "") {
-      set_overlay_state(false);
       set_loading(false);
       return setErrors({
         university: "Please select your university before you continue",

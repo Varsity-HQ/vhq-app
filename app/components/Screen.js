@@ -27,9 +27,16 @@ function Screen({
         </ScrollView>
       ) : (
         <View style={[style, styles.view]}>
-          <KeyboardAvoidingView enabled={avoidkeyboard} behavior={behavior}>
-            {children}
-          </KeyboardAvoidingView>
+          {avoidkeyboard ? (
+            <KeyboardAvoidingView
+              enabled={avoidkeyboard?.active}
+              behavior={behavior}
+            >
+              {children}
+            </KeyboardAvoidingView>
+          ) : (
+            <>{children}</>
+          )}
         </View>
       )}
     </SafeAreaView>

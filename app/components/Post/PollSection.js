@@ -8,6 +8,8 @@ import { set_poll_vote } from "../../store/actions/actions";
 import colors from "../../config/colors";
 import { StyleSheet, TouchableOpacity, View, Dimensions } from "react-native";
 import Text from "../AppText";
+import Button from "../Button";
+import { POLL_DETAILS } from "../../navigation/routes";
 
 const { width } = Dimensions.get("window");
 
@@ -16,6 +18,7 @@ const deviceWidth = width - 25;
 const mapStateToProps = (state) => {
   return {
     acc_poll_votes: state.core.accData.poll_votes,
+    auth_uid: state.core.accData.userID,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -180,9 +183,27 @@ class PostPollSection extends Component {
               borderBottomWidth: 0.3,
             }}
           >
-            <Text style={{ color: colors.secondary_2 }}>
+            <Text style={{ color: colors.secondary_2, fontSize: 13 }}>
               {this.state.time_left}
             </Text>
+            <View>
+              {this.props.created_by === this.props.auth_uid && (
+                <Button
+                  navigateRoute={[
+                    POLL_DETAILS,
+                    { poll_id: this.props.poll_id },
+                  ]}
+                  type={3}
+                  style={{
+                    marginBottom: 0,
+                    backgroundColor: colors.dark_2,
+                    borderColor: colors.secondary,
+                  }}
+                  textStyle={{ color: colors.secondary }}
+                  title="See votes"
+                />
+              )}
+            </View>
           </View>
         </View>
       );
@@ -210,6 +231,20 @@ class PostPollSection extends Component {
           <Text style={{ color: colors.secondary_2 }}>
             {this.state.time_left}
           </Text>
+          <View>
+            {this.props.created_by === this.props.auth_uid && (
+              <Button
+                type={3}
+                style={{
+                  marginBottom: 0,
+                  backgroundColor: colors.dark_2,
+                  borderColor: colors.secondary,
+                }}
+                textStyle={{ color: colors.secondary }}
+                title="See votes"
+              />
+            )}
+          </View>
         </View>
       </View>
     );

@@ -25,6 +25,7 @@ import {
   UPDATE_FIRSTNAME,
   UPDATE_SURNAME,
   UPDATE_ABOUT,
+  POLL_DETAILS,
 } from "./routes";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
@@ -42,6 +43,7 @@ import UpdateAbout from "../screens/settings/UpdateAbout";
 import UpdateUsernameScreen from "../screens/settings/UpdateUsernameScreen";
 import UpdateSurnameScreen from "../screens/settings/UpdateSurnameScreen";
 import UpdateFirstnameScreen from "../screens/settings/UpdateFirstnameScreen";
+import PollDetails from "../screens/PollDetails";
 
 // import PostPage from "../screens/PostPage";
 
@@ -49,11 +51,10 @@ const FeedNavigator = () => (
   <>
     <FloatingButton />
     <Stack.Navigator
-      screenOptions={
-        {
-          // animation: "none",
-        }
-      }
+      defaultScreenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={HOME}
     >
       <Stack.Screen
         options={{
@@ -61,6 +62,13 @@ const FeedNavigator = () => (
         }}
         name={HOME}
         component={Home}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={POLL_DETAILS}
+        component={PollDetails}
       />
       <Stack.Screen
         options={{

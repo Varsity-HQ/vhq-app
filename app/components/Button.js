@@ -1,7 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-
+import { useNavigation } from "@react-navigation/native";
 import colors from "../config/colors";
 
 function AppButton({
@@ -10,16 +10,27 @@ function AppButton({
   disabled,
   style,
   textStyle,
+  navigateRoute,
   onPress,
   type = 1,
   ...props
 }) {
+  const navigation = useNavigation();
+
+  const handleOnPress = () => {
+    if (navigateRoute) {
+      navigation.navigate(navigateRoute[0], navigateRoute[1]);
+    } else {
+      onPress();
+    }
+  };
+
   if (type === 8) {
     return (
       <TouchableOpacity
         {...props}
         style={[styles.button_8, style]}
-        onPress={onPress}
+        onPress={handleOnPress}
       >
         <Text style={[styles.text_t8, textStyle]}>{title}</Text>
       </TouchableOpacity>
@@ -30,7 +41,7 @@ function AppButton({
       <TouchableOpacity
         {...props}
         style={[styles.button_7, style]}
-        onPress={onPress}
+        onPress={handleOnPress}
       >
         <Text style={[styles.text_t7, textStyle]}>{title}</Text>
       </TouchableOpacity>
@@ -41,7 +52,7 @@ function AppButton({
       <TouchableOpacity
         {...props}
         style={[styles.button_t6, style]}
-        onPress={onPress}
+        onPress={handleOnPress}
       >
         <Text style={[styles.text_t3, textStyle]}>{title}</Text>
       </TouchableOpacity>
@@ -52,7 +63,7 @@ function AppButton({
       <TouchableOpacity
         {...props}
         style={[styles.button_t5, style]}
-        onPress={onPress}
+        onPress={handleOnPress}
       >
         <Text style={[styles.text_t3, textStyle]}>{title}</Text>
       </TouchableOpacity>
@@ -63,7 +74,7 @@ function AppButton({
       <TouchableOpacity
         {...props}
         style={[styles.button_t4, style]}
-        onPress={onPress}
+        onPress={handleOnPress}
       >
         <Text style={[styles.text_t3, textStyle]}>{title}</Text>
       </TouchableOpacity>
@@ -75,7 +86,7 @@ function AppButton({
       <TouchableOpacity
         {...props}
         style={[styles.button_t3, style]}
-        onPress={onPress}
+        onPress={handleOnPress}
       >
         <Text style={[styles.text_t3, textStyle]}>{title}</Text>
       </TouchableOpacity>
@@ -86,7 +97,7 @@ function AppButton({
       <TouchableOpacity
         {...props}
         style={[styles.button_t2, style]}
-        onPress={onPress}
+        onPress={handleOnPress}
       >
         <Text style={[styles.text_t2, textStyle]}>{title}</Text>
       </TouchableOpacity>
@@ -97,7 +108,7 @@ function AppButton({
       <TouchableOpacity
         {...props}
         style={[styles.button, style]}
-        onPress={onPress}
+        onPress={handleOnPress}
       >
         <Text style={[styles.text, textStyle]}>{title}</Text>
       </TouchableOpacity>
