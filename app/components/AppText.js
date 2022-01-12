@@ -1,6 +1,8 @@
 import React from "react";
 import { Text, StyleSheet, Platform } from "react-native";
 import colors from "../config/colors";
+import EStyleSheet from "react-native-extended-stylesheet";
+import { normalizeText } from "../util/responsivePx";
 
 const allowFontScaling = false;
 
@@ -41,9 +43,20 @@ function AppText({ children, style, regular = true, ...props }) {
     );
   }
 
+  if (font_styles?.fontFamily) {
+    return (
+      <Text
+        allowFontScaling={allowFontScaling}
+        {...props}
+        style={[styles.text, font_styles]}
+      >
+        {children}
+      </Text>
+    );
+  }
+
   return (
     <Text
-      adjustsFontSizeToFit
       allowFontScaling={allowFontScaling}
       {...props}
       style={[styles.text, font_styles, { fontFamily: "Ubuntu-regular" }]}
@@ -55,7 +68,7 @@ function AppText({ children, style, regular = true, ...props }) {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: Platform.OS === "android" ? 14 : 15,
+    fontSize: normalizeText(15),
     color: colors.white,
     fontFamily: "Ubuntu-regular",
   },

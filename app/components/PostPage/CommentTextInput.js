@@ -53,6 +53,7 @@ function CommentTextInput({
       <View style={[styles.comment_box_container]}>
         {returnProfilePicture(profilepic, styles.profilepic)}
         <TextInput
+          selectionColor={colors.primary}
           placeholderTextColor={colors.secondary_2}
           style={styles.comment_input}
           placeholder={`Respond to ${returnPostOwner()}`}

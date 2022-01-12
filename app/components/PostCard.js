@@ -28,11 +28,14 @@ import PostPictures from "./Post/PostPictures";
 import PollSection from "./Post/PollSection";
 import { post_vote_counter } from "../util/poll_utils";
 import universityShortName from "../util/universityShortName";
+import EStyleSheet from "react-native-extended-stylesheet";
 import moment from "moment";
+
+import { normalizeText } from "../util/responsivePx";
 
 dayjs.extend(Localize);
 
-const { width: deviceWidth } = Dimensions.get("window");
+const { width: deviceWidth, height } = Dimensions.get("window");
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -108,20 +111,20 @@ class PostCard extends PureComponent {
               <View style={{ flexDirection: "row" }}>
                 {data.anonymous_post ? (
                   <ImageLocal
-                    style={styles.p_avatar}
+                    style={[styles.p_avatar]}
                     source={{ uri: emojis[data.anonymous_emoji_index] }}
                   />
                 ) : (
                   <>
                     {data.profilepic ? (
                       <Image
-                        style={styles.p_avatar}
+                        style={[styles.p_avatar]}
                         uri={this.profilepic(data.profilepic)}
                         transitionDuration={300}
                       />
                     ) : (
                       <ImageLocal
-                        style={styles.p_avatar}
+                        style={[styles.p_avatar]}
                         uri={this.profilepic(data.profilepic)}
                         source={require("../assets/avatar.png")}
                       />
@@ -204,20 +207,30 @@ class PostCard extends PureComponent {
                   alignItems: "center",
                 }}
               >
-                <Text style={{ fontSize: 14, color: colors.secondary }}>
+                <Text
+                  style={{
+                    fontSize: normalizeText(13),
+                    color: colors.secondary,
+                  }}
+                >
                   {this.state.total_votes} votes at{" "}
                   {universityShortName(data.university)}
                 </Text>
-                <Text style={{ fontSize: 14, color: colors.secondary }}>
+                <Text
+                  style={{
+                    fontSize: normalizeText(13),
+                    color: colors.secondary,
+                  }}
+                >
                   &nbsp;•&nbsp;
                   {moment(data.created_at).format("LT")}
-                  &nbsp;
-                  {moment(data.created_at).format("L")}
                   &nbsp;
                 </Text>
               </View>
             ) : (
-              <Text style={{ fontSize: 14, color: colors.secondary }}>
+              <Text
+                style={{ fontSize: normalizeText(13), color: colors.secondary }}
+              >
                 {parseInt(data.likes_count) + parseInt(data.comments_count)}{" "}
                 interactions
               </Text>
@@ -233,7 +246,7 @@ class PostCard extends PureComponent {
                   }}
                   source={require("../assets/vhqcat-small.png")}
                 />
-                <Text style={{ fontSize: 13, color: "#4f708a" }}>
+                <Text style={{ fontSize: normalizeText(12), color: "#4f708a" }}>
                   {/* {data.application} */}
                   VarsityHQ ~{""}
                   {Platform.OS === "ios" && " iPhone"}
@@ -263,11 +276,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  button_text: {
-    color: colors.white,
-    fontSize: 16,
-    paddingLeft: 5,
-  },
   button: {
     flexDirection: "row",
     alignItems: "center",
@@ -278,29 +286,32 @@ const styles = StyleSheet.create({
   },
   date_posted: {
     paddingLeft: 10,
-    fontSize: 12,
+    fontSize: normalizeText(12),
     fontWeight: "500",
     color: colors.secondary,
     alignSelf: "center",
     position: "relative",
   },
   username: {
-    fontSize: 17,
+    fontSize: normalizeText(15),
     color: colors.secondary,
   },
   u_name: {
     fontWeight: "700",
-    fontSize: 18,
+    fontSize: normalizeText(16),
     color: colors.white,
     alignItems: "center",
     flexDirection: "row",
     display: "flex",
   },
   p_avatar: {
-    height: 45,
-    width: 45,
     borderRadius: 50,
     backgroundColor: colors.darkish3,
+    // height: 45,
+    // width: 45,
+
+    height: height * 0.058,
+    width: height * 0.058,
   },
   container: {
     // paddingHorizontal: 10,

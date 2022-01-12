@@ -6,6 +6,7 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 
 const statusBarHeight = Constants.statusBarHeight;
@@ -27,7 +28,7 @@ function Screen({
         </ScrollView>
       ) : (
         <View style={[style, styles.view]}>
-          {avoidkeyboard ? (
+          {avoidkeyboard && Platform.OS === "ios" ? (
             <KeyboardAvoidingView
               enabled={avoidkeyboard?.active}
               behavior={behavior}

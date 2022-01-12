@@ -10,6 +10,7 @@ import { StyleSheet, TouchableOpacity, View, Dimensions } from "react-native";
 import Text from "../AppText";
 import Button from "../Button";
 import { POLL_DETAILS } from "../../navigation/routes";
+import { normalizeText } from "../../util/responsivePx";
 
 const { width } = Dimensions.get("window");
 
@@ -159,7 +160,7 @@ class PostPollSection extends Component {
               >
                 <View>
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text style={{ fontSize: 16 }}>{x.choiceName}&nbsp;</Text>
+                    <Text tyle={styles.poll_text}>{x.choiceName}&nbsp;</Text>
                     {this.state.selected === x.choiceIndex && (
                       <MaterialCommunityIcons
                         color={colors.secondary}
@@ -183,7 +184,9 @@ class PostPollSection extends Component {
               borderBottomWidth: 0.3,
             }}
           >
-            <Text style={{ color: colors.secondary_2, fontSize: 13 }}>
+            <Text
+              style={{ color: colors.secondary_2, fontSize: normalizeText(12) }}
+            >
               {this.state.time_left}
             </Text>
             <View>
@@ -228,7 +231,9 @@ class PostPollSection extends Component {
             borderBottomWidth: 0.3,
           }}
         >
-          <Text style={{ color: colors.secondary_2 }}>
+          <Text
+            style={{ color: colors.secondary_2, fontSize: normalizeText(12) }}
+          >
             {this.state.time_left}
           </Text>
           <View>
@@ -278,7 +283,7 @@ const styles = StyleSheet.create({
   poll_text: {
     fontWeight: "600",
     alignSelf: "center",
-    fontSize: 17,
+    fontSize: normalizeText(17),
   },
   poll_choice: {
     borderColor: colors.secondary_2,

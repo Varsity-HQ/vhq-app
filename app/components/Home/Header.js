@@ -4,6 +4,7 @@ import {
   View,
   Image as LocalImage,
   StyleSheet,
+  Dimensions,
   TouchableWithoutFeedback,
 } from "react-native";
 import { Image } from "react-native-expo-image-cache";
@@ -20,6 +21,7 @@ import { ProgressBar } from "react-native-paper";
 import HomeUploading from "../Loaders/HomeUploading";
 import { connect } from "react-redux";
 import { useFocusEffect } from "@react-navigation/native";
+import { normalizeText } from "../../util/responsivePx";
 
 const home_tabs = [
   {
@@ -51,6 +53,8 @@ const home_tabs = [
     icon: <FontAwesome color={colors.white} size={16} name="tags" />,
   },
 ];
+
+const height = Dimensions.get("window").height;
 
 const mapStateToProps = (state) => {
   return {
@@ -90,7 +94,12 @@ const Header = ({
             )}
           </TouchableWithoutFeedback>
         </View>
-        <Text allowFontScaling={false} style={styles.vhq_title}>
+        <Text
+          // numberOfLines={1}
+          // adjustsFontSizeToFit
+          allowFontScaling={false}
+          style={styles.vhq_title}
+        >
           VarsityHQ
         </Text>
         <View style={styles.header_uni_container}>
@@ -199,8 +208,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dark,
   },
   profilepic: {
-    height: 50,
-    width: 50,
+    height: height * 0.07,
+    width: height * 0.07,
+
     marginLeft: 15,
     borderRadius: 100,
     borderWidth: 3,
@@ -211,7 +221,7 @@ const styles = StyleSheet.create({
     color: colors.secondary,
     fontWeight: "700",
     alignSelf: "center",
-    fontSize: 16,
+    fontSize: normalizeText(14),
   },
   header_uni_wrapper: {
     borderWidth: 2,
@@ -220,8 +230,8 @@ const styles = StyleSheet.create({
     borderRightWidth: 0,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingHorizontal: normalizeText(18),
+    paddingVertical: normalizeText(8),
     flexDirection: "row",
     alignItems: "center",
 
@@ -235,11 +245,16 @@ const styles = StyleSheet.create({
     // height: 10,
   },
   vhq_title: {
-    fontSize: 38,
+    fontSize: normalizeText(33),
+    // fontSize: 38%,
     fontWeight: "800",
     color: colors.white,
     fontFamily: "Lobster-Regular",
     width: "40%",
+    // borderWidth: 1,
+    // borderColor: "red",
+    // alignItems: "center",
+    // flexDirection: "row",
   },
 
   header: {
@@ -247,7 +262,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
-    paddingVertical: 20,
+    alignItems: "center",
+    paddingVertical: normalizeText(18),
     overflow: "hidden",
   },
   container: {},

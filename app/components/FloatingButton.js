@@ -1,6 +1,12 @@
 import React from "react";
 import { Text } from "react-native";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+  Dimensions,
+} from "react-native";
 import COntants from "expo-constants";
 import colors from "../config/colors";
 import { LinearGradient } from "expo-linear-gradient";
@@ -9,6 +15,8 @@ import { useNavigation } from "@react-navigation/native";
 import { ADD_POST } from "../navigation/routes";
 import { connect } from "react-redux";
 import HomeUploading from "../components/Loaders/HomeUploading.js";
+
+const height = Dimensions.get("window").height;
 
 const mapStateToProps = (state) => {
   return {
@@ -21,7 +29,7 @@ function FloatingButton({ uploading }) {
   const navigation = useNavigation();
   return (
     <>
-      <View style={styles.shadow} />
+      {Platform.OS === "ios" && <View style={styles.shadow} />}
       <TouchableOpacity
         onPress={() => navigation.navigate(ADD_POST)}
         style={styles.container}
@@ -66,8 +74,10 @@ const styles = StyleSheet.create({
   },
   container: {
     overflow: "hidden",
-    height: 80,
-    width: 80,
+
+    height: height * 0.105,
+    width: height * 0.105,
+
     borderRadius: 100,
     position: "absolute",
     bottom: 40,
@@ -78,8 +88,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   shadow: {
-    height: 80,
-    width: 80,
+    height: height * 0.105,
+    width: height * 0.105,
     borderRadius: 100,
     position: "absolute",
     bottom: 40,

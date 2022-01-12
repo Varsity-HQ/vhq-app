@@ -22,6 +22,7 @@ import {
 } from "../../util/toast_messages";
 import * as Clipboard from "expo-clipboard";
 import check_if_followed from "../../util/check_if_followed";
+import { normalizeText } from "../../util/responsivePx";
 
 const mapStateToProps = (state) => {
   return {
@@ -126,19 +127,31 @@ class PostCardButtons extends PureComponent {
         >
           <TouchableOpacity onPress={this.handleLikePost} style={styles.button}>
             {this.state.post_liked ? (
-              <Ionicons name="heart" size={26} color={colors.redish_2} />
+              <Ionicons
+                name="heart"
+                size={normalizeText(24)}
+                color={colors.redish_2}
+              />
             ) : (
-              <Ionicons name="heart-outline" size={26} color={colors.white} />
+              <Ionicons
+                name="heart-outline"
+                size={normalizeText(24)}
+                color={colors.white}
+              />
             )}
 
             <Text style={styles.button_text}>{data.likes_count}</Text>
           </TouchableOpacity>
           <View style={styles.button}>
-            <Commenticon fill={colors.white} size={25} />
+            <Commenticon fill={colors.white} size={normalizeText(23)} />
             <Text style={styles.button_text}>{data.comments_count}</Text>
           </View>
           <TouchableOpacity onPress={this.handleCopyPost} style={styles.button}>
-            <Ionicons name="copy-outline" size={25} color={colors.white} />
+            <Ionicons
+              name="copy-outline"
+              size={normalizeText(23)}
+              color={colors.white}
+            />
           </TouchableOpacity>
           {!this.state.following_poster && !data.anonymous_post && (
             <TouchableOpacity
@@ -150,7 +163,11 @@ class PostCardButtons extends PureComponent {
                 ellipsizeMode="tail"
                 style={styles.button_text_2}
               >
-                <Feather name="user-plus" size={12} color={colors.secondary} />
+                <Feather
+                  name="user-plus"
+                  size={normalizeText(11)}
+                  color={colors.secondary}
+                />
                 &nbsp;Follow @{data.username}
               </Text>
             </TouchableOpacity>
@@ -161,9 +178,17 @@ class PostCardButtons extends PureComponent {
           style={styles.button}
         >
           {this.state.bookmarked ? (
-            <Ionicons name="bookmark" size={26} color={colors.white} />
+            <Ionicons
+              name="bookmark"
+              size={normalizeText(22)}
+              color={colors.white}
+            />
           ) : (
-            <Ionicons name="bookmark-outline" size={26} color={colors.white} />
+            <Ionicons
+              name="bookmark-outline"
+              size={normalizeText(22)}
+              color={colors.white}
+            />
           )}
         </TouchableOpacity>
       </View>
@@ -174,12 +199,12 @@ class PostCardButtons extends PureComponent {
 const styles = StyleSheet.create({
   button_text: {
     color: colors.white,
-    fontSize: 16,
+    fontSize: normalizeText(15),
     paddingLeft: 5,
   },
   button_text_2: {
     color: colors.secondary,
-    fontSize: 13,
+    fontSize: normalizeText(12),
     // paddingLeft: 5,
   },
   button: {

@@ -66,7 +66,7 @@ function AddImageButton({
         onPress={selectImage}
         style={[style]}
       >
-        <AddPictureIcon name="image-plus" color={colors.secondary} size={32} />
+        <AddPictureIcon name="image-plus" color={colors.secondary} size={24} />
       </TouchableOpacity>
     );
   }

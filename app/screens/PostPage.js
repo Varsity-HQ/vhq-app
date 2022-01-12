@@ -9,7 +9,6 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
-  InputAccessoryView,
   Platform,
 } from "react-native";
 
@@ -23,6 +22,7 @@ import KeyboardEventListener from "../components/KeyboardEventListener";
 import { connect } from "react-redux";
 import CommentTextInput from "../components/PostPage/CommentTextInput";
 import HeaderPostContent from "../components/PostPage/Header";
+import InputAccessoryView from "../components/InputAccessoryView";
 import { get_post_page, clear_post_page } from "../store/actions/actions";
 
 const mapStateToProps = (state) => {
@@ -42,7 +42,6 @@ const mapDispatchToProps = (dispatch) => {
 class PostPage extends React.PureComponent {
   _isMounted = false;
   state = {
-    keyboardHeight: 0,
     post_id: "",
   };
 
@@ -72,12 +71,6 @@ class PostPage extends React.PureComponent {
     console.log("post page loaded");
 
     this.props.get_post_page(post_id);
-    KeyboardEventListener.subscribe(
-      ({ keyboardHeight, layoutAnimationConfig }) => {
-        LayoutAnimation.configureNext(layoutAnimationConfig);
-        if (this._isMounted) this.setState({ keyboardHeight });
-      },
-    );
   };
 
   componentWillUnmount() {
@@ -129,14 +122,14 @@ class PostPage extends React.PureComponent {
         </Screen>
         {/* <KeyboardShift> */}
 
-        <InputAccessoryView backgroundColor="#000">
+        <InputAccessoryView>
           {!this.props.post_page.comments_loading && (
             <View
               style={[
                 styles.comment_box_container,
-                Platform.OS === "android" && {
-                  bottom: this.state.keyboardHeight,
-                },
+                // Platform.OS === "android" && {
+                //   bottom: this.state.keyboardHeight,
+                // },
               ]}
             >
               <CommentTextInput
@@ -155,8 +148,8 @@ const styles = StyleSheet.create({
   comment_box_container: {
     paddingHorizontal: 10,
     paddingVertical: 5,
-    // borderTopColor: colors.black,
-    // borderTopWidth: 2,
+    borderTopColor: colors.black,
+    borderTopWidth: 2,
     backgroundColor: colors.dark,
     bottom: 0,
     shadowColor: "#000",
@@ -177,7 +170,7 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    paddingBottom: 30,
+    // paddingBottom: 30,
   },
 });
 

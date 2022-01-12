@@ -60,7 +60,7 @@ function SetupPersonalInformation({ save_profileDefaults, core }) {
 
   return (
     <Screen scroll style={styles.container}>
-      <KeyboardAvoidingView behavior="position" style={{ flex: 1 }}>
+      <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
         <Header title="Personal information (1/1)" />
 
         <View style={styles.content}>
@@ -104,7 +104,7 @@ function SetupPersonalInformation({ save_profileDefaults, core }) {
                 name="firstname"
                 style={{ marginVertical: 10 }}
                 type={2}
-                placeholder="Your first name e.g Lerato"
+                placeholder="Your first name e.g Llora"
               />
             </View>
             <View style={styles.formgroup}>

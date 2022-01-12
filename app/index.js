@@ -24,7 +24,7 @@ if (!getApps().length) {
   initializeApp(firebaseConfig);
 }
 
-// axios.defaults.baseURL = "http://192.168.8.101:5000";
+// axios.defaults.baseURL = "http://192.168.8.105:5000";
 axios.defaults.baseURL = "https://api.varsityhq.co.za";
 
 const toastConfig = {

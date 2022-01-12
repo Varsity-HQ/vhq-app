@@ -10,6 +10,7 @@ import Toast from "react-native-toast-message";
 import { COPY_URL_IN_POST } from "../../util/toast_messages";
 import { useNavigation } from "@react-navigation/native";
 import { PROFILE } from "../../navigation/routes";
+import { normalizeText } from "../../util/responsivePx";
 
 const CustomTextRenderer = (props) => {
   //
@@ -94,7 +95,7 @@ const tagsStyles = {
   body: {
     whiteSpace: "normal",
     color: colors.white,
-    fontSize: 16,
+    fontSize: normalizeText(15),
   },
 };
 //
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
 
   text: {
     color: colors.white,
-    fontSize: 16,
+    fontSize: normalizeText(15),
   },
 
   phone: {
@@ -157,11 +158,6 @@ const styles = StyleSheet.create({
 
   username: {
     color: colors.primary,
-  },
-
-  magicNumber: {
-    fontSize: 42,
-    color: "pink",
   },
 
   hashTag: {

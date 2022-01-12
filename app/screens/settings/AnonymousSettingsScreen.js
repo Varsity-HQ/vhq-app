@@ -79,129 +79,127 @@ function AnonymousSettingsScreen({
 
   return (
     <Screen scroll={true}>
-      <KeyboardAvoidingView behavior="position">
-        <Header3
-          loading={loading}
-          backPress={() => navigation.goBack()}
-          rightPress={handleSave}
-          title="Anonymous"
-          buttonText="Save"
-        />
-        <View style={styles.container}>
-          <View>
-            <>
-              <View style={styles.dp_container}>
-                <Image
-                  style={styles.emojidp}
-                  source={{ uri: emoji[anonymous_emoji_index] }}
-                />
-              </View>
-              <AppText
-                style={{
-                  paddingHorizontal: 20,
-                  fontWeight: "700",
-                  fontSize: 18,
-                  alignSelf: "center",
-                }}
-              >
-                Pick your mood
-              </AppText>
-              <FlatList
-                horizontal
-                ref={flatListRef}
-                style={styles.emojiscroll}
-                data={emoji}
-                keyExtractor={(index) => index}
-                renderItem={({ item, index }) => (
-                  <TouchableOpacity
-                    onPress={() => changeEmoIndex(index)}
-                    key={index}
-                  >
-                    {index === anonymous_emoji_index ? (
-                      <View style={styles.ind} />
-                    ) : (
-                      <Text style={styles.ind_text}>{index + 1}</Text>
-                    )}
-
-                    <Image style={styles.emojitosl} source={{ uri: item }} />
-                    <View style={styles.selected_indicator}>
-                      <Text style={styles.act_text}>
-                        {index === anonymous_emoji_index && "Active"}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                )}
+      <Header3
+        loading={loading}
+        backPress={() => navigation.goBack()}
+        rightPress={handleSave}
+        title="Anonymous"
+        buttonText="Save"
+      />
+      <View style={styles.container}>
+        <View>
+          <>
+            <View style={styles.dp_container}>
+              <Image
+                style={styles.emojidp}
+                source={{ uri: emoji[anonymous_emoji_index] }}
               />
-            </>
-          </View>
-        </View>
-
-        <View
-          style={{
-            paddingHorizontal: 10,
-          }}
-        >
-          <View>
-            <Text style={{ fontWeight: "700" }}>Anonymous Name</Text>
-            <Text style={{ color: colors.secondary, fontSize: 14 }}>
-              Name to be shown on your posts, for example "Overseas"
-            </Text>
-            <AppTextInput
-              onChangeText={(e) => set_anonymous_name(e)}
-              placeholder="Anonymous"
-              value={anonymous_name}
-              style={{ marginTop: 15 }}
-              type={2}
-            />
-
-            <TouchableOpacity onPress={() => setShowNotes(!show_notes)}>
-              <Text style={{ fontWeight: "700", marginTop: 25 }}>
-                How does this work ?
-              </Text>
-            </TouchableOpacity>
-            <View>
-              {show_notes && (
-                <Text
-                  style={{
-                    color: colors.secondary,
-                    fontSize: 14,
-                    marginTop: 5,
-                  }}
-                >
-                  This setting will only applies when you create new posts and
-                  comment on peoples posts. People will still be able to visit
-                  your normal profile page but they won't be able to trace your
-                  anonymous activity back to your normal profile and your old
-                  posts will remain public.
-                </Text>
-              )}
             </View>
-            <View
+            <AppText
               style={{
-                alignItems: "center",
-                marginTop: 20,
-                paddingVertical: 20,
-                borderTopWidth: 1,
-                borderTopColor: colors.darkish2,
+                paddingHorizontal: 20,
+                fontWeight: "700",
+                fontSize: 18,
+                alignSelf: "center",
               }}
             >
-              <Text>
-                {account.anonymous_profile
-                  ? "Your account is currently anonymous"
-                  : "Your account is not anonymous"}
-              </Text>
-              {account.anonymous_profile && (
-                <AppButton
-                  onPress={() => turn_off_anonymous()}
-                  style={{ borderRadius: 100, paddingHorizontal: 40 }}
-                  type={6}
-                  title="Turn off"
-                />
+              Pick your mood
+            </AppText>
+            <FlatList
+              horizontal
+              ref={flatListRef}
+              style={styles.emojiscroll}
+              data={emoji}
+              keyExtractor={(index) => index}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity
+                  onPress={() => changeEmoIndex(index)}
+                  key={index}
+                >
+                  {index === anonymous_emoji_index ? (
+                    <View style={styles.ind} />
+                  ) : (
+                    <Text style={styles.ind_text}>{index + 1}</Text>
+                  )}
+
+                  <Image style={styles.emojitosl} source={{ uri: item }} />
+                  <View style={styles.selected_indicator}>
+                    <Text style={styles.act_text}>
+                      {index === anonymous_emoji_index && "Active"}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               )}
-            </View>
+            />
+          </>
+        </View>
+      </View>
+
+      <View
+        style={{
+          paddingHorizontal: 10,
+        }}
+      >
+        <View>
+          <Text style={{ fontWeight: "700" }}>Anonymous Name</Text>
+          <Text style={{ color: colors.secondary, fontSize: 14 }}>
+            Name to be shown on your posts, for example "Overseas"
+          </Text>
+          <AppTextInput
+            onChangeText={(e) => set_anonymous_name(e)}
+            placeholder="Anonymous"
+            value={anonymous_name}
+            style={{ marginTop: 15 }}
+            type={2}
+          />
+
+          <TouchableOpacity onPress={() => setShowNotes(!show_notes)}>
+            <Text style={{ fontWeight: "700", marginTop: 25 }}>
+              How does this work ?
+            </Text>
+          </TouchableOpacity>
+          <View>
+            {show_notes && (
+              <Text
+                style={{
+                  color: colors.secondary,
+                  fontSize: 14,
+                  marginTop: 5,
+                }}
+              >
+                This setting will only applies when you create new posts and
+                comment on peoples posts. People will still be able to visit
+                your normal profile page but they won't be able to trace your
+                anonymous activity back to your normal profile and your old
+                posts will remain public.
+              </Text>
+            )}
+          </View>
+          <View
+            style={{
+              alignItems: "center",
+              marginTop: 20,
+              paddingVertical: 20,
+              borderTopWidth: 1,
+              borderTopColor: colors.darkish2,
+            }}
+          >
+            <Text>
+              {account.anonymous_profile
+                ? "Your account is currently anonymous"
+                : "Your account is not anonymous"}
+            </Text>
+            {account.anonymous_profile && (
+              <AppButton
+                onPress={() => turn_off_anonymous()}
+                style={{ borderRadius: 100, paddingHorizontal: 40 }}
+                type={6}
+                title="Turn off"
+              />
+            )}
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </Screen>
   );
 }

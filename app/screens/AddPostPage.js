@@ -10,7 +10,6 @@ import {
   LayoutAnimation,
   Alert,
   Dimensions,
-  KeyboardAvoidingView,
 } from "react-native";
 import colors from "../config/colors";
 import Header from "../components/headers/header2";
@@ -258,7 +257,10 @@ class AddPostPage extends Component {
     console.log(this.state);
     return (
       <>
-        <Screen avoidkeyboard={this.state.pollCreate} style={styles.container}>
+        <Screen
+          avoidkeyboard={{ active: this.state.pollCreate }}
+          style={styles.container}
+        >
           <ScrollView
             style={{
               // flex: 1,
@@ -316,7 +318,12 @@ class AddPostPage extends Component {
         </Screen>
         <View
           style={{
-            bottom: this.state.pollCreate ? 0 : this.state.keyboardHeight,
+            bottom:
+              Platform.OS === "ios"
+                ? this.state.pollCreate
+                  ? 0
+                  : this.state.keyboardHeight
+                : 0,
           }}
         >
           <View>
@@ -324,7 +331,7 @@ class AddPostPage extends Component {
               <ScrollView
                 horizontal
                 style={{
-                  marginTop: 20,
+                  marginTop: 0,
                   paddingVertical: 10,
                   backgroundColor: "transparent",
                 }}
@@ -359,7 +366,7 @@ class AddPostPage extends Component {
                   <Foundation
                     name="graph-bar"
                     color={colors.secondary}
-                    size={30}
+                    size={22}
                   />
                 </TouchableOpacity>
                 <View
@@ -413,12 +420,12 @@ const styles = StyleSheet.create({
   eventtext: {
     color: colors.secondary,
     fontSize: 14,
-    fontWeight: "700",
+    fontWeight: "600",
   },
   obutton: {
-    height: 80,
-    width: 80,
-    borderWidth: 2,
+    height: 65,
+    width: 65,
+    borderWidth: 1.5,
     borderColor: colors.secondary,
     backgroundColor: colors.dark,
     borderRadius: 15,

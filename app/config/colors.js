@@ -1,4 +1,5 @@
 export default {
+  transparent: "#ffffff00",
   primary: "#1acfff",
   secondary: "#b1d5e7",
   secondary_2: "#5c809c",

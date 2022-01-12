@@ -131,13 +131,13 @@ const AppNavigator = () => {
       tabBar={TabBar}
       screenOptions={{
         tabBarStyle: {
-          marginTop: 0,
+          // marginTop: 0,
           backgroundColor: "transparent",
           borderTopColor: colors.darkish2,
           borderTopWidth: 2,
-          shadowColor: colors.black,
-          shadowOpacity: 20,
-          shadowRadius: 5,
+          // shadowColor: colors.black,
+          // shadowOpacity: 20,
+          // shadowRadius: 5,
         },
         tabBarShowLabel: false,
       }}
