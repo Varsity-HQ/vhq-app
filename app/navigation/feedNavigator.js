@@ -53,6 +53,7 @@ const FeedNavigator = () => (
     <Stack.Navigator
       defaultScreenOptions={{
         headerShown: false,
+        animation: "none",
       }}
       initialRouteName={HOME}
     >
@@ -66,6 +67,7 @@ const FeedNavigator = () => (
       <Stack.Screen
         options={{
           headerShown: false,
+          animation: "slide_from_right",
         }}
         name={POLL_DETAILS}
         component={PollDetails}

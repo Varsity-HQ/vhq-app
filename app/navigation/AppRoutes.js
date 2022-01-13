@@ -129,7 +129,11 @@ const AppNavigator = () => {
   return (
     <Tab.Navigator
       tabBar={TabBar}
+      defaultScreenOptions={{
+        tabBarHideOnKeyboard: true,
+      }}
       screenOptions={{
+        tabBarHideOnKeyboard: true,
         tabBarStyle: {
           // marginTop: 0,
           backgroundColor: "transparent",
@@ -144,6 +148,7 @@ const AppNavigator = () => {
     >
       <Tab.Screen
         options={{
+          tabBarHideOnKeyboard: true,
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <RIcon name="home-5-line" color={color} size={size} />

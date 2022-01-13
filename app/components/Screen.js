@@ -22,9 +22,16 @@ function Screen({
     <SafeAreaView style={[styles.screen, style]}>
       {scroll ? (
         <ScrollView style={[style, styles.view]}>
-          <KeyboardAvoidingView enabled={avoidkeyboard} behavior={behavior}>
-            {children}
-          </KeyboardAvoidingView>
+          {avoidkeyboard && Platform.OS === "ios" ? (
+            <KeyboardAvoidingView
+              enabled={avoidkeyboard?.active}
+              behavior={behavior}
+            >
+              {children}
+            </KeyboardAvoidingView>
+          ) : (
+            <>{children}</>
+          )}
         </ScrollView>
       ) : (
         <View style={[style, styles.view]}>
@@ -51,6 +58,8 @@ const styles = StyleSheet.create({
   },
   view: {
     flex: 1,
+    // borderWidth: 1,
+    // borderColor: "red",
   },
 });
 

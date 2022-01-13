@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { poll_life_time_left, post_vote_counter } from "../../util/poll_utils";
-import { set_poll_vote } from "../../store/actions/actions";
+import { set_poll_vote, save_poll_details } from "../../store/actions/actions";
 import colors from "../../config/colors";
 import { StyleSheet, TouchableOpacity, View, Dimensions } from "react-native";
 import Text from "../AppText";
@@ -25,6 +25,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     set_poll_vote: (c) => dispatch(set_poll_vote(c)),
+    save_poll_details: (p) => dispatch(save_poll_details(p)),
   };
 };
 
@@ -128,19 +129,15 @@ class PostPollSection extends Component {
   render() {
     // console.log(this.state);
 
-    if (this.state.selected || this.state.time_left === "Votes closed") {
+    if (
+      this.state.selected ||
+      this.state.time_left === "Votes closed" ||
+      this.props.auth_uid === this.props.created_by
+    ) {
       return (
         <View style={styles.poll_section}>
           {this.props.choices.map((x, index) => (
-            <View
-              onClick={
-                !this.state.poll_voted
-                  ? () => this.selectPoll_choice(x.choiceIndex)
-                  : null
-              }
-              key={index}
-              style={styles.poll_choice_2}
-            >
+            <View key={index} style={styles.poll_choice_2}>
               <View
                 style={[
                   styles.poll_selected_progress,
@@ -192,6 +189,7 @@ class PostPollSection extends Component {
             <View>
               {this.props.created_by === this.props.auth_uid && (
                 <Button
+                  onPress={() => this.props.save_poll_details(this.props.data)}
                   navigateRoute={[
                     POLL_DETAILS,
                     { poll_id: this.props.poll_id },
@@ -239,6 +237,8 @@ class PostPollSection extends Component {
           <View>
             {this.props.created_by === this.props.auth_uid && (
               <Button
+                onPress={() => this.props.save_poll_details(this.props.data)}
+                navigateRoute={[POLL_DETAILS, { poll_id: this.props.poll_id }]}
                 type={3}
                 style={{
                   marginBottom: 0,
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
   poll_text: {
     fontWeight: "600",
     alignSelf: "center",
-    fontSize: normalizeText(17),
+    fontSize: normalizeText(15),
   },
   poll_choice: {
     borderColor: colors.secondary_2,

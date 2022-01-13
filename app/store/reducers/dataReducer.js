@@ -55,10 +55,35 @@ const initialData = {
     //   ],
     // },
   ],
+
+  poll_details: {
+    loading: true,
+    poll: null,
+    voters: [],
+    loading_voters: [],
+  },
 };
 
 const dataReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "SAVE_POLL_POST_DETAILS":
+      return {
+        ...state,
+        poll_details: {
+          poll: actions.payload,
+          loading: false,
+        },
+      };
+
+    case "RESET_POLL_POST_DETAILS":
+      return {
+        ...state,
+        poll_details: {
+          poll: null,
+          loading: true,
+        },
+      };
+
     case "ADD_NEW_POST":
       let cur_home_posts = state.home_data.posts;
       cur_home_posts.unshift(actions.payload);

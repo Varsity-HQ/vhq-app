@@ -176,6 +176,7 @@ class PostCard extends PureComponent {
                 choices={data.poll_fields}
                 created={data.created_at}
                 created_by={data.userID}
+                data={data}
               />
             )}
 

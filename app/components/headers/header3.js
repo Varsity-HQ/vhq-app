@@ -19,6 +19,7 @@ function header3({
   buttonText,
   loading = false,
   backIcon,
+  style,
 }) {
   return (
     <>
@@ -26,6 +27,7 @@ function header3({
       <View
         style={[
           styles.container,
+          style,
           bgActive && {
             backgroundColor: colors.primary,
             borderBottomWidth: 0,

@@ -9,6 +9,30 @@ import {
   POST_POST_SUCCESS_POSTED,
 } from "../../util/toast_messages";
 
+export const reset_poll_details_page = () => (dispatch) => {
+  dispatch({
+    type: "RESET_POLL_POST_DETAILS",
+  });
+};
+
+export const save_poll_details = (poll_post) => (dispatch) => {
+  console.log({ poll_post });
+
+  if (
+    poll_post.postType === "poll_post" &&
+    store.getState().core.accData.userID === poll_post?.posted_by
+  ) {
+    dispatch({
+      type: "SAVE_POLL_POST_DETAILS",
+      payload: poll_post,
+    });
+  } else {
+    dispatch({
+      type: "RESET_POLL_POST_DETAILS",
+    });
+  }
+};
+
 export const set_poll_vote = (c) => (dispatch) => {
   dispatch({
     type: "SET_POLL_VOTE",

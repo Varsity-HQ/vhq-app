@@ -19,6 +19,7 @@ function AppButton({
 
   const handleOnPress = () => {
     if (navigateRoute) {
+      onPress();
       navigation.navigate(navigateRoute[0], navigateRoute[1]);
     } else {
       onPress();
