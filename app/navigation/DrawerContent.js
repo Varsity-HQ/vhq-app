@@ -1,164 +1,198 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React from "react";
 import {
   DrawerContentComponentProps,
   DrawerContentOptions,
   DrawerContentScrollView,
   DrawerItem,
 } from "@react-navigation/drawer";
-import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
 import {
-  Avatar,
-  Caption,
-  Drawer,
-  Paragraph,
-  Switch,
-  Text,
-  Title,
-  TouchableRipple,
-  useTheme,
-} from "react-native-paper";
-import Animated from "react-native-reanimated";
+  MaterialCommunityIcons,
+  Ionicons,
+  FontAwesome,
+} from "@expo/vector-icons";
+import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Drawer } from "react-native-paper";
+import colors from "../config/colors";
+import { useNavigation } from "@react-navigation/native";
 
-export default function DrawerContent(props) {
-  // const translateX = Animated.interpolate(props.progress, {
-  //   inputRange: [0, 0.5, 0.7, 0.8, 1],
-  //   outputRange: [-100, -85, -70, -45, 0],
-  // });
+import Text from "../components/AppText";
+import Image from "../components/Image";
+import { normalizeText } from "../util/responsivePx";
+import Button from "../components/Button";
+import { connect } from "react-redux";
+import { TouchableOpacityBase } from "react-native";
+import { PROFILE } from "./routes";
 
+const height = Dimensions.get("window").height;
+
+const mapStateToProps = (state) => {
+  return {
+    product: state.core.accData.profilepic,
+    account: state.core.accData,
+  };
+};
+function DrawerContent({ props, product, account }) {
+  const navigation = useNavigation();
   return (
-    <DrawerContentScrollView {...props}>
-      <Animated.View
+    <DrawerContentScrollView
+      style={{
+        backgroundColor: colors.dark,
+        borderRightColor: colors.primary,
+        borderRightWidth: 0,
+      }}
+      {...props}
+    >
+      <View
         //@ts-ignore
-        style={[
-          styles.drawerContent,
-          {
-            // backgroundColor: paperTheme.colors.surface,
-            // transform: [{ translateX }],
-          },
-        ]}
+        style={[styles.drawerContent]}
       >
-        <View style={styles.userInfoSection}>
-          <TouchableOpacity
-            style={{ marginLeft: 10 }}
-            onPress={() => {
-              props.navigation.toggleDrawer();
+        <Drawer.Section style={styles.drawerSection}>
+          <View
+            style={{
+              alignSelf: "center",
             }}
           >
-            <Avatar.Image
-              source={{
-                uri: "https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg",
-              }}
-              size={50}
-            />
-          </TouchableOpacity>
-          <Title style={styles.title}>Dawid Urbaniak</Title>
-          <Caption style={styles.caption}>@trensik</Caption>
-          <View style={styles.row}>
-            <View style={styles.section}>
-              <Paragraph style={[styles.paragraph, styles.caption]}>
-                202
-              </Paragraph>
-              <Caption style={styles.caption}>Obserwuje</Caption>
-            </View>
-            <View style={styles.section}>
-              <Paragraph style={[styles.paragraph, styles.caption]}>
-                159
-              </Paragraph>
-              <Caption style={styles.caption}>Obserwujący</Caption>
-            </View>
+            <Image uri={product} style={styles.profilepic} />
           </View>
-        </View>
-        <Drawer.Section style={styles.drawerSection}>
-          <DrawerItem
-            icon={({ color, size }) => (
-              <MaterialCommunityIcons
-                name="account-outline"
-                color={color}
-                size={size}
-              />
-            )}
-            label="Profile"
-            onPress={() => {}}
-          />
-          <DrawerItem
-            icon={({ color, size }) => (
-              <MaterialCommunityIcons name="tune" color={color} size={size} />
-            )}
-            label="Preferences"
-            onPress={() => {}}
-          />
-          <DrawerItem
-            icon={({ color, size }) => (
-              <MaterialCommunityIcons
-                name="bookmark-outline"
-                color={color}
-                size={size}
-              />
-            )}
-            label="Bookmarks"
-            onPress={() => {}}
-          />
+          <Text style={[styles.center, styles.name]}>
+            {account.firstname}&nbsp;{account.surname}
+          </Text>
+          <Text style={[styles.center, styles.username]}>
+            @{account.username}
+          </Text>
+          <View style={[styles.center, styles.row, { marginTop: 15 }]}>
+            <Text style={[styles.subText]}>{account.followers} Followers</Text>
+            <Text style={[styles.subText_2]}>&nbsp;|&nbsp;</Text>
+            <Text style={[styles.subText]}>{account.following} Following</Text>
+          </View>
         </Drawer.Section>
-        <Drawer.Section title="Preferences">
-          <TouchableRipple>
-            <View style={styles.preference}>
-              <Text>Dark Theme</Text>
-              <View pointerEvents="none">
-                <Switch value={true} />
-              </View>
-            </View>
-          </TouchableRipple>
-          <TouchableRipple>
-            <View style={styles.preference}>
-              <Text>RTL</Text>
-              <View pointerEvents="none">
-                <Switch value={true} />
-              </View>
-            </View>
-          </TouchableRipple>
+        <View style={styles.divider} />
+        <Drawer.Section>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate(PROFILE, {
+                username: account.username,
+              })
+            }
+            style={{
+              paddingHorizontal: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 30,
+            }}
+          >
+            <FontAwesome
+              name="user-circle-o"
+              size={30}
+              color={colors.secondary}
+            />
+            <Text style={{ marginLeft: 20 }}>Profile</Text>
+          </TouchableOpacity>
+          <View
+            style={{
+              paddingHorizontal: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 30,
+            }}
+          >
+            <FontAwesome name="bell-o" size={30} color={colors.secondary} />
+            <Text style={{ marginLeft: 20 }}>Notifications</Text>
+          </View>
+          <View
+            style={{
+              paddingHorizontal: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 30,
+            }}
+          >
+            <FontAwesome name="tags" size={30} color={colors.secondary} />
+            <Text style={{ marginLeft: 20 }}>Offers</Text>
+          </View>
+          <View
+            style={{
+              paddingHorizontal: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 30,
+            }}
+          >
+            <MaterialCommunityIcons
+              name="wallet"
+              size={30}
+              color={colors.secondary}
+            />
+            <Text style={{ marginLeft: 20 }}>Wallet</Text>
+          </View>
+          <View
+            style={{
+              paddingHorizontal: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 0,
+            }}
+          >
+            <FontAwesome name="cog" size={30} color={colors.secondary} />
+            <Text style={{ marginLeft: 20 }}>Settings</Text>
+          </View>
+
+          <View style={styles.divider} />
+
+          <View style={{ paddingHorizontal: 10, marginTop: 0 }}>
+            <Button type={3} title="Switch Content" />
+            <Button type={3} title="Sign out" />
+          </View>
         </Drawer.Section>
-      </Animated.View>
+      </View>
     </DrawerContentScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  subText_2: {
+    color: colors.secondary_2,
+  },
+  subText: {
+    fontSize: normalizeText(14),
+  },
+  divider: {
+    height: 10,
+    backgroundColor: colors.darkish2,
+    marginVertical: 20,
+  },
+  name: {
+    fontSize: normalizeText(17),
+    fontWeight: "700",
+    marginTop: 15,
+  },
+  username: {
+    fontSize: normalizeText(14),
+    color: colors.secondary,
+    marginTop: 5,
+  },
+  center: {
+    alignSelf: "center",
+  },
+  profilepic: {
+    height: height * 0.12,
+    width: height * 0.12,
+    borderRadius: 100,
+  },
   drawerContent: {
     flex: 1,
+    // backgroundColor: colors.dark_2,
   },
   userInfoSection: {
     paddingLeft: 20,
   },
-  title: {
-    marginTop: 20,
-    fontWeight: "bold",
-  },
-  caption: {
-    fontSize: 14,
-    lineHeight: 14,
-  },
   row: {
-    marginTop: 20,
     flexDirection: "row",
     alignItems: "center",
-  },
-  section: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginRight: 15,
-  },
-  paragraph: {
-    fontWeight: "bold",
-    marginRight: 3,
   },
   drawerSection: {
     marginTop: 15,
   },
-  preference: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-  },
 });
+
+export default connect(mapStateToProps, null)(DrawerContent);
