@@ -8,7 +8,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, Text, View } from "react-native";
 import { connect } from "react-redux";
 
-import { FontAwesome } from "@expo/vector-icons";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import RIcon from "react-native-remix-icon";
 
 //Navigators
@@ -22,7 +22,7 @@ import SetupUniversity from "../screens/SetupUniversity";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import SetupPersonalInformation from "../screens/SetupPersonalInformation";
 import AddPostPage from "../screens/AddPostPage";
-
+import DrawerContent from "../navigation/DrawerContent";
 import OverlayLoader from "../components/OverlayLoader";
 import colors from "../config/colors";
 import * as routes from "./routes";
@@ -35,6 +35,39 @@ const mapStateToProps = (state) => {
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+
+function NavigationStack() {
+  return (
+    <>
+      <OverlayLoader />
+      <Stack.Navigator initialRouteName="AppNavigator">
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name={routes.APP_NAVIGATOR}
+          component={AppNavigator}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name={routes.ADD_POST}
+          component={AddPostPage}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+            animation: "slide_from_right",
+          }}
+          name={routes.POST_PAGE}
+          component={PostPage}
+        />
+      </Stack.Navigator>
+    </>
+  );
+}
 
 const TabBar = (props) => {
   return (
@@ -95,33 +128,14 @@ const AppRoutes = ({ core }) => {
   }
 
   return (
-    <>
-      <OverlayLoader />
-      <Stack.Navigator initialRouteName="AppNavigator">
-        <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
-          name={routes.APP_NAVIGATOR}
-          component={AppNavigator}
-        />
-        <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
-          name={routes.ADD_POST}
-          component={AddPostPage}
-        />
-        <Stack.Screen
-          options={{
-            headerShown: false,
-            animation: "slide_from_right",
-          }}
-          name={routes.POST_PAGE}
-          component={PostPage}
-        />
-      </Stack.Navigator>
-    </>
+    <Drawer.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      drawerContent={(props) => <DrawerContent {...props} />}
+    >
+      <Drawer.Screen name="Home" component={NavigationStack} />
+    </Drawer.Navigator>
   );
 };
 

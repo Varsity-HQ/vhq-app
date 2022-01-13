@@ -78,8 +78,9 @@ const Header = ({
       <View style={styles.header}>
         <View style={{ width: "30%" }}>
           <TouchableWithoutFeedback
-            onPress={() =>
-              navigation.navigate("Profile", { username: username })
+            onPress={
+              () => navigation.openDrawer()
+              // navigation.navigate("Profile", { username: username })
             }
           >
             {profilepic ? (
@@ -108,7 +109,7 @@ const Header = ({
           <TouchableOpacity style={styles.header_uni_wrapper}>
             <FontAwesome
               name="bell"
-              color={colors.secondary}
+              color={colors.white}
               // style={{ marginRight: 10 }}
               size={20}
             />
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
   header_uni_text: {
     marginLeft: 7,
     marginRight: 7,
-    color: colors.secondary,
+    color: colors.white,
     fontWeight: "700",
     alignSelf: "center",
     fontSize: normalizeText(14),
