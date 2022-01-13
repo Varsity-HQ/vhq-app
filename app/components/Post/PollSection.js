@@ -132,7 +132,8 @@ class PostPollSection extends Component {
     if (
       this.state.selected ||
       this.state.time_left === "Votes closed" ||
-      this.props.auth_uid === this.props.created_by
+      this.props.auth_uid === this.props.created_by ||
+      !this.props.created_by
     ) {
       return (
         <View style={styles.poll_section}>

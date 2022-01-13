@@ -84,7 +84,7 @@ class PostCard extends PureComponent {
   render() {
     const data = this.props.data;
 
-    // console.log({ data });
+    console.log({ data });
 
     if (!data) return <SkeletonPost />;
 

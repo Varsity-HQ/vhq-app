@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PostCard from "../PostCard";
 import PostLoader from "../Skeletons/Post";
 import { get_auth_user_posts } from "../../store/actions/actions";
-
+import { useNavigation } from "@react-navigation/native";
 import Text from "../AppText";
 import AppButton from "../Button";
 
@@ -22,6 +22,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 function PostsTab({ profile_page, get_auth_user_posts, auth_user_id }) {
+  const navigation = useNavigation();
   useEffect(() => {
     if (auth_user_id === profile_page.user.userID) {
       get_auth_user_posts();
@@ -61,7 +62,11 @@ function PostsTab({ profile_page, get_auth_user_posts, auth_user_id }) {
   return (
     <View>
       {posts.map((x, index) => (
-        <PostCard key={index} data={x} />
+        <PostCard
+          navigation={navigation}
+          key={index}
+          data={{ ...x, userID: auth_user_id }}
+        />
       ))}
     </View>
   );
