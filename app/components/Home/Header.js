@@ -6,6 +6,8 @@ import {
   StyleSheet,
   Dimensions,
   TouchableWithoutFeedback,
+  TouchableOpacityBase,
+  TouchableOpacity,
 } from "react-native";
 import { Image } from "react-native-expo-image-cache";
 import universityShortName from "../../util/universityShortName";
@@ -103,12 +105,33 @@ const Header = ({
           VarsityHQ
         </Text>
         <View style={styles.header_uni_container}>
-          <View style={styles.header_uni_wrapper}>
-            <FontAwesome name="university" color={colors.secondary} size={15} />
+          <TouchableOpacity style={styles.header_uni_wrapper}>
+            <FontAwesome
+              name="bell"
+              color={colors.secondary}
+              // style={{ marginRight: 10 }}
+              size={20}
+            />
+            {/* <FontAwesome name="university" color={colors.secondary} size={20} /> */}
+            <Text style={styles.header_uni_text}>2</Text>
+            {/* <Vie></V> */}
+            {/* <Text style={styles.header_uni_text}>
+              {universityShortName(university)}
+            </Text> */}
+          </TouchableOpacity>
+          {/* <TouchableOpacity style={styles.header_uni_wrapper}> */}
+          {/* <FontAwesome
+              name="university"
+              color={colors.secondary}
+              // style={{ marginRight: 10 }}
+              size={20}
+            /> */}
+          {/* <FontAwesome name="university" color={colors.secondary} size={20} /> */}
+          {/* <Text style={styles.header_uni_text}>2</Text>
             <Text style={styles.header_uni_text}>
               {universityShortName(university)}
-            </Text>
-          </View>
+            </Text> */}
+          {/* </TouchableOpacity> */}
         </View>
       </View>
       <View style={styles.tabbar_container}>
@@ -218,6 +241,7 @@ const styles = StyleSheet.create({
   },
   header_uni_text: {
     marginLeft: 7,
+    marginRight: 7,
     color: colors.secondary,
     fontWeight: "700",
     alignSelf: "center",
@@ -225,18 +249,28 @@ const styles = StyleSheet.create({
   },
   header_uni_wrapper: {
     borderWidth: 2,
-    borderColor: colors.secondary,
+    borderColor: colors.secondary_2,
     borderRadius: 50,
-    borderRightWidth: 0,
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
-    paddingHorizontal: normalizeText(18),
-    paddingVertical: normalizeText(8),
+    padding: normalizeText(8),
+    marginRight: 10,
+    paddingLeft: 15,
+    // paddingHorizontal: normalizeText(18),
+    // paddingVertical: normalizeText(8),
     flexDirection: "row",
     alignItems: "center",
-
-    // height: 10,
   },
+  // header_uni_wrapper: {
+  //   borderWidth: 2,
+  //   borderColor: colors.secondary,
+  //   borderRadius: 50,
+  //   borderRightWidth: 0,
+  //   borderTopRightRadius: 0,
+  //   borderBottomRightRadius: 0,
+  //   paddingHorizontal: normalizeText(18),
+  //   paddingVertical: normalizeText(8),
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  // },
   header_uni_container: {
     width: "30%",
     display: "flex",

@@ -139,15 +139,19 @@ const AppNavigator = () => {
           backgroundColor: "transparent",
           borderTopColor: colors.darkish2,
           borderTopWidth: 2,
+          paddingBottom: 3,
+          paddingTop: 2,
+
           // shadowColor: colors.black,
           // shadowOpacity: 20,
           // shadowRadius: 5,
         },
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
       }}
     >
       <Tab.Screen
         options={{
+          tabBarLabel: "Feed",
           tabBarHideOnKeyboard: true,
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
@@ -160,16 +164,29 @@ const AppNavigator = () => {
 
       <Tab.Screen
         options={{
+          tabBarLabel: "Explore",
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <RIcon name="search-2-line" color={color} size={size} />
           ),
-          tabBarShowLabel: false,
         }}
         name={routes.SEARCH_NAVIGATOR}
         component={SearchNavigator}
       />
       <Tab.Screen
+        options={{
+          tabBarLabel: "Dating",
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <RIcon name="hearts-line" color={color} size={size + 3} />
+          ),
+
+          tabBarShowLabel: true,
+        }}
+        name="Messages"
+        component={FeedNavigator}
+      />
+      {/* <Tab.Screen
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
@@ -179,7 +196,7 @@ const AppNavigator = () => {
         }}
         name="Notifications"
         component={FeedNavigator}
-      />
+      /> */}
       <Tab.Screen
         options={{
           headerShown: false,
@@ -188,7 +205,7 @@ const AppNavigator = () => {
           ),
           tabBarShowLabel: false,
         }}
-        name="Store"
+        name="Market"
         component={FeedNavigator}
       />
       <Tab.Screen
@@ -199,7 +216,7 @@ const AppNavigator = () => {
           ),
           tabBarShowLabel: false,
         }}
-        name="Message"
+        name="Chat"
         component={FeedNavigator}
       />
     </Tab.Navigator>
