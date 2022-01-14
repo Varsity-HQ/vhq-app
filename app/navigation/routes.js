@@ -2,6 +2,10 @@
 export const APP_NAVIGATOR = "AppNavigator";
 export const FEED_NAVIGATOR = "FeedNavigator";
 export const SEARCH_NAVIGATOR = "SearchNavigator";
+export const DATING_NAVIGATOR = "DatingNavigator";
+
+// Dating Screens
+export const DATING_INTRO = "DatingIntro";
 
 //Screens
 

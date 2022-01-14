@@ -7,6 +7,7 @@ import { get_auth_user_posts } from "../../store/actions/actions";
 import { useNavigation } from "@react-navigation/native";
 import Text from "../AppText";
 import AppButton from "../Button";
+import { ADD_POST } from "../../navigation/routes";
 
 const mapStateToProps = (state) => {
   return {
@@ -51,7 +52,11 @@ function PostsTab({ profile_page, get_auth_user_posts, auth_user_id }) {
           >
             <Text style={{ fontWeight: "700" }}>No Posts</Text>
             {auth_user_id === profile_page.user.userID && (
-              <AppButton title="Create New" type={3} />
+              <AppButton
+                onPress={() => navigation.navigate(ADD_POST)}
+                title="Create New"
+                type={3}
+              />
             )}
           </View>
         </View>

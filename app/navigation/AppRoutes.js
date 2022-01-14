@@ -12,6 +12,7 @@ import RIcon from "react-native-remix-icon";
 //Navigators
 import FeedNavigator from "./feedNavigator";
 import SearchNavigator from "./SearchNavigator";
+import DatingNavigator from "./DatingNavigator";
 
 // Screens
 import PostPage from "../screens/PostPage";
@@ -196,8 +197,8 @@ const AppNavigator = () => {
 
           tabBarShowLabel: true,
         }}
-        name="Messages"
-        component={FeedNavigator}
+        name={routes.DATING_NAVIGATOR}
+        component={DatingNavigator}
       />
       {/* <Tab.Screen
         options={{
@@ -218,7 +219,7 @@ const AppNavigator = () => {
           ),
           tabBarShowLabel: false,
         }}
-        name="Market"
+        name="Marketplace"
         component={FeedNavigator}
       />
       <Tab.Screen

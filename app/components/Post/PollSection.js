@@ -104,7 +104,7 @@ class PostPollSection extends Component {
     let width = "0";
     let choice_votes = 0;
 
-    this.props.choices.forEach((x) => {
+    this.props?.choices?.forEach((x) => {
       if (x.choiceIndex === index) {
         choice_votes = x.vote_count;
       }

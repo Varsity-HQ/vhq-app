@@ -56,9 +56,12 @@ class PostCard extends PureComponent {
   };
 
   componentDidMount = () => {
-    this.setState({
-      total_votes: post_vote_counter(this.props.data.poll_fields),
-    });
+    {
+      this.props.data.poll_fields.length === 0 &&
+        this.setState({
+          total_votes: post_vote_counter(this.props.data.poll_fields),
+        });
+    }
   };
 
   handleOpenPost = () => {
