@@ -7,8 +7,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, Text, View } from "react-native";
 import { connect } from "react-redux";
-
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import RIcon from "react-native-remix-icon";
 
 //Navigators
@@ -35,7 +33,6 @@ const mapStateToProps = (state) => {
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-const Drawer = createDrawerNavigator();
 
 function NavigationStack() {
   return (
@@ -127,16 +124,18 @@ const AppRoutes = ({ core }) => {
     );
   }
 
-  return (
-    <Drawer.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-      drawerContent={(props) => <DrawerContent {...props} />}
-    >
-      <Drawer.Screen name="Home" component={NavigationStack} />
-    </Drawer.Navigator>
-  );
+  return <NavigationStack />;
+
+  // return (
+  //   <Drawer.Navigator
+  //     screenOptions={{
+  //       headerShown: false,
+  //     }}
+  //     drawerContent={(props) => <DrawerContent {...props} />}
+  //   >
+  //     <Drawer.Screen name="Home" component={NavigationStack} />
+  //   </Drawer.Navigator>
+  // );
 };
 
 const AppNavigator = () => {
