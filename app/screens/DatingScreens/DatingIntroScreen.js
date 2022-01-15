@@ -1,12 +1,13 @@
 import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
-import Text from "../components/AppText";
-import Button from "../components/Button";
-import Image from "../components/Image";
-import Screen from "../components/Screen";
-import colors from "../config/colors";
-import { normalizeText } from "../util/responsivePx";
+import Text from "../../components/AppText";
+import Button from "../../components/Button";
+import Image from "../../components/Image";
+import Screen from "../../components/Screen";
+import colors from "../../config/colors";
+import { DATING_ENCOUNTERS } from "../../navigation/routes";
+import { normalizeText } from "../../util/responsivePx";
 
 const height = Dimensions.get("window").height;
 
@@ -16,7 +17,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-function DatingIntroScreen({ profilepic }) {
+function DatingIntroScreen({ profilepic, navigation }) {
   return (
     <Screen style={styles.container}>
       <View style={{ width: "85%" }}>
@@ -36,7 +37,7 @@ function DatingIntroScreen({ profilepic }) {
           />
         </View>
         <Text style={[styles.center, styles.heading]}>
-          Hoping to meet someone ?
+          Want to meet someone ?
         </Text>
         <Text style={styles.subText}>
           Create a show to meet and chat to more encounters around your
@@ -44,11 +45,17 @@ function DatingIntroScreen({ profilepic }) {
           encounter and no dead profiles
         </Text>
         <Button
-          onPress={() => console.log("es")}
+          onPress={() => navigation.navigate(DATING_ENCOUNTERS)}
           style={[styles.center]}
           title="Create Show"
         />
-        <Text style={[styles.center, styles.text_bottom]}>See encounters</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate(DATING_ENCOUNTERS)}
+        >
+          <Text style={[styles.center, styles.text_bottom]}>
+            See encounters
+          </Text>
+        </TouchableOpacity>
       </View>
     </Screen>
   );

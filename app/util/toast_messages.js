@@ -34,3 +34,8 @@ export const POST_POST_SUCCESS_POSTED = {
   text1: undefined,
   text2: "Your post has been posted successfully",
 };
+export const FAILED_TO_INITIALIZE = {
+  text1: undefined,
+  text2:
+    "Failed : We encountered an error, please check your internet or restart app before you attempt to sign in again",
+};

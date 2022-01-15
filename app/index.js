@@ -19,6 +19,7 @@ import { initializeApp, getApps } from "firebase/app";
 import { firebaseConfig } from "./util/fb_config";
 import { StatusBar } from "react-native";
 import AppToast from "./components/AppToast";
+import { FAILED_TO_INITIALIZE } from "./util/toast_messages";
 
 if (!getApps().length) {
   initializeApp(firebaseConfig);

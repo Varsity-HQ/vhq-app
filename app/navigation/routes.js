@@ -6,6 +6,7 @@ export const DATING_NAVIGATOR = "DatingNavigator";
 
 // Dating Screens
 export const DATING_INTRO = "DatingIntro";
+export const DATING_ENCOUNTERS = "DatingEncouters";
 
 //Screens
 
