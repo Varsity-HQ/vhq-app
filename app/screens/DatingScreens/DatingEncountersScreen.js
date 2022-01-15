@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Dimensions,
@@ -188,7 +188,7 @@ const Home = () => {
     <Screen style={styles.bg}>
       <View style={styles.containerHome}>
         <View style={styles.top}>
-          <City />
+          <City onPress={() => swiper.current.swipeRight()} />
           <Filters />
         </View>
 
@@ -212,11 +212,15 @@ const Home = () => {
             }}
           ></View> */}
           <CardStack
+            // horizontalSwipe={false}
+            // disableRightSwipe={true}
             cardContainerStyle={{
               height: "100%",
               width: "100%",
               top: 0,
               bottom: 0,
+              left: 0,
+              right: 0,
               //   flex: 1,
               //   position: "relative",
               //   top: 0,
@@ -229,6 +233,7 @@ const Home = () => {
               //   height: 200,
               overflow: "hidden",
             }}
+            // horizontalSwipe={false}
             verticalSwipe={false}
             renderNoMoreCards={() => null}
             ref={swiper}
@@ -241,7 +246,7 @@ const Home = () => {
                   name={item.name}
                   description={item.description}
                   matches={item.match}
-                  handleLeftSwipeUp={() => console.log("clicked")}
+                  handleLeftSwipeUp={() => swiper.current.swipeLeft()}
                 />
               </Card>
             ))}
@@ -346,7 +351,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     width: 100,
-    elevation: 1,
+    // elevation: 1,
     shadowOpacity: 0.05,
     shadowRadius: 10,
     shadowColor: BLACK,
@@ -550,8 +555,8 @@ const Filters = () => (
   </TouchableOpacity>
 );
 
-const City = () => (
-  <TouchableOpacity style={styles.city}>
+const City = ({ onPress }) => (
+  <TouchableOpacity onPress={onPress} style={styles.city}>
     <Text style={styles.cityText}>
       <Icon name="location-sharp" size={13} color={DARK_GRAY} /> New York
     </Text>
@@ -574,8 +579,12 @@ const CardItem = ({
 }) => {
   const handleLeftSwipe = () => {
     console.log("eses");
-    // handleLeftSwipeUp();
+    handleLeftSwipeUp();
   };
+
+  useEffect(() => {
+    console.log("got here", name);
+  }, []);
 
   // Custom styling
   const fullWidth = Dimensions.get("window").width;
@@ -675,6 +684,13 @@ const CardItem = ({
                   <Icon name="flash" color={FLASH_ACTIONS} size={14} />
                 </TouchableOpacity>
               </View>
+            )}
+            <Image source={{ uri: image }} style={imageStyle} />
+            <Text style={nameStyle}>{name}</Text>
+
+            {/* DESCRIPTION */}
+            {description && (
+              <Text style={styles.descriptionCardItem}>{description}</Text>
             )}
             <Image source={{ uri: image }} style={imageStyle} />
           </View>
