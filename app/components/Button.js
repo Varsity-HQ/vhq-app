@@ -1,6 +1,11 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import colors from "../config/colors";
 
@@ -22,7 +27,7 @@ function AppButton({
       onPress();
       navigation.navigate(navigateRoute[0], navigateRoute[1]);
     } else {
-      onPress();
+      if (!loading) onPress();
     }
   };
 
@@ -111,7 +116,11 @@ function AppButton({
         style={[styles.button, style]}
         onPress={handleOnPress}
       >
-        <Text style={[styles.text, textStyle]}>{title}</Text>
+        {loading ? (
+          <ActivityIndicator color={colors.white} />
+        ) : (
+          <Text style={[styles.text, textStyle]}>{title}</Text>
+        )}
       </TouchableOpacity>
     );
   }

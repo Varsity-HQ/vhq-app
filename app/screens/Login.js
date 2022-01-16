@@ -6,6 +6,7 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import Screen from "../components/Screen";
 import { Ionicons } from "@expo/vector-icons";
@@ -23,6 +24,7 @@ import ErrorMessage from "../components/Forms/ErrorMessage";
 import { connect } from "react-redux";
 
 import { login_user } from "../store/actions/actions";
+import { FORGOT_PASSWORD, REGISTER } from "../navigation/routes";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required("Provide a username, phone number or email"),
@@ -123,15 +125,20 @@ function Login({ navigation, login_user, logging_in_user, logging_in_error }) {
               marginTop: 15,
             }}
           >
-            <Text style={styles.text}>
-              Forgot password ?{" "}
-              <Text onPress={() => navigation.navigate("Register")}>
-                Click Here
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={styles.text}>Forgot password ? </Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate(FORGOT_PASSWORD)}
+              >
+                <Text style={styles.text}>Click Here</Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity onPress={() => navigation.navigate(REGISTER)}>
+              <Text style={styles.text}>
+                Click here to sign up if you dont have an account
               </Text>
-            </Text>
-            <Text style={styles.text}>
-              Click here to sign up if you dont have an account
-            </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Screen>

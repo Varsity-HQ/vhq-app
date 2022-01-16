@@ -3,6 +3,7 @@ import { ImageBackground, StyleSheet, View, Image, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Button from "../components/Button";
 import colors from "../config/colors";
+import { LOGIN, REGISTER } from "../navigation/routes";
 
 function LandingScreen({ navigation }) {
   return (
@@ -29,12 +30,12 @@ function LandingScreen({ navigation }) {
         </Text>
         <Button
           type={2}
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => navigation.navigate(LOGIN)}
           title="Login"
         />
         <Button
           type={1}
-          onPress={() => navigation.navigate("Register")}
+          onPress={() => navigation.navigate(REGISTER)}
           title="Register"
         />
       </View>

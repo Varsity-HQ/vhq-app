@@ -7,22 +7,25 @@ import { View } from "react-native";
 function SubmitButton({ title, loading, type, ...props }) {
   const { handleSubmit } = useFormikContext();
 
+  const nullPress = () => {};
+
   return (
     <View
       style={
         loading
           ? {
-              opacity: 0.5,
+              opacity: 0.6,
             }
           : {}
       }
     >
       <AppButton
+        loading={loading}
         disabled={loading ? true : false}
         title={loading ? "Please wait" : title}
         {...props}
         type={type}
-        onPress={loading ? null : handleSubmit}
+        onPress={loading ? nullPress : handleSubmit}
       />
     </View>
   );

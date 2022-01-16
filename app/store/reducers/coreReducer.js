@@ -28,10 +28,42 @@ const initialData = {
   logging_in_user: false,
   logging_in_error: {},
   deleting_post: false,
+
+  reset_pass: {
+    loading: false,
+    errors: {},
+    requested: false,
+  },
 };
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "SET_RESETTING_LOADING_N_CLEAR_ERR":
+      return {
+        ...state,
+        reset_pass: {
+          loading: actions.payload,
+          errors: {},
+          requested: false,
+        },
+      };
+    case "SET_PASS_R_REQUESTED":
+      return {
+        ...state,
+        reset_pass: {
+          ...state.reset_pass,
+          requested: true,
+        },
+      };
+    case "SET_PASS_R_ERRORS":
+      return {
+        ...state,
+        reset_pass: {
+          ...state.reset_pass,
+          errors: actions.payload,
+        },
+      };
+
     case "SET_POLL_VOTE":
       let poll_votes = state.accData.poll_votes;
 

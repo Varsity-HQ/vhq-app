@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   ImageBackground,
+  TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native";
 import Screen from "../components/Screen";
@@ -22,6 +23,7 @@ import axios from "axios";
 import { set_token, get_user } from "../store/actions/actions";
 import { connect } from "react-redux";
 import store from "../store/store";
+import { LOGIN } from "../navigation/routes";
 
 const u_name_validationSchema = Yup.object().shape({
   username: Yup.string()
@@ -264,12 +266,18 @@ function Signup({ navigation, set_token, get_user }) {
               marginTop: 15,
             }}
           >
-            <Text style={styles.text}>
-              Already have an account ?&nbsp;
-              <Text onPress={() => navigation.navigate("Login")}>
-                Click Here
-              </Text>
-            </Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={styles.text}>Already have an account ?&nbsp;</Text>
+              <TouchableOpacity>
+                <Text
+                  style={styles.text}
+                  onPress={() => navigation.navigate(LOGIN)}
+                >
+                  Click Here
+                </Text>
+              </TouchableOpacity>
+            </View>
+
             <Text
               style={[
                 styles.text,

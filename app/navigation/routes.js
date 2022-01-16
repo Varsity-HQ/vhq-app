@@ -9,6 +9,11 @@ export const DATING_INTRO = "DatingIntro";
 export const DATING_ENCOUNTERS = "DatingEncouters";
 
 //Screens
+//===> Auth Screens
+export const REGISTER = "Register";
+export const LOGIN = "Login";
+export const FORGOT_PASSWORD = "ForgotPassword";
+export const LANDING_PAGE = "LandingScreen";
 
 export const ADD_POST = "AddPost";
 export const SEARCH = "Search";
