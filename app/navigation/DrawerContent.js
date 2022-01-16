@@ -10,7 +10,13 @@ import {
   Ionicons,
   FontAwesome,
 } from "@expo/vector-icons";
-import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Dimensions,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Drawer } from "react-native-paper";
 import colors from "../config/colors";
 import { useNavigation } from "@react-navigation/native";
@@ -20,6 +26,8 @@ import { normalizeText } from "../util/responsivePx";
 import Button from "../components/Button";
 import { connect } from "react-redux";
 import { PROFILE } from "./routes";
+import { logOutUser } from "../store/actions/actions";
+import store from "../store/store";
 
 const height = Dimensions.get("window").height;
 
@@ -31,6 +39,26 @@ const mapStateToProps = (state) => {
 };
 function DrawerContent({ props, product, account }) {
   const navigation = useNavigation();
+
+  const handleSignout = () => {
+    Alert.alert(
+      `@${account.username}`,
+      `Are you sure you want to sign out ?. You will need to sign in again to use this app`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Yes",
+          onPress: () => {
+            store.dispatch(logOutUser());
+          },
+        },
+      ],
+    );
+  };
+
   return (
     <DrawerContentScrollView
       style={{
@@ -139,7 +167,7 @@ function DrawerContent({ props, product, account }) {
 
           <View style={{ paddingHorizontal: 10, marginTop: 0 }}>
             <Button type={3} title="Switch Content" />
-            <Button type={3} title="Sign out" />
+            <Button onPress={handleSignout} type={3} title="Sign out" />
           </View>
         </Drawer.Section>
       </View>

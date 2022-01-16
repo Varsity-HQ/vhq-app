@@ -214,6 +214,7 @@ const Home = () => {
           <CardStack
             // horizontalSwipe={false}
             // disableRightSwipe={true}
+            duration={500}
             cardContainerStyle={{
               height: "100%",
               width: "100%",
