@@ -7,6 +7,7 @@ import { get_home_posts } from "../store/actions/actions";
 import Header from "../components/Home/Header";
 import Footer from "../components/Home/Footer";
 import Post from "../components/Skeletons/Post";
+import { useScrollToTop } from "@react-navigation/native";
 
 const mapStateToProps = (state) => {
   return {
@@ -27,6 +28,12 @@ const mapDispatchToProps = (dispatch) => {
     get_home_posts: (c) => dispatch(get_home_posts(c)),
   };
 };
+
+function HomeWrapper(props) {
+  const ref = React.useRef(null);
+  useScrollToTop(ref);
+  return <Home {...props} scrollRef={ref} />;
+}
 
 class Home extends PureComponent {
   state = {
@@ -69,9 +76,7 @@ class Home extends PureComponent {
     return (
       <Screen>
         <FlatList
-          ref={(ref) => {
-            this.flatListRef = ref;
-          }}
+          ref={this.props.scrollRef}
           ListHeaderComponent={<Header {...this.props} />}
           ListFooterComponent={
             this.props.loading
@@ -102,4 +107,4 @@ const styles = StyleSheet.create({
   container: {},
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeWrapper);
