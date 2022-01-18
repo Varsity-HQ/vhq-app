@@ -120,11 +120,7 @@ function SetupUniversity({
           id="1"
           value={university}
           zIndex={2}
-          setValue={
-            Platform.OS === "ios"
-              ? (callback) => set_university(callback())
-              : (u) => set_university(u)
-          }
+          setValue={(u) => set_university(u)}
           searchPlaceholder="Search University or college"
           placeholder="Select your university or college"
           // searchable
@@ -136,11 +132,7 @@ function SetupUniversity({
         <Text>Year of current study</Text>
         <DropDown
           id="2"
-          setValue={
-            Platform.OS === "ios"
-              ? (callback) => set_yearofstudy(callback())
-              : (y) => set_yearofstudy(y)
-          }
+          setValue={(y) => set_yearofstudy(y)}
           value={yearOfStudy}
           placeholder="Select year of study"
           items={uniYears}
@@ -154,6 +146,7 @@ function SetupUniversity({
         </Text>
 
         <AppButton
+          loading={loading}
           onPress={handleUpdate}
           type={1}
           style={{ marginTop: 20 }}

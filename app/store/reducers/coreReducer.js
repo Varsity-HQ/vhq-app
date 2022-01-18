@@ -9,6 +9,8 @@ const initialData = {
   //
   overlayloader: false,
   getting_account_data: false,
+  finalizing_account_settings: false,
+
   saving_anon_settings: false,
   saving_yos_settings: false,
   saving_degree_settings: false,
@@ -39,6 +41,12 @@ const initialData = {
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "SET_FINALIZING_ACC_STTNGS":
+      return {
+        ...state,
+        finalizing_account_settings: actions.payload,
+      };
+
     case "SET_GETTING_USER_LOADER":
       return {
         ...state,

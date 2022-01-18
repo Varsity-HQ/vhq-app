@@ -16,7 +16,6 @@ import {
   ErrorMessage,
   SubmitButton,
 } from "../components/Forms";
-import axios from "axios";
 
 import { save_profileDefaults } from "../store/actions/actions";
 import { connect } from "react-redux";
@@ -35,10 +34,15 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     core: state.core.accData,
+    finalizing_account_settings: state.core.finalizing_account_settings,
   };
 };
 
-function SetupPersonalInformation({ save_profileDefaults, core }) {
+function SetupPersonalInformation({
+  save_profileDefaults,
+  core,
+  finalizing_account_settings,
+}) {
   const [image_selected, set_image] = useState(core.profilepic);
   const [image_error, set_image_error] = useState("");
 
@@ -117,6 +121,7 @@ function SetupPersonalInformation({ save_profileDefaults, core }) {
           <View>
             <SubmitButton
               type={1}
+              loading={finalizing_account_settings}
               // style={{ borderRadius: 12 }}
               title="Finish setup"
             />

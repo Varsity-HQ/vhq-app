@@ -11,11 +11,23 @@ function DropDown({ items, value, setValue, style, ...props }) {
   const [lang, setSelectedLanguage] = useState("false");
   //   const [value, setValue] = useState(null);
 
+  const handleSelection = (selected, type) => {
+    if (type === "modal") {
+      return setValue(selected);
+    }
+
+    if (type === "dropdown") {
+      return setValue(selected());
+    }
+
+    setOpen(false);
+  };
+
   if (Platform.OS === "android") {
     return (
       <View style={style}>
         <ModalPicker
-          onSelectItem={setValue}
+          onSelectItem={(x) => handleSelection(x, "modal")}
           headerText="Select Universites"
           items={items}
           value={value}
@@ -35,7 +47,7 @@ function DropDown({ items, value, setValue, style, ...props }) {
         dropDownDirection="BOTTOM"
         items={items}
         setOpen={setOpen}
-        setValue={setValue}
+        setValue={(callback) => handleSelection(callback, "dropdown")}
         // setItems={setItems}
         style={styles.dropdown}
         textStyle={styles.textStyle}

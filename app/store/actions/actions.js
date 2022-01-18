@@ -961,7 +961,7 @@ export const get_home_posts = (props) => (dispatch) => {
 
 export const save_profileDefaults = (uObj) => async (dispatch) => {
   dispatch({
-    type: "SET_OVERLAY_STATE",
+    type: "SET_FINALIZING_ACC_STTNGS",
     payload: true,
   });
 
@@ -993,19 +993,24 @@ export const save_profileDefaults = (uObj) => async (dispatch) => {
     })
     .then(() => {
       dispatch({
-        type: "SET_OVERLAY_STATE",
+        type: "SET_FINALIZING_ACC_STTNGS",
         payload: false,
       });
-
       dispatch({
         type: "SET_ACC_ACTIVATED",
       });
-      return;
+      return axios.get("/get/account");
+    })
+    .then((data) => {
+      dispatch({
+        type: "SET_USER_DATA",
+        payload: data.data,
+      });
     })
     .catch((err) => {
       console.log(err);
       dispatch({
-        type: "SET_OVERLAY_STATE",
+        type: "SET_FINALIZING_ACC_STTNGS",
         payload: false,
       });
     });
