@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   createBottomTabNavigator,
   BottomTabBar,
 } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  Linking,
+  Platform,
+  NativeModules,
+} from "react-native";
 import { connect } from "react-redux";
 import RIcon from "react-native-remix-icon";
 
+import Constants from "expo-constants";
 //Navigators
 import FeedNavigator from "./feedNavigator";
 import SearchNavigator from "./SearchNavigator";
@@ -26,9 +35,26 @@ import OverlayLoader from "../components/OverlayLoader";
 import colors from "../config/colors";
 import * as routes from "./routes";
 
+import * as Notifications from "expo-notifications";
+import { setExpoPushToken } from "../store/actions/auth_actions";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
 const mapStateToProps = (state) => {
   return {
     core: state.core,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setExpoPushToken: (token) => dispatch(setExpoPushToken(token)),
   };
 };
 
@@ -81,23 +107,81 @@ const TabBar = (props) => {
   );
 };
 
-const AppRoutes = ({ core }) => {
+const AppRoutes = ({ core, setExpoPushToken }) => {
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(
+      (token) => token && setExpoPushToken(token),
+    );
+
+    return () => {};
+  }, []);
+
+  const handleOpenSettings = () => {
+    Linking.openSettings({ notification: true });
+  };
+
+  async function registerForPushNotificationsAsync() {
+    let token;
+
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      Alert.alert(
+        "Enable Notifications",
+        "Your notification settings for this app are not set to active. Please enable notifications in settings to stay updated and never miss out.",
+        [
+          {
+            text: "Open settings",
+            onPress: handleOpenSettings,
+          },
+          {
+            text: "I will do it later.",
+          },
+        ],
+      );
+
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    return token;
+  }
+
   if (core.accData.accountStatus === "pending-setup") {
-    // console.log("pending setup");
-    return (
-      <>
-        <OverlayLoader />
-        <Stack.Navigator
-          screenOptions={{
-            animation: "slide_from_right",
-          }}
-          initialRsouteName={
-            core.accData.university && core.accData.yearOfStudy
-              ? "SetupPersonalInformation"
-              : "SetupUniversity"
-          }
-        >
-          {/* <Stack.Screen
+    return <SetupNavigator core={core} />;
+  }
+
+  return <NavigationStack />;
+};
+
+const SetupNavigator = ({ core }) => {
+  return (
+    <>
+      <Stack.Navigator
+        screenOptions={{
+          animation: "slide_from_right",
+        }}
+        initialRouteName={
+          core.accData.university && core.accData.yearOfStudy
+            ? "SetupPersonalInformation"
+            : "SetupUniversity"
+        }
+      >
+        {/* <Stack.Screen
             options={{
               headerShown: false,
             }}
@@ -105,38 +189,24 @@ const AppRoutes = ({ core }) => {
             component={WelcomeScreen}
           /> */}
 
-          <Stack.Screen
-            options={{
-              headerShown: false,
-            }}
-            name={routes.SETUP_UNIVERSITY}
-            component={SetupUniversity}
-          />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name={routes.SETUP_UNIVERSITY}
+          component={SetupUniversity}
+        />
 
-          <Stack.Screen
-            options={{
-              headerShown: false,
-            }}
-            name={routes.SETUP_PERSONAL_INFO}
-            component={SetupPersonalInformation}
-          />
-        </Stack.Navigator>
-      </>
-    );
-  }
-
-  return <NavigationStack />;
-
-  // return (
-  //   <Drawer.Navigator
-  //     screenOptions={{
-  //       headerShown: false,
-  //     }}
-  //     drawerContent={(props) => <DrawerContent {...props} />}
-  //   >
-  //     <Drawer.Screen name="Home" component={NavigationStack} />
-  //   </Drawer.Navigator>
-  // );
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name={routes.SETUP_PERSONAL_INFO}
+          component={SetupPersonalInformation}
+        />
+      </Stack.Navigator>
+    </>
+  );
 };
 
 const AppNavigator = () => {
@@ -248,4 +318,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, null)(AppRoutes);
+export default connect(mapStateToProps, mapDispatchToProps)(AppRoutes);

@@ -15,11 +15,19 @@ import {
 } from "./store/actions/actions";
 import Toast from "react-native-toast-message";
 import { useFonts } from "expo-font";
+import * as Font from "expo-font";
 import { initializeApp, getApps } from "firebase/app";
 import { firebaseConfig } from "./util/fb_config";
-import { StatusBar } from "react-native";
+import { Image, StatusBar } from "react-native";
 import AppToast from "./components/AppToast";
 import { FAILED_TO_INITIALIZE } from "./util/toast_messages";
+import { Asset } from "expo-asset";
+import {
+  FontAwesome,
+  Ionicons,
+  MaterialCommunityIcons,
+  Feather,
+} from "@expo/vector-icons";
 
 if (!getApps().length) {
   initializeApp(firebaseConfig);
@@ -48,8 +56,23 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+function cacheImages(images) {
+  return images.map((image) => {
+    if (typeof image === "string") {
+      return Image.prefetch(image);
+    } else {
+      return Asset.fromModule(image).downloadAsync();
+    }
+  });
+}
+
+function cacheFonts(fonts) {
+  return fonts.map((font) => Font.loadAsync(font));
+}
+
 function App({ authenticated, set_user, setAuthState, set_token, userID }) {
   const [isReady, setisReady] = useState();
+  const [isAssetsCached, setIsAssetsCached] = useState(false);
 
   let [fontsLoaded] = useFonts({
     "Lobster-Regular": require("./Fonts/Lobster-Regular.ttf"),
@@ -59,17 +82,47 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
     "Ubuntu-medium": require("./Fonts/Ubuntu-Medium.ttf"),
   });
 
+  const _loadAssetsAsync = async () => {
+    const imageAssets = cacheImages([
+      "https://image.shutterstock.com/image-photo/close-beauty-portrait-young-charming-600w-1931216711.jpg",
+      "https://image.shutterstock.com/image-photo/portrait-beautiful-african-american-female-600w-721419679.jpg",
+      require("./assets/avatar.png"),
+      require("./assets/logo-small.png"),
+      require("./assets/login-img-1.jpg"),
+      require("./assets/signup-img-1.jpg"),
+      require("./assets/signup-img-2.jpg"),
+      require("./assets/vhqcat-small.png"),
+    ]);
+
+    const fontAssets = cacheFonts([
+      FontAwesome.font,
+      Ionicons.font,
+      MaterialCommunityIcons.font,
+      Feather.font,
+    ]);
+
+    await Promise.all([...imageAssets, ...fontAssets])
+      .then(() => {
+        setIsAssetsCached(true);
+        console.log("cached all");
+      })
+      .catch(() => {
+        setIsAssetsCached(true);
+        console.log("failed to cache all");
+      });
+  };
+
   const restoreToken = async () => {
+    _loadAssetsAsync();
     const token = await auth_storage.getToken();
     if (token) {
-      //   console.log({ oldToken: token });
+      console.log("started");
       set_token(token);
       await axios
         .get("/get/account")
         .then((data) => {
-          // console.log(data.data);
           set_user(data.data);
-          return setAuthState(true);
+          setAuthState(true);
         })
         .catch((err) => {
           console.log(err);
@@ -79,7 +132,7 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
     }
   };
 
-  if (!isReady || !fontsLoaded) {
+  if (!isReady || !fontsLoaded || !isAssetsCached) {
     return (
       <>
         <StatusBar animated={true} hidden={true} />

@@ -5,6 +5,8 @@ const init_accdata = {
   profilepic: "",
   friends: 0,
 
+  notificationToken: "",
+
   user_following: [],
   user_followers: [],
 

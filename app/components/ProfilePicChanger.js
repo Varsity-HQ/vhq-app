@@ -19,7 +19,7 @@ function ProfilePicChanger({ image, onImgChange }) {
   }, []);
 
   const process_image = async (uri) => {
-    console.log({ uri });
+    // console.log({ uri });
 
     const manipResult = await manipulateAsync(
       uri,

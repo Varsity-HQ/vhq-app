@@ -59,73 +59,70 @@ function SetupPersonalInformation({ save_profileDefaults, core }) {
   console.log(image_selected);
 
   return (
-    <Screen scroll style={styles.container}>
-      <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
-        <Header title="Personal information (1/1)" />
-
-        <View style={styles.content}>
-          <View
+    <Screen scroll avoidkeyboard style={styles.container}>
+      <Header title="Personal information (1/1)" />
+      <View style={styles.content}>
+        <View
+          style={{
+            marginBottom: 20,
+          }}
+        >
+          <ProfilePicChanger
+            image={image_selected}
+            onImgChange={(uri) => set_image(uri)}
+          />
+          <AppText
             style={{
-              marginBottom: 20,
+              textAlign: "center",
+              fontWeight: "700",
+              color: colors.secondary,
             }}
           >
-            <ProfilePicChanger
-              image={image_selected}
-              onImgChange={(uri) => set_image(uri)}
-            />
-            <AppText
-              style={{
-                textAlign: "center",
-                fontWeight: "700",
-                color: colors.secondary,
-              }}
-            >
-              Profile picture
-            </AppText>
+            Profile picture
+          </AppText>
 
-            <ErrorMessage
-              style={{ textAlign: "center" }}
-              visible={image_error}
-              error={image_error}
+          <ErrorMessage
+            style={{ textAlign: "center" }}
+            visible={image_error}
+            error={image_error}
+          />
+        </View>
+
+        <AppForm
+          validationSchema={validationSchema}
+          onSubmit={handle_submit}
+          initialValues={{
+            firstname: core.firstname,
+            surname: core.surname,
+          }}
+        >
+          <View style={styles.formgroup}>
+            <AppText style={{ fontWeight: "700" }}>First name</AppText>
+            <AppFormField
+              name="firstname"
+              style={{ marginVertical: 10 }}
+              type={2}
+              placeholder="Your first name e.g Llora"
             />
           </View>
-
-          <AppForm
-            validationSchema={validationSchema}
-            onSubmit={handle_submit}
-            initialValues={{
-              firstname: core.firstname,
-              surname: core.surname,
-            }}
-          >
-            <View style={styles.formgroup}>
-              <AppText style={{ fontWeight: "700" }}>First name</AppText>
-              <AppFormField
-                name="firstname"
-                style={{ marginVertical: 10 }}
-                type={2}
-                placeholder="Your first name e.g Llora"
-              />
-            </View>
-            <View style={styles.formgroup}>
-              <AppText style={{ fontWeight: "700" }}>Last name</AppText>
-              <AppFormField
-                name="surname"
-                style={{ marginVertical: 10 }}
-                type={2}
-                placeholder="Your last name e.g Tesa"
-              />
-            </View>
-            <View>
-              <SubmitButton
-                type={1}
-                // style={{ borderRadius: 12 }}
-                title="Finish setup"
-              />
-            </View>
-          </AppForm>
-        </View>
-      </KeyboardAvoidingView>
+          <View style={styles.formgroup}>
+            <AppText style={{ fontWeight: "700" }}>Last name</AppText>
+            <AppFormField
+              name="surname"
+              style={{ marginVertical: 10 }}
+              type={2}
+              placeholder="Your last name e.g Tesa"
+            />
+          </View>
+          <View>
+            <SubmitButton
+              type={1}
+              // style={{ borderRadius: 12 }}
+              title="Finish setup"
+            />
+          </View>
+        </AppForm>
+      </View>
     </Screen>
   );
 }

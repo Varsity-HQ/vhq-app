@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "VarsityHQ",
-    "slug": "varistyhq",
-    "version": "1.0.2",
+    "slug": "vhq",
+    "version": "1.0.0",
     "orientation": "portrait",
     "description": "A social media app for students at South African universities.",
     "userInterfaceStyle": "automatic",
@@ -17,11 +17,16 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIBackgroundModes": ["remote-notification"]
+      }
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "package": "com.varsityheadquarters.varsityhq",
-      "versionCode": 1
+      "versionCode": 1,
+      "useNextNotificationsApi": true
     },
     "web": {
       "favicon": "./app/assets/favicon.png"

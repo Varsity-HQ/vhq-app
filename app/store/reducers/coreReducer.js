@@ -8,6 +8,7 @@ const initialData = {
   temp_anonymous_emoji_index: 20,
   //
   overlayloader: false,
+  getting_account_data: false,
   saving_anon_settings: false,
   saving_yos_settings: false,
   saving_degree_settings: false,
@@ -38,6 +39,21 @@ const initialData = {
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "SET_GETTING_USER_LOADER":
+      return {
+        ...state,
+        getting_account_data: actions.payload,
+      };
+
+    case "SET_PUSH_TOKEN":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          notificationToken: actions.payload,
+        },
+      };
+
     case "SET_RESETTING_LOADING_N_CLEAR_ERR":
       return {
         ...state,

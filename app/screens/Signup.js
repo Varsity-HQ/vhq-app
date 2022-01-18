@@ -46,14 +46,20 @@ const validationSchema = Yup.object().shape({
     .required("Please confirm your password"),
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    set_token: (token) => dispatch(set_token(token)),
-    get_user: () => dispatch(get_user()),
+    getting_account_data: state.core.getting_account_data,
   };
 };
 
-function Signup({ navigation, set_token, get_user }) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    set_token: (token) => dispatch(set_token(token)),
+    get_user: (props) => dispatch(get_user(props)),
+  };
+};
+
+function Signup({ navigation, set_token, get_user, getting_account_data }) {
   const [page, setPage] = useState(0);
   const [processing, set_processing] = useState(false);
   const [errors, set_errors] = useState({});
@@ -85,7 +91,7 @@ function Signup({ navigation, set_token, get_user }) {
         set_token(res.data.token);
         console.log(res.data);
 
-        store.dispatch(get_user());
+        store.dispatch(get_user(true));
         // set_processing(false);
       })
       .catch((err) => {
@@ -165,7 +171,7 @@ function Signup({ navigation, set_token, get_user }) {
           />
           <View style={{ marginTop: 20 }}>
             <SubmitButton
-              loading={processing}
+              loading={processing || getting_account_data}
               icon=""
               type={1}
               title="Signup"
@@ -326,4 +332,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

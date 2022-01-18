@@ -16,7 +16,7 @@ export const reset_poll_details_page = () => (dispatch) => {
 };
 
 export const save_poll_details = (poll_post) => (dispatch) => {
-  console.log({ poll_post });
+  // console.log({ poll_post });
 
   if (
     poll_post.postType === "poll_post" &&
@@ -195,10 +195,10 @@ export const save_local_post = (post) => (dispatch) => {
 export const get_post_page = (id) => (dispatch) => {
   const saved_post_id = store.getState().data.post_page.post?.post?.id;
 
-  console.log({
-    saved_post_id,
-    id,
-  });
+  // console.log({
+  //   saved_post_id,
+  //   id,
+  // });
 
   if (saved_post_id === id) {
     dispatch({
@@ -217,7 +217,7 @@ export const get_post_page = (id) => (dispatch) => {
         console.log(err);
       });
   } else {
-    console.log("fetch whole post");
+    // console.log("fetch whole post");
     axios
       .get(`/post/${id}`)
       .then((data) => {
@@ -1060,7 +1060,13 @@ export const set_yearofstudy = (yos) => (dispatch) => {
   });
 };
 
-export const get_user = () => (dispatch) => {
+export const get_user = (props) => (dispatch) => {
+  if (props === true) {
+    dispatch({
+      type: "SET_GETTING_USER_LOADER",
+      payload: true,
+    });
+  }
   axios
     .get("/get/account")
     .then((data) => {
@@ -1073,9 +1079,19 @@ export const get_user = () => (dispatch) => {
         type: "SET_AUTH_STATE",
         payload: true,
       });
+
+      dispatch({
+        type: "SET_GETTING_USER_LOADER",
+        payload: false,
+      });
     })
     .catch((err) => {
       console.log(err);
+
+      dispatch({
+        type: "SET_GETTING_USER_LOADER",
+        payload: false,
+      });
     });
 };
 
@@ -1104,13 +1120,13 @@ export const login_user = (email, password) => (dispatch) => {
       password,
     })
     .then((data) => {
-      console.log({ token: data.data.token });
+      // console.log({ token: data.data.token });
 
       //
       setAuthorizationHeader(data.data.token);
 
       return axios.get("/get/account").then((user_data) => {
-        console.log({ res: user_data.data });
+        // console.log({ res: user_data.data });
 
         if (user_data.data.userID) {
           dispatch({
@@ -1180,7 +1196,7 @@ export const logOutUser = () => (dispatch) => {
 };
 
 const log_out_function = async () => {
-  console.log("logging out");
+  // console.log("logging out");
   delete axios.defaults.headers.common[`Authorization`];
   try {
     await auth_storage.removeToken();
@@ -1223,7 +1239,7 @@ const uploadImageAsync = async (uri) => {
         resolve(xhr.response);
       };
       xhr.onerror = function (e) {
-        console.log(e);
+        // console.log(e);
         reject(new TypeError("Network request failed"));
       };
       xhr.responseType = "blob";

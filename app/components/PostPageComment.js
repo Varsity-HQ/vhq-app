@@ -16,7 +16,7 @@ function PostPageComment({ data, returnProfilePicture, skeleton = false }) {
   const updateRef = useRef();
   if (skeleton) return <CommentSkeleton />;
 
-  console.log({ data });
+  // console.log({ data });
 
   const renderRightActions = () => {
     return (

@@ -11,11 +11,7 @@ import {
 } from "react-native";
 import { Image } from "react-native-expo-image-cache";
 import universityShortName from "../../util/universityShortName";
-import {
-  FontAwesome,
-  Ionicons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import Text from "../AppText";
 import TabNavigator from "../TabNavigator";
 import colors from "../../config/colors";

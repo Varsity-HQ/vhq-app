@@ -1,4 +1,24 @@
 import axios from "axios";
+import store from "../store";
+
+export const setExpoPushToken = (token) => (dispatch) => {
+  let currentToken = store.getState().core.accData.notificationToken;
+  if (currentToken !== token) {
+    axios
+      .post("/update/notifications/token", {
+        token,
+      })
+      .then(() => {
+        dispatch({
+          type: "SET_PUSH_TOKEN",
+          payload: token,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+};
 
 export const request_password_reset = (email) => (dispatch) => {
   let reset_token = generate_token(32);
@@ -13,13 +33,7 @@ export const request_password_reset = (email) => (dispatch) => {
       token: reset_token,
       email: email,
     })
-    .then((data) => {
-      console.log(data.data);
-      //   this.setState({
-      //     requested: true,
-      //     errors: {},
-      //   });
-
+    .then(() => {
       dispatch({
         type: "SET_RESETTING_LOADING_N_CLEAR_ERR",
         payload: false,

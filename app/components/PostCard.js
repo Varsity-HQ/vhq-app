@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import colors from "../config/colors";
-import { FontAwesome, Ionicons, Feather } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import SkeletonPost from "./Skeletons/Post";
 import dayjs from "dayjs";
 import Localize from "dayjs/plugin/relativeTime";
@@ -87,7 +87,7 @@ class PostCard extends PureComponent {
   render() {
     const data = this.props.data;
 
-    console.log({ data });
+    // console.log({ data });
 
     if (!data) return <SkeletonPost />;
 
