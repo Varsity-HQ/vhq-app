@@ -104,11 +104,9 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
     await Promise.all([...imageAssets, ...fontAssets])
       .then(() => {
         setIsAssetsCached(true);
-        console.log("cached all");
       })
       .catch(() => {
         setIsAssetsCached(true);
-        console.log("failed to cache all");
       });
   };
 
@@ -116,7 +114,6 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
     _loadAssetsAsync();
     const token = await auth_storage.getToken();
     if (token) {
-      console.log("started");
       set_token(token);
       await axios
         .get("/get/account")

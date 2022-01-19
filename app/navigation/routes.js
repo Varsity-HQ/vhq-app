@@ -15,6 +15,8 @@ export const LOGIN = "Login";
 export const FORGOT_PASSWORD = "ForgotPassword";
 export const LANDING_PAGE = "LandingScreen";
 
+export const ADD_PROFILE_PICTURE = "AddProfilePicture";
+
 export const ADD_POST = "AddPost";
 export const SEARCH = "Search";
 export const HOME = "Home";

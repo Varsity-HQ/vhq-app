@@ -25,18 +25,16 @@ import DatingNavigator from "./DatingNavigator";
 
 // Screens
 import PostPage from "../screens/PostPage";
-import Profile from "../screens/Profile";
 import SetupUniversity from "../screens/SetupUniversity";
-import WelcomeScreen from "../screens/WelcomeScreen";
 import SetupPersonalInformation from "../screens/SetupPersonalInformation";
 import AddPostPage from "../screens/AddPostPage";
-import DrawerContent from "../navigation/DrawerContent";
 import OverlayLoader from "../components/OverlayLoader";
 import colors from "../config/colors";
 import * as routes from "./routes";
 
 import * as Notifications from "expo-notifications";
 import { setExpoPushToken } from "../store/actions/auth_actions";
+import ForgotToAddProfilePic from "../screens/ForgotToAddProfilePic";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -61,7 +59,21 @@ const mapDispatchToProps = (dispatch) => {
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function NavigationStack() {
+function NavigationStack({ core }) {
+  if (!core.accData.profilepic) {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name={routes.ADD_PROFILE_PICTURE}
+          component={ForgotToAddProfilePic}
+        />
+      </Stack.Navigator>
+    );
+  }
+
   return (
     <>
       <OverlayLoader />
@@ -165,7 +177,7 @@ const AppRoutes = ({ core, setExpoPushToken }) => {
     return <SetupNavigator core={core} />;
   }
 
-  return <NavigationStack />;
+  return <NavigationStack core={core} />;
 };
 
 const SetupNavigator = ({ core }) => {
