@@ -73,7 +73,10 @@ function SetupPersonalInformation({
         >
           <ProfilePicChanger
             image={image_selected}
-            onImgChange={(uri) => set_image(uri)}
+            onImgChange={(uri) => {
+              set_image(uri);
+              set_image_error("");
+            }}
           />
           <AppText
             style={{
