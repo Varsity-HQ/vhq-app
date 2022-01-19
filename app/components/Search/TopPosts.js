@@ -40,11 +40,11 @@ function TopPosts({ university, posts }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.darkish,
-    marginVertical: 10,
+    marginBottom: 10,
   },
   header: {
     fontSize: 20,
-    fontWeight: "800",
+    fontWeight: "700",
     padding: 10,
   },
 });

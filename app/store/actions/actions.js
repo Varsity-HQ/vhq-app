@@ -1198,6 +1198,7 @@ export const setAuthState = (state) => (dispatch) => {
 export const logOutUser = () => (dispatch) => {
   log_out_function();
   dispatch({ type: "SET_UNAUTHENTICATED" });
+  dispatch({ type: "RESET_DATA" });
 };
 
 const log_out_function = async () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput, ActivityIndicator } from "react-native";
 import colors from "../../config/colors";
 
 import RIcon from "react-native-remix-icon";
@@ -26,13 +26,18 @@ function SearchSkeleton(props) {
       </View>
       <View style={styles.tcontainer}>
         <View>
-          <Text style={styles.header}>Loading..</Text>
+          <SkeletonComponent duration={2000} style={styles.header} />
         </View>
         <Trend />
         <Trend />
       </View>
       <View style={{ padding: 20, alignSelf: "center" }}>
         <Text>Please wait</Text>
+        <ActivityIndicator
+          color={colors.primary}
+          size="large"
+          style={{ marginTop: 20 }}
+        />
       </View>
     </View>
   );
@@ -40,7 +45,7 @@ function SearchSkeleton(props) {
 
 function Trend() {
   return (
-    <SkeletonComponent style={styles.trend}>
+    <View style={styles.trend}>
       <View>
         <Ionicons
           color={colors.darkish2}
@@ -55,30 +60,35 @@ function Trend() {
         }}
       >
         <View>
-          <Text style={styles.tr_t1}>.</Text>
-          <Text style={styles.tr_t2}>#Loading..</Text>
-          <Text style={styles.tr_t3}>.</Text>
+          <SkeletonComponent duration={2000} style={styles.tr_t1} />
+          <SkeletonComponent duration={2000} style={styles.tr_t2} />
+          <SkeletonComponent duration={2000} style={styles.tr_t3} />
         </View>
       </View>
       <View></View>
-    </SkeletonComponent>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   tr_t1: {
-    fontSize: 16,
+    height: 16,
+    width: "25%",
+    marginBottom: 10,
     fontWeight: "700",
     color: colors.darkish2,
   },
   tr_t2: {
-    fontSize: 18,
+    height: 18,
     fontWeight: "700",
+    width: "75%",
     color: colors.darkish2,
   },
   tr_t3: {
-    fontSize: 16,
+    height: 16,
     fontWeight: "500",
+    width: "50%",
+    marginTop: 10,
     color: colors.darkish2,
   },
   trend: {
@@ -89,9 +99,11 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   header: {
-    fontSize: 20,
+    height: 20,
+    width: "45%",
+    marginLeft: 10,
     fontWeight: "800",
-    padding: 10,
+    marginVertical: 20,
     color: colors.secondary,
   },
   tcontainer: {

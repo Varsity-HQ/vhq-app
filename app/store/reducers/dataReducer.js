@@ -438,6 +438,9 @@ const dataReducer = (state = initialData, actions) => {
         home_data: updated_home_data,
       };
 
+    case "RESET_DATA":
+      return (state = initialData);
+
     default:
       return state;
   }
