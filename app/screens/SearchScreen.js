@@ -66,8 +66,8 @@ function SearchScreen({ search_page, get_search_data }) {
   return (
     <Screen style={styles.container}>
       <ScrollView>
-        <SearchHeader />
-        <View style={styles.devider} />
+        {/* <SearchHeader /> */}
+        {/* <View style={styles.devider} /> */}
         <View>
           <TopPosts posts={data.posts} />
           <TopicTrends trends={data.topics} />
@@ -79,7 +79,10 @@ function SearchScreen({ search_page, get_search_data }) {
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    borderTopColor: colors.primary,
+    borderTopWidth: 0,
+  },
   devider: {
     height: 2,
     width: "100%",

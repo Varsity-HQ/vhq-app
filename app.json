@@ -4,7 +4,7 @@
     "slug": "vhq",
     "version": "1.0.0",
     "orientation": "portrait",
-    "description": "A social media app for students at South African universities.",
+    "description": "A social media app for students in South African universities.",
     "userInterfaceStyle": "automatic",
     "icon": "./app/assets/icon.png",
     "backgroundColor": "#15202b",

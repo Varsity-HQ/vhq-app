@@ -10,7 +10,7 @@ import SkeletonComponent from "./SkeletonComponent";
 function SearchSkeleton(props) {
   return (
     <View style={styles.container}>
-      <View style={styles.scontainer}>
+      {/* <View  style={styles.scontainer}>
         <View style={styles.innerContainer}>
           <TextInput
             editable={false}
@@ -23,7 +23,7 @@ function SearchSkeleton(props) {
             <RIcon name="search-2-line" size={25} color={colors.primary} />
           </View>
         </View>
-      </View>
+      </View> */}
       <View style={styles.tcontainer}>
         <View>
           <SkeletonComponent duration={2000} style={styles.header} />

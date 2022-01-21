@@ -22,18 +22,20 @@ import { Image, StatusBar } from "react-native";
 import AppToast from "./components/AppToast";
 import { FAILED_TO_INITIALIZE } from "./util/toast_messages";
 import { Asset } from "expo-asset";
+
 import {
   FontAwesome,
   Ionicons,
   MaterialCommunityIcons,
   Feather,
 } from "@expo/vector-icons";
+import RIcon from "react-native-remix-icon";
 
 if (!getApps().length) {
   initializeApp(firebaseConfig);
 }
 
-axios.defaults.baseURL = "http://192.168.8.105:5000";
+axios.defaults.baseURL = "http://192.168.8.102:5000";
 // axios.defaults.baseURL = "https://api.varsityhq.co.za";
 
 const toastConfig = {

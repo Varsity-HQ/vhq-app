@@ -796,8 +796,11 @@ export const unfollow_account = (uid) => (dispatch) => {
 };
 
 export const get_search_data = () => (dispatch) => {
+  const userFollowing = store.getState().core.accData.user_following;
   axios
-    .get("/get/search")
+    .post("/get/search", {
+      userFollowing: userFollowing,
+    })
     .then((data) => {
       dispatch({
         type: "SET_SEARCH_DATA",

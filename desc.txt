@@ -1,0 +1,6 @@
+VarsityHQ is a social media app built for university students across all South African universities. This app allows you to meet and connect with your fellow peers at your university and freely express yourself anonymously if you do not want to be judged.  
+
+With VarsityHQ you will be able to : 
+- Meet new friends
+- Find your match 
+- Display your services 

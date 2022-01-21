@@ -5,6 +5,7 @@ import Text from "../AppText";
 import { Ionicons } from "@expo/vector-icons";
 
 import ShortenUniName from "../../util/universityShortName";
+import TrendMenu from "./TrendMenu";
 
 function TopicTrends({ trends }) {
   return (
@@ -51,11 +52,12 @@ function Trend({ x }) {
           </View>
         </View>
         <View>
-          <Ionicons
+          <TrendMenu data={x} />
+          {/* <Ionicons
             name="ios-ellipsis-horizontal-outline"
             color={colors.white}
             size={25}
-          />
+          /> */}
         </View>
       </View>
     </TouchableOpacity>
