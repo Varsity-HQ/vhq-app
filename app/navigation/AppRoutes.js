@@ -229,6 +229,8 @@ const AppNavigator = () => {
         tabBarHideOnKeyboard: true,
       }}
       screenOptions={{
+        lazy: true,
+
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
           // marginTop: 0,

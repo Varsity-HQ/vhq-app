@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import AppNavigator from "./navigation/AppRoutes";
+import SearchNavigator from "./navigation/SearchNavigator";
 import AuthRoutes from "./navigation/AuthRoutes";
 import vhqTheme from "./navigation/navigationTheme";
 import axios from "axios";

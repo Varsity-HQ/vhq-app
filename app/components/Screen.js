@@ -2,13 +2,13 @@ import React from "react";
 import Constants from "expo-constants";
 import {
   StyleSheet,
-  SafeAreaView,
   View,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  SafeAreaView,
 } from "react-native";
-
+// import { SafeAreaView } from "react-native-safe-area-context";
 const statusBarHeight = Constants.statusBarHeight;
 
 function Screen({

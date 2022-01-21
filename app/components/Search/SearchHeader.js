@@ -4,13 +4,16 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  SafeAreaView,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  SafeAreaView,
+  StatusBar,
 } from "react-native";
 import colors from "../../config/colors";
-import { SEARCH_RESULTS } from "../../navigation/routes";
+import { SEARCH, SEARCH_RESULTS } from "../../navigation/routes";
 import RIcon from "react-native-remix-icon";
+import Button from "../Button";
+// import { SafeAreaView } from "react-native-safe-area-context";
 
 function SearchHeader(props) {
   const searchBarFocus = () => {
@@ -24,6 +27,14 @@ function SearchHeader(props) {
     }
   };
 
+  const handleCancel = () => {
+    switch (props.stackName) {
+      case "SearchNavigator":
+        props.navigation.navigate(SEARCH);
+        break;
+    }
+  };
+
   const handlePress = () => {
     if (props.route.name !== SEARCH_RESULTS) searchBarFocus();
   };
@@ -32,21 +43,43 @@ function SearchHeader(props) {
 
   return (
     <SafeAreaView>
+      <StatusBar
+        translucent
+        animated={true}
+        backgroundColor={colors.darkish2}
+        barStyle="light-content"
+        showHideTransition="fade"
+        hidden={false}
+      />
       <TouchableWithoutFeedback onPress={handlePress}>
-        <View style={styles.input_container}>
-          <RIcon name="search-2-line" size={20} color={colors.primary} />
-          {props.route.name === SEARCH_RESULTS ? (
-            <TextInput
-              autoFocus={props.route.name === SEARCH_RESULTS ? true : false}
-              onPressIn={searchBarFocus}
-              style={styles.input}
-              placeholder="Search VarsityHQ.."
-              placeholderTextColor={colors.secondary}
+        <View style={styles.search_container}>
+          <View style={styles.input_container}>
+            <RIcon name="search-2-line" size={20} color={colors.primary} />
+            {props.route.name === SEARCH_RESULTS ? (
+              <TextInput
+                autoFocus={props.route.name === SEARCH_RESULTS ? true : false}
+                onPressIn={searchBarFocus}
+                style={styles.input}
+                placeholder="Search VarsityHQ.."
+                placeholderTextColor={colors.secondary}
+              />
+            ) : (
+              <Text style={[styles.input, styles.placeholderText]}>
+                Search VarsityHQ..
+              </Text>
+            )}
+          </View>
+          {props.route.name !== SEARCH && (
+            <Button
+              onPress={handleCancel}
+              style={{
+                marginRight: 8,
+                paddingVertical: 1,
+                backgroundColor: "transparent",
+              }}
+              type={5}
+              title="Cancel"
             />
-          ) : (
-            <Text style={[styles.input, styles.placeholderText]}>
-              Search VarsityHQ..
-            </Text>
           )}
         </View>
       </TouchableWithoutFeedback>
@@ -55,6 +88,13 @@ function SearchHeader(props) {
 }
 
 const styles = StyleSheet.create({
+  search_container: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.darkish2,
+    borderColor: colors.darkish3,
+    borderBottomWidth: 1,
+  },
   placeholderText: {
     color: colors.secondary,
   },
@@ -83,19 +123,22 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     height: "100%",
     width: "100%",
-    paddingVertical: 8,
+    paddingVertical: 12,
     color: "white",
   },
   input_container: {
-    backgroundColor: colors.darkish2,
+    backgroundColor: colors.darkish,
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "center",
     margin: 5,
     paddingHorizontal: 8,
-    width: "95%",
+    // width: "95%",
     // height: "100%",
-    borderRadius: 10,
+    borderRadius: 100,
+    borderWidth: 0,
+    borderColor: colors.secondary_2,
+    flex: 1,
   },
   container: {
     position: "relative",

@@ -32,6 +32,7 @@ const SearchNavigator = () => {
       <Stack.Screen
         options={{
           headerShown: true,
+          animationTypeForReplace: "push",
         }}
         name={routes.SEARCH}
         component={Search}

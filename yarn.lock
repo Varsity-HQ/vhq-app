@@ -7427,6 +7427,13 @@ react-native-screens@^3.4.0, react-native-screens@~3.10.1:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
+react-native-search-box@^0.0.20:
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/react-native-search-box/-/react-native-search-box-0.0.20.tgz#25eedda46a1c69ab1875ea37c43762b69fb2c22a"
+  integrity sha512-ynyqX2wXynzgzt9wshBm6aE+/1EDOzCv49QcyGzoIsed3pgirzW4ealHLjFEkFos3Eb7RP5PriUGnjhyH1plLQ==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-snap-carousel@^3.9.1:
   version "3.9.1"
   resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.9.1.tgz#6fd9bd8839546c2c6043a41d2035afbc6fe0443e"
