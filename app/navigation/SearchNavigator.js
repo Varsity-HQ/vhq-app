@@ -19,6 +19,7 @@ const SearchNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={({ navigation, route }) => ({
+        presentation: "card",
         headerStyle: { backgroundColor: colors.dark },
         header: () => (
           <SearchHeader
@@ -40,16 +41,8 @@ const SearchNavigator = () => {
       <Stack.Screen
         options={{
           headerShown: true,
-          gestureEnabled: false,
+          // gestureEnabled: false,
           animation: "fade",
-          headerRight: () => (
-            <Button
-              type={4}
-              style={{ paddingVertical: 8 }}
-              onPress={() => navigation.navigate(routes.SEARCH)}
-              title="Cancel"
-            />
-          ),
         }}
         name={routes.SEARCH_RESULTS}
         component={SearchResults}
