@@ -44,7 +44,7 @@ function SearchScreenHeader(props) {
     <View>
       <View style={styles.container}>
         <View>
-          <Text style={styles.title}>
+          <Text allowFontScaling={false} style={styles.title}>
             Explore <Text style={styles.dim_text}>For You</Text>
           </Text>
         </View>
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   title: {
     color: colors.white,
     fontSize: normalizeText(35),
-    fontWeight: "700",
+    fontWeight: "800",
     fontFamily: "Lobster-Regular",
   },
 });

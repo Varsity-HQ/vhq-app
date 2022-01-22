@@ -1,10 +1,19 @@
 import React from "react";
-import { View, StyleSheet, Image as ImageLocal } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image as ImageLocal,
+  TouchableOpacity,
+} from "react-native";
 import Text from "../AppText";
 import colors from "../../config/colors";
 import { Image } from "react-native-expo-image-cache";
+import { useNavigation } from "@react-navigation/native";
+// import Image from "../Image"
 
 function TopPost({ x }) {
+  const navigation = useNavigation();
+  //
   const returnPicture = () => {
     if (!x.profilepic)
       return (
@@ -13,14 +22,16 @@ function TopPost({ x }) {
           source={{ uri: require("../../assets/avatar.png") }}
         />
       );
-
     if (x.attachments.length > 0)
       return <Image style={styles.image} uri={x.attachments[0]} />;
     return <Image style={styles.image} uri={x.profilepic} />;
   };
-
+  //
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate(POST)}
+      style={styles.container}
+    >
       <View>{returnPicture()}</View>
       <View style={styles.content}>
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.name}>
@@ -35,7 +46,7 @@ function TopPost({ x }) {
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -47,16 +58,17 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   date: {
-    color: colors.skblue,
+    color: colors.secondary,
     fontSize: 14,
   },
   text: {
-    color: colors.secondary,
+    color: colors.white,
     height: 50,
   },
   name: {
     fontSize: 16,
     fontWeight: "700",
+    color: colors.secondary,
   },
   content: {
     marginLeft: 10,

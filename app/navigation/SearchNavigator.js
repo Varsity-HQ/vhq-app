@@ -21,13 +21,13 @@ const SearchNavigator = () => {
       screenOptions={({ navigation, route }) => ({
         presentation: "card",
         headerStyle: { backgroundColor: colors.dark },
-        header: () => (
-          <SearchHeader
-            stackName={"SearchNavigator"}
-            navigation={navigation}
-            route={route}
-          />
-        ),
+        // header: () => (
+        //   <SearchHeader
+        //     stackName={"SearchNavigator"}
+        //     navigation={navigation}
+        //     route={route}
+        //   />
+        // ),
       })}
     >
       <Stack.Screen
@@ -39,7 +39,7 @@ const SearchNavigator = () => {
       />
       <Stack.Screen
         options={{
-          headerShown: true,
+          headerShown: false,
           // gestureEnabled: false,
           animation: "fade",
         }}

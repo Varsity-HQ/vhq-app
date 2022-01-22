@@ -3,6 +3,7 @@ import { View, StyleSheet, useWindowDimensions } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import Text from "../components/AppText";
 import Screen from "../components/Screen";
+import SearchHeader from "../components/Search/SearchHeader";
 import colors from "../config/colors";
 
 const FirstRoute = ({ jumpTo }) => <View />;
@@ -23,6 +24,11 @@ function SearchResults(props) {
   ]);
   return (
     <Screen style={styles.container}>
+      <SearchHeader
+        stackName={"SearchNavigator"}
+        navigation={"navigation"}
+        route={"route"}
+      />
       <TabView
         style={{}}
         navigationState={{ index, routes }}

@@ -212,6 +212,7 @@ const Home = () => {
             }}
           ></View> */}
           <CardStack
+            useNativeDriver={true}
             // horizontalSwipe={false}
             // disableRightSwipe={true}
             duration={500}
@@ -617,7 +618,7 @@ const CardItem = ({
       }}
     >
       <View style={styles.containerCardItem}>
-        <ScrollView
+        <View
           style={{
             flex: 1,
             zIndex: 9,
@@ -695,7 +696,7 @@ const CardItem = ({
             )}
             <Image source={{ uri: image }} style={imageStyle} />
           </View>
-        </ScrollView>
+        </View>
       </View>
     </View>
   );
