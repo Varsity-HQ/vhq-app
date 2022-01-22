@@ -109,7 +109,7 @@ function DrawerContent({ props, product, account }) {
           >
             <FontAwesome
               name="user-circle-o"
-              size={30}
+              size={25}
               color={colors.secondary}
             />
             <Text style={{ marginLeft: 20 }}>Profile</Text>
@@ -122,7 +122,7 @@ function DrawerContent({ props, product, account }) {
               marginBottom: 30,
             }}
           >
-            <FontAwesome name="bell-o" size={30} color={colors.secondary} />
+            <FontAwesome name="bell-o" size={25} color={colors.secondary} />
             <Text style={{ marginLeft: 20 }}>Notifications</Text>
           </View>
           <View
@@ -133,7 +133,18 @@ function DrawerContent({ props, product, account }) {
               marginBottom: 30,
             }}
           >
-            <FontAwesome name="tags" size={30} color={colors.secondary} />
+            <FontAwesome name="group" size={25} color={colors.secondary} />
+            <Text style={{ marginLeft: 20 }}>Groups</Text>
+          </View>
+          <View
+            style={{
+              paddingHorizontal: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 30,
+            }}
+          >
+            <FontAwesome name="tags" size={25} color={colors.secondary} />
             <Text style={{ marginLeft: 20 }}>Offers</Text>
           </View>
           <View
@@ -146,7 +157,7 @@ function DrawerContent({ props, product, account }) {
           >
             <MaterialCommunityIcons
               name="wallet"
-              size={30}
+              size={25}
               color={colors.secondary}
             />
             <Text style={{ marginLeft: 20 }}>Wallet</Text>
@@ -159,7 +170,7 @@ function DrawerContent({ props, product, account }) {
               marginBottom: 0,
             }}
           >
-            <FontAwesome name="cog" size={30} color={colors.secondary} />
+            <FontAwesome name="cog" size={25} color={colors.secondary} />
             <Text style={{ marginLeft: 20 }}>Settings</Text>
           </View>
 

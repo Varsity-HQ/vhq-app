@@ -55,7 +55,6 @@ function SearchScreenHeader(props) {
           <RIcon name="search-2-line" size={22} color={colors.primary} />
         </TouchableOpacity>
       </View>
-
       <TabNavigator
         type={2}
         style={{ marginBottom: 10 }}
