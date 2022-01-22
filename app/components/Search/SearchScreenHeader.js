@@ -7,31 +7,33 @@ import { useNavigation } from "@react-navigation/native";
 import { SEARCH_RESULTS } from "../../navigation/routes";
 import { StatusBar } from "expo-status-bar";
 import Button from "../Button";
-import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
+import {
+  MaterialCommunityIcons,
+  Ionicons,
+  SimpleLineIcons,
+} from "@expo/vector-icons";
 import TabNavigator from "../TabNavigator";
 
 const home_tabs = [
   {
     title: "Trends",
     index: 1,
-    icon: (
-      <MaterialCommunityIcons
-        color={colors.white}
-        size={18}
-        name="post-outline"
-      />
-    ),
+    icon: <Ionicons color={colors.white} size={18} name="trending-up" />,
   },
   {
     title: "Pictures",
     index: 2,
-    icon: <FontAwesome color={colors.white} size={16} name="calendar-o" />,
+    icon: <SimpleLineIcons color={colors.white} size={16} name="picture" />,
   },
   {
     title: "Groups",
     index: 3,
     icon: (
-      <FontAwesome color={colors.white} size={16} name="arrow-circle-o-right" />
+      <MaterialCommunityIcons
+        color={colors.white}
+        size={16}
+        name="account-group-outline"
+      />
     ),
   },
 ];
@@ -42,7 +44,9 @@ function SearchScreenHeader(props) {
     <View>
       <View style={styles.container}>
         <View>
-          <Text style={styles.title}>Explore</Text>
+          <Text style={styles.title}>
+            Explore <Text style={styles.dim_text}>For You</Text>
+          </Text>
         </View>
         <TouchableOpacity
           onPress={() => navigation.navigate(SEARCH_RESULTS)}
@@ -64,6 +68,9 @@ function SearchScreenHeader(props) {
 }
 
 const styles = StyleSheet.create({
+  dim_text: {
+    color: colors.darkish2,
+  },
   subHeader: {
     flexDirection: "row",
     paddingHorizontal: 10,
