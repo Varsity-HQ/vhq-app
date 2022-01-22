@@ -8,7 +8,48 @@ import {
 } from "react-native";
 import colors from "../config/colors";
 
-function TabNavigator({ active = 1, style, items = [], onPress }) {
+function TabNavigator({ active = 1, style, items = [], onPress, type }) {
+  if (type === 2) {
+    return (
+      <ScrollView horizontal={true} style={[styles.container_2, style]}>
+        {items.map((x, index) => {
+          return (
+            <TouchableWithoutFeedback
+              key={index}
+              onPress={() => onPress(x.index)}
+            >
+              <View style={styles.tab}>
+                <View
+                  style={[
+                    styles.tab_indicator_2_2,
+                    {
+                      backgroundColor:
+                        active === x.index ? colors.primary : colors.dark,
+                    },
+                  ]}
+                />
+
+                <View style={styles.tab_Container}>
+                  {x.icon && x.icon}
+                  <Text style={styles.text}>{x.title}</Text>
+                </View>
+                <View
+                  style={[
+                    styles.tab_indicator_1_2,
+                    {
+                      backgroundColor:
+                        active === x.index ? colors.primary : colors.dark,
+                    },
+                  ]}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          );
+        })}
+      </ScrollView>
+    );
+  }
+
   return (
     <ScrollView horizontal={true} style={[styles.container, style]}>
       {items.map((x, index) => {
@@ -49,6 +90,13 @@ function TabNavigator({ active = 1, style, items = [], onPress }) {
 }
 
 const styles = StyleSheet.create({
+  container_2: {
+    paddingVertical: 0,
+    borderBottomColor: colors.primary,
+    borderWidth: 3,
+    borderRadius: 0,
+    // paddingBottom: 5,
+  },
   container: {
     paddingVertical: 0,
     borderTopColor: colors.primary,
@@ -62,6 +110,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  tab_indicator_2_2: {
+    alignSelf: "center",
+    width: 7,
+    height: 7,
+    backgroundColor: colors.primary,
+    borderRadius: 10,
+    top: 5,
+  },
   tab_indicator_2: {
     alignSelf: "center",
     width: 7,
@@ -69,6 +125,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 10,
     bottom: 5,
+  },
+  tab_indicator_1_2: {
+    width: "100%",
+    height: 6,
+    backgroundColor: colors.primary,
+    borderTopRightRadius: 50,
+    borderTopLeftRadius: 50,
   },
   tab_indicator_1: {
     width: "100%",

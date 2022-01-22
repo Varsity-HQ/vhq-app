@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import colors from "../config/colors";
 import { get_search_data } from "../store/actions/actions";
 import { useFocusEffect } from "@react-navigation/native";
+import SearchScreenHeader from "../components/Search/SearchScreenHeader";
 
 const iconSize = 20;
 
@@ -66,7 +67,7 @@ function SearchScreen({ search_page, get_search_data }) {
   return (
     <Screen style={styles.container}>
       <ScrollView>
-        {/* <SearchHeader /> */}
+        <SearchScreenHeader />
         {/* <View style={styles.devider} /> */}
         <View>
           <TopPosts posts={data.posts} />

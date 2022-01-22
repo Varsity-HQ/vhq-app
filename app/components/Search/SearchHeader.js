@@ -13,6 +13,7 @@ import colors from "../../config/colors";
 import { SEARCH, SEARCH_RESULTS } from "../../navigation/routes";
 import RIcon from "react-native-remix-icon";
 import Button from "../Button";
+import { normalizeText } from "../../util/responsivePx";
 // import { SafeAreaView } from "react-native-safe-area-context";
 
 function SearchHeader(props) {
@@ -46,14 +47,6 @@ function SearchHeader(props) {
       <SafeAreaView>
         <TouchableWithoutFeedback onPress={handlePress}>
           <View style={styles.search_container}>
-            <StatusBar
-              translucent
-              animated={true}
-              backgroundColor={colors.darkish2}
-              barStyle="light-content"
-              showHideTransition="fade"
-              hidden={false}
-            />
             <View style={styles.input_container}>
               <RIcon name="search-2-line" size={20} color={colors.primary} />
               {props.route.name === SEARCH_RESULTS ? (
