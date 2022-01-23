@@ -7,15 +7,7 @@ import Image from "../Image";
 
 const height = Dimensions.get("window").height;
 
-const HighlightMatch = ({ attribute, hit, highlight }) => {
-  //   const highlights = highlight({
-  //     highlightProperty: "_highlightResult",
-  //     attribute,
-  //     hit,
-  //   });
-
-  console.log({ hit: hit.degree });
-
+const HighlightMatch = ({ hit }) => {
   if (!hit.firstname || !hit.username) return null;
   return (
     <View style={styles.res_container}>

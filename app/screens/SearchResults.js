@@ -11,6 +11,8 @@ import {
   connectRefinementList,
 } from "react-instantsearch-native";
 import AccountsResultsTab from "../components/Search/AccountsResultsTab";
+import TrendsResultsTab from "../components/Search/TrendsResultsTab";
+import Searchinindicator from "../components/Search/Searchinindicator";
 
 const searchClient = algoliasearch(
   "R37EQ47X30",
@@ -18,10 +20,12 @@ const searchClient = algoliasearch(
 );
 
 const Accounts = () => <AccountsResultsTab />;
+const TrendsScreen = () => <TrendsResultsTab />;
 const SecondRoute = () => <View />;
+
 const renderScene = SceneMap({
   accounts: Accounts,
-  submissions: SecondRoute,
+  trends: TrendsScreen,
   marketplace: SecondRoute,
 });
 
@@ -32,7 +36,7 @@ function SearchResults(props) {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "accounts", title: "Accounts" },
-    { key: "submissions", title: "Trends" },
+    { key: "trends", title: "Trends" },
     { key: "marketplace", title: "Marketplace" },
   ]);
 
@@ -40,13 +44,15 @@ function SearchResults(props) {
     setSearchState({ ...searchState, ...nextState });
   };
 
-  console.log({ searchState });
+  console.log({ index });
 
   return (
     <Screen style={styles.container}>
       <InstantSearch
         searchClient={searchClient}
-        indexName={"accounts"}
+        indexName={
+          index === 0 ? "accounts" : index === 1 ? "hashtags" : "accounts"
+        }
         searchState={searchState}
         onSearchStateChange={onSearchStateChange}
       >
@@ -61,7 +67,7 @@ function SearchResults(props) {
           renderScene={renderScene}
           onIndexChange={setIndex}
           initialLayout={{ width: layout.width }}
-          lazy={({ route }) => route.key === "submissions"}
+          lazy={({ route }) => route.key === "trends"}
           renderTabBar={(props) => (
             <TabBar
               indicatorStyle={{
