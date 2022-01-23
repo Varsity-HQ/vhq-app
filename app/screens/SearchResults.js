@@ -5,65 +5,92 @@ import Text from "../components/AppText";
 import Screen from "../components/Screen";
 import SearchHeader from "../components/Search/SearchHeader";
 import colors from "../config/colors";
+import algoliasearch from "algoliasearch/lite";
+import {
+  InstantSearch,
+  connectRefinementList,
+} from "react-instantsearch-native";
+import AccountsResultsTab from "../components/Search/AccountsResultsTab";
 
-const FirstRoute = ({ jumpTo }) => <View />;
+const searchClient = algoliasearch(
+  "R37EQ47X30",
+  "3655cf3408f922e47809314f91939c1d",
+);
+
+const Accounts = () => <AccountsResultsTab />;
 const SecondRoute = () => <View />;
 const renderScene = SceneMap({
-  first: FirstRoute,
+  accounts: Accounts,
   submissions: SecondRoute,
   marketplace: SecondRoute,
 });
 
 function SearchResults(props) {
+  const [searchState, setSearchState] = React.useState({});
+
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "Accounts" },
+    { key: "accounts", title: "Accounts" },
     { key: "submissions", title: "Trends" },
     { key: "marketplace", title: "Marketplace" },
   ]);
+
+  const onSearchStateChange = (nextState) => {
+    setSearchState({ ...searchState, ...nextState });
+  };
+
+  console.log({ searchState });
+
   return (
     <Screen style={styles.container}>
-      <SearchHeader
-        stackName={"SearchNavigator"}
-        navigation={"navigation"}
-        route={"route"}
-      />
-      <TabView
-        style={{}}
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-        lazy={({ route }) => route.key === "submissions"}
-        renderTabBar={(props) => (
-          <TabBar
-            indicatorStyle={{
-              backgroundColor: colors.darkish3,
-              height: 3,
-              borderTopLeftRadius: 100,
-              borderTopRightRadius: 100,
-            }}
-            renderLabel={({ route, focused, color }) => (
-              <Text
-                style={{
-                  color: focused ? colors.secondary : color,
-                  margin: 8,
-                  fontWeight: "600",
-                }}
-              >
-                {route.title}
-              </Text>
-            )}
-            style={{
-              backgroundColor: colors.dark,
-              borderBottomColor: colors.darkish3,
-              borderBottomWidth: 2,
-            }}
-            {...props}
-          />
-        )}
-      />
+      <InstantSearch
+        searchClient={searchClient}
+        indexName={"accounts"}
+        searchState={searchState}
+        onSearchStateChange={onSearchStateChange}
+      >
+        <SearchHeader
+          stackName={"SearchNavigator"}
+          navigation={props.navigation}
+          route={"route"}
+        />
+        <TabView
+          style={{}}
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{ width: layout.width }}
+          lazy={({ route }) => route.key === "submissions"}
+          renderTabBar={(props) => (
+            <TabBar
+              indicatorStyle={{
+                backgroundColor: colors.darkish3,
+                height: 3,
+                borderTopLeftRadius: 100,
+                borderTopRightRadius: 100,
+              }}
+              renderLabel={({ route, focused, color }) => (
+                <Text
+                  style={{
+                    color: focused ? colors.secondary : color,
+                    margin: 8,
+                    fontWeight: "600",
+                  }}
+                >
+                  {route.title}
+                </Text>
+              )}
+              style={{
+                backgroundColor: colors.dark,
+                borderBottomColor: colors.darkish3,
+                borderBottomWidth: 2,
+              }}
+              {...props}
+            />
+          )}
+        />
+      </InstantSearch>
     </Screen>
   );
 }

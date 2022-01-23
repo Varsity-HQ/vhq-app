@@ -14,71 +14,60 @@ import { SEARCH, SEARCH_RESULTS } from "../../navigation/routes";
 import RIcon from "react-native-remix-icon";
 import Button from "../Button";
 import { normalizeText } from "../../util/responsivePx";
+import { connectSearchBox } from "react-instantsearch-native";
 // import { SafeAreaView } from "react-native-safe-area-context";
 
-function SearchHeader(props) {
+function SearchHeader({ navigation, currentRefinement, refine }) {
   const searchBarFocus = () => {
-    switch (props.stackName) {
-      case "SearchNavigator":
-        if (props.route.name !== SEARCH_RESULTS) {
-          console.log(props.navigation);
-          props.navigation.navigate("SearchResults");
-        }
-        break;
-    }
+    // switch (props.stackName) {
+    //   case "SearchNavigator":
+    //     if (props.route.name !== SEARCH_RESULTS) {
+    //      navigation.navigate("SearchResults");
+    //     }
+    //     break;
+    // }
   };
 
   const handleCancel = () => {
-    switch (props.stackName) {
-      case "SearchNavigator":
-        props.navigation.navigate(SEARCH);
-        break;
-    }
+    navigation.goBack();
   };
 
   const handlePress = () => {
-    if (props.route.name !== SEARCH_RESULTS) searchBarFocus();
+    // if (props.route.name !== SEARCH_RESULTS) searchBarFocus();
   };
 
-  console.log(props);
+  // console.log(props);
 
   return (
-    <>
-      <SafeAreaView>
-        <TouchableWithoutFeedback onPress={handlePress}>
-          <View style={styles.search_container}>
-            <View style={styles.input_container}>
-              <RIcon name="search-2-line" size={20} color={colors.primary} />
-              {props.route.name === SEARCH_RESULTS ? (
-                <TextInput
-                  autoFocus={props.route.name === SEARCH_RESULTS ? true : false}
-                  onPressIn={searchBarFocus}
-                  style={styles.input}
-                  placeholder="Search VarsityHQ.."
-                  placeholderTextColor={colors.secondary}
-                />
-              ) : (
-                <Text style={[styles.input, styles.placeholderText]}>
-                  Search VarsityHQ..
-                </Text>
-              )}
-            </View>
-            {props.route.name !== SEARCH && (
-              <Button
-                onPress={handleCancel}
-                style={{
-                  marginRight: 8,
-                  paddingVertical: 1,
-                  backgroundColor: "transparent",
-                }}
-                type={5}
-                title="Cancel"
-              />
-            )}
+    <SafeAreaView>
+      <TouchableWithoutFeedback onPress={handlePress}>
+        <View style={styles.search_container}>
+          <View style={styles.input_container}>
+            <RIcon name="search-2-line" size={20} color={colors.primary} />
+            <TextInput
+              onChangeText={(value) => refine(value)}
+              value={currentRefinement}
+              selectionColor={colors.primary}
+              autoFocus={true}
+              onPressIn={searchBarFocus}
+              style={styles.input}
+              placeholder="Search VarsityHQ.."
+              placeholderTextColor={colors.secondary}
+            />
           </View>
-        </TouchableWithoutFeedback>
-      </SafeAreaView>
-    </>
+          <Button
+            onPress={handleCancel}
+            style={{
+              marginRight: 8,
+              paddingVertical: 1,
+              backgroundColor: "transparent",
+            }}
+            type={5}
+            title="Cancel"
+          />
+        </View>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }
 
@@ -148,4 +137,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchHeader;
+export default connectSearchBox(SearchHeader);
