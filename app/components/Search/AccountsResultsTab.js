@@ -18,7 +18,7 @@ function AccountsResultsTab({ hits, hasMore, refineNext }) {
             () => (
               <View style={{ padding: 10, marginTop: 10 }}>
                 <Text style={{ alignSelf: "center", color: colors.secondary }}>
-                  Not Results
+                  No Results
                 </Text>
               </View>
             )

@@ -1,16 +1,26 @@
 import React from "react";
 import { connectHighlight } from "react-instantsearch-native";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { StyleSheet, View, Dimensions, TouchableOpacity } from "react-native";
 import colors from "../../config/colors";
 import Text from "../AppText";
 import Image from "../Image";
+import { useNavigation } from "@react-navigation/native";
+import { PROFILE } from "../../navigation/routes";
 
 const height = Dimensions.get("window").height;
 
 const HighlightMatch = ({ hit }) => {
+  const navigation = useNavigation();
   if (!hit.firstname || !hit.username) return null;
   return (
-    <View style={styles.res_container}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate(PROFILE, {
+          username: hit.username,
+        })
+      }
+      style={styles.res_container}
+    >
       <Image uri={hit.profilepic} style={styles.profilepic} />
       <View>
         <View>
@@ -20,7 +30,7 @@ const HighlightMatch = ({ hit }) => {
           <Text style={styles.username}>@{hit.username}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

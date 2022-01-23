@@ -13,6 +13,7 @@ import {
 import AccountsResultsTab from "../components/Search/AccountsResultsTab";
 import TrendsResultsTab from "../components/Search/TrendsResultsTab";
 import Searchinindicator from "../components/Search/Searchinindicator";
+import MarketplaceTab from "../components/Search/MarketplaceTab";
 
 const searchClient = algoliasearch(
   "R37EQ47X30",
@@ -21,12 +22,12 @@ const searchClient = algoliasearch(
 
 const Accounts = () => <AccountsResultsTab />;
 const TrendsScreen = () => <TrendsResultsTab />;
-const SecondRoute = () => <View />;
+const Marketplace = () => <MarketplaceTab />;
 
 const renderScene = SceneMap({
   accounts: Accounts,
   trends: TrendsScreen,
-  marketplace: SecondRoute,
+  marketplace: Marketplace,
 });
 
 function SearchResults(props) {
