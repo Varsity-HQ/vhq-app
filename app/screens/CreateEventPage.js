@@ -5,6 +5,8 @@ import Header from "../components/headers/header3";
 import Screen from "../components/Screen";
 import Button from "../components/Button";
 import { connect } from "react-redux";
+import BarStepperIndicator from "../components/BarStepperIndicator";
+import UserDetBar from "../components/UserDetBar";
 
 const mapStateToProps = (state) => {
   return {
@@ -74,12 +76,11 @@ class CreateEventPage extends Component {
         />
         <View style={{ padding: 12 }}>
           <Text style={styles.heading}>Create Event</Text>
-          <View>
-            <View></View>
-            <View></View>
-            <View></View>
-            <View></View>
-          </View>
+          <BarStepperIndicator
+            step={this.state.tabIndex + 1}
+            style={{ marginTop: 20, marginBottom: 10 }}
+          />
+          <UserDetBar />
           <Button
             style={{ marginVertical: 30 }}
             onPress={this.handleProceed}
