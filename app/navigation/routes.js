@@ -20,6 +20,7 @@ export const LANDING_PAGE = "LandingScreen";
 
 export const ADD_PROFILE_PICTURE = "AddProfilePicture";
 
+export const CREATE_EVENT = "CreateEvent";
 export const ADD_POST = "AddPost";
 export const SEARCH = "Search";
 export const HOME = "Home";

@@ -20,7 +20,7 @@ import { Ionicons, Foundation } from "@expo/vector-icons";
 import Screen from "../components/Screen";
 import Image from "../components/Image";
 import KeyboardEventListener from "../components/KeyboardEventListener";
-import { HOME } from "../navigation/routes";
+import { CREATE_EVENT, HOME } from "../navigation/routes";
 import { connect } from "react-redux";
 import he from "he";
 import { post_new } from "../store/actions/actions";
@@ -259,7 +259,6 @@ class AddPostPage extends Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <>
         <Screen
@@ -384,6 +383,7 @@ class AddPostPage extends Component {
                   <TouchableOpacity
                     disabled={this.state.pollCreate}
                     style={styles.obutton}
+                    onPress={() => this.props.navigation.navigate(CREATE_EVENT)}
                   >
                     <Text style={styles.eventtext}>Event</Text>
                   </TouchableOpacity>

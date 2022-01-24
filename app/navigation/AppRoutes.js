@@ -35,6 +35,7 @@ import * as routes from "./routes";
 import * as Notifications from "expo-notifications";
 import { setExpoPushToken } from "../store/actions/auth_actions";
 import ForgotToAddProfilePic from "../screens/ForgotToAddProfilePic";
+import CreateEventPage from "../screens/CreateEventPage";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -99,6 +100,14 @@ function NavigationStack({ core }) {
           }}
           name={routes.POST_PAGE}
           component={PostPage}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+            animation: "slide_from_right",
+          }}
+          name={routes.CREATE_EVENT}
+          component={CreateEventPage}
         />
       </Stack.Navigator>
     </>
