@@ -238,9 +238,12 @@ class AddPostPage extends Component {
       poll_fields: this.state.poll_fields,
     };
 
+    let _proceed = true;
+
     if (postObj.postType === "poll_post") {
       postObj.poll_fields.forEach((x) => {
-        if (x.choiceName === "") {
+        if (x.choiceName === "" || x.choiceName === " ") {
+          _proceed = false;
           return Alert.alert(
             "Poll warning",
             "One or more poll fields have an empty name. Make sure your fields have been named before posting",
@@ -249,8 +252,10 @@ class AddPostPage extends Component {
       });
     }
 
-    this.props.post_new(postObj, this.state.local_attachments);
-    this.props.navigation.navigate(HOME);
+    if (_proceed) {
+      this.props.post_new(postObj, this.state.local_attachments);
+      this.props.navigation.navigate(HOME);
+    }
   };
 
   render() {

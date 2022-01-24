@@ -29,6 +29,7 @@ import {
   Ionicons,
   MaterialCommunityIcons,
   Feather,
+  SimpleLineIcons,
 } from "@expo/vector-icons";
 import RIcon from "react-native-remix-icon";
 
@@ -102,6 +103,7 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
       Ionicons.font,
       MaterialCommunityIcons.font,
       Feather.font,
+      SimpleLineIcons.font,
     ]);
 
     await Promise.all([...imageAssets, ...fontAssets])

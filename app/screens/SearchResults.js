@@ -9,6 +9,7 @@ import algoliasearch from "algoliasearch/lite";
 import {
   InstantSearch,
   connectRefinementList,
+  Configure,
 } from "react-instantsearch-native";
 import AccountsResultsTab from "../components/Search/AccountsResultsTab";
 import TrendsResultsTab from "../components/Search/TrendsResultsTab";
@@ -57,6 +58,14 @@ function SearchResults(props) {
         searchState={searchState}
         onSearchStateChange={onSearchStateChange}
       >
+        {index === 0 && (
+          <Configure
+            filters='university:"University of Johannesburg"'
+            hitsPerPage={10}
+            distinct
+          />
+        )}
+
         <SearchHeader
           stackName={"SearchNavigator"}
           navigation={props.navigation}
