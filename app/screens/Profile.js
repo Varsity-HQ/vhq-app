@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, Text } from "react-native";
-import { View, StyleSheet, Image as ImageLocal } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image as ImageLocal,
+  Touchable,
+  TouchableOpacity,
+} from "react-native";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
-import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import Ricons from "react-native-remix-icon";
 import Button from "../components/Button";
-import AppText from "../components/AppText";
-import PostCard from "../components/PostCard";
+import Text from "../components/AppText";
 import TabNavigator from "../components/TabNavigator";
 import {
   get_auth_profile,
@@ -31,6 +35,7 @@ import {
   EDIT_PROFILE,
   UPDATE_PROFILE_PAGE,
 } from "../navigation/routes";
+import { normalizeText } from "../util/responsivePx";
 
 const mapStateToProps = (state) => {
   return {
@@ -167,10 +172,8 @@ function Profile({
       </View>
       <View
         style={{
-          paddingVertical: 20,
+          paddingTop: 20,
           paddingHorizontal: 10,
-          borderBottomColor: colors.black,
-          borderBottomWidth: 4,
         }}
       >
         <View style={{ flexDirection: "row" }}>
@@ -184,52 +187,62 @@ function Profile({
               />
             )}
           </View>
-          <View style={{ marginLeft: 18 }}>
-            <Text style={styles.username}>{user.username}</Text>
-            <Text style={styles.user_stream}>
-              {user.yearOfStudy === "postgraduates" ? (
-                <>
-                  Postgraduate{" "}
-                  <Text style={{ color: colors.secondary }}>Student</Text>
-                </>
-              ) : (
-                <>
-                  {user.yearOfStudy} Year,{" "}
-                  <Text style={{ color: colors.secondary }}>Student</Text>
-                </>
-              )}
-            </Text>
+          <View
+            style={{
+              marginLeft: 18,
+              flex: 1,
+            }}
+          >
+            <View></View>
+
             {auth_profile ? (
               <View style={{ flexDirection: "row" }}>
-                <Button
-                  onPress={() => navigation.navigate(UPDATE_PROFILE_PAGE)}
-                  style={styles.buttonShadow}
-                  type={3}
-                  title="Edit Profile"
-                />
-                <Button
-                  onPress={() => navigation.navigate(PROFILE_SETTINGS)}
-                  style={{
-                    marginLeft: 8,
-                    paddingVertical: 7,
-                    paddingHorizontal: 18,
-                  }}
-                  type={3}
-                  title="Settings"
-                />
+                <View style={{ flexDirection: "row" }}>
+                  <Button
+                    onPress={() => navigation.navigate(UPDATE_PROFILE_PAGE)}
+                    style={styles.buttonShadow}
+                    type={3}
+                    title="Edit Profile"
+                  />
+                  <Button
+                    onPress={() => navigation.navigate(PROFILE_SETTINGS)}
+                    style={{
+                      marginLeft: 8,
+                      paddingVertical: 7,
+                      paddingHorizontal: 18,
+                    }}
+                    type={3}
+                    title="Settings"
+                  />
+                </View>
               </View>
             ) : (
-              <View style={{ flexDirection: "row", flex: 1 }}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Button
                   type={8}
+                  textStyle={{
+                    color: following ? colors.white : colors.lighish2,
+                  }}
                   style={{
                     paddingHorizontal: 30,
                     ...styles.buttonShadow,
+                    ...styles.buttonBorders,
+                    backgroundColor: following ? colors.darkish3 : colors.dark,
                   }}
                   onPress={handleFollow}
                   title={following ? "Following" : "Follow"}
                 />
-                <Button
+                <View>
+                  <TouchableOpacity style={styles.circle_btn}>
+                    <FontAwesome
+                      size={22}
+                      name="envelope"
+                      color={colors.lighish2}
+                    />
+                  </TouchableOpacity>
+                </View>
+                {/* <Button
+              
                   // onPress={()=>navigation.navigate()}
                   style={{
                     marginLeft: 8,
@@ -238,13 +251,24 @@ function Profile({
                     ...styles.buttonShadow,
                   }}
                   type={3}
-                  title="Message"
-                />
+                  title="Message" 
+                /> */}
               </View>
             )}
+            <View style={{ flexDirection: "row", marginTop: 5 }}>
+              <Text>
+                {user.followers ? user.followers : 0}{" "}
+                <Text style={{ color: colors.secondary }}>Followers</Text>
+              </Text>
+              <Text>&nbsp;|&nbsp;</Text>
+              <Text>
+                {user.following}{" "}
+                <Text style={{ color: colors.secondary }}>Following</Text>
+              </Text>
+            </View>
           </View>
         </View>
-        <View style={{ marginTop: 8 }}>
+        <View style={{ marginTop: 10 }}>
           {auth_profile && user.anonymous_profile ? (
             <Text style={styles.anon_state}>Anonymous</Text>
           ) : null}
@@ -252,56 +276,82 @@ function Profile({
           <Text style={styles.user_f_name}>
             {user.firstname} {user.surname}
           </Text>
-          <View style={{ flexDirection: "row", marginTop: 8 }}>
-            <AppText>
-              {user.followers ? user.followers : 0}{" "}
-              <AppText style={{ color: colors.secondary }}>Followers</AppText>
-            </AppText>
-            <AppText>&nbsp;|&nbsp;</AppText>
-            <AppText>
-              {user.following}{" "}
-              <AppText style={{ color: colors.secondary }}>Following</AppText>
-            </AppText>
-          </View>
-
+          <Text style={styles.username}>@{user.username}</Text>
           {user.about ? (
-            <View style={{ marginTop: 10 }}>
-              <AppText>{user.about}</AppText>
+            <View style={{ marginVertical: 10 }}>
+              <Text
+                style={{
+                  color: colors.white,
+                }}
+              >
+                {user.about}
+              </Text>
             </View>
           ) : null}
         </View>
       </View>
       <View
         style={{
-          padding: 10,
+          paddingHorizontal: 0,
+          marginTop: 5,
+          flexDirection: "row",
+          flexWrap: "wrap",
         }}
       >
+        <Text style={[styles.user_stream, styles.prof_inf]}>
+          <MaterialCommunityIcons
+            name="chair-school"
+            size={19}
+            color={colors.lighish2}
+          />{" "}
+          {user.yearOfStudy === "postgraduates" ? (
+            <>
+              Postgraduate <Text style={styles.user_stream}>Student</Text>
+            </>
+          ) : (
+            <>
+              {user.yearOfStudy} Year,{" "}
+              <Text style={styles.user_stream}>Student</Text>
+            </>
+          )}
+        </Text>
         <View
-          style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}
+          style={[
+            styles.prof_inf,
+            { flexDirection: "row", alignItems: "center", marginTop: 0 },
+          ]}
         >
-          <FontAwesome color={colors.secondary} name="university" size={15} />
-          <AppText style={{ marginLeft: 8 }}>{user.university}</AppText>
+          <FontAwesome color={colors.lighish2} name="university" size={13} />
+          <Text style={[styles.user_stream, { marginLeft: 8 }]}>
+            {user.university}
+          </Text>
         </View>
         {user?.degree ? (
           <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginTop: 5,
-            }}
+            style={[
+              styles.prof_inf,
+              {
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 0,
+              },
+            ]}
           >
             <FontAwesome
-              color={colors.secondary}
+              color={colors.lighish2}
               name="graduation-cap"
-              size={15}
+              size={13}
             />
-            <AppText style={{ marginLeft: 8 }}>{user.degree}</AppText>
+            <Text style={[styles.user_stream, { marginLeft: 8 }]}>
+              {user.degree}
+            </Text>
           </View>
         ) : null}
-
+      </View>
+      <View style={{ paddingHorizontal: 10 }}>
         {user.number_of_markitems > 0 ||
           (auth_profile && (
-            <View style={{ marginTop: 8 }}>
+            <View style={{ marginTop: 0 }}>
               <Button
                 type={3}
                 style={{ borderRadius: 100 }}
@@ -329,6 +379,28 @@ function Profile({
 }
 
 const styles = StyleSheet.create({
+  buttonBorders: {
+    borderColor: colors.lighish2,
+    height: 45,
+    borderRadius: 100,
+  },
+  circle_btn: {
+    borderWidth: 1,
+    borderColor: colors.lighish2,
+    // padding: 12,
+    borderRadius: 100,
+    marginLeft: 10,
+    height: 45,
+    width: 45,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.darkish3,
+  },
+  prof_inf: {
+    paddingHorizontal: 10,
+    marginBottom: 5,
+  },
   buttonShadow: {
     shadowColor: colors.black,
     shadowOffset: {
@@ -340,7 +412,8 @@ const styles = StyleSheet.create({
     elevation: 12,
   },
   user_f_name: {
-    fontSize: 19,
+    fontSize: normalizeText(20),
+    marginBottom: 5,
     color: colors.white,
     marginTop: 5,
     fontWeight: "700",
@@ -352,20 +425,23 @@ const styles = StyleSheet.create({
   },
 
   user_stream: {
-    color: colors.white,
+    color: colors.lighish2,
     fontWeight: "500",
-    fontSize: 17,
+    fontSize: normalizeText(13),
     paddingVertical: 2,
   },
   username: {
-    color: colors.white,
-    fontWeight: "700",
-    fontSize: 40,
+    color: colors.secondary,
+    fontWeight: "500",
+    marginBottom: 5,
+    fontSize: normalizeText(14),
+    // fontSize: 40,
   },
   profilepic: {
     height: 125,
     width: 125,
     borderRadius: 100,
+    backgroundColor: colors.darkish,
   },
   toggle_anonymous_text: {
     color: colors.white,

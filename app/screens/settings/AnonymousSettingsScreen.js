@@ -78,7 +78,7 @@ function AnonymousSettingsScreen({
   };
 
   return (
-    <Screen scroll={true}>
+    <Screen avoidkeyboard scroll={true}>
       <Header3
         loading={loading}
         backPress={() => navigation.goBack()}
