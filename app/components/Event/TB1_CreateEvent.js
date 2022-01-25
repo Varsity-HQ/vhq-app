@@ -10,6 +10,7 @@ import SubmitButton from "../Forms/SubmitButton";
 import AppFormField from "../Forms/FormField";
 
 import * as Yup from "yup";
+import UserDetBar from "../UserDetBar";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().min(4).required("Event must have a name"),
@@ -32,50 +33,57 @@ function TB1_CreateEvent({ handleProceed }) {
     });
   };
   return (
-    <View style={styles.tab_container}>
-      <Form
-        validationSchema={validationSchema}
-        initialValues={{
-          name: "",
-          venue: "",
-          start_date: new Date().toISOString(),
-          end_date: new Date().toISOString(),
-        }}
-        onSubmit={handleSubmit}
-      >
-        <View style={styles.input_container}>
-          <Text style={styles.input_title}>Event Name</Text>
-          <AppFormField
-            type={2}
-            name="name"
-            style={styles.input}
-            placeholder="Type the name of the event"
-          />
-        </View>
-        <View style={styles.input_container}>
-          <Text style={styles.input_title}>Event Venue</Text>
-          <AppFormField
-            type={2}
-            name="venue"
-            style={styles.input}
-            placeholder="Provide venue for this event"
-          />
-        </View>
-        <View style={styles.input_container}>
-          <Text style={styles.input_title}>Start Date and Time</Text>
-          <AppFormField
-            name="start_date"
-            type="datetime"
-            style={styles.input}
-          />
-        </View>
-        <View style={styles.input_container}>
-          <Text style={styles.input_title}>End Date and Time</Text>
-          <AppFormField name="end_date" type="datetime" style={styles.input} />
-        </View>
-        <SubmitButton style={{ marginVertical: 20 }} type={4} title="Next" />
-      </Form>
-    </View>
+    <>
+      <UserDetBar style={styles.u_det_container} />
+      <View style={styles.tab_container}>
+        <Form
+          validationSchema={validationSchema}
+          initialValues={{
+            name: "",
+            venue: "",
+            start_date: new Date().toISOString(),
+            end_date: new Date().toISOString(),
+          }}
+          onSubmit={handleSubmit}
+        >
+          <View style={styles.input_container}>
+            <Text style={styles.input_title}>Event Name</Text>
+            <AppFormField
+              type={2}
+              name="name"
+              style={styles.input}
+              placeholder="Type the name of the event"
+            />
+          </View>
+          <View style={styles.input_container}>
+            <Text style={styles.input_title}>Event Venue</Text>
+            <AppFormField
+              type={2}
+              name="venue"
+              style={styles.input}
+              placeholder="Provide venue for this event"
+            />
+          </View>
+          <View style={styles.input_container}>
+            <Text style={styles.input_title}>Start Date and Time</Text>
+            <AppFormField
+              name="start_date"
+              type="datetime"
+              style={styles.input}
+            />
+          </View>
+          <View style={styles.input_container}>
+            <Text style={styles.input_title}>End Date and Time</Text>
+            <AppFormField
+              name="end_date"
+              type="datetime"
+              style={styles.input}
+            />
+          </View>
+          <SubmitButton style={{ marginVertical: 20 }} type={4} title="Next" />
+        </Form>
+      </View>
+    </>
   );
 }
 

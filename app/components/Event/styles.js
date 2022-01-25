@@ -2,6 +2,18 @@ import { StyleSheet } from "react-native";
 import colors from "../../config/colors";
 
 const styles = StyleSheet.create({
+  et_container: {
+    marginTop: 10,
+  },
+  exp_container: {
+    borderBottomColor: colors.white,
+    borderBottomWidth: 1,
+    paddingBottom: 20,
+  },
+  text_exp: {
+    color: colors.secondary,
+    marginTop: 0,
+  },
   input_container: {
     marginBottom: 20,
   },

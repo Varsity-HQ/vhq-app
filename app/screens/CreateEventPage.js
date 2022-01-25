@@ -10,6 +10,7 @@ import UserDetBar from "../components/UserDetBar";
 import colors from "../config/colors";
 import TB1_CreateEvent from "../components/Event/TB1_CreateEvent";
 import styles from "../components/Event/styles";
+import TB2_EventTarget from "../components/Event/TB2_EventTarget";
 
 const mapStateToProps = (state) => {
   return {
@@ -19,7 +20,7 @@ const mapStateToProps = (state) => {
 
 class CreateEventPage extends Component {
   state = {
-    tabIndex: 0,
+    tabIndex: 1,
     target: {
       first: true,
       second: true,
@@ -73,6 +74,8 @@ class CreateEventPage extends Component {
 
   pageSwitcher = () => {
     switch (this.state.tabIndex) {
+      case 1:
+        return <TB2_EventTarget />;
       default:
         return <TB1_CreateEvent handleProceed={this.handle_proceed} />;
     }
@@ -100,7 +103,7 @@ class CreateEventPage extends Component {
             step={this.state.tabIndex + 1}
             style={{ marginTop: 20, marginBottom: 7 }}
           />
-          <UserDetBar style={styles.u_det_container} />
+
           {this.pageSwitcher()}
         </View>
       </Screen>
