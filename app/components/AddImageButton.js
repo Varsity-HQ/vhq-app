@@ -10,8 +10,8 @@ import * as ImagePicker from "expo-image-picker";
 import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
 import colors from "../config/colors";
 import AddPictureIcon from "../components/AddPost/AddPictureIcon";
-import { Image } from "react-native";
 import Text from "../components/AppText";
+import Image from "./Image";
 
 const height = Dimensions.get("window").height;
 
@@ -23,6 +23,7 @@ function AddImageButton({
   length,
   disabled,
   event_picture,
+  image,
 }) {
   const requestPermission = async () => {
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -34,8 +35,6 @@ function AddImageButton({
   }, []);
 
   const process_image = async (uri) => {
-    console.log({ uri });
-
     const manipResult = await manipulateAsync(uri, [], {
       compress: 0.7,
       format: SaveFormat.JPEG,
@@ -56,6 +55,7 @@ function AddImageButton({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         quality: 0.7,
         // aspect: [1, 1],
+        // aspect: [1.91, 1],
         presentationStyle: 0,
         allowsEditing: true,
       });
@@ -88,14 +88,20 @@ function AddImageButton({
         onPress={selectImage}
         style={[style, styles.event_button]}
       >
-        <View style={styles.container_inner}>
-          <AddPictureIcon
-            name="image-plus"
-            color={colors.secondary}
-            size={24}
-          />
-          <Text style={styles.title}>Cover Photo</Text>
-        </View>
+        {image ? (
+          <Image uri={image} local style={styles.image} />
+        ) : (
+          <View style={styles.container_inner}>
+            <View style={styles.center}>
+              <AddPictureIcon
+                name="image-plus"
+                color={colors.secondary}
+                size={44}
+              />
+            </View>
+            <Text style={[styles.title, styles.center]}>Cover Photo</Text>
+          </View>
+        )}
       </TouchableOpacity>
     );
   }
@@ -104,21 +110,34 @@ function AddImageButton({
 }
 
 const styles = StyleSheet.create({
-  container_inner: {
-    // flexDirection: "row",
+  image: {
+    height: "100%",
+    width: "100%",
+  },
+  center: {
     alignSelf: "center",
+  },
+  container_inner: {
+    flexDirection: "column",
+    alignSelf: "center",
+    alignContent: "center",
+    flexWrap: "wrap",
   },
   title: {
     fontWeight: "700",
+    marginTop: 10,
   },
   event_button: {
     borderWidth: 1,
     borderColor: colors.white,
-    height: height * 0.26,
+    height: height * 0.31,
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 20,
+    borderRadius: 10,
+    overflow: "hidden",
   },
 });
 

@@ -106,10 +106,22 @@ class CreateEventPage extends Component {
     });
   };
 
+  onImgChange = (uri) => {
+    // console.log(uri);
+    this.setState({
+      attachments: [uri],
+    });
+  };
+
   pageSwitcher = () => {
     switch (this.state.tabIndex) {
       case 3:
-        return <TB4_CoverPhoto />;
+        return (
+          <TB4_CoverPhoto
+            onImgChange={this.onImgChange}
+            image={this.state.attachments[0]}
+          />
+        );
       case 2:
         return (
           <TB3_Description

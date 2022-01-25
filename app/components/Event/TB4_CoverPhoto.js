@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import AddImageButton from "../AddImageButton";
 
-function TB4_CoverPhoto(props) {
+function TB4_CoverPhoto({ image, onImgChange }) {
   return (
     <View style={[styles.tab_container, styles.et_container]}>
       <View style={[styles.exp_container, { borderBottomWidth: 0 }]}>
@@ -19,7 +19,11 @@ function TB4_CoverPhoto(props) {
           Click the section below to select your cover photo.
         </Text>
         <View style={styles.event_container}>
-          <AddImageButton event_picture />
+          <AddImageButton
+            image={image}
+            onImgChange={onImgChange}
+            event_picture
+          />
           <View style={[styles.row, styles.det_section]}>
             <Ionicons name="md-calendar" color={colors.white} size={18} />
             <Text style={[styles.smallText, styles.ped_from_text]}>
