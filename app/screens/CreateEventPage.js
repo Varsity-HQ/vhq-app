@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
 
 class CreateEventPage extends Component {
   state = {
-    tabIndex: 3,
+    tabIndex: 0,
     target: {
       first: true,
       second: true,

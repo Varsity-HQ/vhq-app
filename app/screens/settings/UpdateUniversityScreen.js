@@ -61,7 +61,7 @@ function UpdateUniversityScreen({
           searchPlaceholder="Search your university or college.."
           style={styles.dropdown}
           value={l_uni}
-          setValue={(e) => set_uni(e())}
+          setValue={(e) => set_uni(e)}
           items={universities}
           placeholder="Select your gender"
         />

@@ -62,7 +62,7 @@ function UpdateGenderScreen({ gender, update_gender, loading, navigation }) {
         <DropDown
           style={styles.dropdown}
           value={l_gender}
-          setValue={(e) => set_gender(e())}
+          setValue={(e) => set_gender(e)}
           items={gender_list}
           placeholder="Select your gender"
         />

@@ -78,7 +78,7 @@ function UpdateSexualOrientationScreen({
         <DropDown
           style={styles.dropdown}
           value={l_so}
-          setValue={(e) => set_so(e())}
+          setValue={(e) => set_so(e)}
           items={so_list}
           placeholder="Sexual orientation"
         />

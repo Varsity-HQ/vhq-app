@@ -68,7 +68,7 @@ function UpdateRelationshipStatusScreen({
         <DropDown
           style={styles.dropdown}
           value={l_rs}
-          setValue={(e) => set_rs(e())}
+          setValue={(e) => set_rs(e)}
           items={rs_list}
           placeholder="Relationship status"
         />

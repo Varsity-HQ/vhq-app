@@ -19,7 +19,7 @@ import {
 } from "react-native";
 import { Drawer } from "react-native-paper";
 import colors from "../config/colors";
-import { useNavigation } from "@react-navigation/native";
+import { DrawerActions, useNavigation } from "@react-navigation/native";
 import Text from "../components/AppText";
 import Image from "../components/Image";
 import { normalizeText } from "../util/responsivePx";
@@ -95,11 +95,12 @@ function DrawerContent({ props, product, account }) {
         <View style={styles.divider} />
         <Drawer.Section>
           <TouchableOpacity
-            onPress={() =>
+            onPress={() => {
               navigation.navigate(PROFILE, {
                 username: account.username,
-              })
-            }
+              });
+              navigation.dispatch(DrawerActions.closeDrawer());
+            }}
             style={{
               paddingHorizontal: 10,
               flexDirection: "row",

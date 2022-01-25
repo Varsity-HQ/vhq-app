@@ -72,7 +72,7 @@ function YearOfStudyScreen({
           yearOfStudy
           style={styles.dropdown}
           value={yof}
-          setValue={(e) => set_yof(e())}
+          setValue={(e) => set_yof(e)}
           items={uniYears}
           placeholder="Current year of study"
         />
