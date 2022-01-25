@@ -1,7 +1,33 @@
 import { StyleSheet } from "react-native";
 import colors from "../../config/colors";
+import { normalizeText } from "../../util/responsivePx";
 
 const styles = StyleSheet.create({
+  event_title: {
+    fontWeight: "700",
+    fontSize: normalizeText(20),
+    marginBottom: 10,
+  },
+  ped_from_text: {
+    marginLeft: 5,
+  },
+  det_section: {
+    marginBottom: 10,
+  },
+  row: {
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  smallText: {
+    fontSize: normalizeText(13),
+    color: colors.secondary,
+  },
+  event_container: {
+    padding: 10,
+    borderColor: colors.white,
+    borderWidth: 1,
+    borderRadius: 7,
+  },
   border: {
     width: "100%",
     height: 1,

@@ -13,6 +13,7 @@ import styles from "../components/Event/styles";
 import TB2_EventTarget from "../components/Event/TB2_EventTarget";
 import TB3_Description from "../components/Event/TB3_Description";
 import he from "he";
+import TB4_CoverPhoto from "../components/Event/TB4_CoverPhoto";
 
 const mapStateToProps = (state) => {
   return {
@@ -22,7 +23,7 @@ const mapStateToProps = (state) => {
 
 class CreateEventPage extends Component {
   state = {
-    tabIndex: 2,
+    tabIndex: 3,
     target: {
       first: true,
       second: true,
@@ -107,6 +108,8 @@ class CreateEventPage extends Component {
 
   pageSwitcher = () => {
     switch (this.state.tabIndex) {
+      case 3:
+        return <TB4_CoverPhoto />;
       case 2:
         return (
           <TB3_Description
@@ -165,7 +168,7 @@ class CreateEventPage extends Component {
               return this.setState({
                 tabIndex: 3,
               });
-            navigation.goBack();
+            if (this.state.tabIndex !== 2) navigation.goBack();
           }}
         />
         <View style={{ paddingHorizontal: 12 }}>
@@ -183,6 +186,7 @@ class CreateEventPage extends Component {
 }
 
 const CE_header = ({ tabIndex }) => {
+  if (tabIndex === 3) return <Text style={styles.heading}>Cover Photo</Text>;
   if (tabIndex === 2) return <Text style={styles.heading}>Description</Text>;
   if (tabIndex === 1) return <Text style={styles.heading}>Event Target</Text>;
   if (tabIndex <= 0) return <Text style={styles.heading}>Create Event</Text>;
