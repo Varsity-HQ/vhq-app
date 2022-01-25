@@ -2,11 +2,30 @@ import { StyleSheet } from "react-native";
 import colors from "../../config/colors";
 
 const styles = StyleSheet.create({
+  border: {
+    width: "100%",
+    height: 1,
+    backgroundColor: colors.lighish,
+  },
+  marginTop20: {
+    marginTop: 20,
+  },
+  marginbottom20: {
+    marginBottom: 20,
+  },
+  switcher: {
+    marginRight: 15,
+  },
+  option: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+  },
   et_container: {
     marginTop: 10,
   },
   exp_container: {
-    borderBottomColor: colors.white,
+    borderBottomColor: colors.lighish,
     borderBottomWidth: 1,
     paddingBottom: 20,
   },
