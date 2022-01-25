@@ -2353,10 +2353,10 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
-"@react-native-community/datetimepicker@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-5.1.0.tgz#c2e73b6ca375a527e54f0a19b0e4ca42bc8b7382"
-  integrity sha512-DsKmdthZIb1AfuvpPE0iOiw4iQLXUWY3mJEYpGe9iUJt7pOkNnqHk6D95wqg4wjZ2bEBLAPfvndoeWZAjAZKfw==
+"@react-native-community/datetimepicker@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-4.0.0.tgz#4629ac3d8d54b4024385f2b2a30bbe13640c6ed3"
+  integrity sha512-q3JfDHX5PI0AxFeMsB6jcHSXODloXAqBVsOfkIvm+YbAe1TUs/xZ3qGazsKVBk9EdFyHO4k+S1Q8tQkEnk2YrQ==
   dependencies:
     invariant "^2.2.4"
 
@@ -2615,10 +2615,10 @@
   dependencies:
     ts-toolbelt "^6.15.1"
 
-"@types/react-native@^0.66.11":
-  version "0.66.12"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.66.12.tgz#3afc5ad3a03601666a2c5893af6f2652bfaec651"
-  integrity sha512-4qQwvfXzVtik/cN/13wwH0cIMHYLzQ40iRazVdEEhjzz8YpNrkESSUUMsSE683YSse4zLShHQYWeI1x2/zB1BA==
+"@types/react-native@~0.64.12":
+  version "0.64.23"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.23.tgz#5a0cd846efcfc7c6ad28550172d1041df7b5d7b0"
+  integrity sha512-glxMEAmG1PKeTA6ZvPb81oYg4Q+sgCsCJKnkeoGSqBIR2z38XispNb1+Sar+0I7E4dJXg+NC9pZhWl9HnxOG1A==
   dependencies:
     "@types/react" "*"
 
@@ -4258,7 +4258,7 @@ expo-clipboard@~2.1.0:
   resolved "https://registry.yarnpkg.com/expo-clipboard/-/expo-clipboard-2.1.0.tgz#33e32ca453cdc2e3da8ccecc86b197da554c3387"
   integrity sha512-wJLATd1roEUsatx+GNREBtS8g5vkPWS/0jsLoaPTDVjBVib7RgavaMHj5Wob430qujg+leQmnhPViFk1BXzLYw==
 
-expo-constants@~13.0.0:
+expo-constants@13.0.0, expo-constants@~13.0.0:
   version "13.0.0"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-13.0.0.tgz#e167b0e4d064029e53a0bc89c8cffcb7cb8f2a0a"
   integrity sha512-DwElzs1k6KljlZln/X2O9b5K4bXlDk8nzF5nzSLgI+Ibg/xUoIL5QKM41Y9RDJfTzlDlV7nmeS/Xar+nP5KjMA==
@@ -5589,7 +5589,7 @@ jest-environment-node@^26.6.2:
     jest-mock "^26.6.2"
     jest-util "^26.6.2"
 
-jest-expo@^44.0.1:
+jest-expo@^44.0.0:
   version "44.0.1"
   resolved "https://registry.yarnpkg.com/jest-expo/-/jest-expo-44.0.1.tgz#2f39d8ed94f04d8f29b29d960d70f4b8a1049229"
   integrity sha512-pGncycmLBlg2rOiZjdWGFujlVe3X+SHutKN42rZPoG3zOvv66/E0VpSQxPyn3DN3JCNKpWlK7CkwpCweg0qKtA==

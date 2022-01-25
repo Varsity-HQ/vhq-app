@@ -7,7 +7,6 @@ import {
   Platform,
   Dimensions,
 } from "react-native";
-import COntants from "expo-constants";
 import colors from "../config/colors";
 import { LinearGradient } from "expo-linear-gradient";
 import Ricons from "react-native-remix-icon";

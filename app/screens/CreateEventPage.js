@@ -7,6 +7,9 @@ import Button from "../components/Button";
 import { connect } from "react-redux";
 import BarStepperIndicator from "../components/BarStepperIndicator";
 import UserDetBar from "../components/UserDetBar";
+import colors from "../config/colors";
+import TB1_CreateEvent from "../components/Event/TB1_CreateEvent";
+import styles from "../components/Event/styles";
 
 const mapStateToProps = (state) => {
   return {
@@ -60,12 +63,29 @@ class CreateEventPage extends Component {
     image_dimensions: null,
   };
 
+  handle_proceed = (e) => {
+    this.setState({
+      ...this.state,
+      ...e,
+      tabIndex: this.state.tabIndex + 1,
+    });
+  };
+
+  pageSwitcher = () => {
+    switch (this.state.tabIndex) {
+      default:
+        return <TB1_CreateEvent handleProceed={this.handle_proceed} />;
+    }
+  };
+
   handleProceed = () => {};
+
   render() {
     const { navigation } = this.props;
 
+    console.log(this.state);
     return (
-      <Screen style={styles.container}>
+      <Screen scroll style={styles.container}>
         <Header
           style={{ borderBottomWidth: 0 }}
           backIcon={true}
@@ -74,33 +94,18 @@ class CreateEventPage extends Component {
           buttonText="Cancel"
           rightPress={() => navigation.goBack()}
         />
-        <View style={{ padding: 12 }}>
+        <View style={{ paddingHorizontal: 12 }}>
           <Text style={styles.heading}>Create Event</Text>
           <BarStepperIndicator
             step={this.state.tabIndex + 1}
-            style={{ marginTop: 20, marginBottom: 10 }}
+            style={{ marginTop: 20, marginBottom: 7 }}
           />
-          <UserDetBar />
-          <Button
-            style={{ marginVertical: 30 }}
-            onPress={this.handleProceed}
-            type={4}
-            title="Next"
-          />
+          <UserDetBar style={styles.u_det_container} />
+          {this.pageSwitcher()}
         </View>
       </Screen>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  heading: {
-    fontSize: 30,
-    fontWeight: "700",
-  },
-  container: {
-    flex: 1,
-  },
-});
 
 export default connect(mapStateToProps, null)(CreateEventPage);

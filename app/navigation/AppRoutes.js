@@ -16,8 +16,6 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import RIcon from "react-native-remix-icon";
-
-import Constants from "expo-constants";
 //Navigators
 import FeedNavigator from "./feedNavigator";
 import SearchNavigator from "./SearchNavigator";
@@ -36,6 +34,8 @@ import * as Notifications from "expo-notifications";
 import { setExpoPushToken } from "../store/actions/auth_actions";
 import ForgotToAddProfilePic from "../screens/ForgotToAddProfilePic";
 import CreateEventPage from "../screens/CreateEventPage";
+import Profile from "../screens/Profile";
+import UpdateUniversityScreen from "../screens/settings/UpdateUniversityScreen";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -101,6 +101,24 @@ function NavigationStack({ core }) {
           name={routes.POST_PAGE}
           component={PostPage}
         />
+
+        <Stack.Screen
+          options={{
+            headerShown: false,
+            animation: "slide_from_right",
+          }}
+          name={routes.PROFILE}
+          component={Profile}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+            animation: "slide_from_right",
+          }}
+          name={routes.UPDATE_UNIVERSITY}
+          component={UpdateUniversityScreen}
+        />
+
         <Stack.Screen
           options={{
             headerShown: false,

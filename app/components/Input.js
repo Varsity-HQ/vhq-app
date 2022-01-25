@@ -2,6 +2,10 @@ import React from "react";
 import { View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
 import colors from "../config/colors";
+import dayjs from "dayjs";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+dayjs.extend(localizedFormat);
 
 function AppTextInput({
   type,
@@ -16,6 +20,43 @@ function AppTextInput({
   value,
   ...otherProps
 }) {
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [date, setDate] = React.useState(new Date());
+
+  const handleDateConfirm = (e) => {
+    setModalVisible(false);
+    const date1 = new Date(e);
+    setDate(e);
+    onChangeText && onChangeText(date1.toISOString());
+  };
+
+  if (type === "datetime") {
+    return (
+      <>
+        <DateTimePickerModal
+          date={date}
+          isVisible={modalVisible}
+          mode="datetime"
+          onConfirm={handleDateConfirm}
+          onCancel={() => setModalVisible(false)}
+        />
+        <TouchableOpacity
+          onPress={() => setModalVisible(true)}
+          style={styles.inputbox_btn}
+        >
+          <View style={styles.btn_inner} />
+          <TextInput
+            value={dayjs(value ? value : date).format("LLL")}
+            selectionColor={colors.primary}
+            placeholderTextColor={colors.secondary}
+            style={[styles.TextInput, style]}
+            {...otherProps}
+          />
+        </TouchableOpacity>
+      </>
+    );
+  }
+
   if (type === 2) {
     return (
       <TextInput
@@ -64,6 +105,14 @@ function AppTextInput({
 }
 
 const styles = StyleSheet.create({
+  btn_inner: {
+    backgroundColor: "red",
+    zIndex: 1,
+    height: "100%",
+    width: "100%",
+    opacity: 0,
+    position: "absolute",
+  },
   TextInput: {
     borderLeftWidth: 4,
     borderLeftColor: colors.primary,
