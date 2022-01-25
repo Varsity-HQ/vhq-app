@@ -11,6 +11,7 @@ import colors from "../config/colors";
 import TB1_CreateEvent from "../components/Event/TB1_CreateEvent";
 import styles from "../components/Event/styles";
 import TB2_EventTarget from "../components/Event/TB2_EventTarget";
+import TB3_Description from "../components/Event/TB3_Description";
 
 const mapStateToProps = (state) => {
   return {
@@ -20,7 +21,7 @@ const mapStateToProps = (state) => {
 
 class CreateEventPage extends Component {
   state = {
-    tabIndex: 1,
+    tabIndex: 3,
     target: {
       first: true,
       second: true,
@@ -72,16 +73,61 @@ class CreateEventPage extends Component {
     });
   };
 
+  selectEveryone = (isChecked) => {
+    let new_targets = {
+      first: isChecked,
+      second: isChecked,
+      third: isChecked,
+      forth: isChecked,
+      postgraduates: isChecked,
+    };
+    this.setState({
+      target: new_targets,
+    });
+  };
+
+  handleTargetCheck = (check_state, field) => {
+    let new_targets = {
+      ...this.state.target,
+      [field]: check_state,
+    };
+    this.setState({
+      target: new_targets,
+    });
+  };
+
   pageSwitcher = () => {
     switch (this.state.tabIndex) {
+      case 2:
+        return <TB3_Description />;
       case 1:
-        return <TB2_EventTarget />;
+        return (
+          <TB2_EventTarget
+            handleTargetCheck={this.handleTargetCheck}
+            selectEveryone={this.selectEveryone}
+            target={this.state.target}
+            handleNext={() => {
+              this.setState({
+                tabIndex: 2,
+              });
+            }}
+          />
+        );
+      case 0:
+        return <TB1_CreateEvent handleProceed={this.handle_proceed} />;
       default:
         return <TB1_CreateEvent handleProceed={this.handle_proceed} />;
     }
   };
 
   handleProceed = () => {};
+
+  handleBackPress = () => {
+    if (this.state.tabIndex <= 0) return this.props.navigation.goBack();
+    this.setState({
+      tabIndex: this.state.tabIndex - 1,
+    });
+  };
 
   render() {
     const { navigation } = this.props;
@@ -92,13 +138,13 @@ class CreateEventPage extends Component {
         <Header
           style={{ borderBottomWidth: 0 }}
           backIcon={true}
-          backPress={() => navigation.goBack()}
+          backPress={this.handleBackPress}
           title=""
           buttonText="Cancel"
           rightPress={() => navigation.goBack()}
         />
         <View style={{ paddingHorizontal: 12 }}>
-          <Text style={styles.heading}>Create Event</Text>
+          <CE_header tabIndex={this.state.tabIndex} />
           <BarStepperIndicator
             step={this.state.tabIndex + 1}
             style={{ marginTop: 20, marginBottom: 7 }}
@@ -110,5 +156,12 @@ class CreateEventPage extends Component {
     );
   }
 }
+
+const CE_header = ({ tabIndex }) => {
+  if (tabIndex === 3) return <Text style={styles.heading}>Description</Text>;
+  if (tabIndex === 1) return <Text style={styles.heading}>Event Target</Text>;
+  if (tabIndex <= 0) return <Text style={styles.heading}>Create Event</Text>;
+  return null;
+};
 
 export default connect(mapStateToProps, null)(CreateEventPage);
