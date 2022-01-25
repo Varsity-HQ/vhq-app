@@ -1,10 +1,19 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Dimensions,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
 import colors from "../config/colors";
 import AddPictureIcon from "../components/AddPost/AddPictureIcon";
 import { Image } from "react-native";
+import Text from "../components/AppText";
+
+const height = Dimensions.get("window").height;
 
 function AddImageButton({
   style,
@@ -13,6 +22,7 @@ function AddImageButton({
   max,
   length,
   disabled,
+  event_picture,
 }) {
   const requestPermission = async () => {
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -71,11 +81,45 @@ function AddImageButton({
     );
   }
 
+  if (event_picture) {
+    return (
+      <TouchableOpacity
+        disabled={disabled}
+        onPress={selectImage}
+        style={[style, styles.event_button]}
+      >
+        <View style={styles.container_inner}>
+          <AddPictureIcon
+            name="image-plus"
+            color={colors.secondary}
+            size={24}
+          />
+          <Text style={styles.title}>Cover Photo</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
   return null;
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container_inner: {
+    // flexDirection: "row",
+    alignSelf: "center",
+  },
+  title: {
+    fontWeight: "700",
+  },
+  event_button: {
+    borderWidth: 1,
+    borderColor: colors.white,
+    height: height * 0.26,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+  },
 });
 
 export default AddImageButton;
