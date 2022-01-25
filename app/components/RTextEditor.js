@@ -36,11 +36,12 @@ class RTextEditor extends Component {
   };
 
   render() {
+    const { initialInput } = this.props;
     return (
       <>
         <View
-          style={
-            (styles.container,
+          style={[
+            styles.container,
             !this.props.pollCreate
               ? {
                   maxHeight: 200,
@@ -48,8 +49,9 @@ class RTextEditor extends Component {
                 }
               : {
                   maxHeight: 200,
-                })
-          }
+                },
+            this.props.stylePreset === 2 && styles.stylePreset2,
+          ]}
         >
           <ScrollView
             ref={this.scrollview}
@@ -69,8 +71,12 @@ class RTextEditor extends Component {
               // useContainer={true}
               onBlur={this.onBlur}
               // initialHeight={this.props.pollCreate ? null : 150}
-              containerStyle={styles.re_container}
-              placeholder={"Tell a story..."}
+              containerStyle={[styles.re_container]}
+              placeholder={
+                this.props.placeholder
+                  ? this.props.placeholder
+                  : "Tell a story..."
+              }
               editorStyle={{
                 backgroundColor: colors.dark,
                 contentCSSText: colors.white,
@@ -80,7 +86,7 @@ class RTextEditor extends Component {
                 fontSize: 30,
                 cssText: "* {font-size : 19px}",
               }}
-              //  initialContentHTML={initHTML}
+              initialContentHTML={initialInput ? initialInput : ""}
               //  editorInitializedCallback={that.editorInitializedCallback}
               onChange={this.handleChange}
               //  onHeightChange={that.handleHeightChange}
@@ -112,6 +118,17 @@ class RTextEditor extends Component {
 }
 
 const styles = StyleSheet.create({
+  stylePreset2: {
+    borderColor: colors.primary,
+    borderWidth: 1,
+    borderRadius: 6,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderLeftWidth: 4,
+    borderRightWidth: 4,
+    borderTopColor: colors.primary,
+    borderBottomColor: colors.primary,
+  },
   moda_inner_t: {
     backgroundColor: colors.black,
     // flex: 1,

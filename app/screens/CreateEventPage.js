@@ -12,6 +12,7 @@ import TB1_CreateEvent from "../components/Event/TB1_CreateEvent";
 import styles from "../components/Event/styles";
 import TB2_EventTarget from "../components/Event/TB2_EventTarget";
 import TB3_Description from "../components/Event/TB3_Description";
+import he from "he";
 
 const mapStateToProps = (state) => {
   return {
@@ -21,7 +22,7 @@ const mapStateToProps = (state) => {
 
 class CreateEventPage extends Component {
   state = {
-    tabIndex: 3,
+    tabIndex: 2,
     target: {
       first: true,
       second: true,
@@ -39,7 +40,7 @@ class CreateEventPage extends Component {
     posted_by: "",
     application: "",
     can_reply_privately: "true",
-    caption: null,
+    postHtmlText: "",
     postText: "",
     created_at: "",
     feed_targeting: "",
@@ -96,10 +97,28 @@ class CreateEventPage extends Component {
     });
   };
 
+  handleEditorChange = (html) => {
+    let receivedTxt = he.decode(html.replace(/<[^>]+>/g, ""));
+    this.setState({
+      postHtmlText: html,
+      postText: receivedTxt,
+    });
+  };
+
   pageSwitcher = () => {
     switch (this.state.tabIndex) {
       case 2:
-        return <TB3_Description />;
+        return (
+          <TB3_Description
+            handleNext={() => {
+              this.setState({
+                tabIndex: 3,
+              });
+            }}
+            postHtmlText={this.state.postHtmlText}
+            handleEditorChange={this.handleEditorChange}
+          />
+        );
       case 1:
         return (
           <TB2_EventTarget
@@ -140,8 +159,14 @@ class CreateEventPage extends Component {
           backIcon={true}
           backPress={this.handleBackPress}
           title=""
-          buttonText="Cancel"
-          rightPress={() => navigation.goBack()}
+          buttonText={this.state.tabIndex === 2 ? "Save & Continue" : "Cancel"}
+          rightPress={() => {
+            if (this.state.tabIndex === 2 && this.state.postHtmlText)
+              return this.setState({
+                tabIndex: 3,
+              });
+            navigation.goBack();
+          }}
         />
         <View style={{ paddingHorizontal: 12 }}>
           <CE_header tabIndex={this.state.tabIndex} />
@@ -158,7 +183,7 @@ class CreateEventPage extends Component {
 }
 
 const CE_header = ({ tabIndex }) => {
-  if (tabIndex === 3) return <Text style={styles.heading}>Description</Text>;
+  if (tabIndex === 2) return <Text style={styles.heading}>Description</Text>;
   if (tabIndex === 1) return <Text style={styles.heading}>Event Target</Text>;
   if (tabIndex <= 0) return <Text style={styles.heading}>Create Event</Text>;
   return null;

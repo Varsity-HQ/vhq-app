@@ -23,6 +23,7 @@ function AppButton({
   const navigation = useNavigation();
 
   const handleOnPress = () => {
+    if (disabled) return;
     if (navigateRoute) {
       onPress();
       navigation.navigate(navigateRoute[0], navigateRoute[1]);

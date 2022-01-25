@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   text_exp: {
     color: colors.secondary,
-    marginTop: 0,
+    marginTop: 5,
   },
   input_container: {
     marginBottom: 20,
