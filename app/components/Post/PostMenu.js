@@ -22,6 +22,7 @@ import {
   POST_TO_BE_DELETED,
 } from "../../util/toast_messages";
 import { delete_post } from "../../store/actions/actions";
+import { save_post_user } from "../../store/actions/profile";
 
 const mapStateToProps = (state) => {
   return {
@@ -33,6 +34,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     delete_post: (pid) => dispatch(delete_post(pid)),
+    save_post_user: (post) => dispatch(save_post_user(post)),
   };
 };
 
@@ -44,6 +46,7 @@ function PostMenu({
   delete_post,
   deleting_post,
   post_page,
+  save_post_user,
 }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
@@ -104,7 +107,7 @@ function PostMenu({
         });
       },
       title: "Go to post",
-      hide: post_page,
+      hide: post_page || data.anonymous_post,
       icon: (
         <Ionicons
           color={colors.secondary}
@@ -115,6 +118,7 @@ function PostMenu({
     },
     {
       onPress: () => {
+        save_post_user(data);
         handleModal();
         navigation.navigate(PROFILE, {
           username: data.username,

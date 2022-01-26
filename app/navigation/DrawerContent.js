@@ -96,10 +96,10 @@ function DrawerContent({ props, product, account }) {
         <Drawer.Section>
           <TouchableOpacity
             onPress={() => {
+              navigation.dispatch(DrawerActions.closeDrawer());
               navigation.navigate(PROFILE, {
                 username: account.username,
               });
-              navigation.dispatch(DrawerActions.closeDrawer());
             }}
             style={{
               paddingHorizontal: 10,

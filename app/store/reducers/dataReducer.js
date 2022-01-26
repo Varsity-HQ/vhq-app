@@ -17,19 +17,6 @@ const initialData = {
     refreshing: false,
     loading_more: false,
   },
-
-  profile_page: {
-    loading_user: true,
-    loading_post: true,
-    loading_pictures: true,
-    loading_bookmarks: true, // for authenticated user
-    page_cursor: null,
-    posts: [],
-    pictures: [],
-    bookmarks: [],
-    errors: {},
-    user: {},
-  },
   post_page: {
     post: null,
     post_loading: true,
@@ -204,7 +191,6 @@ const dataReducer = (state = initialData, actions) => {
 
     case "REMOVE_DELETED_POST":
       let homePosts = state.home_data.posts;
-      let myPosts = state.profile_page.posts;
 
       let filtered_home_posts = [];
       let filtered_my_posts = [];
@@ -232,16 +218,11 @@ const dataReducer = (state = initialData, actions) => {
           ...state.home_data,
           posts: filtered_home_posts,
         },
-        profile_page: {
-          ...state.profile_page,
-          posts: filtered_my_posts,
-        },
       };
     case "UPDATE_UNLIKED_POST":
       // console.log("fired with id ", actions.payload);
 
       let updated_home_posts_unl = [];
-      let updated_profile_posts_unl = [];
 
       state.home_data.posts.forEach((x) => {
         if (x.id === actions.payload) {
@@ -253,30 +234,15 @@ const dataReducer = (state = initialData, actions) => {
         }
       });
 
-      state.profile_page.posts.forEach((x) => {
-        if (x.id === actions.payload) {
-          let updated_liked_count = (parseInt(x.likes_count) - 1).toString();
-          let post_r = { ...x, likes_count: updated_liked_count };
-          updated_profile_posts_unl.push(post_r);
-        } else {
-          updated_profile_posts_unl.push(x);
-        }
-      });
-
       return {
         ...state,
         home_data: { ...state.home_data, posts: updated_home_posts_unl },
-        profile_page: {
-          ...state.profile_page,
-          posts: updated_profile_posts_unl,
-        },
       };
 
     case "UPDATE_LIKED_POST":
       // console.log("fired with id ", actions.payload);
 
       let updated_home_posts = [];
-      let updated_profile_posts = [];
 
       state.home_data.posts.forEach((x) => {
         if (x.id === actions.payload) {
@@ -287,93 +253,10 @@ const dataReducer = (state = initialData, actions) => {
           updated_home_posts.push(x);
         }
       });
-      state.profile_page.posts.forEach((x) => {
-        if (x.id === actions.payload) {
-          let updated_liked_count = (parseInt(x.likes_count) + 1).toString();
-          let post_r = { ...x, likes_count: updated_liked_count };
-          updated_profile_posts.push(post_r);
-        } else {
-          updated_profile_posts.push(x);
-        }
-      });
 
       return {
         ...state,
         home_data: { ...state.home_data, posts: updated_home_posts },
-        profile_page: { ...state.profile_page, posts: updated_profile_posts },
-      };
-
-    case "INCREMENT_OTHER_USER_FOLLOWING":
-      return {
-        ...state,
-        profile_page: {
-          ...state.profile_page,
-          user: {
-            ...state.profile_page.user,
-            followers: state.profile_page.user.followers + 1,
-          },
-        },
-      };
-    case "DECREMENT_OTHER_USER_FOLLOWING":
-      return {
-        ...state,
-        profile_page: {
-          ...state.profile_page,
-          user: {
-            ...state.profile_page.user,
-            followers:
-              state.profile_page.user.followers > 1
-                ? state.profile_page.user.followers - 1
-                : 0,
-          },
-        },
-      };
-
-    case "SET_PROFILE_POSTS_LOADING":
-      return {
-        ...state,
-        profile_page: {
-          ...state.profile_page,
-          loading_post: true,
-        },
-      };
-    case "SET_OTHER_PROFILE_DATA":
-      return {
-        ...state,
-        profile_page: {
-          ...state.profile_page,
-          loading_user: false,
-          loading_post: false,
-          posts: actions.payload.posts,
-          user: actions.payload.user,
-        },
-      };
-    case "SET_USER_NOT_FOUND":
-      return {
-        ...state,
-        profile_page: {
-          ...state.profile_page,
-          loading_user: true,
-          loading_post: true,
-          loading_pictures: true,
-          errors: {
-            notFound: true,
-          },
-        },
-      };
-    case "SET_LOADING_PROFILE":
-      return {
-        ...state,
-        profile_page: {
-          ...state.profile_page,
-          loading_user: true,
-          loading_post: true,
-          loading_pictures: true,
-          errors: {},
-          user: {},
-          // posts: [],
-          // pictures: [],
-        },
       };
 
     case "SET_SEARCH_DATA":
@@ -383,26 +266,6 @@ const dataReducer = (state = initialData, actions) => {
           ...state.search_page,
           data: actions.payload,
           loading: false,
-        },
-      };
-
-    case "SET_PROFILE_POSTS":
-      return {
-        ...state,
-        profile_page: {
-          ...state.profile_page,
-          loading_post: false,
-          posts: actions.payload,
-        },
-      };
-    case "SET_PROFILE_DATA":
-      return {
-        ...state,
-        profile_page: {
-          ...state.profile_page,
-          loading_user: false,
-          user: actions.payload,
-          errors: {},
         },
       };
 

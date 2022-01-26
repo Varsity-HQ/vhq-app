@@ -23,6 +23,7 @@ import * as routes from "../navigation/routes";
 import PostCardButtons from "./Post/PostCardButtons";
 import { connect } from "react-redux";
 import { save_local_post } from "../store/actions/actions";
+import { save_post_user } from "../store/actions/profile";
 import emojis from "../util/emojis";
 import PostPictures from "./Post/PostPictures";
 import PollSection from "./Post/PollSection";
@@ -40,6 +41,7 @@ const { width: deviceWidth, height } = Dimensions.get("window");
 const mapDispatchToProps = (dispatch) => {
   return {
     save_local_post: (post) => dispatch(save_local_post(post)),
+    save_post_user: (post) => dispatch(save_post_user(post)),
   };
 };
 
@@ -84,6 +86,13 @@ class PostCard extends PureComponent {
     return image_uri;
   };
 
+  handleOpenProfile = () => {
+    this.props.save_post_user(this.props.data);
+    this.props.navigation.push(routes.PROFILE, {
+      username: this.props.data.username,
+    });
+  };
+
   render() {
     const data = this.props.data;
 
@@ -103,13 +112,9 @@ class PostCard extends PureComponent {
             }}
           >
             <TouchableWithoutFeedback
-              onPress={() =>
-                data.anonymous_post
-                  ? null
-                  : this.props.navigation.push(routes.PROFILE, {
-                      username: data.username,
-                    })
-              }
+              onPress={() => {
+                data.anonymous_post ? null : this.handleOpenProfile();
+              }}
             >
               <View style={{ flexDirection: "row" }}>
                 {data.anonymous_post ? (

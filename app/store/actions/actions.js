@@ -241,6 +241,7 @@ export const delete_post = (p_id) => (dispatch) => {
     .get(`/post/${p_id}/delete`)
     .then(() => {
       dispatch({ type: "REMOVE_DELETED_POST", payload: p_id });
+      dispatch({ type: "REMOVE_DELETED_POST_PP", payload: p_id });
       dispatch({
         type: "DECREMENT_POST_COUNT",
       });
@@ -293,6 +294,7 @@ export const unlike_post = (post_id) => (dispatch) => {
   // console.log("unlike");
   dispatch({ type: "UNLIKE_POST", payload: post_id });
   dispatch({ type: "UPDATE_UNLIKED_POST", payload: post_id });
+  dispatch({ type: "UPDATE_UNLIKED_POST_PP", payload: post_id });
 
   // if (store.getState().core.currentPost) {
   //   dispatch({ type: "UPDATE_LIKED_POST_PP_DEC" });
@@ -311,6 +313,8 @@ export const like_post = (post_id) => (dispatch) => {
   // console.log("like");
   dispatch({ type: "LIKE_POST", payload: post_id });
   dispatch({ type: "UPDATE_LIKED_POST", payload: post_id });
+  dispatch({ type: "UPDATE_LIKED_POST_PP", payload: post_id });
+
   // if (store.getState().core.currentPost) {
   //   dispatch({ type: "UPDATE_LIKED_POST_PP" });
   // }
@@ -752,7 +756,7 @@ export const follow_account = (uid) => (dispatch) => {
     follow_date: new Date().toISOString(),
   };
 
-  let pp_user_id = store.getState().data.profile_page.user.userID;
+  let pp_user_id = store.getState().profile.user.userID;
 
   dispatch({
     type: "ADD_FOLLOWED_ACCOUNT",
@@ -774,7 +778,7 @@ export const follow_account = (uid) => (dispatch) => {
 };
 
 export const unfollow_account = (uid) => (dispatch) => {
-  let pp_user_id = store.getState().data.profile_page.user.userID;
+  let pp_user_id = store.getState().profile.user.userID;
 
   dispatch({
     type: "REMOVE_FOLLOWED_ACCOUNT",
@@ -828,49 +832,6 @@ export const get_auth_user_posts = () => (dispatch) => {
       dispatch({
         type: "SET_PROFILE_POSTS",
         payload: data.data,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-export const get_auth_profile = () => (dispatch) => {
-  let profile = store.getState().core.accData;
-  dispatch({
-    type: "SET_PROFILE_DATA",
-    payload: profile,
-  });
-};
-
-export const get_user_profile = (username) => (dispatch) => {
-  let previous_user = store.getState().data.profile_page.user.username;
-  let previous_errors = store.getState().data.profile_page.errors;
-
-  if (previous_user !== username || previous_errors.notFound) {
-    // console.log("set loading", { previous_user, username });
-    dispatch({
-      type: "SET_LOADING_PROFILE",
-    });
-  }
-
-  axios
-    .get(`/user/${username}/get`)
-    .then((data) => {
-      let u_data = data.data;
-
-      if (u_data.response === "user_not_found") {
-        return dispatch({
-          type: "SET_USER_NOT_FOUND",
-        });
-      }
-
-      dispatch({
-        type: "SET_OTHER_PROFILE_DATA",
-        payload: {
-          posts: u_data.user_posts,
-          user: u_data.user_data,
-        },
       });
     })
     .catch((err) => {
