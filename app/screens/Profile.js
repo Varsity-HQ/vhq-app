@@ -191,13 +191,13 @@ class Profile extends PureComponent {
           renderItem={this.handleListRendering}
           keyExtractor={(item) => item.id}
           data={loading_post ? [] : posts}
-          ListHeaderComponent={() => (
+          ListHeaderComponent={
             <ProfileHeader
               handleTabChange={this.handleTabChange}
               tabActive={this.state.tabActive}
               username={username}
             />
-          )}
+          }
           ListFooterComponent={() => (
             <FooterLoadings
               tab={this.state.tabActive}

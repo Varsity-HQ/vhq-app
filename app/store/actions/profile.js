@@ -1,6 +1,7 @@
 import axios from "axios";
 import store from "../store";
 import returnUser from "../../util/returnUser";
+import check_if_followed from "../../util/check_if_followed";
 
 const check_if_auth = (uid) => {
   if (uid === store.getState().core.accData.userID) {
@@ -8,6 +9,13 @@ const check_if_auth = (uid) => {
   } else {
     return false;
   }
+};
+
+export const set_following = (followed) => (dispatch) => {
+  dispatch({
+    type: "PROFILE_USER_FOLOWING",
+    payload: followed,
+  });
 };
 
 export const get_posts = (load_more) => (dispatch) => {
@@ -87,15 +95,20 @@ export const save_post_user = (post) => (dispatch) => {
   if (
     profile_data.userID &&
     profile_data.userID !== store.getState().core.accData.userID
-  )
+  ) {
+    dispatch({
+      type: "PROFILE_USER_FOLOWING",
+      payload: check_if_followed(profile_data.userID),
+    });
     dispatch({
       type: "IS_AUTH_PROFILE",
       payload: false,
     });
-  dispatch({
-    type: "SET_PROFILE_DATA",
-    payload: profile_data,
-  });
+    dispatch({
+      type: "SET_PROFILE_DATA",
+      payload: profile_data,
+    });
+  }
 };
 
 export const profile_screen_moved_away = () => (dispatch) => {

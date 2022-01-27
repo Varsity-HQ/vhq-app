@@ -24,6 +24,8 @@ import {
   UPDATE_PROFILE_PAGE,
 } from "../../navigation/routes";
 import styles from "../../components/Profile/styles";
+import { follow_account, unfollow_account } from "../../store/actions/actions";
+import { set_following } from "../../store/actions/profile";
 
 const mapStateToProps = (state) => {
   return {
@@ -32,11 +34,16 @@ const mapStateToProps = (state) => {
     user: state.profile.user,
     tabIndex: state.profile.tabIndex,
     auth_profile: state.profile.is_auth_profile,
+    following: state.profile.user_following,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    follow_account: (username) => dispatch(follow_account(username)),
+    unfollow_account: (username) => dispatch(unfollow_account(username)),
+    set_following: (followed) => dispatch(set_following(followed)),
+  };
 };
 
 const profile_tabs = [
@@ -66,9 +73,12 @@ function ProfileHeader({
   setTab,
   handleTabChange,
   tabActive = 1,
+  following,
+  follow_account,
+  unfollow_account,
+  set_following,
 }) {
   const navigation = useNavigation();
-  const [following, set_following] = useState(false);
 
   const handleFollow = () => {
     let uid = profile_page.user.userID;
