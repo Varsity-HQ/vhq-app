@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Image as ImageLocal,
-  Touchable,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { View, Image as ImageLocal, TouchableOpacity } from "react-native";
 import ProfileMenu from "../../components/Profile/ProfileMenu";
 import Ricons from "react-native-remix-icon";
 import Button from "../../components/Button";
@@ -17,7 +10,6 @@ import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { Image } from "react-native-expo-image-cache";
-import { normalizeText } from "../../util/responsivePx";
 import {
   ANONYMOUS_SETTINGS,
   PROFILE_SETTINGS,

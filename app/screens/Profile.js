@@ -129,6 +129,7 @@ class Profile extends PureComponent {
   componentDidMount = () => {
     console.log("page first load");
     this.props.get_posts();
+    this.props.get_user_profile(this.props.route.params.username);
   };
 
   componentWillUnmount = () => {
@@ -139,6 +140,7 @@ class Profile extends PureComponent {
   handleLoadMore = () => {
     if (this.state.tabActive === 1) {
       this.props.get_posts(true);
+      // console.log("get posts");
     }
   };
 
@@ -185,8 +187,8 @@ class Profile extends PureComponent {
     return (
       <Screen>
         <FlatList
-          onEndReached={() => this.handleLoadMore()}
-          onEndReachedThreshold={0.8}
+          onEndReached={this.handleLoadMore}
+          onEndReachedThreshold={0.5}
           initialNumToRender={10}
           renderItem={this.handleListRendering}
           keyExtractor={(item) => item.id}
@@ -198,13 +200,13 @@ class Profile extends PureComponent {
               username={username}
             />
           }
-          ListFooterComponent={() => (
+          ListFooterComponent={
             <FooterLoadings
               tab={this.state.tabActive}
               loading={this.props.profile_page.loading_post}
               loading_more={this.props.profile_page.loading_more_posts}
             />
-          )}
+          }
         />
       </Screen>
     );

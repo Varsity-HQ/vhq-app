@@ -24,6 +24,11 @@ const initialState = {
 
 const profileReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "STOP_LOADING_MORE":
+      return {
+        ...state,
+        loading_more_posts: false,
+      };
     case "PROFILE_USER_FOLOWING":
       return {
         ...state,
@@ -131,6 +136,7 @@ const profileReducer = (state = initialState, actions) => {
         loading_post: false,
         posts: actions.payload.posts,
         user: actions.payload.user,
+        posts_lv: actions.payload.lastVisible,
       };
 
     case "SET_PROFILE_POSTS":

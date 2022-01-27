@@ -26,12 +26,11 @@ export const get_posts = (load_more) => (dispatch) => {
     get_auth_posts(load_more, dispatch);
   } else {
     get_user_posts(load_more, dispatch);
+    // console.log("get posts");
   }
 };
 
 export const get_auth_posts = (load_more, dispatch) => {
-  console.log("get auth posts");
-
   let stop = false;
 
   let lastVisible = null;
@@ -72,7 +71,69 @@ export const get_auth_posts = (load_more, dispatch) => {
     });
 };
 export const get_user_posts = (load_more, dispatch) => {
-  console.log("get posts");
+  let username = store.getState().profile.user.username;
+
+  let stop = false;
+
+  let lastVisible = null;
+
+  if (load_more) {
+    lastVisible = store.getState().profile.posts_lv;
+
+    if (!lastVisible) {
+      stop = true;
+    } else {
+      dispatch({
+        type: "LOADING_MORE_POSTS",
+        payload: true,
+      });
+    }
+  }
+
+  if (stop) return;
+
+  console.log("start req");
+
+  axios
+    .get(
+      `/user/${username}/posts/get${lastVisible ? "?plv=" + lastVisible : ""}`,
+    )
+    .then((data) => {
+      console.log(data.data);
+
+      const last_visible = data.data.lastVisible;
+
+      let currentPosts = store.getState().profile.posts;
+
+      let new_posts = !lastVisible
+        ? data.data.user_posts
+        : currentPosts.concat(data.data.user_posts);
+
+      if (data.data.lastVisible !== store.getState().profile.posts_lv) {
+        console.log("set new data");
+        dispatch({
+          type: "SET_PROFILE_DATA",
+          payload: data.data.user_data,
+        });
+
+        dispatch({
+          type: "SET_PROFILE_POSTS",
+          payload: {
+            posts: [...new Set(new_posts)],
+            lastVisible: data.data.lastVisible,
+            // lastVisible: null,
+          },
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      if (load_more) {
+        dispatch({
+          type: "STOP_LOADING_MORE",
+        });
+      }
+    });
 };
 
 export const save_post_user = (post) => (dispatch) => {
@@ -126,18 +187,20 @@ export const get_auth_profile = () => (dispatch) => {
 };
 
 export const get_user_profile = (username) => (dispatch) => {
-  let previous_user = store.getState().profile.user.username;
+  let set_user = store.getState().profile.user.username;
   let previous_errors = store.getState().profile.errors;
 
-  if (previous_user !== username || previous_errors.notFound) {
+  if (set_user !== username || previous_errors.notFound) {
     // console.log("set loading", { previous_user, username });
     dispatch({
       type: "SET_LOADING_PROFILE",
     });
   }
 
+  if (set_user) return;
+
   axios
-    .get(`/user/${username}/get`)
+    .get(`/user/${username}/posts/get`)
     .then((data) => {
       let u_data = data.data;
 
@@ -148,10 +211,16 @@ export const get_user_profile = (username) => (dispatch) => {
       }
 
       dispatch({
+        type: "PROFILE_USER_FOLOWING",
+        payload: check_if_followed(u_data.user_data.userID),
+      });
+
+      dispatch({
         type: "SET_OTHER_PROFILE_DATA",
         payload: {
           posts: u_data.user_posts,
           user: u_data.user_data,
+          lastVisible: data.data.lastVisible,
         },
       });
     })
