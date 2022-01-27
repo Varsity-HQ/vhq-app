@@ -1,4 +1,6 @@
 const initialState = {
+  is_auth_profile: false,
+
   loading_user: true,
   user: {},
   user_following: false,
@@ -22,6 +24,12 @@ const initialState = {
 
 const profileReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "IS_AUTH_PROFILE":
+      return {
+        ...state,
+        is_auth_profile: actions.payload,
+      };
+
     case "LOADING_MORE_POSTS":
       return {
         ...state,

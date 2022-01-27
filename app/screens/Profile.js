@@ -56,10 +56,10 @@ const mapDispatchToProps = (dispatch) => {
     get_user_profile: (username) => dispatch(get_user_profile(username)),
     follow_account: (username) => dispatch(follow_account(username)),
     unfollow_account: (username) => dispatch(unfollow_account(username)),
-    profile_screen_moved_away: () => dispatch(profile_screen_moved_away()),
 
     //
     get_posts: (more) => dispatch(get_posts(more)),
+    profile_screen_moved_away: () => dispatch(profile_screen_moved_away()),
   };
 };
 
@@ -131,6 +131,11 @@ class Profile extends PureComponent {
     this.props.get_posts();
   };
 
+  componentWillUnmount = () => {
+    console.log("bye");
+    this.props.profile_screen_moved_away();
+  };
+
   handleLoadMore = () => {
     if (this.state.tabActive === 1) {
       this.props.get_posts(true);
@@ -190,7 +195,6 @@ class Profile extends PureComponent {
             <ProfileHeader
               handleTabChange={this.handleTabChange}
               tabActive={this.state.tabActive}
-              auth_profile={false}
               username={username}
             />
           )}

@@ -31,6 +31,7 @@ const mapStateToProps = (state) => {
     profile_page: state.profile,
     user: state.profile.user,
     tabIndex: state.profile.tabIndex,
+    auth_profile: state.profile.is_auth_profile,
   };
 };
 

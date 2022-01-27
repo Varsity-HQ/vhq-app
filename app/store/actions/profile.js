@@ -75,6 +75,10 @@ export const save_post_user = (post) => (dispatch) => {
     profile_data.userID === store.getState().core.accData.userID
   ) {
     dispatch({
+      type: "IS_AUTH_PROFILE",
+      payload: true,
+    });
+    dispatch({
       type: "SET_PROFILE_DATA",
       payload: store.getState().core.accData,
     });
@@ -85,9 +89,13 @@ export const save_post_user = (post) => (dispatch) => {
     profile_data.userID !== store.getState().core.accData.userID
   )
     dispatch({
-      type: "SET_PROFILE_DATA",
-      payload: profile_data,
+      type: "IS_AUTH_PROFILE",
+      payload: false,
     });
+  dispatch({
+    type: "SET_PROFILE_DATA",
+    payload: profile_data,
+  });
 };
 
 export const profile_screen_moved_away = () => (dispatch) => {
