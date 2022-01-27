@@ -76,6 +76,7 @@ class Home extends PureComponent {
     return (
       <Screen>
         <FlatList
+          extraData={posts}
           ref={this.props.scrollRef}
           ListHeaderComponent={<Header {...this.props} />}
           ListFooterComponent={

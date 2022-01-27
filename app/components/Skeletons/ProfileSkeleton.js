@@ -127,8 +127,8 @@ function ProfileSkeleton({ username = "User", notFound }) {
         style={{
           paddingVertical: 20,
           paddingHorizontal: 10,
-          borderBottomColor: colors.black,
-          borderBottomWidth: 4,
+          // borderBottomColor: colors.black,
+          // borderBottomWidth: 4,
         }}
       >
         <View style={{ flexDirection: "row" }}>
@@ -176,7 +176,8 @@ function ProfileSkeleton({ username = "User", notFound }) {
             color: colors.secondary,
           }}
         >
-          Loading, please wait..
+          {/* Loading, please wait.. */}
+          {/* ... */}
         </Text>
       </View>
     </Screen>

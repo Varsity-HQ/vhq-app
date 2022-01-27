@@ -1,19 +1,39 @@
 const initialState = {
   loading_user: true,
   user: {},
+  user_following: false,
   //
   loading_post: true,
+  loading_more_posts: false,
+
   loading_pictures: true,
   loading_bookmarks: true, // for authenticated user
   page_cursor: null,
+
   posts: [],
+  posts_lv: null,
+
   pictures: [],
   bookmarks: [],
   errors: {},
+  //tabs
+  tabIndex: 1,
 };
 
 const profileReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "LOADING_MORE_POSTS":
+      return {
+        ...state,
+        loading_more_posts: actions.payload,
+      };
+
+    case "CHANGE_TAB":
+      return {
+        ...state,
+        tabIndex: actions.payload,
+      };
+
     case "RESET_PROFILE_PAGE":
       console.log("reset");
       return (state = initialState);
@@ -104,7 +124,9 @@ const profileReducer = (state = initialState, actions) => {
       return {
         ...state,
         loading_post: false,
-        posts: actions.payload,
+        loading_more_posts: false,
+        posts: actions.payload.posts,
+        posts_lv: actions.payload.lastVisible,
       };
     case "SET_PROFILE_DATA":
       return {

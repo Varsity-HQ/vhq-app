@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -30,6 +30,7 @@ const mapStateToProps = (state) => {
     acc_data: state.core.accData,
     profile_page: state.profile,
     user: state.profile.user,
+    tabIndex: state.profile.tabIndex,
   };
 };
 
@@ -60,8 +61,10 @@ function ProfileHeader({
   user,
   acc_data,
   username,
-  index = 0,
   auth_profile,
+  setTab,
+  handleTabChange,
+  tabActive = 1,
 }) {
   const navigation = useNavigation();
   const [following, set_following] = useState(false);
@@ -277,8 +280,8 @@ function ProfileHeader({
       </View>
       <View>
         <TabNavigator
-          onPress={(i) => setTab(i)}
-          active={index}
+          onPress={(i) => handleTabChange(i)}
+          active={tabActive}
           items={auth_profile ? profile_tabs : profile_tabs.slice(0, 2)}
           style={{
             //   padding: 10,

@@ -2,8 +2,84 @@ import axios from "axios";
 import store from "../store";
 import returnUser from "../../util/returnUser";
 
+const check_if_auth = (uid) => {
+  if (uid === store.getState().core.accData.userID) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const get_posts = (load_more) => (dispatch) => {
+  let user_id = store.getState().profile.user.userID;
+  if (!user_id) return;
+
+  if (check_if_auth(user_id)) {
+    get_auth_posts(load_more, dispatch);
+  } else {
+    get_user_posts(load_more, dispatch);
+  }
+};
+
+export const get_auth_posts = (load_more, dispatch) => {
+  console.log("get auth posts");
+
+  let stop = false;
+
+  let lastVisible = null;
+
+  if (load_more) {
+    lastVisible = store.getState().profile.posts_lv;
+
+    if (!lastVisible) {
+      stop = true;
+    } else {
+      dispatch({
+        type: "LOADING_MORE_POSTS",
+        payload: true,
+      });
+    }
+  }
+
+  if (stop) return;
+
+  console.log("called");
+
+  axios
+    .get(`/profile/posts${lastVisible ? "?plv=" + lastVisible : ""}`)
+    .then((data) => {
+      dispatch({
+        type: "SET_PROFILE_POSTS",
+        payload: {
+          posts: data.data.posts,
+          lastVisible:
+            data.data.lastVisible === lastVisible
+              ? null
+              : data.data.lastVisible,
+        },
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+export const get_user_posts = (load_more, dispatch) => {
+  console.log("get posts");
+};
+
 export const save_post_user = (post) => (dispatch) => {
   const profile_data = returnUser(post);
+
+  if (
+    profile_data.userID &&
+    profile_data.userID === store.getState().core.accData.userID
+  ) {
+    dispatch({
+      type: "SET_PROFILE_DATA",
+      payload: store.getState().core.accData,
+    });
+  }
+
   if (
     profile_data.userID &&
     profile_data.userID !== store.getState().core.accData.userID

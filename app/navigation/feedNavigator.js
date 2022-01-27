@@ -1,6 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+// import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import Home from "../screens/Home";
 import Profile from "../screens/Profile";
@@ -45,21 +45,23 @@ import UpdateFirstnameScreen from "../screens/settings/UpdateFirstnameScreen";
 import PollDetails from "../screens/PollDetails";
 import DrawerContent from "./DrawerContent";
 
-const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
 
+// const Drawer = createDrawerNavigator();
 const HomeDrawerNavigator = () => {
-  return (
-    <Drawer.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-      drawerContent={(props) => <DrawerContent {...props} />}
-    >
-      <Drawer.Screen name="HomeScreen" component={Home} />
-    </Drawer.Navigator>
-  );
+  return <Home />;
+
+  // return (
+  //   <Drawer.Navigator
+  //     screenOptions={{
+  //       headerShown: false,
+  //     }}
+  //     drawerContent={(props) => <DrawerContent {...props} />}
+  //   >
+  //     <Drawer.Screen name="HomeScreen" component={Home} />
+  //   </Drawer.Navigator>
+  // );
 };
 
 const FeedNavigator = () => (
@@ -77,7 +79,7 @@ const FeedNavigator = () => (
           headerShown: false,
         }}
         name={HOME}
-        component={HomeDrawerNavigator}
+        component={Home}
       />
       <Stack.Screen
         options={{

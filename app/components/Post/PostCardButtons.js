@@ -168,7 +168,7 @@ class PostCardButtons extends PureComponent {
                   size={normalizeText(11)}
                   color={colors.secondary}
                 />
-                &nbsp;Follow @{data.username}
+                &nbsp;Follow @{data.username.substring(0, 9)}..
               </Text>
             </TouchableOpacity>
           )}
@@ -211,6 +211,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginRight: 15,
+    // flex: 1,
     // backgroundColor: colors.dark,
   },
   button_f: {

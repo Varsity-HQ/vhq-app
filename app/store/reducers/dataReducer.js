@@ -200,11 +200,7 @@ const dataReducer = (state = initialData, actions) => {
           filtered_home_posts.push(x);
         }
       });
-      myPosts.forEach((x) => {
-        if (x.id !== actions.payload) {
-          filtered_my_posts.push(x);
-        }
-      });
+
       // console.group("Post filtering");
       // console.log({
       //   ...state,
