@@ -110,6 +110,7 @@ class PostCardButtons extends PureComponent {
 
   render() {
     const data = this.props.data;
+    const hideFollowBtn = this.props.hideFollowBtn;
     return (
       <View
         style={{
@@ -153,25 +154,27 @@ class PostCardButtons extends PureComponent {
               color={colors.white}
             />
           </TouchableOpacity>
-          {!this.state.following_poster && !data.anonymous_post && (
-            <TouchableOpacity
-              onPress={this.handleFollowPoster}
-              style={styles.button_f}
-            >
-              <Text
-                numberOfLines={1}
-                ellipsizeMode="tail"
-                style={styles.button_text_2}
+          {!this.state.following_poster &&
+            !data.anonymous_post &&
+            !hideFollowBtn && (
+              <TouchableOpacity
+                onPress={this.handleFollowPoster}
+                style={styles.button_f}
               >
-                <Feather
-                  name="user-plus"
-                  size={normalizeText(11)}
-                  color={colors.secondary}
-                />
-                &nbsp;Follow @{data.username.substring(0, 9)}..
-              </Text>
-            </TouchableOpacity>
-          )}
+                <Text
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  style={styles.button_text_2}
+                >
+                  <Feather
+                    name="user-plus"
+                    size={normalizeText(11)}
+                    color={colors.secondary}
+                  />
+                  &nbsp;Follow @{data.username.substring(0, 9)}..
+                </Text>
+              </TouchableOpacity>
+            )}
         </View>
         <TouchableOpacity
           onPress={this.handleBookmarkPress}

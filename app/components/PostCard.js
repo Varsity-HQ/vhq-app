@@ -96,6 +96,8 @@ class PostCard extends PureComponent {
   render() {
     const data = this.props.data;
 
+    const hideFollowBtn = this.props.hideFollowBtn;
+
     // console.log({ data });
 
     if (!data) return <SkeletonPost />;
@@ -268,7 +270,7 @@ class PostCard extends PureComponent {
             </View>
           </View>
 
-          <PostCardButtons data={data} />
+          <PostCardButtons hideFollowBtn={hideFollowBtn} data={data} />
 
           {/* <PostCardFooter data={data} /> */}
         </View>

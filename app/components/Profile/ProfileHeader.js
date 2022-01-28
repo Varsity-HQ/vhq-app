@@ -45,7 +45,7 @@ const profile_tabs = [
     icon: <Ricons color={colors.white} size={18} name="quill-pen-fill" />,
   },
   {
-    title: "Pictures",
+    title: "Recent Pictures",
     index: 2,
     icon: <FontAwesome color={colors.white} size={16} name="picture-o" />,
   },

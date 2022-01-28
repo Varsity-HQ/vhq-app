@@ -18,6 +18,159 @@ export const set_following = (followed) => (dispatch) => {
   });
 };
 
+export const get_pictures = (load_more) => (dispatch) => {
+  let user_id = store.getState().profile.user.userID;
+  if (!user_id) return;
+
+  if (check_if_auth(user_id)) {
+    get_auth_pictures(load_more, dispatch);
+  } else {
+    get_user_pictures(load_more, dispatch);
+    // console.log("get posts");
+  }
+};
+
+export const get_auth_bookmarks = (load_more) => (dispatch) => {
+  let stop = false;
+
+  let lastVisible = null;
+
+  if (load_more) {
+    lastVisible = store.getState().profile.bookmarks_lv;
+
+    if (!lastVisible) {
+      stop = true;
+    } else {
+      dispatch({
+        type: "SET_BOOKMARKS_MORE_LOADING",
+        payload: true,
+      });
+    }
+  }
+
+  if (stop) return;
+
+  axios
+    .post(`/profile/bookmarks`, {
+      post_ids: store.getState().core.accData.bookmarks,
+    })
+    .then((data) => {
+      console.log(data.data);
+      dispatch({
+        type: "SET_BOOKMARKS",
+        payload: data.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+export const get_auth_pictures = (load_more, dispatch) => {
+  let stop = false;
+
+  let lastVisible = null;
+
+  if (load_more) {
+    lastVisible = store.getState().profile.pictures_lv;
+
+    if (!lastVisible) {
+      stop = true;
+    } else {
+      dispatch({
+        type: "LOADING_MORE_PICTURES",
+        payload: true,
+      });
+    }
+  }
+
+  if (stop) return;
+
+  console.log("called");
+
+  axios
+    .get(`/profile/images${lastVisible ? "?plv=" + lastVisible : ""}`)
+    .then((data) => {
+      console.log(data.data);
+      dispatch({
+        type: "SET_PICTURES",
+        payload: {
+          posts: data.data.pictures,
+          pictures_lv: null,
+        },
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+export const get_user_pictures = (load_more, dispatch) => {
+  let username = store.getState().profile.user.username;
+
+  let stop = false;
+
+  let lastVisible = null;
+
+  if (load_more) {
+    lastVisible = store.getState().profile.pictures_lv;
+
+    if (!lastVisible) {
+      stop = true;
+    } else {
+      dispatch({
+        type: "LOADING_MORE_PICTURES",
+        payload: true,
+      });
+    }
+  }
+
+  if (stop) return;
+
+  axios
+    .get(
+      `/user/${username}/pictures/get${
+        lastVisible ? "?plv=" + lastVisible : ""
+      }`,
+    )
+    .then((data) => {
+      console.log(data.data);
+
+      const last_visible = data.data.lastVisible;
+
+      let currentPosts = store.getState().profile.posts;
+
+      let new_posts = !lastVisible
+        ? data.data.user_posts
+        : currentPosts.concat(data.data.user_posts);
+
+      // if (data.data.lastVisible !== store.getState().profile.pictures_lv) {
+      console.log("set new data");
+      dispatch({
+        type: "SET_PROFILE_DATA",
+        payload: data.data.user_data,
+      });
+
+      dispatch({
+        type: "SET_PICTURES",
+        payload: {
+          pictures: [...new Set(new_posts)],
+          pictures_lv: data.data.lastVisible,
+          // lastVisible: null,
+        },
+      });
+      // }
+    })
+    .catch((err) => {
+      console.log(err);
+      if (load_more) {
+        dispatch({
+          type: "STOP_LOADING_MORE_PICTURES",
+        });
+      }
+    });
+};
+
+// Load posts
+
 export const get_posts = (load_more) => (dispatch) => {
   let user_id = store.getState().profile.user.userID;
   if (!user_id) return;
@@ -199,6 +352,8 @@ export const get_user_profile = (username) => (dispatch) => {
 
   if (set_user) return;
 
+  console.log({ username });
+
   axios
     .get(`/user/${username}/posts/get`)
     .then((data) => {
@@ -213,6 +368,10 @@ export const get_user_profile = (username) => (dispatch) => {
       dispatch({
         type: "PROFILE_USER_FOLOWING",
         payload: check_if_followed(u_data.user_data.userID),
+      });
+      dispatch({
+        type: "IS_AUTH_PROFILE",
+        payload: check_if_auth(u_data.user_data.userID),
       });
 
       dispatch({

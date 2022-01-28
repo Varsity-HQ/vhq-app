@@ -20,6 +20,8 @@ import {
   get_user_profile,
   profile_screen_moved_away,
   get_posts,
+  get_pictures,
+  get_auth_bookmarks,
 } from "../store/actions/profile";
 import { follow_account, unfollow_account } from "../store/actions/actions";
 import { connect } from "react-redux";
@@ -59,69 +61,13 @@ const mapDispatchToProps = (dispatch) => {
 
     //
     get_posts: (more) => dispatch(get_posts(more)),
+    get_pictures: (more) => dispatch(get_pictures(more)),
+    get_auth_bookmarks: (more) => dispatch(get_auth_bookmarks(more)),
     profile_screen_moved_away: () => dispatch(profile_screen_moved_away()),
   };
 };
 
-// const ProfileContainer = (props) => {
-//   const [index, setTab] = useState(1);
-//   const { username } = props.route.params;
-//   const [auth_profile, set_auth_profile] = useState(true);
-//   const [init, setInit] = useState(false);
-
-//   useFocusEffect(
-//     React.useCallback(() => {
-//       if (check_if_auth_profile()) {
-//         props.get_auth_profile();
-//         console.log("my profile");
-//       } else {
-//         console.log("other profile");
-//         // get_user_profile(username);
-//         // set_following(check_if_followed(props.profile_page.user.userID));
-//       }
-//       return () => {
-//         console.log("moved away");
-//         props.profile_screen_moved_away();
-//       };
-//     }, []),
-//   );
-
-//   // useEffect(() => {
-//   //   if (!init) {
-//   //     // set_following(check_if_followed(props.profile_page.user.userID));
-//   //     setInit(true);
-//   //   }
-//   // }, [props.profile_page]);
-
-//   const check_if_auth_profile = () => {
-//     if (username === props.acc_data.username) {
-//       set_auth_profile(true);
-//       return true;
-//     } else {
-//       set_auth_profile(false);
-//       return false;
-//     }
-//   };
-
-//   return (
-//     <Profile
-//       auth_profile={auth_profile}
-//       username={username}
-//       passed_props={props}
-//     />
-//   );
-// };
-
 class Profile extends PureComponent {
-  // tab_switcher = () => {
-  //   switch (index) {
-  //     case 2:
-  //       return <PicturesTab />;
-  //     default:
-  //       return <PostsTab />;
-  //   }
-  // };
-
   state = {
     tabActive: 1,
   };
@@ -140,20 +86,42 @@ class Profile extends PureComponent {
   handleLoadMore = () => {
     if (this.state.tabActive === 1) {
       this.props.get_posts(true);
-      // console.log("get posts");
     }
+    // if (this.state.tabActive === 2) {
+    //   this.props.get_pictures(true);
+    // }
+  };
+
+  load_account_pictures = () => {
+    this.props.get_pictures();
   };
 
   handleTabChange = (tab) => {
     this.setState({
       tabActive: tab,
     });
+
+    if (tab === 1) {
+      this.props.get_pictures();
+    }
+
+    if (tab === 2) {
+      this.load_account_pictures();
+    }
+    if (tab === 3) {
+      this.props.get_auth_bookmarks();
+    }
   };
 
   handleListRendering = ({ item }) => (
     <PostCard
+      hideFollowBtn={true}
       navigation={this.props.navigation}
-      data={{ ...item, ...this.props.profile_page.user }}
+      data={
+        this.state.tabActive !== 3
+          ? { ...item, ...this.props.profile_page.user }
+          : item
+      }
     />
   );
 
@@ -182,7 +150,17 @@ class Profile extends PureComponent {
       );
     }
 
-    const { posts, loading_post } = this.props.profile_page;
+    const {
+      posts,
+      pictures,
+      loading_post,
+      loading_pictures,
+      loading_more_pictures,
+      loading_more_posts,
+      bookmarks,
+      loading_bookmarks,
+      loading_more_bookmarks,
+    } = this.props.profile_page;
 
     return (
       <Screen>
@@ -192,7 +170,19 @@ class Profile extends PureComponent {
           initialNumToRender={10}
           renderItem={this.handleListRendering}
           keyExtractor={(item) => item.id}
-          data={loading_post ? [] : posts}
+          data={
+            this.state.tabActive === 1
+              ? loading_post
+                ? []
+                : posts
+              : this.state.tabActive === 2
+              ? loading_pictures
+                ? []
+                : pictures
+              : this.state.tabActive === 3
+              ? bookmarks
+              : []
+          }
           ListHeaderComponent={
             <ProfileHeader
               handleTabChange={this.handleTabChange}
@@ -200,11 +190,44 @@ class Profile extends PureComponent {
               username={username}
             />
           }
+          ListFooterComponentStyle={{
+            paddingBottom: 60,
+            marginBottom: 60,
+          }}
           ListFooterComponent={
             <FooterLoadings
               tab={this.state.tabActive}
-              loading={this.props.profile_page.loading_post}
-              loading_more={this.props.profile_page.loading_more_posts}
+              data={
+                this.state.tabActive === 1
+                  ? loading_post
+                    ? []
+                    : posts
+                  : this.state.tabActive === 2
+                  ? loading_pictures
+                    ? []
+                    : pictures
+                  : this.state.tabActive === 3
+                  ? bookmarks
+                  : []
+              }
+              loading={
+                this.state.tabActive === 1
+                  ? loading_post
+                  : this.state.tabActive === 2
+                  ? loading_pictures
+                  : this.state.tabActive === 3
+                  ? loading_bookmarks
+                  : loading_post
+              }
+              loading_more={
+                this.state.tabActive === 1
+                  ? loading_more_posts
+                  : this.state.tabActive === 2
+                  ? loading_more_pictures
+                  : this.state.tabActive === 3
+                  ? loading_more_bookmarks
+                  : loading_more_posts
+              }
             />
           }
         />
@@ -213,8 +236,8 @@ class Profile extends PureComponent {
   }
 }
 
-const FooterLoadings = ({ loading, tab, loading_more }) => {
-  if (tab === 1 && loading) {
+const FooterLoadings = ({ loading, tab, loading_more, data = [] }) => {
+  if (loading) {
     return (
       <View>
         <PostLoader />
@@ -223,7 +246,7 @@ const FooterLoadings = ({ loading, tab, loading_more }) => {
     );
   }
 
-  if (tab === 1 && loading_more) {
+  if (loading_more) {
     return (
       <View
         style={{
@@ -231,6 +254,46 @@ const FooterLoadings = ({ loading, tab, loading_more }) => {
         }}
       >
         <ActivityIndicator color={colors.secondary} size="large" />
+      </View>
+    );
+  }
+
+  if (tab === 1 && data.length === 0) {
+    return (
+      <View
+        style={{
+          padding: 30,
+        }}
+      >
+        <Text style={{ alignSelf: "center", color: colors.secondary }}>
+          No posts
+        </Text>
+      </View>
+    );
+  }
+  if (tab === 2 && data.length === 0) {
+    return (
+      <View
+        style={{
+          padding: 30,
+        }}
+      >
+        <Text style={{ alignSelf: "center", color: colors.secondary }}>
+          No pictures
+        </Text>
+      </View>
+    );
+  }
+  if (tab === 3 && data.length === 0) {
+    return (
+      <View
+        style={{
+          padding: 30,
+        }}
+      >
+        <Text style={{ alignSelf: "center", color: colors.secondary }}>
+          No bookmarks
+        </Text>
       </View>
     );
   }

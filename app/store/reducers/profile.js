@@ -8,15 +8,21 @@ const initialState = {
   loading_post: true,
   loading_more_posts: false,
 
-  loading_pictures: true,
-  loading_bookmarks: true, // for authenticated user
   page_cursor: null,
 
   posts: [],
   posts_lv: null,
 
   pictures: [],
+  pictures_lv: null,
+  loading_pictures: true,
+  loading_more_pictures: false,
+
   bookmarks: [],
+  bookmarks_lv: null,
+  loading_bookmarks: true, // for authenticated user
+  loading_more_bookmarks: true,
+
   errors: {},
   //tabs
   tabIndex: 1,
@@ -24,6 +30,58 @@ const initialState = {
 
 const profileReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "SET_BOOKMARKS_LV":
+      return {
+        ...state,
+        bookmarks_lv: actions.payload,
+      };
+    case "SET_BOOKMARKS_MORE_LOADING":
+      return {
+        ...state,
+        loading_more_bookmarks: actions.payload,
+      };
+    case "SET_BOOKMARKS_LOADING":
+      return {
+        ...state,
+        loading_bookmarks: actions.payload,
+      };
+
+    case "SET_BOOKMARKS":
+      return {
+        ...state,
+        bookmarks: actions.payload,
+        loading_bookmarks: false,
+        loading_more_bookmarks: false,
+      };
+
+    case "SET_PICTURES":
+      return {
+        ...state,
+        pictures: actions.payload.pictures,
+        pictures_lv: actions.payload.pictures_lv,
+        loading_pictures: false,
+        loading_more_pictures: false,
+      };
+    case "SET_PICTURES_LV":
+      return {
+        ...state,
+        pictures_lv: actions.payload,
+      };
+    case "SET_PICTURES_LOADING":
+      return {
+        ...state,
+        loading_pictures: actions.payload,
+      };
+    case "STOP_LOADING_MORE_PICTURES":
+      return {
+        ...state,
+        loading_more_pictures: false,
+      };
+    case "LOADING_MORE_PICTURES":
+      return {
+        ...state,
+        loading_more_pictures: actions.payload,
+      };
     case "STOP_LOADING_MORE":
       return {
         ...state,
