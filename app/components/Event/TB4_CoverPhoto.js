@@ -5,8 +5,19 @@ import styles from "./styles";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import AddImageButton from "../AddImageButton";
+import Button from "../Button";
+import { connect } from "react-redux";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+dayjs.extend(localizedFormat);
 
-function TB4_CoverPhoto({ image, onImgChange }) {
+const mapStateToProps = (state) => {
+  return {
+    acc_data: state.core.accData,
+  };
+};
+
+function TB4_CoverPhoto({ image, onImgChange, data, acc_data, handleSubmit }) {
   return (
     <View style={[styles.tab_container, styles.et_container]}>
       <View style={[styles.exp_container, { borderBottomWidth: 0 }]}>
@@ -27,19 +38,24 @@ function TB4_CoverPhoto({ image, onImgChange }) {
           <View style={[styles.row, styles.det_section]}>
             <Ionicons name="md-calendar" color={colors.white} size={18} />
             <Text style={[styles.smallText, styles.ped_from_text]}>
-              STARTS TUE, JAN 25, 2022 12:38 AM
+              STARTS {dayjs(data.eventStartDateTime).format("llll")}
             </Text>
           </View>
-          <Text style={styles.event_title}>ojies eosiej</Text>
+          <Text style={styles.event_title}>{data.eventName}</Text>
           <View style={[styles.row, styles.det_section]}>
             <Ionicons name="md-location" color={colors.white} size={18} />
-            <Text style={styles.ped_from_text}>Konka</Text>
+            <Text style={styles.ped_from_text}>{data.eventVenue}</Text>
           </View>
-          <Text style={styles.smallText}>Posted by : Harmony Chikari</Text>
+          <Text style={styles.smallText}>
+            Posted by : {acc_data.firstname}&nbsp;{acc_data.surname}
+          </Text>
+        </View>
+        <View style={{ marginVertical: 20, paddingBottom: 150 }}>
+          <Button onPress={handleSubmit} title="Post Event" />
         </View>
       </View>
     </View>
   );
 }
 
-export default TB4_CoverPhoto;
+export default connect(mapStateToProps, null)(TB4_CoverPhoto);

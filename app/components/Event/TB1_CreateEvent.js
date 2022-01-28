@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
     .label("End date"),
 });
 
-function TB1_CreateEvent({ handleProceed }) {
+function TB1_CreateEvent({ handleProceed, data }) {
   const handleSubmit = (e) => {
     handleProceed({
       eventName: e.name,
@@ -32,6 +32,15 @@ function TB1_CreateEvent({ handleProceed }) {
       eventEndDateTime: e.end_date,
     });
   };
+
+  const return_date = (date) => {
+    if (date) {
+      return date;
+    } else {
+      return new Date().toISOString();
+    }
+  };
+
   return (
     <>
       <UserDetBar style={styles.u_det_container} />
@@ -39,10 +48,10 @@ function TB1_CreateEvent({ handleProceed }) {
         <Form
           validationSchema={validationSchema}
           initialValues={{
-            name: "",
-            venue: "",
-            start_date: new Date().toISOString(),
-            end_date: new Date().toISOString(),
+            name: data.eventName,
+            venue: data.eventVenue,
+            start_date: return_date(data.eventStartDateTime),
+            end_date: return_date(data.eventEndDateTime),
           }}
           onSubmit={handleSubmit}
         >

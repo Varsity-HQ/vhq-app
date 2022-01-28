@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, Alert } from "react-native";
 import Text from "../components/AppText";
 import Header from "../components/headers/header3";
 import Screen from "../components/Screen";
@@ -118,6 +118,8 @@ class CreateEventPage extends Component {
       case 3:
         return (
           <TB4_CoverPhoto
+            handleSubmit={this.handleSubmit}
+            data={this.state}
             onImgChange={this.onImgChange}
             image={this.state.attachments[0]}
           />
@@ -148,13 +150,30 @@ class CreateEventPage extends Component {
           />
         );
       case 0:
-        return <TB1_CreateEvent handleProceed={this.handle_proceed} />;
+        return (
+          <TB1_CreateEvent
+            data={this.state}
+            handleProceed={this.handle_proceed}
+          />
+        );
       default:
-        return <TB1_CreateEvent handleProceed={this.handle_proceed} />;
+        return (
+          <TB1_CreateEvent
+            data={this.state}
+            handleProceed={this.handle_proceed}
+          />
+        );
     }
   };
 
-  handleProceed = () => {};
+  handleSubmit = () => {
+    if (this.state.attachments.length === 0) {
+      return Alert.alert(
+        "Add picture",
+        "Please upload a picture or poster to be used for this event. This will help to better decorate your event",
+      );
+    }
+  };
 
   handleBackPress = () => {
     if (this.state.tabIndex <= 0) return this.props.navigation.goBack();
