@@ -117,6 +117,7 @@ function PostMenu({
       ),
     },
     {
+      hide: data.anonymous_post,
       onPress: () => {
         save_post_user(data);
         handleModal();
