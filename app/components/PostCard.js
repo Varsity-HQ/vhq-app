@@ -455,15 +455,7 @@ const EventPost = ({ data, profilepic, handleOpenPost, handleOpenProfile }) => {
           <View style={[styles.width20, { paddingLeft: 10 }]}>
             <Button
               style={{ height: height * 0.06, padding: 0, borderWidth: 2 }}
-              content={
-                <View style={[styles.row, { marginTop: 0 }]}>
-                  <Ionicons
-                    name="ios-ellipsis-horizontal-outline"
-                    color={colors.white}
-                    size={30}
-                  />
-                </View>
-              }
+              content={<PostMenu data={data} />}
               type={6}
             />
           </View>
