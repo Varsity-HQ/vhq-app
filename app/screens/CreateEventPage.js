@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Alert } from "react-native";
+import { View, Alert, Platform } from "react-native";
 import Text from "../components/AppText";
 import Header from "../components/headers/header3";
 import Screen from "../components/Screen";
@@ -14,10 +14,18 @@ import TB2_EventTarget from "../components/Event/TB2_EventTarget";
 import TB3_Description from "../components/Event/TB3_Description";
 import he from "he";
 import TB4_CoverPhoto from "../components/Event/TB4_CoverPhoto";
+import { post_new } from "../store/actions/actions";
+import { HOME } from "../navigation/routes";
 
 const mapStateToProps = (state) => {
   return {
     core: state.core,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    post_new: (post, attachments) => dispatch(post_new(post, attachments)),
   };
 };
 
@@ -61,8 +69,6 @@ class CreateEventPage extends Component {
     postType: "event_post",
     link: "",
     attachments: [],
-    local_attachments: [],
-    local_attachments_blob: [],
     uploading: false,
     image_dimensions: null,
   };
@@ -173,6 +179,57 @@ class CreateEventPage extends Component {
         "Please upload a picture or poster to be used for this event. This will help to better decorate your event",
       );
     }
+
+    let targets = [];
+    let targetObj = this.state.target;
+
+    Object.keys(targetObj).forEach(function (key) {
+      if (key === "first" && targetObj[key] === true) {
+        targets.push("1st");
+      }
+      if (key === "second" && targetObj[key] === true) {
+        targets.push("2nd");
+      }
+      if (key === "third" && targetObj[key] === true) {
+        targets.push("3rd");
+      }
+      if (key === "forth" && targetObj[key] === true) {
+        targets.push("4th");
+      }
+      if (key === "postgraduates" && targetObj[key] === true) {
+        targets.push("postgraduates");
+        targets.push("masters");
+        targets.push("honors");
+        targets.push("phd");
+      }
+    });
+
+    let local_attachments = this.state.attachments;
+    this.setState({
+      attachments: [],
+    });
+
+    let postObj = {
+      application: Platform.OS === "ios" ? "iPhone" : "Android",
+      can_reply_privately: this.state.can_reply_privately,
+      postHtmlText: this.state.postHtmlText,
+      postText: this.state.postText,
+      is_eligible_for_promotion: "true",
+      tagged_users: this.state.tagged_users,
+      postHashTags: this.state.postHashTags,
+      postType: this.state.postType,
+      fromUniversity: this.state.fromUniversity,
+      attachments: this.state.attachments,
+      image_dimensions: this.state.image_dimensions,
+      eventName: this.state.eventName,
+      eventStartDateTime: this.state.eventStartDateTime,
+      eventEndDateTime: this.state.eventEndDateTime,
+      eventVenue: this.state.eventVenue,
+      feed_targeting: targets,
+    };
+
+    this.props.post_new(postObj, local_attachments);
+    this.props.navigation.navigate(HOME);
   };
 
   handleBackPress = () => {
@@ -224,4 +281,4 @@ const CE_header = ({ tabIndex }) => {
   return null;
 };
 
-export default connect(mapStateToProps, null)(CreateEventPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateEventPage);
