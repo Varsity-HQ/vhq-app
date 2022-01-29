@@ -25,6 +25,20 @@ class PostPictures extends PureComponent {
   render() {
     if (this.props.images.length === 0) return null;
 
+    if (this.props.event && this.props.images.length === 1) {
+      return (
+        <Image
+          style={{
+            height: deviceWidth * 0.5,
+            width: "95%",
+            // width: deviceWidth - 20,
+            borderRadius: 7,
+          }}
+          uri={this.props.images[0]}
+        />
+      );
+    }
+
     if (this.props.images.length === 1)
       return (
         <Image

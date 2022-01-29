@@ -18,6 +18,7 @@ function AppButton({
   navigateRoute,
   onPress,
   type = 1,
+  content,
   ...props
 }) {
   const navigation = useNavigation();
@@ -28,7 +29,7 @@ function AppButton({
       onPress();
       navigation.navigate(navigateRoute[0], navigateRoute[1]);
     } else {
-      if (!loading) onPress();
+      if (!loading) onPress && onPress();
     }
   };
 
@@ -61,7 +62,11 @@ function AppButton({
         style={[styles.button_t6, style]}
         onPress={handleOnPress}
       >
-        <Text style={[styles.text_t3, textStyle]}>{title}</Text>
+        {content ? (
+          content
+        ) : (
+          <Text style={[styles.text_t3, textStyle]}>{title}</Text>
+        )}
       </TouchableOpacity>
     );
   }
@@ -83,7 +88,11 @@ function AppButton({
         style={[styles.button_t4, style]}
         onPress={handleOnPress}
       >
-        <Text style={[styles.text_t3, textStyle]}>{title}</Text>
+        {content ? (
+          content
+        ) : (
+          <Text style={[styles.text_t3, textStyle]}>{title}</Text>
+        )}
       </TouchableOpacity>
     );
   }
