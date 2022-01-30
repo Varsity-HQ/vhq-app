@@ -9,8 +9,8 @@ import { Ionicons } from "@expo/vector-icons";
 const mapStateToProps = (state) => {
   return {
     profilepic: state.core.accData.profilepic,
-    post_page: state.data.post_page,
-    post: state.data.post_page?.post?.post,
+    post_page: state.postPage,
+    post: state.postPage?.post.post,
   };
 };
 

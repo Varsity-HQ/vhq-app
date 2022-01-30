@@ -20,7 +20,7 @@ import PostCardFooter from "../components/Post/PostCardFooter";
 import * as routes from "../navigation/routes";
 import PostCardButtons from "./Post/PostCardButtons";
 import { connect } from "react-redux";
-import { save_local_post } from "../store/actions/actions";
+import { save_local_post } from "../store/actions/postPage";
 import { save_post_user } from "../store/actions/profile";
 import emojis from "../util/emojis";
 import PostPictures from "./Post/PostPictures";

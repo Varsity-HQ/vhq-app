@@ -23,12 +23,12 @@ import { connect } from "react-redux";
 import CommentTextInput from "../components/PostPage/CommentTextInput";
 import HeaderPostContent from "../components/PostPage/Header";
 import InputAccessoryView from "../components/InputAccessoryView";
-import { get_post_page, clear_post_page } from "../store/actions/actions";
+import { get_post_page, clear_post_page } from "../store/actions/postPage";
 
 const mapStateToProps = (state) => {
   return {
     account: state.core.accData,
-    post_page: state.data.post_page,
+    post_page: state.postPage,
   };
 };
 

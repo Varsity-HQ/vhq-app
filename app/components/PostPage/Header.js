@@ -25,9 +25,9 @@ dayjs.extend(localizedFormat);
 
 const mapStateToProps = (state) => {
   return {
-    post_page: state.data.post_page,
-    post: state.data.post_page.post?.post,
-    account: state.data.post_page.post?.account,
+    post_page: state.postPage,
+    post: state.postPage.post?.post,
+    account: state.postPage.post?.account,
   };
 };
 

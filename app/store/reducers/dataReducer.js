@@ -17,12 +17,6 @@ const initialData = {
     refreshing: false,
     loading_more: false,
   },
-  post_page: {
-    post: null,
-    post_loading: true,
-    comments: null,
-    comments_loading: true,
-  },
   home_market_items: [],
   search_page: {
     loading: true,
@@ -114,78 +108,6 @@ const dataReducer = (state = initialData, actions) => {
         new_post: {
           ...state.new_post,
           anonymous_emoji_index: actions.payload,
-        },
-      };
-
-    case "CLEAR_POST_PAGE":
-      return {
-        ...state,
-        post_page: {
-          post: null,
-          post_loading: true,
-          comments: null,
-          comments_loading: true,
-        },
-      };
-    case "LOAD_POST_COMMENTS":
-      return {
-        ...state,
-        post_page: {
-          ...state.post_page,
-          post_loading: false,
-          comments: actions.payload,
-          comments_loading: false,
-        },
-      };
-    case "POST_DATA_LOADING":
-      return {
-        ...state,
-        post_page: {
-          ...state.post_page,
-          post_loading: false,
-          comments: null,
-          comments_loading: true,
-        },
-      };
-
-    case "SET_POST_PAGE_DATA":
-      let post_to_save = {
-        post: actions.payload.post,
-        account: actions.payload.account,
-      };
-
-      return {
-        ...state,
-        post_page: {
-          ...state.post_page,
-          post: post_to_save,
-          post_loading: false,
-          comments: actions.payload.comments,
-          comments_loading: false,
-        },
-      };
-
-    case "SAVE_LOCAL_POST":
-      let l_post = { ...actions.payload };
-      let l_account = {
-        surname: actions.payload.surname,
-        firstname: actions.payload.firstname,
-        username: actions.payload.username,
-        profilepic: actions.payload.profilepic,
-        userID: actions.payload.userID,
-      };
-      // let l_comments = [];
-
-      let local_post = { post: l_post, account: l_account };
-
-      return {
-        ...state,
-        post_page: {
-          ...state.post_page,
-          post: local_post,
-          post_loading: true,
-          comments: null,
-          comments_loading: true,
         },
       };
 
