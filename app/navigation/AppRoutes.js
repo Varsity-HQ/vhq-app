@@ -36,6 +36,7 @@ import ForgotToAddProfilePic from "../screens/ForgotToAddProfilePic";
 import CreateEventPage from "../screens/CreateEventPage";
 import Profile from "../screens/Profile";
 import UpdateUniversityScreen from "../screens/settings/UpdateUniversityScreen";
+import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -109,6 +110,14 @@ function NavigationStack({ core }) {
           }}
           name={routes.PROFILE}
           component={Profile}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+            animation: "slide_from_bottom",
+          }}
+          name={routes.ANONYMOUS_SETTINGS}
+          component={AnonymousSettingsScreen}
         />
         <Stack.Screen
           options={{

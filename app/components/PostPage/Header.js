@@ -197,7 +197,7 @@ function HeaderPostContent({
                   flexDirection: "row",
                 }}
               >
-                <View
+                <TouchableOpacity
                   style={{
                     alignItems: "center",
                     flexDirection: "row",
@@ -207,7 +207,7 @@ function HeaderPostContent({
                   <Text style={{ fontSize: 15 }}>
                     &nbsp;{post.likes_count} Likes
                   </Text>
-                </View>
+                </TouchableOpacity>
                 <View
                   style={{
                     marginLeft: 10,

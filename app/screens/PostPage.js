@@ -68,8 +68,6 @@ class PostPage extends React.PureComponent {
       post_id,
     });
 
-    console.log("post page loaded");
-
     this.props.get_post_page(post_id);
   };
 

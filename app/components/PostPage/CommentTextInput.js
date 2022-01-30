@@ -1,14 +1,19 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import colors from "../../config/colors";
 import Text from "../AppText";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { PROFILE } from "../../navigation/routes";
+import emojis from "../../util/emojis";
+import Image from "../../components/Image";
 
 const mapStateToProps = (state) => {
   return {
     profilepic: state.core.accData.profilepic,
+    account: state.core.accData,
+    username: state.core.accData.username,
     post_page: state.postPage,
     post: state.postPage?.post.post,
   };
@@ -19,7 +24,10 @@ function CommentTextInput({
   profilepic,
   post_page,
   post,
+  username,
+  account,
 }) {
+  const navigation = useNavigation();
   if (!post_page.post) return null;
 
   const returnPostOwner = () => {
@@ -51,12 +59,33 @@ function CommentTextInput({
         </Text>
       </View> */}
       <View style={[styles.comment_box_container]}>
-        {returnProfilePicture(profilepic, styles.profilepic)}
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate(PROFILE, {
+              username: username,
+            })
+          }
+        >
+          {account.anonymous_profile ? (
+            <Image
+              style={styles.profilepic}
+              local
+              uri={emojis[account.anonymous_emoji_index]}
+            />
+          ) : (
+            <Image style={styles.profilepic} uri={profilepic} />
+          )}
+
+          {/* {returnProfilePicture(profilepic, styles.profilepic)} */}
+          {/* {returnProfilePicture(emojis[2])} */}
+        </TouchableOpacity>
         <TextInput
           selectionColor={colors.primary}
           placeholderTextColor={colors.secondary_2}
           style={styles.comment_input}
-          placeholder={`Respond to ${returnPostOwner()}`}
+          placeholder={`Respond to ${returnPostOwner()} ${
+            account.anonymous_profile ? "anonymously" : ""
+          }`}
         />
         <TouchableOpacity style={styles.send_btn}>
           <Text style={styles.sendBtnText}>Send</Text>

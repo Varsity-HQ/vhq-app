@@ -3,6 +3,18 @@ const initialState = {
   post_loading: true,
   comments: null,
   comments_loading: true,
+  comment_replies: [
+    // {
+    //   parent_comment_id: "bAaRufZFxLHGQyTs1yfq",
+    //   loading : false,
+    //   replies: [
+    //     {
+    //       comment_id: "C8EZS08ZHifujpfJBmlz",
+    //       comment_text: "working",
+    //     },
+    //   ],
+    // },
+  ],
 };
 
 const postPageReducer = (state = initialState, actions) => {
