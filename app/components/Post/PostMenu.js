@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
-  TouchableHighlight,
+  Alert,
 } from "react-native";
 import Modal from "react-native-modal";
 import colors from "../../config/colors";
@@ -47,6 +47,8 @@ function PostMenu({
   deleting_post,
   post_page,
   save_post_user,
+  height,
+  event,
 }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
@@ -67,30 +69,44 @@ function PostMenu({
   };
 
   const handleDeletePost = () => {
-    if (deleting_post) {
-      return Toast.show({
-        type: "general",
-        autoHide: false,
-        ...ANOTHER_POST_CURRENTLY_DELETING,
-      });
-    }
+    Alert.alert(
+      "Confirm",
+      `Are you sure you want to delete this ${event ? "event" : "post"} ? `,
+      [
+        {
+          text: "No",
+        },
+        {
+          text: "Yes delete",
+          onPress: () => {
+            if (deleting_post) {
+              return Toast.show({
+                type: "general",
+                autoHide: false,
+                ...ANOTHER_POST_CURRENTLY_DELETING,
+              });
+            }
 
-    if (data.posted_by === auth_acc_id && !deleting_post) {
-      delete_post(data.id);
-      handleModal();
-      return Toast.show({
-        type: "general",
-        autoHide: false,
-        ...POST_TO_BE_DELETED,
-      });
-    }
+            if (data.posted_by === auth_acc_id && !deleting_post) {
+              delete_post(data.id);
+              handleModal();
+              return Toast.show({
+                type: "general",
+                autoHide: false,
+                ...POST_TO_BE_DELETED,
+              });
+            }
+          },
+        },
+      ],
+    );
   };
 
   const options = [
     {
       onPress: () => handleDeletePost(),
       hide: data.posted_by !== auth_acc_id,
-      title: "Delete Post",
+      title: `Delete ${event ? "Event" : "Post"}`,
       icon: (
         <Ionicons
           color={colors.secondary}
@@ -106,7 +122,7 @@ function PostMenu({
           post_id: data.id,
         });
       },
-      title: "Go to post",
+      title: `Go to ${event ? "event" : "post"}`,
       hide: post_page || data.anonymous_post,
       icon: (
         <Ionicons
@@ -132,7 +148,7 @@ function PostMenu({
     },
     {
       onPress: () => handleCopyLink(),
-      title: "Copy post",
+      title: `Copy ${event ? "event link" : "post"}`,
       icon: (
         <Ionicons
           color={colors.secondary}
@@ -155,14 +171,34 @@ function PostMenu({
 
   return (
     <>
-      {/* // <View style={styles.container}> */}
-      <TouchableWithoutFeedback onPress={handleModal}>
-        <Ionicons
-          color={colors.white}
-          name="ios-ellipsis-horizontal-outline"
-          size={30}
+      {event ? (
+        <Button
+          style={{
+            height: height,
+            padding: 0,
+            borderWidth: 2,
+            borderColor: colors.secondary,
+          }}
+          onPress={handleModal}
+          content={
+            <Ionicons
+              color={colors.white}
+              name="ios-ellipsis-horizontal-outline"
+              size={30}
+            />
+          }
+          type={6}
         />
-      </TouchableWithoutFeedback>
+      ) : (
+        <TouchableWithoutFeedback onPress={handleModal}>
+          <Ionicons
+            color={colors.white}
+            name="ios-ellipsis-horizontal-outline"
+            size={30}
+          />
+        </TouchableWithoutFeedback>
+      )}
+      {/* // <View style={styles.container}> */}
 
       <Modal
         // animationIn={"fadeIn"}

@@ -159,6 +159,8 @@ class AddPostPage extends Component {
   };
 
   componentDidMount = () => {
+    console.log("harmony");
+
     this._isMounted = true;
     KeyboardEventListener.subscribe(
       ({ keyboardHeight, layoutAnimationConfig }) => {

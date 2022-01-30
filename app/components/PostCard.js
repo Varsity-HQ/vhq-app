@@ -33,6 +33,7 @@ import { normalizeText } from "../util/responsivePx";
 import Text from "./AppText";
 import { FontAwesome, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Button from "./Button";
+import EventFooterButtons from "./Post/EventFooterButtons";
 
 dayjs.extend(Localize);
 
@@ -436,31 +437,9 @@ const EventPost = ({ data, profilepic, handleOpenPost, handleOpenProfile }) => {
           </View>
         </View>
 
-        <View style={[styles.row, { paddingHorizontal: 10, marginTop: 0 }]}>
-          <View style={styles.width80}>
-            <Button
-              style={{ height: height * 0.06 }}
-              content={
-                <View style={[styles.row, { marginTop: 0 }]}>
-                  <Ionicons name="star" color={colors.white} size={16} />
-                  <Text style={{ fontWeight: "700", marginLeft: 5 }}>
-                    interested
-                  </Text>
-                </View>
-              }
-              type={4}
-            />
-          </View>
-          <View style={[styles.width20, { paddingLeft: 10 }]}>
-            <Button
-              style={{ height: height * 0.06, padding: 0, borderWidth: 2 }}
-              content={<PostMenu data={data} />}
-              type={6}
-            />
-          </View>
-        </View>
+        <EventFooterButtons data={data} />
 
-        {/* <PostCardFooter data={data} /> */}
+        {/* <PostCardFooter data={data} />  */}
       </View>
     </>
   );

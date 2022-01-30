@@ -104,7 +104,11 @@ function AppButton({
         style={[styles.button_t3, style]}
         onPress={handleOnPress}
       >
-        <Text style={[styles.text_t3, textStyle]}>{title}</Text>
+        {content ? (
+          content
+        ) : (
+          <Text style={[styles.text_t3, textStyle]}>{title}</Text>
+        )}
       </TouchableOpacity>
     );
   }
