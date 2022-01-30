@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import colors from "../config/colors";
-
 import SkeletonPost from "./Skeletons/Post";
 import dayjs from "dayjs";
 import Localize from "dayjs/plugin/relativeTime";

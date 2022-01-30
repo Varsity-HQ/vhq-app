@@ -1,5 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import Home from "../screens/Home";
@@ -44,6 +45,12 @@ import UpdateSurnameScreen from "../screens/settings/UpdateSurnameScreen";
 import UpdateFirstnameScreen from "../screens/settings/UpdateFirstnameScreen";
 import PollDetails from "../screens/PollDetails";
 import DrawerContent from "./DrawerContent";
+import HomeScreen from "../screens/HomeTabs/HomeScreen";
+import EventsScreen from "../screens/HomeTabs/EventsScreen";
+import colors from "../config/colors";
+import Screen from "../components/Screen";
+import { ScrollView, View } from "react-native";
+import VirtualizedView from "../components/VirtualizedViewBacked";
 
 const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
