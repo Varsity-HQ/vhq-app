@@ -43,8 +43,6 @@ class PostPictures extends PureComponent {
 
     const { imgWidth, imgHeight } = this.state;
 
-    console.log(this.state);
-
     if (this.props.event && this.props.images.length === 1) {
       return (
         <Image

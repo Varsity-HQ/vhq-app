@@ -23,6 +23,7 @@ import { normalizeText } from "../../util/responsivePx";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { doc } from "firebase/firestore";
 import db from "../../util/fb_admin";
+import { NOTIFICATIONS } from "../../navigation/routes";
 
 const home_tabs = [
   {
@@ -109,7 +110,10 @@ const Header = ({
           VarsityHQ
         </Text>
         <View style={styles.header_uni_container}>
-          <TouchableOpacity style={styles.header_uni_wrapper}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(NOTIFICATIONS)}
+            style={styles.header_uni_wrapper}
+          >
             <FontAwesome
               name="bell"
               color={colors.secondary}

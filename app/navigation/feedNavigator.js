@@ -26,6 +26,7 @@ import {
   UPDATE_SURNAME,
   UPDATE_ABOUT,
   POLL_DETAILS,
+  NOTIFICATIONS,
 } from "./routes";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
@@ -44,6 +45,7 @@ import UpdateUsernameScreen from "../screens/settings/UpdateUsernameScreen";
 import UpdateSurnameScreen from "../screens/settings/UpdateSurnameScreen";
 import UpdateFirstnameScreen from "../screens/settings/UpdateFirstnameScreen";
 import PollDetails from "../screens/PollDetails";
+import Notifications from "../screens/Notifications";
 import DrawerContent from "./DrawerContent";
 import HomeScreen from "../screens/HomeTabs/HomeScreen";
 import EventsScreen from "../screens/HomeTabs/EventsScreen";
@@ -88,6 +90,16 @@ const FeedNavigator = () => (
         name={HOME}
         component={Home}
       />
+
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "none",
+        }}
+        name={NOTIFICATIONS}
+        component={Notifications}
+      />
+
       <Stack.Screen
         options={{
           headerShown: false,
