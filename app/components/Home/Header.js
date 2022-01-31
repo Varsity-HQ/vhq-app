@@ -20,6 +20,9 @@ import HomeUploading from "../Loaders/HomeUploading";
 import { connect } from "react-redux";
 import { useFocusEffect } from "@react-navigation/native";
 import { normalizeText } from "../../util/responsivePx";
+import { useDocumentData } from "react-firebase-hooks/firestore";
+import { doc } from "firebase/firestore";
+import db from "../../util/fb_admin";
 
 const home_tabs = [
   {
@@ -57,6 +60,7 @@ const height = Dimensions.get("window").height;
 const mapStateToProps = (state) => {
   return {
     uploading: state.data.new_post.uploading,
+    user_id: state.core.accData.userID,
   };
 };
 
@@ -66,8 +70,11 @@ const Header = ({
   profilepic,
   username,
   university,
+  user_id,
 }) => {
   const [index, setTab] = useState(1);
+  const userDocRef = doc(db, "accounts", user_id);
+  const [user_snapshot, loading, error] = useDocumentData(userDocRef);
 
   return (
     <View>
@@ -105,13 +112,15 @@ const Header = ({
           <TouchableOpacity style={styles.header_uni_wrapper}>
             <FontAwesome
               name="bell"
-              color={colors.white}
+              color={colors.secondary}
               // style={{ marginRight: 10 }}
               size={20}
             />
             {/* <FontAwesome name="university" color={colors.secondary} size={20} /> */}
-            <Text style={styles.header_uni_text}>2</Text>
-            {/* <Vie></V> */}
+            <Text style={styles.header_uni_text}>
+              {user_snapshot?.new_notications_count}
+            </Text>
+            <View style={styles.n_badge} />
             {/* <Text style={styles.header_uni_text}>
               {universityShortName(university)}
             </Text> */}
@@ -207,6 +216,17 @@ const Header = ({
 };
 
 const styles = StyleSheet.create({
+  n_badge: {
+    height: 14,
+    width: 14,
+    backgroundColor: colors.primary,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    borderRadius: 100,
+    position: "absolute",
+    top: -5,
+    left: 0,
+  },
   grad_diverder: {
     position: "absolute",
     top: 0,
@@ -239,7 +259,7 @@ const styles = StyleSheet.create({
   header_uni_text: {
     marginLeft: 7,
     marginRight: 7,
-    color: colors.white,
+    color: colors.secondary,
     fontWeight: "700",
     alignSelf: "center",
     fontSize: normalizeText(14),
@@ -255,6 +275,7 @@ const styles = StyleSheet.create({
     // paddingVertical: normalizeText(8),
     flexDirection: "row",
     alignItems: "center",
+    position: "relative",
   },
   // header_uni_wrapper: {
   //   borderWidth: 2,

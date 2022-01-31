@@ -1,25 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  createBottomTabNavigator,
-  BottomTabBar,
-} from "@react-navigation/bottom-tabs";
+import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { LinearGradient } from "expo-linear-gradient";
 import {
   StyleSheet,
-  Text,
-  View,
   Alert,
   Linking,
   Platform,
   NativeModules,
 } from "react-native";
 import { connect } from "react-redux";
-import RIcon from "react-native-remix-icon";
-//Navigators
-import FeedNavigator from "./feedNavigator";
-import SearchNavigator from "./SearchNavigator";
-import DatingNavigator from "./DatingNavigator";
 
 // Screens
 import PostPage from "../screens/PostPage";
@@ -37,6 +25,7 @@ import CreateEventPage from "../screens/CreateEventPage";
 import Profile from "../screens/Profile";
 import UpdateUniversityScreen from "../screens/settings/UpdateUniversityScreen";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
+import TabNavigator from "./TabNavigator";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -59,7 +48,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
 
 function NavigationStack({ core }) {
   if (!core.accData.profilepic) {
@@ -85,7 +73,7 @@ function NavigationStack({ core }) {
             headerShown: false,
           }}
           name={routes.APP_NAVIGATOR}
-          component={AppNavigator}
+          component={TabNavigator}
         />
         <Stack.Screen
           options={{
@@ -140,20 +128,6 @@ function NavigationStack({ core }) {
     </>
   );
 }
-
-const TabBar = (props) => {
-  return (
-    <LinearGradient
-      colors={["#1c2b3a", colors.dark]}
-      // colors={["red", "white"]}
-      start={[1, 0]}
-      end={[1, 1]}
-    >
-      {/* <View style={styles.bottomNav}></View> */}
-      <BottomTabBar {...props} style={[{ backgroundColor: "transparent" }]} />
-    </LinearGradient>
-  );
-};
 
 const AppRoutes = ({ core, setExpoPushToken }) => {
   useEffect(() => {
@@ -254,106 +228,6 @@ const SetupNavigator = ({ core }) => {
         />
       </Stack.Navigator>
     </>
-  );
-};
-
-const AppNavigator = () => {
-  return (
-    <Tab.Navigator
-      tabBar={TabBar}
-      defaultScreenOptions={{
-        tabBarHideOnKeyboard: true,
-      }}
-      screenOptions={{
-        lazy: true,
-
-        tabBarHideOnKeyboard: true,
-        tabBarStyle: {
-          // marginTop: 0,
-          backgroundColor: "transparent",
-          borderTopColor: colors.darkish2,
-          borderTopWidth: 2,
-          paddingBottom: 3,
-          paddingTop: 2,
-
-          // shadowColor: colors.black,
-          // shadowOpacity: 20,
-          // shadowRadius: 5,
-        },
-        tabBarShowLabel: true,
-      }}
-    >
-      <Tab.Screen
-        options={{
-          tabBarLabel: "Feed",
-          tabBarHideOnKeyboard: true,
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <RIcon name="home-5-line" color={color} size={size} />
-          ),
-        }}
-        name={routes.FEED_NAVIGATOR}
-        component={FeedNavigator}
-      />
-
-      <Tab.Screen
-        options={{
-          tabBarLabel: "Explore",
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <RIcon name="search-2-line" color={color} size={size} />
-          ),
-        }}
-        name={routes.SEARCH_NAVIGATOR}
-        component={SearchNavigator}
-      />
-      <Tab.Screen
-        options={{
-          tabBarLabel: "Dating",
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <RIcon name="hearts-line" color={color} size={size + 3} />
-          ),
-
-          tabBarShowLabel: true,
-        }}
-        name={routes.DATING_NAVIGATOR}
-        component={DatingNavigator}
-      />
-      {/* <Tab.Screen
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="bell-o" color={color} size={size} />
-          ),
-          tabBarShowLabel: false,
-        }}
-        name="Notifications"
-        component={FeedNavigator}
-      /> */}
-      <Tab.Screen
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <RIcon name="store-2-line" color={color} size={size} />
-          ),
-          tabBarShowLabel: false,
-        }}
-        name="Marketplace"
-        component={FeedNavigator}
-      />
-      <Tab.Screen
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <RIcon name="chat-3-line" color={color} size={size} />
-          ),
-          tabBarShowLabel: false,
-        }}
-        name="Chat"
-        component={FeedNavigator}
-      />
-    </Tab.Navigator>
   );
 };
 

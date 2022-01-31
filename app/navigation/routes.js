@@ -4,6 +4,8 @@ export const FEED_NAVIGATOR = "FeedNavigator";
 export const SEARCH_NAVIGATOR = "SearchNavigator";
 export const DATING_NAVIGATOR = "DatingNavigator";
 
+export const CHAT_HOME = "ChatHome";
+
 //Search Screens
 export const SEARCH_RESULTS = "SearchResults";
 
