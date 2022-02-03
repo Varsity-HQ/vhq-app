@@ -124,7 +124,11 @@ const Header = ({
             <Text style={styles.header_uni_text}>
               {user_snapshot?.new_notications_count}
             </Text>
-            <View style={styles.n_badge} />
+
+            {!user_snapshot.new_notifications_opened ? (
+              <View style={styles.n_badge} />
+            ) : null}
+
             {/* <Text style={styles.header_uni_text}>
               {universityShortName(university)}
             </Text> */}
@@ -301,7 +305,7 @@ const styles = StyleSheet.create({
     // height: 10,
   },
   vhq_title: {
-    fontSize: normalizeText(33),
+    fontSize: normalizeText(30),
     // fontSize: 38%,
     fontWeight: "800",
     color: colors.white,

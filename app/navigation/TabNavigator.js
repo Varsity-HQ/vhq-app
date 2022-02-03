@@ -1,3 +1,5 @@
+import React from "react";
+import { Platform } from "react-native";
 import colors from "../config/colors";
 import FeedNavigator from "./feedNavigator";
 import ChatNavigator from "./ChatNavigator";
@@ -48,11 +50,10 @@ const AppNavigator = ({ user_id }) => {
       }}
       screenOptions={{
         lazy: true,
-
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
-          // marginTop: 0,
-          backgroundColor: "transparent",
+          backgroundColor:
+            Platform.OS === "android" ? colors.dark : colors.transparent,
           borderTopColor: colors.darkish2,
           borderTopWidth: 2,
           paddingBottom: 3,

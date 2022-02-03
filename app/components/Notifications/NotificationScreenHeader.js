@@ -40,11 +40,12 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: normalizeText(16),
+    paddingVertical: normalizeText(10),
     overflow: "hidden",
     paddingHorizontal: 10,
     borderBottomColor: colors.primary,
     borderBottomWidth: 3,
+    marginBottom: 5,
   },
   vhq_title: {
     fontSize: normalizeText(33),

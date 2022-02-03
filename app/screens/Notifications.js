@@ -4,25 +4,56 @@ import Screen from "../components/Screen";
 import AppText from "../components/AppText";
 import NotificationScreenHeader from "../components/Notifications/NotificationScreenHeader";
 import Notification from "../components/Notifications/Notification";
+import { connect } from "react-redux";
+import { get_notification } from "../store/actions/notifications";
 
-function Notifications(props) {
-  useEffect(() => {
-    console.log("here");
-  });
+const mapStateToProps = (state) => {
+  return {
+    notifications: state.notifications,
+  };
+};
 
-  const renderItemHandler = ({ item }) => <Notification dasta={item} />;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get_notification: () => dispatch(get_notification()),
+  };
+};
 
-  return (
-    <Screen style={styles.container}>
-      <FlatList
-        data={[1, 2, 4]}
-        keyExtractor={(item) => item}
-        ListHeaderComponent={<NotificationScreenHeader loading={true} />}
-        renderItem={renderItemHandler}
-      />
-    </Screen>
-  );
+class Notifications extends React.PureComponent {
+  renderItemHandler = ({ item }) => <Notification data={item} />;
+
+  componentDidMount = () => {
+    this.props.get_notification();
+  };
+
+  render() {
+    const notifications = this.props.notifications;
+    console.log({ notifications });
+    return (
+      <Screen style={styles.container}>
+        <FlatList
+          data={notifications.new}
+          keyExtractor={(item) => item.id}
+          ListHeaderComponent={
+            <NotificationScreenHeader loading={notifications.loading} />
+          }
+          renderItem={this.renderItemHandler}
+          ListFooterComponent={notifications.loading ? <ListFooter /> : null}
+        />
+      </Screen>
+    );
+  }
 }
+
+const ListFooter = () => {
+  return (
+    <View>
+      <Notification />
+      <Notification />
+      <Notification />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -30,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Notifications;
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

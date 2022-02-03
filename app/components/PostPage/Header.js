@@ -63,7 +63,10 @@ function HeaderPostContent({
           )}
         </View>
         <View>
-          <PostMenu post_page data={{ ...post, ...account }} />
+          {loading ? (
+            <PostMenu post_page data={{ ...post, ...account }} />
+          ) : null}
+
           {/* <Ionicons
             name="ellipsis-horizontal-outline"
             color={colors.white}

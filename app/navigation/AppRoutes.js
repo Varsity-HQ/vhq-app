@@ -67,10 +67,16 @@ function NavigationStack({ core }) {
   return (
     <>
       <OverlayLoader />
-      <Stack.Navigator initialRouteName="AppNavigator">
+      <Stack.Navigator
+        initialRouteName="AppNavigator"
+        defaultScreenOptions={{
+          animation: "none",
+        }}
+      >
         <Stack.Screen
           options={{
             headerShown: false,
+            animation: "none",
           }}
           name={routes.APP_NAVIGATOR}
           component={TabNavigator}
@@ -78,6 +84,7 @@ function NavigationStack({ core }) {
         <Stack.Screen
           options={{
             headerShown: false,
+            animation: "none",
           }}
           name={routes.ADD_POST}
           component={AddPostPage}
