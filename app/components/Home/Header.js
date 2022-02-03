@@ -125,7 +125,7 @@ const Header = ({
               {user_snapshot?.new_notications_count}
             </Text>
 
-            {!user_snapshot.new_notifications_opened ? (
+            {!user_snapshot?.new_notifications_opened ? (
               <View style={styles.n_badge} />
             ) : null}
 

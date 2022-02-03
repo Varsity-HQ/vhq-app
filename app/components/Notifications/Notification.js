@@ -14,9 +14,17 @@ import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import { useNavigation } from "@react-navigation/native";
 import { POST_PAGE, PROFILE } from "../../navigation/routes";
+import { connect } from "react-redux";
+import { flag_notification_opened } from "../../store/actions/notifications";
 dayjs.extend(localizedFormat);
 
-function Notification({ data }) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    flag_notification_opened: (id) => dispatch(flag_notification_opened(id)),
+  };
+};
+
+function Notification({ data, flag_notification_opened }) {
   const navigation = useNavigation();
 
   if (!data) {
@@ -34,11 +42,13 @@ function Notification({ data }) {
 
   const handleNotificationPress = () => {
     if (data.type === "u_liked_post" && data.medium_id) {
+      flag_notification_opened(data.id);
       return navigation.navigate(POST_PAGE, {
         post_id: data.medium_id,
       });
     }
 
+    flag_notification_opened(data.id);
     return navigation.navigate(PROFILE, {
       username: data.username,
     });
@@ -55,7 +65,7 @@ function Notification({ data }) {
         style={{ position: "relative" }}
       >
         <Image uri={data.profilepic} style={styles.profile_pic} />
-        <View style={styles.new_indicator} />
+        {!data.n_seen ? <View style={styles.new_indicator} /> : null}
       </TouchableOpacity>
       <TouchableWithoutFeedback onPress={handleNotificationPress}>
         <View>
@@ -110,4 +120,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Notification;
+export default connect(null, mapDispatchToProps)(Notification);

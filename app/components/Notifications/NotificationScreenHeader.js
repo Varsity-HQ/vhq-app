@@ -12,28 +12,11 @@ function NotificationScreenHeader({ loading }) {
           Notifications
         </Text>
       </View>
-      <View style={styles.pContainer}>
-        <View
-          style={{
-            backgroundColor: colors.darkish3,
-            padding: 10,
-            borderRadius: 10,
-            width: "30%",
-          }}
-        >
-          <Text style={{ fontWeight: "700" }}>
-            {loading ? "Loading" : "Newer"}
-          </Text>
-        </View>
-      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  pContainer: {
-    padding: 10,
-  },
   header: {
     display: "flex",
     flexDirection: "row",

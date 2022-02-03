@@ -14,3 +14,12 @@ export const get_notification = () => (dispatch) => {
       console.log(err);
     });
 };
+
+export const flag_notification_opened = (id) => () => {
+  axios
+    .get(`/flag/notifications/opened/${id}`)
+    .then(() => {})
+    .catch((err) => {
+      console.error(err);
+    });
+};
