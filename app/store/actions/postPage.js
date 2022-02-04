@@ -48,3 +48,34 @@ export const get_post_page = (id) => (dispatch) => {
       });
   }
 };
+
+export const send_post_comment = (txt) => (dispatch) => {
+  const auth_user_data = store.getState().core.accData;
+  const post_id = store.getState().postPage.post.post.id;
+
+  axios
+    .post(`/post/comment/${post_id}`, {
+      comment: txt,
+    })
+    .then((data) => {
+      dispatch({
+        type: "ADD_POST_COMMENT",
+        payload: {
+          post_id: post_id,
+          commenter_username: auth_user_data.username,
+          commenter_profilepic: auth_user_data.profilepic,
+          commenter_firstname: auth_user_data.firstname,
+          commenter_surname: auth_user_data.surname,
+          comment_by: auth_user_data.userID,
+          date_created: new Date().toISOString(),
+          comment_text: txt,
+          comment_likes: "0",
+          comment_comments: "0",
+          comment_id: data.data.comment_id,
+        },
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

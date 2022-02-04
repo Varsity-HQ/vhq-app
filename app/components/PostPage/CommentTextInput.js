@@ -1,5 +1,11 @@
-import React from "react";
-import { View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Keyboard,
+} from "react-native";
 import { connect } from "react-redux";
 import colors from "../../config/colors";
 import Text from "../AppText";
@@ -8,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { PROFILE } from "../../navigation/routes";
 import emojis from "../../util/emojis";
 import Image from "../../components/Image";
+import { send_post_comment } from "../../store/actions/postPage";
 
 const mapStateToProps = (state) => {
   return {
@@ -19,6 +26,12 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    sendPostComment: (txt) => dispatch(send_post_comment(txt)),
+  };
+};
+
 function CommentTextInput({
   returnProfilePicture,
   profilepic,
@@ -26,9 +39,21 @@ function CommentTextInput({
   post,
   username,
   account,
+  sendPostComment,
 }) {
   const navigation = useNavigation();
+  const [commentText, setCommentText] = useState("");
+
   if (!post_page.post) return null;
+
+  const handleSendBtn = () => {
+    if (commentText) {
+      sendPostComment(commentText);
+      setCommentText("");
+      Keyboard.dismiss();
+      return;
+    }
+  };
 
   const returnPostOwner = () => {
     let poster = post_page.post.account.firstname;
@@ -80,6 +105,8 @@ function CommentTextInput({
           {/* {returnProfilePicture(emojis[2])} */}
         </TouchableOpacity>
         <TextInput
+          value={commentText}
+          onChangeText={(text) => setCommentText(text)}
           selectionColor={colors.primary}
           placeholderTextColor={colors.secondary_2}
           style={styles.comment_input}
@@ -87,8 +114,17 @@ function CommentTextInput({
             account.anonymous_profile ? "anonymously" : ""
           }`}
         />
-        <TouchableOpacity style={styles.send_btn}>
-          <Text style={styles.sendBtnText}>Send</Text>
+        <TouchableOpacity onPress={handleSendBtn} style={styles.send_btn}>
+          <Text
+            style={[
+              styles.sendBtnText,
+              commentText !== "" && {
+                color: colors.white,
+              },
+            ]}
+          >
+            Send
+          </Text>
         </TouchableOpacity>
       </View>
     </>
@@ -157,9 +193,9 @@ const styles = StyleSheet.create({
   },
   sendBtnText: {
     fontSize: 16,
-    color: "#dee2e6",
+    color: colors.gray,
     fontWeight: "700",
   },
 });
 
-export default connect(mapStateToProps, null)(CommentTextInput);
+export default connect(mapStateToProps, mapDispatchToProps)(CommentTextInput);

@@ -3,22 +3,34 @@ const initialState = {
   post_loading: true,
   comments: null,
   comments_loading: true,
-  comment_replies: [
-    // {
-    //   parent_comment_id: "bAaRufZFxLHGQyTs1yfq",
-    //   loading : false,
-    //   replies: [
-    //     {
-    //       comment_id: "C8EZS08ZHifujpfJBmlz",
-    //       comment_text: "working",
-    //     },
-    //   ],
-    // },
-  ],
+  comment_replies: [],
 };
 
 const postPageReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "ADD_POST_COMMENT":
+      let new_comments_array = state.comments;
+
+      if (state.comments) {
+        new_comments_array.unshift(actions.payload);
+      } else {
+        new_comments_array = [actions.payload];
+      }
+
+      let post_new_comments = {
+        ...state.post,
+        post: {
+          ...state.post.post,
+          comments_count: parseInt(state.post.post.comments_count) + 1,
+        },
+      };
+
+      return {
+        ...state,
+        post: post_new_comments,
+        comments: new_comments_array,
+      };
+
     case "CLEAR_POST_PAGE":
       return {
         ...state,
