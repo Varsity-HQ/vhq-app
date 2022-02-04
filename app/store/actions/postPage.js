@@ -79,3 +79,25 @@ export const send_post_comment = (txt) => (dispatch) => {
       console.log(err);
     });
 };
+
+export const replyToComment = (data) => (dispatch) => {
+  const id = data.comment_id;
+  const ctext = data.comment_text;
+  const username = data.commenter_username;
+
+  dispatch({
+    type: "SET_COMMENT_REPLY_TO",
+    payload: {
+      parentCommentId: id,
+      username: username,
+      commentText: ctext,
+    },
+  });
+};
+
+export const cancelReplyComment = () => (dispatch) => {
+  dispatch({
+    type: "SET_COMMENT_REPLY_TO",
+    payload: null,
+  });
+};

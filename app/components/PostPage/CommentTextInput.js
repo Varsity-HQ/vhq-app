@@ -14,7 +14,10 @@ import { useNavigation } from "@react-navigation/native";
 import { PROFILE } from "../../navigation/routes";
 import emojis from "../../util/emojis";
 import Image from "../../components/Image";
-import { send_post_comment } from "../../store/actions/postPage";
+import {
+  cancelReplyComment,
+  send_post_comment,
+} from "../../store/actions/postPage";
 
 const mapStateToProps = (state) => {
   return {
@@ -29,6 +32,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     sendPostComment: (txt) => dispatch(send_post_comment(txt)),
+    cancelReplyComment: () => dispatch(cancelReplyComment()),
   };
 };
 
@@ -40,6 +44,7 @@ function CommentTextInput({
   username,
   account,
   sendPostComment,
+  cancelReplyComment,
 }) {
   const navigation = useNavigation();
   const [commentText, setCommentText] = useState("");
@@ -63,26 +68,30 @@ function CommentTextInput({
     return poster;
   };
 
+  const commentToReply = post_page.replyTo;
+
   return (
     <>
-      {/* <View style={styles.reply_box_container}>
-        <View style={styles.reply_top_header}>
-          <Text style={[styles.reply_text, { marginBottom: 3 }]}>
-            Replying to @pabie
+      {post_page.replyTo || post_page?.parentCommentId ? (
+        <View style={styles.reply_box_container}>
+          <View style={styles.reply_top_header}>
+            <Text style={[styles.reply_text, { marginBottom: 3 }]}>
+              Replying to @{commentToReply.username}
+            </Text>
+            <TouchableOpacity onPress={cancelReplyComment}>
+              <Ionicons name="close" size={25} color={colors.white} />
+            </TouchableOpacity>
+          </View>
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={styles.reply_text_2}
+          >
+            {commentToReply.commentText}
           </Text>
-          <TouchableOpacity>
-            <Ionicons name="close" size={25} color={colors.white} />
-          </TouchableOpacity>
         </View>
-        <Text
-          numberOfLines={1}
-          ellipsizeMode="tail"
-          style={styles.reply_text_2}
-        >
-          Tot tot you see them post but dololo yours aiii... That's why people
-          block people aii
-        </Text>
-      </View> */}
+      ) : null}
+
       <View style={[styles.comment_box_container]}>
         <TouchableOpacity
           onPress={() =>

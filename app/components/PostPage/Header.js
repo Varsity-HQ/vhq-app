@@ -172,7 +172,7 @@ function HeaderPostContent({
             >
               <Text style={styles.post_meta}>
                 {dayjs(post.created_at).format("LLL")} ~ by{" "}
-                <Text style={{ color: colors.secondary }}>
+                <Text style={[{ color: colors.secondary }, styles.post_meta]}>
                   VasityHQ &nbsp;{post.application}
                 </Text>
               </Text>

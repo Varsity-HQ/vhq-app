@@ -4,10 +4,17 @@ const initialState = {
   comments: null,
   comments_loading: true,
   comment_replies: [],
+  replyTo: null,
 };
 
 const postPageReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "SET_COMMENT_REPLY_TO":
+      return {
+        ...state,
+        replyTo: actions.payload,
+      };
+
     case "ADD_POST_COMMENT":
       let new_comments_array = state.comments;
 
@@ -32,13 +39,7 @@ const postPageReducer = (state = initialState, actions) => {
       };
 
     case "CLEAR_POST_PAGE":
-      return {
-        ...state,
-        post: null,
-        post_loading: true,
-        comments: null,
-        comments_loading: true,
-      };
+      return (state = initialState);
 
     case "LOAD_POST_COMMENTS":
       return {

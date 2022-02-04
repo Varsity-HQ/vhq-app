@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Image } from "react-native";
-import { View, StyleSheet, Animated } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import colors from "../config/colors";
 import AppText from "./AppText";
 import { FontAwesome } from "@expo/vector-icons";
@@ -10,13 +10,30 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import DeleteComment from "./Comment/DeleteComment";
 import { RectButton } from "react-native-gesture-handler";
+import { connect } from "react-redux";
+import { replyToComment } from "../store/actions/postPage";
 dayjs.extend(relativeTime);
 
-function PostPageComment({ data, returnProfilePicture, skeleton = false }) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    replyToComment: (comment) => dispatch(replyToComment(comment)),
+  };
+};
+
+function PostPageComment({
+  data,
+  returnProfilePicture,
+  skeleton = false,
+  replyToComment,
+}) {
   const updateRef = useRef();
   if (skeleton) return <CommentSkeleton />;
 
   // console.log({ data });
+
+  const handleReplyToComment = () => {
+    replyToComment(data);
+  };
 
   const renderRightActions = () => {
     return (
@@ -62,9 +79,17 @@ function PostPageComment({ data, returnProfilePicture, skeleton = false }) {
                 alignItems: "center",
               }}
             >
-              <FontAwesome name="heart" size={18} color={colors.white} />
-              <AppText style={{ marginHorizontal: 12 }}>Reply</AppText>
-              <AppText>Report</AppText>
+              <FontAwesome name="heart" size={18} color={colors.secondary} />
+              <TouchableOpacity onPress={handleReplyToComment}>
+                <AppText
+                  style={{ marginHorizontal: 15, color: colors.secondary }}
+                >
+                  Reply{" "}
+                  {data.comment_comments > 0 || data.comment_comments !== "0"
+                    ? `${data.comment_comments}`
+                    : ""}
+                </AppText>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -95,4 +120,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostPageComment;
+export default connect(null, mapDispatchToProps)(PostPageComment);

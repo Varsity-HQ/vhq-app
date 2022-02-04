@@ -85,8 +85,6 @@ class PostPage extends React.PureComponent {
   );
 
   render() {
-    console.log(this.props.post_page.comments);
-
     return (
       <>
         <Screen style={styles.container}>

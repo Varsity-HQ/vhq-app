@@ -91,7 +91,7 @@ class Home extends PureComponent {
               : () => <Footer loadingMore={this.props.loading_more} />
           }
           data={this.props.loading ? [] : posts}
-          renderItem={(p) => this.handleListRendering(p)}
+          renderItem={this.handleListRendering}
           keyExtractor={(item) => item.id}
           initialNumToRender={10}
           onRefresh={() => this.onRefresh()}

@@ -41,6 +41,12 @@ function Notification({ data, flag_notification_opened }) {
   }
 
   const handleNotificationPress = () => {
+    if (data.type === "u_commented_on_post" && data.medium_id) {
+      flag_notification_opened(data.id);
+      return navigation.navigate(POST_PAGE, {
+        post_id: data.medium_id,
+      });
+    }
     if (data.type === "u_liked_post" && data.medium_id) {
       flag_notification_opened(data.id);
       return navigation.navigate(POST_PAGE, {
@@ -68,7 +74,7 @@ function Notification({ data, flag_notification_opened }) {
         {!data.n_seen ? <View style={styles.new_indicator} /> : null}
       </TouchableOpacity>
       <TouchableWithoutFeedback onPress={handleNotificationPress}>
-        <View>
+        <View style={{ flex: 1 }}>
           <Text>
             <Text style={styles.username}>@{data.username}</Text>&nbsp;
             {data.notification_text}
@@ -107,7 +113,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: "row",
-    alignItems: "center",
+    // alignItems: "center",
     marginBottom: 12,
     paddingHorizontal: 10,
     position: "relative",
