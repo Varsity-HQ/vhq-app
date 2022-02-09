@@ -27,7 +27,14 @@ const TabBar = (props) => {
       end={[1, 1]}
     >
       {/* <View style={styles.bottomNav}></View> */}
-      <BottomTabBar {...props} style={[{ backgroundColor: "transparent" }]} />
+      <BottomTabBar
+        {...props}
+        style={[
+          {
+            backgroundColor: "transparent",
+          },
+        ]}
+      />
     </LinearGradient>
   );
 };
@@ -56,7 +63,7 @@ const AppNavigator = ({ user_id }) => {
             Platform.OS === "android" ? colors.dark : colors.transparent,
           borderTopColor: colors.darkish2,
           borderTopWidth: 2,
-          paddingBottom: 3,
+          // paddingBottom: 0,
           paddingTop: 2,
 
           // shadowColor: colors.black,

@@ -101,3 +101,29 @@ export const cancelReplyComment = () => (dispatch) => {
     payload: null,
   });
 };
+
+export const getCommentReplies = (c_id) => (dispatch) => {
+  dispatch({
+    type: "SET_COMMENT_REPLIES_LOADING",
+    payload: c_id,
+  });
+  axios
+    .get(`/comment/${c_id}/replies`)
+    .then((data) => {
+      console.log(data.data);
+      dispatch({
+        type: "SET_COMMENT_REPLIES",
+        payload: {
+          comment_id: c_id,
+          comments: data.data,
+        },
+      });
+      dispatch({
+        type: "SET_COMMENT_REPLIES_LOADING_OFF",
+        payload: c_id,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

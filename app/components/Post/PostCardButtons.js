@@ -23,6 +23,7 @@ import {
 import * as Clipboard from "expo-clipboard";
 import check_if_followed from "../../util/check_if_followed";
 import { normalizeText } from "../../util/responsivePx";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const mapStateToProps = (state) => {
   return {
@@ -130,13 +131,13 @@ class PostCardButtons extends PureComponent {
             {this.state.post_liked ? (
               <Ionicons
                 name="heart"
-                size={normalizeText(24)}
+                size={RFValue(24)}
                 color={colors.redish_2}
               />
             ) : (
               <Ionicons
                 name="heart-outline"
-                size={normalizeText(24)}
+                size={RFValue(24)}
                 color={colors.white}
               />
             )}
@@ -144,13 +145,13 @@ class PostCardButtons extends PureComponent {
             <Text style={styles.button_text}>{data.likes_count}</Text>
           </TouchableOpacity>
           <View style={styles.button}>
-            <Commenticon fill={colors.white} size={normalizeText(23)} />
+            <Commenticon fill={colors.white} size={RFValue(22)} />
             <Text style={styles.button_text}>{data.comments_count}</Text>
           </View>
           <TouchableOpacity onPress={this.handleCopyPost} style={styles.button}>
             <Ionicons
               name="copy-outline"
-              size={normalizeText(23)}
+              size={RFValue(21)}
               color={colors.white}
             />
           </TouchableOpacity>
@@ -168,7 +169,7 @@ class PostCardButtons extends PureComponent {
                 >
                   <Feather
                     name="user-plus"
-                    size={normalizeText(11)}
+                    size={RFValue(11)}
                     color={colors.secondary}
                   />
                   &nbsp;Follow @{data.username.substring(0, 9)}..
@@ -181,15 +182,11 @@ class PostCardButtons extends PureComponent {
           style={styles.button}
         >
           {this.state.bookmarked ? (
-            <Ionicons
-              name="bookmark"
-              size={normalizeText(22)}
-              color={colors.white}
-            />
+            <Ionicons name="bookmark" size={RFValue(22)} color={colors.white} />
           ) : (
             <Ionicons
               name="bookmark-outline"
-              size={normalizeText(22)}
+              size={RFValue(22)}
               color={colors.white}
             />
           )}
@@ -202,12 +199,12 @@ class PostCardButtons extends PureComponent {
 const styles = StyleSheet.create({
   button_text: {
     color: colors.white,
-    fontSize: normalizeText(15),
+    fontSize: RFValue(14),
     paddingLeft: 5,
   },
   button_text_2: {
     color: colors.secondary,
-    fontSize: normalizeText(12),
+    fontSize: RFValue(11),
     // paddingLeft: 5,
   },
   button: {

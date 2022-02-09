@@ -11,6 +11,7 @@ import { COPY_URL_IN_POST } from "../../util/toast_messages";
 import { useNavigation } from "@react-navigation/native";
 import { PROFILE } from "../../navigation/routes";
 import { normalizeText } from "../../util/responsivePx";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const CustomTextRenderer = (props) => {
   //
@@ -95,7 +96,10 @@ const tagsStyles = {
   body: {
     whiteSpace: "normal",
     color: colors.white,
-    fontSize: normalizeText(15),
+    // fontSize: RFValue(16),
+  },
+  p: {
+    fontSize: 10,
   },
 };
 //
@@ -145,7 +149,7 @@ const styles = StyleSheet.create({
 
   text: {
     color: colors.white,
-    fontSize: normalizeText(15),
+    fontSize: RFValue(13),
   },
 
   phone: {

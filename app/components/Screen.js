@@ -6,10 +6,10 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
+  // SafeAreaView,
 } from "react-native";
-// import { SafeAreaView } from "react-native-safe-area-context";
-const statusBarHeight = Constants.statusBarHeight;
+import { SafeAreaView } from "react-native-safe-area-context";
+// const statusBarHeight = Constants.statusBarHeight;
 
 function Screen({
   children,
@@ -19,7 +19,7 @@ function Screen({
   behavior = "position",
 }) {
   return (
-    <SafeAreaView style={[styles.screen, style]}>
+    <View style={[styles.screen, style]}>
       {scroll ? (
         <ScrollView style={[style, styles.view]}>
           {avoidkeyboard && Platform.OS === "ios" ? (
@@ -47,13 +47,13 @@ function Screen({
           )}
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: statusBarHeight,
+    // paddingTop: statusBarHeight,
     flex: 1,
   },
   view: {

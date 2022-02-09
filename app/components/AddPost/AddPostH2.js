@@ -21,6 +21,7 @@ import {
   update_temp_anon_name,
 } from "../../store/actions/actions";
 import Popover from "react-native-popover-view";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const mapStateToProps = (state) => {
   return {
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
   text: {
     color: colors.white,
     fontWeight: "800",
-    fontSize: 16,
+    fontSize: RFValue(13),
   },
   emoji_pic: {
     width: 50,

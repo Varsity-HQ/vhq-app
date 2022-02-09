@@ -24,6 +24,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import { doc } from "firebase/firestore";
 import db from "../../util/fb_admin";
 import { NOTIFICATIONS } from "../../navigation/routes";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const home_tabs = [
   {
@@ -270,7 +271,7 @@ const styles = StyleSheet.create({
     color: colors.secondary,
     fontWeight: "700",
     alignSelf: "center",
-    fontSize: normalizeText(14),
+    fontSize: RFValue(14),
   },
   header_uni_wrapper: {
     borderWidth: 2,
@@ -305,7 +306,7 @@ const styles = StyleSheet.create({
     // height: 10,
   },
   vhq_title: {
-    fontSize: normalizeText(30),
+    fontSize: RFValue(30),
     // fontSize: 38%,
     fontWeight: "800",
     color: colors.white,

@@ -11,12 +11,13 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import DeleteComment from "./Comment/DeleteComment";
 import { RectButton } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import { replyToComment } from "../store/actions/postPage";
+import { replyToComment, getCommentReplies } from "../store/actions/postPage";
 dayjs.extend(relativeTime);
 
 const mapDispatchToProps = (dispatch) => {
   return {
     replyToComment: (comment) => dispatch(replyToComment(comment)),
+    handleOpenResponses: (id) => dispatch(getCommentReplies(id)),
   };
 };
 
@@ -25,6 +26,7 @@ function PostPageComment({
   returnProfilePicture,
   skeleton = false,
   replyToComment,
+  handleOpenResponses,
 }) {
   const updateRef = useRef();
   if (skeleton) return <CommentSkeleton />;
@@ -57,6 +59,7 @@ function PostPageComment({
           }}
         >
           {returnProfilePicture(data.commenter_profilepic, styles.p_avatar)}
+          <View style={styles.comment_line} />
           <View style={{ marginLeft: 10, flex: 1 }}>
             <AppText style={styles.u_name}>
               {data.commenter_username}
@@ -91,6 +94,55 @@ function PostPageComment({
                 </AppText>
               </TouchableOpacity>
             </View>
+            <View style={{ marginBottom: 10, marginTop: 5 }}>
+              {data.comment_comments > 0 || data.comment_comments !== "0" ? (
+                <TouchableOpacity
+                  onPress={() => handleOpenResponses(data.comment_id)}
+                >
+                  <AppText style={styles.responses_text}>
+                    {data.comments_loading
+                      ? "-loading responses-"
+                      : "See responses"}
+                  </AppText>
+                </TouchableOpacity>
+              ) : null}
+
+              <View>
+                {data.comments_replies?.map((x) => (
+                  <View key={x.comment_id}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        paddingTop: 13,
+                        paddingBottom: 5,
+                      }}
+                    >
+                      {returnProfilePicture(
+                        x.commenter_profilepic,
+                        styles.p_avatar,
+                      )}
+                      <View style={{ marginLeft: 10, flex: 1 }}>
+                        <AppText style={styles.u_name}>
+                          {x.commenter_username}
+                          <AppText style={styles.date_posted}>
+                            &nbsp;•&nbsp;
+                            {dayjs(x.date_created).fromNow()}
+                          </AppText>
+                        </AppText>
+                        <View
+                          style={{
+                            paddingVertical: 5,
+                            marginRight: 0,
+                          }}
+                        >
+                          <AppText>{x.comment_text}</AppText>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                ))}
+              </View>
+            </View>
           </View>
         </View>
       </View>
@@ -99,6 +151,17 @@ function PostPageComment({
 }
 
 const styles = StyleSheet.create({
+  comment_line: {
+    // width: 2,
+    // height: "100%",
+    // backgroundColor: "white",
+    // alignSelf: "center",
+    // flex: 1,
+  },
+  responses_text: {
+    fontWeight: "700",
+    color: colors.secondary,
+  },
   date_posted: {
     fontSize: 14,
     color: colors.secondary,
@@ -112,6 +175,7 @@ const styles = StyleSheet.create({
     width: 45,
     borderRadius: 50,
     backgroundColor: colors.darkish3,
+    // flex : 1
   },
 
   container: {

@@ -9,6 +9,8 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
+import { scale, verticalScale, moderateScale } from "react-native-size-matters";
+
 import colors from "../config/colors";
 import SkeletonPost from "./Skeletons/Post";
 import dayjs from "dayjs";
@@ -34,10 +36,11 @@ import Text from "./AppText";
 import { FontAwesome, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Button from "./Button";
 import EventFooterButtons from "./Post/EventFooterButtons";
+import { RFValue } from "react-native-responsive-fontsize";
 
 dayjs.extend(Localize);
 
-const { width: deviceWidth, height } = Dimensions.get("window");
+const { width: deviceWidth, height, fontScale } = Dimensions.get("window");
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -495,12 +498,12 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   username: {
-    fontSize: normalizeText(15),
+    fontSize: RFValue(14),
     color: colors.secondary,
   },
   u_name: {
     fontWeight: "700",
-    fontSize: normalizeText(16),
+    fontSize: RFValue(15),
     color: colors.white,
     alignItems: "center",
     flexDirection: "row",
@@ -513,6 +516,8 @@ const styles = StyleSheet.create({
     // width: 45,
 
     height: height * 0.058,
+    // height: verticalScale(40),
+    // width: verticalScale(40),
     width: height * 0.058,
   },
   container: {

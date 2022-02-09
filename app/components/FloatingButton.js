@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
   container: {
     overflow: "hidden",
 
-    height: height * 0.105,
-    width: height * 0.105,
+    height: height * 0.09,
+    width: height * 0.09,
 
     borderRadius: 100,
     position: "absolute",
@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   shadow: {
-    height: height * 0.105,
-    width: height * 0.105,
+    height: height * 0.09,
+    width: height * 0.09,
     borderRadius: 100,
     position: "absolute",
     bottom: 40,

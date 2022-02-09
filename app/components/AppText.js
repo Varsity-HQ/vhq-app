@@ -3,6 +3,7 @@ import { Text, StyleSheet, Platform } from "react-native";
 import colors from "../config/colors";
 import EStyleSheet from "react-native-extended-stylesheet";
 import { normalizeText } from "../util/responsivePx";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const allowFontScaling = false;
 
@@ -68,7 +69,7 @@ function AppText({ children, style, regular = true, ...props }) {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: normalizeText(15),
+    fontSize: RFValue(13),
     color: colors.white,
     fontFamily: "Ubuntu-regular",
   },

@@ -7,6 +7,7 @@ import Notification from "../components/Notifications/Notification";
 import { connect } from "react-redux";
 import { get_notification } from "../store/actions/notifications";
 import colors from "../config/colors";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const mapStateToProps = (state) => {
   return {
@@ -63,7 +64,9 @@ class Notifications extends React.PureComponent {
                     width: "50%",
                   }}
                 >
-                  <Text style={{ fontWeight: "700" }}>{section.title}</Text>
+                  <Text style={{ fontWeight: "700", fontSize: RFValue(14) }}>
+                    {section.title}
+                  </Text>
                 </View>
               </View>
             );
@@ -82,7 +85,7 @@ class Notifications extends React.PureComponent {
 
 const ListFooter = () => {
   return (
-    <View>
+    <View style={{ marginTop: 20 }}>
       <Notification />
       <Notification />
       <Notification />
@@ -93,6 +96,7 @@ const ListFooter = () => {
 const styles = StyleSheet.create({
   pContainer: {
     padding: 10,
+    marginBottom: 10,
   },
   container: {
     flex: 1,

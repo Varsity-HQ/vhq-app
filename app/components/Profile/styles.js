@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 import colors from "../../config/colors";
 import { normalizeText } from "../../util/responsivePx";
 
@@ -51,14 +52,14 @@ const styles = StyleSheet.create({
   user_stream: {
     color: colors.lighish2,
     fontWeight: "500",
-    fontSize: normalizeText(13),
+    fontSize: RFValue(13),
     paddingVertical: 2,
   },
   username: {
     color: colors.secondary,
     fontWeight: "500",
     marginBottom: 5,
-    fontSize: normalizeText(14),
+    fontSize: RFValue(13),
     // fontSize: 40,
   },
   profilepic: {

@@ -9,6 +9,60 @@ const initialState = {
 
 const postPageReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "SET_COMMENT_REPLIES":
+      let comment_to_set_replies = state.comments;
+
+      if (comment_to_set_replies) {
+        comment_to_set_replies.forEach((x, index) => {
+          if (x.comment_id === actions.payload.comment_id) {
+            comment_to_set_replies[index] = {
+              ...x,
+              comments_loading: false,
+              comments_replies: actions.payload.comments,
+            };
+          }
+        });
+      }
+      return {
+        ...state,
+        comments: comment_to_set_replies,
+      };
+    case "SET_COMMENT_REPLIES_LOADING":
+      let comments_to_set_loading = state.comments;
+
+      if (comments_to_set_loading) {
+        comments_to_set_loading.forEach((x, index) => {
+          if (x.comment_id === actions.payload) {
+            comments_to_set_loading[index] = {
+              ...x,
+              comments_loading: true,
+            };
+          }
+        });
+      }
+
+      return {
+        ...state,
+        comments: comments_to_set_loading,
+      };
+    case "SET_COMMENT_REPLIES_LOADING_OFF":
+      let comments_to_set_not_loading = state.comments;
+
+      if (comments_to_set_not_loading) {
+        comments_to_set_not_loading.forEach((x, index) => {
+          if (x.comment_id === actions.payload) {
+            comments_to_set_not_loading[index] = {
+              ...x,
+              comments_loading: false,
+            };
+          }
+        });
+      }
+
+      return {
+        ...state,
+        comments: comments_to_set_not_loading,
+      };
     case "SET_COMMENT_REPLY_TO":
       return {
         ...state,

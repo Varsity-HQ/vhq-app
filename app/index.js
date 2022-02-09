@@ -21,8 +21,8 @@ import { initializeApp, getApps } from "firebase/app";
 import { firebaseConfig } from "./util/fb_config";
 import { Image, StatusBar } from "react-native";
 import AppToast from "./components/AppToast";
-import { FAILED_TO_INITIALIZE } from "./util/toast_messages";
 import { Asset } from "expo-asset";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import {
   FontAwesome,
@@ -158,7 +158,9 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
         hidden={false}
       />
       <NavigationContainer theme={vhqTheme}>
-        {authenticated && userID ? <AppNavigator /> : <AuthRoutes />}
+        <SafeAreaView style={{ flex: 1 }}>
+          {authenticated && userID ? <AppNavigator /> : <AuthRoutes />}
+        </SafeAreaView>
       </NavigationContainer>
       <Toast config={toastConfig} />
     </>

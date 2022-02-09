@@ -2,7 +2,7 @@ import React from "react";
 import IndexContainer from "./app/index";
 import { Provider } from "react-redux";
 import store from "./app/store/store";
-// import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 // import "react-native-gesture-handler";
 
@@ -18,10 +18,10 @@ import store from "./app/store/store";
 
 export default function App() {
   return (
-    // <SafeAreaProvider>
-    <Provider store={store}>
-      <IndexContainer />
-    </Provider>
-    // </SafeAreaProvider>
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <IndexContainer />
+      </Provider>
+    </SafeAreaProvider>
   );
 }

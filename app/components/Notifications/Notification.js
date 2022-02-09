@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { POST_PAGE, PROFILE } from "../../navigation/routes";
 import { connect } from "react-redux";
 import { flag_notification_opened } from "../../store/actions/notifications";
+import { RFValue } from "react-native-responsive-fontsize";
 dayjs.extend(localizedFormat);
 
 const mapDispatchToProps = (dispatch) => {
@@ -108,7 +109,8 @@ const styles = StyleSheet.create({
     width: "56%",
   },
   date_created: {
-    fontSize: normalizeText(13),
+    marginTop: 5,
+    fontSize: RFValue(12),
     color: colors.secondary,
   },
   container: {
