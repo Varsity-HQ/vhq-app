@@ -26,7 +26,7 @@ const chat_tabs = [
     icon: <MaterialCommunityIcons color={colors.white} size={18} name="chat" />,
   },
   {
-    title: "Unwanted",
+    title: "Unwanted (2)",
     index: 2,
     icon: <FontAwesome color={colors.white} size={16} name="life-ring" />,
   },
@@ -49,22 +49,11 @@ function ChatHeader({ navigation, user_data }) {
   return (
     <View style={styles.header_container}>
       <View style={styles.header}>
-        <View>
-          <TouchableWithoutFeedback
-            onPress={() =>
-              navigation.navigate(PROFILE, {
-                username: user_data.username,
-              })
-            }
-          >
-            <Image
-              transitionDuration={300}
-              style={styles.profilepic}
-              uri={user_data.profilepic}
-            />
-          </TouchableWithoutFeedback>
-        </View>
-        <View>
+        <View
+          style={{
+            paddingHorizontal: 10,
+          }}
+        >
           <Text allowFontScaling={false} style={styles.vhq_title}>
             Chatroom
           </Text>

@@ -1,13 +1,88 @@
-import React from "react";
-import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
+import React, { useState } from "react";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { View, StyleSheet, FlatList } from "react-native";
 import Text from "../../components/AppText";
 import Screen from "../../components/Screen";
 import db from "../../util/fb_admin";
 import ChatHeader from "../../components/Chat/ChatHeader";
+import { connect } from "react-redux";
 import styles from "../../components/Chat/styles";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
-function ChatHome(props) {
+const mapStateToProps = (state) => {
+  return {
+    acc_data: state.core.accData,
+  };
+};
+
+function ChatHome({ acc_data }) {
+  const [userAccountsModal, set_modal_state] = useState(false);
+  const [activetab, setactivetab] = useState(0);
+  const chat_ref = collection(db, "chats");
+
+  const query_ = query(
+    chat_ref,
+    where("members", "array-contains", acc_data.userID),
+    orderBy("last_update", "desc"),
+  );
+
+  const [chats, chats_loading] = useCollectionData(query_);
+  const [chat_global_loader, set_chat_global_loader] = useState(false);
+
+  console.log({ chats });
+
+  let accounts_in_chat = [];
+
+  if (!chats_loading) {
+    chats.forEach((x) => {
+      x.members.forEach((m) => {
+        if (m !== acc_data.userID) {
+          accounts_in_chat.push(m);
+        }
+      });
+    });
+
+    function getAcc() {
+      let ua_promises = [];
+      accounts_in_chat.forEach((x) => {
+        const acc_ref = doc(db, "accounts", x);
+
+        ua_promises.push(getDoc(acc_ref));
+      });
+      return Promise.all(ua_promises);
+    }
+
+    const set_array_to_state = (n) => {
+      // console.log("fire");
+      // console.log({ n });
+      // set_parsed_acc({ n });
+    };
+
+    // getAcc()
+    //   .then((x) => {
+    //     let accounts_parsed_local = [];
+    //     x.forEach((p) => {
+    //       accounts_parsed_local.push(p.data());
+    //     });
+
+    //     set_array_to_state(accounts_parsed_local);
+    //     // console.log(accounts_parsed_local);
+
+    //     set_accounts_loading(false);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  }
+
   return (
     <Screen>
       <FlatList ListHeaderComponent={<ChatHeader />} />
@@ -15,4 +90,4 @@ function ChatHome(props) {
   );
 }
 
-export default ChatHome;
+export default connect(mapStateToProps, null)(ChatHome);
