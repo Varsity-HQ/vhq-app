@@ -16,6 +16,7 @@ import ChatHeader from "../../components/Chat/ChatHeader";
 import { connect } from "react-redux";
 import styles from "../../components/Chat/styles";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import ChatRoomFooter from "../../components/Chat/ChatRoomFooter";
 
 const mapStateToProps = (state) => {
   return {
@@ -28,6 +29,8 @@ function ChatHome({ acc_data }) {
   const [activetab, setactivetab] = useState(0);
   const chat_ref = collection(db, "chats");
 
+  const [pageIndex, setPageIndex] = useState(0);
+
   const query_ = query(
     chat_ref,
     where("members", "array-contains", acc_data.userID),
@@ -36,8 +39,6 @@ function ChatHome({ acc_data }) {
 
   const [chats, chats_loading] = useCollectionData(query_);
   const [chat_global_loader, set_chat_global_loader] = useState(false);
-
-  console.log({ chats });
 
   let accounts_in_chat = [];
 
@@ -85,7 +86,10 @@ function ChatHome({ acc_data }) {
 
   return (
     <Screen>
-      <FlatList ListHeaderComponent={<ChatHeader />} />
+      <FlatList
+        ListHeaderComponent={<ChatHeader />}
+        ListFooterComponent={<ChatRoomFooter tab={pageIndex} data={chats} />}
+      />
     </Screen>
   );
 }

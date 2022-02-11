@@ -109,6 +109,33 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   container: {},
+  footer_container: {
+    padding: 20,
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  footer_text_container: {
+    textAlign: "center",
+  },
+  s_c_button: {
+    borderRadius: 100,
+    borderColor: colors.secondary,
+    borderWidth: 2,
+    paddingVertical: 10,
+  },
+  t_center: {
+    textAlign: "center",
+  },
+  subText: {
+    color: colors.secondary,
+    marginBottom: 20,
+    fontSize: RFValue(14),
+  },
+  header3: {
+    fontSize: RFValue(20),
+    marginBottom: 10,
+    fontWeight: "700",
+  },
 });
 
 export default styles;
