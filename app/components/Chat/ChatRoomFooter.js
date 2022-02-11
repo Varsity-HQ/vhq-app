@@ -6,7 +6,7 @@ import styles from "./styles";
 
 function ChatRoomFooter({ tab, data = [] }) {
   if (tab === 0) {
-    if (data.length > 0) {
+    if (data.length === 0) {
       return (
         <View style={styles.footer_container}>
           <View style={styles.footer_text_container}>
@@ -26,12 +26,7 @@ function ChatRoomFooter({ tab, data = [] }) {
       );
     }
   }
-
-  return (
-    <View style={styles.container}>
-      <Text>...</Text>
-    </View>
-  );
+  return null;
 }
 
 export default ChatRoomFooter;

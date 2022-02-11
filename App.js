@@ -6,9 +6,11 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 // import "react-native-gesture-handler";
 
-// import { LogBox } from "react-native";
+// console.ignoredYellowBox = ['Setting a timer'];
+
+import { LogBox } from "react-native";
 // import _ from "lodash";
-// LogBox.ignoreLogs(["Setting a timer"]);
+LogBox.ignoreLogs(["Setting a timer"]);
 // const _console = _.clone(console);
 // console.warn = (message) => {
 //   if (message.indexOf("Setting a timer") <= -1) {

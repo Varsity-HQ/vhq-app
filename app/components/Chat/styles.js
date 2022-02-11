@@ -136,6 +136,53 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: "700",
   },
+  chat_profile_pic: {
+    height: height * 0.07,
+    width: height * 0.07,
+    borderRadius: 100,
+    marginRight: 10,
+  },
+  c_s_left_section: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  c_s_container: {
+    marginBottom: 10,
+    marginTop: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
+  },
+  c_s_user_time: {
+    marginVertical: 3,
+    flexDirection: "row",
+  },
+  c_s_name: {
+    fontWeight: "700",
+  },
+  c_s_msg_preview: {
+    color: colors.secondary,
+  },
+  c_s_dot: {
+    height: height * 0.013,
+    width: height * 0.013,
+    backgroundColor: colors.primary,
+    borderRadius: 100,
+    alignSelf: "flex-end",
+  },
+  c_s_time_stamp: {
+    backgroundColor: colors.darkish3,
+    paddingHorizontal: 5,
+    paddingVertical: 1,
+    marginLeft: 7,
+  },
+  c_s_time_text: {
+    fontSize: RFValue(12),
+  },
+  c_s_dot_sptor: {
+    fontSize: RFValue(15),
+    color: colors.secondary,
+  },
 });
 
 export default styles;

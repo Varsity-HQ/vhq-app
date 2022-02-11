@@ -17,6 +17,8 @@ import { connect } from "react-redux";
 import styles from "../../components/Chat/styles";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import ChatRoomFooter from "../../components/Chat/ChatRoomFooter";
+import { __get_chatAcc_id } from "../../util/chatRoomUtils";
+import ChatSelector from "../../components/Chat/ChatSelector";
 
 const mapStateToProps = (state) => {
   return {
@@ -87,11 +89,24 @@ function ChatHome({ acc_data }) {
   return (
     <Screen>
       <FlatList
+        data={chats}
+        renderItem={renderItem}
+        keyExtractor={(x) => __get_chatAcc_id(x)}
         ListHeaderComponent={<ChatHeader />}
-        ListFooterComponent={<ChatRoomFooter tab={pageIndex} data={chats} />}
+        ListFooterComponent={
+          <ChatRoomFooter
+            loading={chats_loading}
+            tab={pageIndex}
+            data={chats}
+          />
+        }
       />
     </Screen>
   );
 }
+
+const renderItem = ({ item }) => {
+  return <ChatSelector data={item} />;
+};
 
 export default connect(mapStateToProps, null)(ChatHome);
