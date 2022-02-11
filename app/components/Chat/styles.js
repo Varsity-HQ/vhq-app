@@ -1,0 +1,114 @@
+import { Dimensions, StyleSheet } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
+import colors from "../../config/colors";
+import { normalizeText } from "../../util/responsivePx";
+
+const height = Dimensions.get("window").height;
+
+const styles = StyleSheet.create({
+  container: {},
+  header_container: {},
+  n_badge: {
+    height: 14,
+    width: 14,
+    backgroundColor: colors.primary,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    borderRadius: 100,
+    position: "absolute",
+    top: -5,
+    left: 0,
+  },
+  grad_diverder: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
+    height: "100%",
+    width: "100%",
+  },
+
+  tab: {
+    marginLeft: 10,
+    height: "100%",
+  },
+  tabbar_container: {
+    borderTopWidth: 3,
+    borderRadius: 0,
+    borderTopColor: colors.primary,
+    backgroundColor: colors.dark,
+  },
+  profilepic: {
+    height: height * 0.07,
+    width: height * 0.07,
+
+    marginLeft: 15,
+    borderRadius: 100,
+    borderWidth: 3,
+    borderColor: colors.dark_opacity_2,
+  },
+  header_uni_text: {
+    marginLeft: 7,
+    marginRight: 7,
+    color: colors.secondary,
+    fontWeight: "700",
+    alignSelf: "center",
+    fontSize: RFValue(14),
+  },
+  header_uni_wrapper: {
+    // borderWidth: 2,
+    // borderColor: colors.secondary_2,
+    borderRadius: 50,
+    padding: normalizeText(8),
+    marginRight: 10,
+    paddingLeft: 15,
+    // paddingHorizontal: normalizeText(18),
+    // paddingVertical: normalizeText(8),
+    flexDirection: "row",
+    alignItems: "center",
+    position: "relative",
+  },
+  // header_uni_wrapper: {
+  //   borderWidth: 2,
+  //   borderColor: colors.secondary,
+  //   borderRadius: 50,
+  //   borderRightWidth: 0,
+  //   borderTopRightRadius: 0,
+  //   borderBottomRightRadius: 0,
+  //   paddingHorizontal: normalizeText(18),
+  //   paddingVertical: normalizeText(8),
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  // },
+  header_uni_container: {
+    width: "30%",
+    display: "flex",
+    flexDirection: "row-reverse",
+    alignItems: "center",
+    // height: 10,
+  },
+  vhq_title: {
+    fontSize: RFValue(30),
+    // fontSize: 38%,
+    fontWeight: "800",
+    color: colors.white,
+    fontFamily: "Lobster-Regular",
+    height: 39,
+    // alignItems: "center",
+    // flexDirection: "row",
+  },
+
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: normalizeText(18),
+    overflow: "hidden",
+  },
+  container: {},
+});
+
+export default styles;
