@@ -17,7 +17,7 @@ import {
 } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import { connect } from "react-redux";
-import { PROFILE } from "../../navigation/routes";
+import { PROFILE_SETTINGS } from "../../navigation/routes";
 
 const chat_tabs = [
   {

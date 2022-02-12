@@ -15,7 +15,7 @@ function ChatSelector({ data }) {
           <View style={styles.c_s_user_time}>
             <View>
               <Text>
-                @hector shovambu_ <Text style={styles.c_s_dot_sptor}>•</Text>
+                @hector shovambu_<Text style={styles.c_s_dot_sptor}> •</Text>
               </Text>
             </View>
             <View style={styles.c_s_time_stamp}>
@@ -23,7 +23,7 @@ function ChatSelector({ data }) {
             </View>
           </View>
           <Text>
-            me : <Text style={styles.c_s_msg_preview}>Say hi</Text>
+            me :<Text style={styles.c_s_msg_preview}> Say hi</Text>
           </Text>
         </View>
       </View>
