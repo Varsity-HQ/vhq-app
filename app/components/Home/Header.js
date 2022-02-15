@@ -25,6 +25,7 @@ import { doc } from "firebase/firestore";
 import db from "../../util/fb_admin";
 import { NOTIFICATIONS } from "../../navigation/routes";
 import { RFValue } from "react-native-responsive-fontsize";
+import OffersHeader from "./OffersHeader";
 
 const home_tabs = [
   {
@@ -197,6 +198,7 @@ const Header = ({
             position: "relative",
             borderTopWidth: 2,
             // marginTop: 10,
+            height: index !== 4 ? null : 0,
           }}
         >
           <Text
@@ -221,11 +223,16 @@ const Header = ({
           />
         </View>
       )}
+
+      <OffersHeader show={index === 4} />
     </View>
   );
 };
 
 const SimpleHeaderText = ({ tab, university }) => {
+  if (tab === 4) {
+    return null;
+  }
   if (tab === 1) {
     return (
       <>
