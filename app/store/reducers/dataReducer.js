@@ -13,6 +13,12 @@ const initialData = {
     loading: true,
     page_cursor: null,
     posts: [],
+    //
+    events: [],
+    loading_events: true,
+    events_cursor: null,
+    events_error: false,
+    //
     error: false,
     refreshing: false,
     loading_more: false,
@@ -190,8 +196,19 @@ const dataReducer = (state = initialData, actions) => {
         },
       };
 
+    case "SET_HOME_EVENTS":
+      return {
+        ...state,
+        home_data: {
+          ...state.home_data,
+          events: actions.payload,
+          loading_events: false,
+        },
+      };
+
     case "SET_HOME_POSTS":
       let updated_home_data = {
+        ...state.home_data,
         loading: false,
         page_cursor: actions.payload.cursor,
         posts: actions.payload.posts,

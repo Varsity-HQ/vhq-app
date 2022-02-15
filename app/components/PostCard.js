@@ -410,9 +410,7 @@ const EventPost = ({ data, profilepic, handleOpenPost, handleOpenProfile }) => {
               color={colors.secondary}
               size={16}
             />
-            <Text
-              style={{ fontSize: normalizeText(13), color: colors.secondary }}
-            >
+            <Text style={{ fontSize: RFValue(13), color: colors.secondary }}>
               {parseInt(data.likes_count)} people interested
             </Text>
           </View>
@@ -427,7 +425,7 @@ const EventPost = ({ data, profilepic, handleOpenPost, handleOpenProfile }) => {
                 }}
                 source={require("../assets/vhqcat-small.png")}
               />
-              <Text style={{ fontSize: normalizeText(12), color: "#4f708a" }}>
+              <Text style={{ fontSize: RFValue(11), color: "#4f708a" }}>
                 {/* {data.application} */}
                 VarsityHQ ~{""}
                 {Platform.OS === "ios" && " iPhone"}
@@ -461,18 +459,18 @@ const styles = StyleSheet.create({
     width: "25%",
   },
   event_name: {
-    fontSize: normalizeText(22),
+    fontSize: RFValue(20),
     fontWeight: "700",
   },
   event_venue: {
     marginLeft: 5,
-    fontSize: normalizeText(13),
+    fontSize: RFValue(13),
     fontWeight: "700",
   },
   event_date: {
     marginLeft: 5,
     // color: colors.secondary,
-    fontSize: normalizeText(13),
+    fontSize: RFValue(11),
   },
   def_padding: {
     paddingHorizontal: 10,
@@ -491,7 +489,7 @@ const styles = StyleSheet.create({
   },
   date_posted: {
     paddingLeft: 10,
-    fontSize: normalizeText(12),
+    fontSize: RFValue(12),
     fontWeight: "500",
     color: colors.secondary,
     alignSelf: "center",

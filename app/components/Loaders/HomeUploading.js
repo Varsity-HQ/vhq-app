@@ -18,7 +18,7 @@ function uploadLoader({ overlayloader }) {
           style={styles.lottie}
           autoPlay
           loop
-          speed={1}
+          speed={2}
           source={require("../../assets/animations/uploadingbar_2.json")}
         />
       </View>
@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
   lottie: {
     // borderColor: "red",
     // borderWidth: 1,
-    height: 90,
-    width: 90,
+    height: 140,
+    width: 140,
     top: -12,
   },
 });

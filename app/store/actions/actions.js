@@ -9,6 +9,20 @@ import {
   POST_POST_SUCCESS_POSTED,
 } from "../../util/toast_messages";
 
+export const get_home_events = () => (dispatch) => {
+  axios
+    .get("/get/events")
+    .then((data) => {
+      dispatch({
+        type: "SET_HOME_EVENTS",
+        payload: data.data.events,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const reset_poll_details_page = () => (dispatch) => {
   dispatch({
     type: "RESET_POLL_POST_DETAILS",

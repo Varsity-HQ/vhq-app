@@ -52,7 +52,7 @@ class EventFooterButtons extends React.PureComponent {
           <Button
             onPress={this.handleIntrested}
             style={[
-              { height: height * 0.06 },
+              { height: height * 0.05 },
               !this.state.intrested && {
                 borderWidth: 2,
                 borderColor: colors.secondary,
@@ -82,7 +82,7 @@ class EventFooterButtons extends React.PureComponent {
           />
         </View>
         <View style={[styles.width20, { paddingLeft: 10 }]}>
-          <PostMenu height={height * 0.06} event data={data} />
+          <PostMenu height={height * 0.05} event data={data} />
         </View>
       </View>
     );

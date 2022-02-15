@@ -63,6 +63,7 @@ const mapStateToProps = (state) => {
   return {
     uploading: state.data.new_post.uploading,
     user_id: state.core.accData.userID,
+    university: state.core.accData.university,
   };
 };
 
@@ -73,8 +74,9 @@ const Header = ({
   username,
   university,
   user_id,
+  index = 1,
+  setTab,
 }) => {
-  const [index, setTab] = useState(1);
   const userDocRef = doc(db, "accounts", user_id);
   const [user_snapshot, loading, error] = useDocumentData(userDocRef);
 
@@ -176,7 +178,7 @@ const Header = ({
             }}
           >
             {/* <HomeUploading /> */}
-            <Text style={{ fontWeight: "700" }}>Posting post ... </Text>
+            <Text style={{ fontWeight: "700" }}>Post in progress ... </Text>
             {/* <Text style={{ fontSize: 14 }}>showing recent posts</Text> */}
           </View>
           <LinearGradient
@@ -208,8 +210,7 @@ const Header = ({
               flexDirection: "column",
             }}
           >
-            <Text style={{ fontWeight: "700" }}>Timeline | </Text>
-            <Text style={{ fontSize: 14 }}>showing recent posts</Text>
+            <SimpleHeaderText university={university} tab={index} />
           </Text>
           <LinearGradient
             colors={["#1160af", "#9e7b9b"]}
@@ -221,6 +222,33 @@ const Header = ({
         </View>
       )}
     </View>
+  );
+};
+
+const SimpleHeaderText = ({ tab, university }) => {
+  if (tab === 1) {
+    return (
+      <>
+        <Text style={{ fontWeight: "700" }}>Timeline | </Text>
+        <Text style={{ fontSize: 14 }}>showing recent posts</Text>
+      </>
+    );
+  }
+  if (tab === 2) {
+    return (
+      <>
+        <Text style={{ fontWeight: "700" }}>Events | </Text>
+        <Text style={{ fontSize: 14 }}>
+          showing events at {universityShortName(university)}
+        </Text>
+      </>
+    );
+  }
+  return (
+    <>
+      <Text style={{ fontWeight: "700" }}>Timeline | </Text>
+      <Text style={{ fontSize: 14 }}>showing recent posts</Text>
+    </>
   );
 };
 
