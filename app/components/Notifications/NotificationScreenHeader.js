@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 import Text from "../../components/AppText";
 import colors from "../../config/colors";
 import { normalizeText } from "../../util/responsivePx";
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   vhq_title: {
-    fontSize: normalizeText(33),
+    fontSize: RFValue(33),
     fontWeight: "800",
     color: colors.white,
     fontFamily: "Lobster-Regular",

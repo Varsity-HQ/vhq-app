@@ -8,7 +8,10 @@ import {
   Platform,
   // SafeAreaView,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 // const statusBarHeight = Constants.statusBarHeight;
 
 function Screen({
@@ -17,9 +20,24 @@ function Screen({
   scroll,
   avoidkeyboard,
   behavior = "position",
+  removeInsets = false,
 }) {
+  const insets = useSafeAreaInsets();
+
+  console.log({ insets });
+
   return (
-    <View style={[styles.screen, style]}>
+    <View
+      style={[
+        styles.screen,
+        style,
+        {
+          marginTop: insets.top,
+          // marginBottom: insets.bottom
+          marginBottom: removeInsets ? insets.bottom : 0,
+        },
+      ]}
+    >
       {scroll ? (
         <ScrollView style={[style, styles.view]}>
           {avoidkeyboard && Platform.OS === "ios" ? (

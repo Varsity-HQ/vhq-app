@@ -19,6 +19,11 @@ const initialData = {
     events_cursor: null,
     events_error: false,
     //
+    offers: [],
+    loading_offers: true,
+    offers_cursor: null,
+    offers_error: false,
+    //
     error: false,
     refreshing: false,
     loading_more: false,
@@ -196,6 +201,15 @@ const dataReducer = (state = initialData, actions) => {
         },
       };
 
+    case "SET_HOME_OFFERS":
+      return {
+        ...state,
+        home_data: {
+          ...state.home_data,
+          offers: actions.payload,
+          loading_offers: false,
+        },
+      };
     case "SET_HOME_EVENTS":
       return {
         ...state,

@@ -2,7 +2,10 @@ import React from "react";
 import IndexContainer from "./app/index";
 import { Provider } from "react-redux";
 import store from "./app/store/store";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import {
+  SafeAreaProvider,
+  initialWindowMetrics,
+} from "react-native-safe-area-context";
 
 // import "react-native-gesture-handler";
 
@@ -20,7 +23,7 @@ LogBox.ignoreLogs(["Setting a timer"]);
 
 export default function App() {
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <Provider store={store}>
         <IndexContainer />
       </Provider>

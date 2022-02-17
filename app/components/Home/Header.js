@@ -47,6 +47,7 @@ const home_tabs = [
   {
     title: "Discover",
     index: 3,
+    navTo: null,
     icon: (
       <FontAwesome color={colors.white} size={16} name="arrow-circle-o-right" />
     ),

@@ -9,6 +9,11 @@ import {
 import colors from "../config/colors";
 
 function TabNavigator({ active = 1, style, items = [], onPress, type }) {
+  const handlePress = (x) => {
+    if (x.navTo === null) return;
+
+    onPress(x.index);
+  };
   if (type === 2) {
     return (
       <ScrollView horizontal={true} style={[styles.container_2, style]}>
@@ -16,7 +21,7 @@ function TabNavigator({ active = 1, style, items = [], onPress, type }) {
           return (
             <TouchableWithoutFeedback
               key={index}
-              onPress={() => onPress(x.index)}
+              onPress={() => handlePress(x)}
             >
               <View style={styles.tab}>
                 <View
@@ -54,10 +59,7 @@ function TabNavigator({ active = 1, style, items = [], onPress, type }) {
     <ScrollView horizontal={true} style={[styles.container, style]}>
       {items.map((x, index) => {
         return (
-          <TouchableWithoutFeedback
-            key={index}
-            onPress={() => onPress(x.index)}
-          >
+          <TouchableWithoutFeedback key={index} onPress={() => handlePress(x)}>
             <View style={styles.tab}>
               <View
                 style={[

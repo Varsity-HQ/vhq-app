@@ -9,7 +9,7 @@ import Button from "../Button";
 function OffersHeader({ show = true }) {
   if (!show) return null;
   return (
-    <>
+    <View style={{ position: "relative" }}>
       <View style={styles.upper_container}>
         <LinearGradient
           colors={[colors.primary, "#1c83f9"]}
@@ -20,6 +20,7 @@ function OffersHeader({ show = true }) {
         <View
           style={{
             padding: 20,
+            marginBottom: 7,
           }}
         >
           <View style={styles.heading_container}>
@@ -49,7 +50,7 @@ function OffersHeader({ show = true }) {
         </View>
       </View>
       <View style={styles.lower_container}></View>
-    </>
+    </View>
   );
 }
 
@@ -74,12 +75,17 @@ const styles = StyleSheet.create({
     fontSize: RFValue(35),
     fontFamily: "Lobster-Regular",
   },
+  upper_container: {
+    paddingBottom: 10,
+  },
   lower_container: {
     padding: 20,
     backgroundColor: colors.dark,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    top: -13,
+    top: -24,
+    borderBottomColor: colors.dark_2,
+    borderBottomWidth: 0,
   },
 });
 

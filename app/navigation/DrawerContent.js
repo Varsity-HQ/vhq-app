@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   username: {
-    fontSize: normalizeText(14),
+    fontSize: 15,
     color: colors.secondary,
     marginTop: 5,
   },

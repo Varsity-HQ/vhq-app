@@ -56,6 +56,18 @@ class PostPictures extends PureComponent {
         />
       );
     }
+    if (this.props.offer && this.props.images.length === 1) {
+      return (
+        <Image
+          style={{
+            height: deviceWidth * 0.5,
+            width: "100%",
+            borderRadius: 7,
+          }}
+          uri={this.props.images[0]}
+        />
+      );
+    }
 
     if (this.props.images.length === 1) {
       return (

@@ -158,9 +158,9 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
         hidden={false}
       />
       <NavigationContainer theme={vhqTheme}>
-        <SafeAreaView style={{ flex: 1 }}>
+        {/* <SafeAreaView style={{ flex: 1 }}> */}
         {authenticated && userID ? <AppNavigator /> : <AuthRoutes />}
-        </SafeAreaView>
+        {/* </SafeAreaView> */}
       </NavigationContainer>
       <Toast config={toastConfig} />
     </>

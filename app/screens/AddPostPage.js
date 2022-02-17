@@ -26,6 +26,7 @@ import he from "he";
 import { post_new } from "../store/actions/actions";
 import AddImageButton from "../components/AddImageButton";
 import PollCreate from "../components/Poll/PollCreate";
+
 const { width: deviceWidth } = Dimensions.get("window");
 
 const mapStateToProps = (state) => {
@@ -324,6 +325,7 @@ class AddPostPage extends Component {
         </Screen>
         <View
           style={{
+            marginBottom: Platform.OS === "ios" ? 20 : 0,
             bottom:
               Platform.OS === "ios"
                 ? this.state.pollCreate

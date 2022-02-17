@@ -9,6 +9,20 @@ import {
   POST_POST_SUCCESS_POSTED,
 } from "../../util/toast_messages";
 
+export const get_home_offers = () => (dispatch) => {
+  axios
+    .get("/get/offers")
+    .then((data) => {
+      dispatch({
+        type: "SET_HOME_OFFERS",
+        payload: data.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const get_home_events = () => (dispatch) => {
   axios
     .get("/get/events")

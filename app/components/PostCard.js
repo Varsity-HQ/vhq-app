@@ -1,15 +1,12 @@
-import React, { useEffect, useState, PureComponent } from "react";
+import React, { PureComponent } from "react";
 import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
-  TouchableHighlight,
   Image as ImageLocal,
   Platform,
   Dimensions,
-  TouchableOpacity,
 } from "react-native";
-import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 
 import colors from "../config/colors";
 import SkeletonPost from "./Skeletons/Post";
@@ -18,7 +15,6 @@ import Localize from "dayjs/plugin/relativeTime";
 import Content from "./Post/content";
 import PostMenu from "./Post/PostMenu";
 import { Image } from "react-native-expo-image-cache";
-import PostCardFooter from "../components/Post/PostCardFooter";
 import * as routes from "../navigation/routes";
 import PostCardButtons from "./Post/PostCardButtons";
 import { connect } from "react-redux";
@@ -29,12 +25,10 @@ import PostPictures from "./Post/PostPictures";
 import PollSection from "./Post/PollSection";
 import { post_vote_counter } from "../util/poll_utils";
 import universityShortName from "../util/universityShortName";
-import EStyleSheet from "react-native-extended-stylesheet";
 import moment from "moment";
 import { normalizeText } from "../util/responsivePx";
 import Text from "./AppText";
 import { FontAwesome, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import Button from "./Button";
 import EventFooterButtons from "./Post/EventFooterButtons";
 import { RFValue } from "react-native-responsive-fontsize";
 
@@ -169,9 +163,6 @@ class PostCard extends PureComponent {
                         ? data.anonymous_name
                         : data.firstname + " " + data.surname.charAt(0)}
                     </Text>
-                    <Text style={styles.date_posted}>
-                      {dayjs(data.created_at).fromNow()}
-                    </Text>
                   </View>
                   <Text style={styles.username}>
                     {data.anonymous_post ? (
@@ -235,7 +226,7 @@ class PostCard extends PureComponent {
               >
                 <Text
                   style={{
-                    fontSize: normalizeText(13),
+                    fontSize: RFValue(11.5),
                     color: colors.secondary,
                   }}
                 >
@@ -244,7 +235,7 @@ class PostCard extends PureComponent {
                 </Text>
                 <Text
                   style={{
-                    fontSize: normalizeText(13),
+                    fontSize: RFValue(11.5),
                     color: colors.secondary,
                   }}
                 >
@@ -254,11 +245,10 @@ class PostCard extends PureComponent {
                 </Text>
               </View>
             ) : (
-              <Text
-                style={{ fontSize: normalizeText(13), color: colors.secondary }}
-              >
+              <Text style={{ fontSize: RFValue(11), color: colors.secondary }}>
                 {parseInt(data.likes_count) + parseInt(data.comments_count)}{" "}
-                interactions
+                interactions&nbsp;•&nbsp;
+                {dayjs(data.created_at).fromNow()}
               </Text>
             )}
 
@@ -286,6 +276,17 @@ class PostCard extends PureComponent {
           </View>
 
           <PostCardButtons hideFollowBtn={hideFollowBtn} data={data} />
+          {/* <View
+            style={{
+              // flexDirection: "row",
+              // alignItems: "flex-end",
+              paddingTop: 5,
+            }}
+          >
+            <Text style={styles.date_posted}>
+              {dayjs(data.created_at).fromNow()}
+            </Text>
+          </View> */}
 
           {/* <PostCardFooter data={data} /> */}
         </View>
@@ -489,9 +490,9 @@ const styles = StyleSheet.create({
   },
   date_posted: {
     paddingLeft: 10,
-    fontSize: RFValue(12),
+    fontSize: RFValue(10),
     fontWeight: "500",
-    color: colors.secondary,
+    color: colors.secondary_2,
     alignSelf: "center",
     position: "relative",
   },
