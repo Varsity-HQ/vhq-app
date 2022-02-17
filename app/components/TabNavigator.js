@@ -8,8 +8,17 @@ import {
 } from "react-native";
 import colors from "../config/colors";
 
-function TabNavigator({ active = 1, style, items = [], onPress, type }) {
+function TabNavigator({
+  active = 1,
+  style,
+  items = [],
+  onPress,
+  type,
+  actionsDisable,
+}) {
   const handlePress = (x) => {
+    if (actionsDisable) return;
+
     if (x.navTo === null) return;
 
     onPress(x.index);

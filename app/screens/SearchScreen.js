@@ -54,16 +54,14 @@ function SearchScreen({ search_page, get_search_data }) {
     }, []),
   );
 
-  if (!search_page.loading) {
+  if (search_page.loading) {
     return (
       <Screen>
-        <SearchScreenHeader />
+        <SearchScreenHeader actionsDisable={true} />
         <SearchSkeleton />
       </Screen>
     );
   }
-
-  return null;
 
   const data = search_page.data;
 

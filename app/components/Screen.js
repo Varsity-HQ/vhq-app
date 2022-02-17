@@ -24,7 +24,7 @@ function Screen({
 }) {
   const insets = useSafeAreaInsets();
 
-  console.log({ insets });
+  // console.log({ insets });
 
   return (
     <View
