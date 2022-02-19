@@ -205,7 +205,11 @@ class Home extends PureComponent {
           initialNumToRender={10}
           onRefresh={() => this.onRefresh()}
           refreshing={this.props.refreshing}
-          onEndReached={() => this.handleLoadMore()}
+          onEndReached={() => {
+            if (this.state.index === 1) {
+              this.handleLoadMore();
+            }
+          }}
           onEndReachedThreshold={0.8}
         />
       </Screen>

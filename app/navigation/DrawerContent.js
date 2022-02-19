@@ -25,8 +25,10 @@ import Image from "../components/Image";
 import { normalizeText } from "../util/responsivePx";
 import Button from "../components/Button";
 import { connect } from "react-redux";
-import { PROFILE } from "./routes";
+import { PROFILE, NOTIFICATIONS, PROFILE_SETTINGS } from "./routes";
 import { logOutUser } from "../store/actions/actions";
+import { save_post_user } from "../store/actions/profile";
+
 import store from "../store/store";
 
 const height = Dimensions.get("window").height;
@@ -37,8 +39,23 @@ const mapStateToProps = (state) => {
     account: state.core.accData,
   };
 };
-function DrawerContent({ props, product, account }) {
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    save_post_user: (post) => dispatch(save_post_user(post)),
+  };
+};
+
+function DrawerContent({ props, product, account, save_post_user }) {
   const navigation = useNavigation();
+
+  const handleNavigateToProfile = () => {
+    navigation.dispatch(DrawerActions.closeDrawer());
+    navigation.navigate(PROFILE, {
+      username: account.username,
+    });
+    save_post_user(account);
+  };
 
   const handleSignout = () => {
     Alert.alert(
@@ -95,12 +112,7 @@ function DrawerContent({ props, product, account }) {
         <View style={styles.divider} />
         <Drawer.Section>
           <TouchableOpacity
-            onPress={() => {
-              navigation.dispatch(DrawerActions.closeDrawer());
-              navigation.navigate(PROFILE, {
-                username: account.username,
-              });
-            }}
+            onPress={handleNavigateToProfile}
             style={{
               paddingHorizontal: 10,
               flexDirection: "row",
@@ -115,7 +127,11 @@ function DrawerContent({ props, product, account }) {
             />
             <Text style={{ marginLeft: 20 }}>Profile</Text>
           </TouchableOpacity>
-          <View
+          <TouchableOpacity
+            onPress={() => {
+              navigation.dispatch(DrawerActions.closeDrawer());
+              navigation.navigate(NOTIFICATIONS);
+            }}
             style={{
               paddingHorizontal: 10,
               flexDirection: "row",
@@ -125,7 +141,7 @@ function DrawerContent({ props, product, account }) {
           >
             <FontAwesome name="bell-o" size={25} color={colors.secondary} />
             <Text style={{ marginLeft: 20 }}>Notifications</Text>
-          </View>
+          </TouchableOpacity>
           <View
             style={{
               paddingHorizontal: 10,
@@ -163,7 +179,11 @@ function DrawerContent({ props, product, account }) {
             />
             <Text style={{ marginLeft: 20 }}>Wallet</Text>
           </View>
-          <View
+          <TouchableOpacity
+            onPress={() => {
+              navigation.dispatch(DrawerActions.closeDrawer());
+              navigation.navigate(PROFILE_SETTINGS);
+            }}
             style={{
               paddingHorizontal: 10,
               flexDirection: "row",
@@ -173,7 +193,7 @@ function DrawerContent({ props, product, account }) {
           >
             <FontAwesome name="cog" size={25} color={colors.secondary} />
             <Text style={{ marginLeft: 20 }}>Settings</Text>
-          </View>
+          </TouchableOpacity>
 
           <View style={styles.divider} />
 
@@ -233,4 +253,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, null)(DrawerContent);
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent);
