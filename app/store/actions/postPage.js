@@ -53,6 +53,11 @@ export const send_post_comment = (txt) => (dispatch) => {
   const auth_user_data = store.getState().core.accData;
   const post_id = store.getState().postPage.post.post.id;
 
+  dispatch({
+    type: "SET_COMMENTING",
+    payload: true,
+  });
+
   axios
     .post(`/post/comment/${post_id}`, {
       comment: txt,
@@ -74,9 +79,17 @@ export const send_post_comment = (txt) => (dispatch) => {
           comment_id: data.data.comment_id,
         },
       });
+      dispatch({
+        type: "SET_COMMENTING",
+        payload: false,
+      });
     })
     .catch((err) => {
       console.log(err);
+      dispatch({
+        type: "SET_COMMENTING",
+        payload: false,
+      });
     });
 };
 

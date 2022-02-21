@@ -123,6 +123,13 @@ function CommentTextInput({
             account.anonymous_profile ? "anonymously" : ""
           }`}
         />
+
+        {post_page.commenting ? (
+          <View style={styles.loading_overlay}>
+            <Text style={{ color: colors.lighish2 }}>Commenting..</Text>
+          </View>
+        ) : null}
+
         <TouchableOpacity onPress={handleSendBtn} style={styles.send_btn}>
           <Text
             style={[
@@ -141,6 +148,21 @@ function CommentTextInput({
 }
 
 const styles = StyleSheet.create({
+  loading_overlay: {
+    position: "absolute",
+    top: 7,
+    bottom: 0,
+    left: 7,
+    right: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: colors.dark_opacity_2,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 2,
+    borderRadius: 1000,
+  },
   reply_top_header: {
     flexDirection: "row",
     alignItems: "center",

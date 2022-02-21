@@ -59,6 +59,16 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
       ),
     },
     {
+      title: "Refer a friend",
+      icon: (
+        <Ionicons
+          color={colors.secondary}
+          name="person-add-outline"
+          size={iconSize}
+        />
+      ),
+    },
+    {
       onPress: () => copyToClipboard(),
       title: "Copy Profile link",
       icon: (

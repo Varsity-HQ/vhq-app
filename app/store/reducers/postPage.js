@@ -5,10 +5,17 @@ const initialState = {
   comments_loading: true,
   comment_replies: [],
   replyTo: null,
+  commenting: false,
 };
 
 const postPageReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "SET_COMMENTING":
+      return {
+        ...state,
+        commenting: actions.payload,
+      };
+
     case "SET_COMMENT_REPLIES":
       let comment_to_set_replies = state.comments;
 
