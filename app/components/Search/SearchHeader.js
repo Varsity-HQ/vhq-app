@@ -15,9 +15,12 @@ import RIcon from "react-native-remix-icon";
 import Button from "../Button";
 import { normalizeText } from "../../util/responsivePx";
 import { connectSearchBox } from "react-instantsearch-native";
+import { useNavigation } from "@react-navigation/native";
 // import { SafeAreaView } from "react-native-safe-area-context";
 
-function SearchHeader({ navigation, currentRefinement, refine }) {
+function SearchHeader({ currentRefinement, refine }) {
+  const navigation = useNavigation();
+
   const searchBarFocus = () => {
     // switch (props.stackName) {
     //   case "SearchNavigator":

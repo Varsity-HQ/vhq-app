@@ -28,6 +28,7 @@ import {
   POLL_DETAILS,
   NOTIFICATIONS,
   HASHTAG_SCREEN,
+  SEARCH_RESULTS,
 } from "./routes";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
@@ -55,6 +56,7 @@ import colors from "../config/colors";
 import Screen from "../components/Screen";
 import { ScrollView, View } from "react-native";
 import VirtualizedView from "../components/VirtualizedViewBacked";
+import SearchResults from "../screens/SearchResults";
 
 const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
@@ -91,6 +93,15 @@ const FeedNavigator = () => (
         }}
         name={HOME}
         component={HomeDrawerNavigator}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          // gestureEnabled: false,
+          animation: "fade",
+        }}
+        name={SEARCH_RESULTS}
+        component={SearchResults}
       />
 
       <Stack.Screen

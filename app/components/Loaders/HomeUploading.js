@@ -9,16 +9,16 @@ const mapStateToProps = (state) => {
   };
 };
 
-function uploadLoader({ overlayloader }) {
+function uploadLoader({ overlayloader, size }) {
   //   if (!overlayloader) return null;
   return (
     <>
       <View style={styles.lottie_container}>
         <LottieView
-          style={styles.lottie}
+          style={size === "small" ? styles.lottie_small : styles.lottie}
           autoPlay
           loop
-          speed={2.5}
+          speed={3}
           source={require("../../assets/animations/cool_loader.json")}
         />
       </View>
@@ -28,15 +28,15 @@ function uploadLoader({ overlayloader }) {
 
 const styles = StyleSheet.create({
   lottie_container: {
-    // overflow: "hidden",
     height: 20,
   },
   lottie: {
-    // borderColor: "red",
-    // borderWidth: 1,
     height: 140,
     width: 140,
-    top: -12,
+  },
+  lottie_small: {
+    height: 60,
+    width: 60,
   },
 });
 

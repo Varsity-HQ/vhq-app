@@ -5,6 +5,27 @@ import TabNavigator from "../TabNavigator";
 import Footer from "./Footer";
 
 class TabbedScreenComponent extends React.PureComponent {
+  refreshTrigger = () => {
+    if (
+      this.props.tabsConfig[this.props.activeTabIndex - 1].allowRefresh &&
+      this.props.tabsConfig[this.props.activeTabIndex - 1].refreshHandler
+    ) {
+      return this.props.tabsConfig[
+        this.props.activeTabIndex - 1
+      ].refreshHandler();
+    } else null;
+  };
+  reachedEndTrigger = () => {
+    if (
+      this.props.tabsConfig[this.props.activeTabIndex - 1].allowLoadMore &&
+      this.props.tabsConfig[this.props.activeTabIndex - 1].loadMoreHandler
+    ) {
+      return this.props.tabsConfig[
+        this.props.activeTabIndex - 1
+      ].loadMoreHandler();
+    } else null;
+  };
+
   render() {
     const {
       TopHeader,
@@ -16,14 +37,15 @@ class TabbedScreenComponent extends React.PureComponent {
       keyExtractor,
       tabStates,
       tabsConfig,
+      listRenderingHandler,
+      initialNumToRender,
+      handleRefresh,
+      onEndReachedThreshold,
     } = this.props;
     return (
       <FlatList
-        style={{
-          borderBottomColor: "red",
-          borderBottomWidth: 0,
-        }}
-        keyExtractor={keyExtractor}
+        initialNumToRender={initialNumToRender ? initialNumToRender : 10}
+        keyExtractor={tabsConfig[activeTabIndex - 1].keyExtractor}
         ListHeaderComponent={
           <>
             {TopHeader}
@@ -36,13 +58,31 @@ class TabbedScreenComponent extends React.PureComponent {
             ) : null}
           </>
         }
+        data={
+          tabStates[activeTabIndex - 1].loading
+            ? []
+            : tabStates[activeTabIndex - 1].data
+        }
+        renderItem={listRenderingHandler}
         ListFooterComponent={
           <Footer
+            noDataComponent={tabsConfig[activeTabIndex - 1].noDataComponent}
+            data={tabStates[activeTabIndex - 1].data}
             loading={tabStates[activeTabIndex - 1].loading}
             loading_more={tabStates[activeTabIndex - 1].loading_more}
             useCustomLoader={tabsConfig[activeTabIndex - 1].useCustomLoader}
             customLoader={tabsConfig[activeTabIndex - 1].customLoader}
           />
+        }
+        onRefresh={this.refreshTrigger}
+        refreshing={
+          tabStates[activeTabIndex - 1].refreshing
+            ? tabStates[activeTabIndex - 1].refreshing
+            : false
+        }
+        onEndReached={this.reachedEndTrigger}
+        onEndReachedThreshold={
+          onEndReachedThreshold ? onEndReachedThreshold : 0.8
         }
       />
     );

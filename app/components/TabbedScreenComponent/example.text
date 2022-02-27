@@ -4,7 +4,6 @@ import Screen from "../../components/Screen";
 import TabbedScreenComponent from "../../components/TabbedScreenComponent";
 import Text from "../../components/AppText";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
-import Header from "../HashtagScreen/Header";
 import colors from "../../config/colors";
 
 const tabs = [
@@ -20,9 +19,9 @@ const tabs = [
     ),
   },
   {
-    title: "Pictures",
+    title: "Events",
     index: 2,
-    icon: <FontAwesome color={colors.white} size={16} name="picture-o" />,
+    icon: <FontAwesome color={colors.white} size={16} name="calendar-o" />,
   },
 ];
 
@@ -85,7 +84,7 @@ class index extends Component {
           activeTabIndex={this.state.activeTabIndex}
           setTabIndex={this.setTabIndex}
           tabOptions={tabs}
-          TopHeader={<Header hashtag={this.state.hashtag} />}
+          TopHeader={<Text>header component</Text>}
           listRenderingHandler={this.listRenderingHandler}
           tabsConfig={[
             {

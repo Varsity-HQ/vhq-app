@@ -15,6 +15,7 @@ import AccountsResultsTab from "../components/Search/AccountsResultsTab";
 import TrendsResultsTab from "../components/Search/TrendsResultsTab";
 import Searchinindicator from "../components/Search/Searchinindicator";
 import MarketplaceTab from "../components/Search/MarketplaceTab";
+import { useNavigation } from "@react-navigation/native";
 
 const searchClient = algoliasearch(
   "R37EQ47X30",
@@ -33,6 +34,7 @@ const renderScene = SceneMap({
 
 function SearchResults(props) {
   const [searchState, setSearchState] = React.useState({});
+  const navigation = useNavigation();
 
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
