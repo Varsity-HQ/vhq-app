@@ -1,6 +1,6 @@
-import React, { useCallback, PureComponent } from "react";
-import { Alert, View, StyleSheet, Linking } from "react-native";
-import { Button, SafeAreaView, Dimensions } from "react-native";
+import React, { PureComponent } from "react";
+import { View, StyleSheet, Linking } from "react-native";
+import { Dimensions } from "react-native";
 import colors from "../../config/colors";
 import RenderHtml from "react-native-render-html";
 import ParsedText from "react-native-parsed-text";
@@ -9,8 +9,7 @@ import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
 import { COPY_URL_IN_POST } from "../../util/toast_messages";
 import { useNavigation } from "@react-navigation/native";
-import { PROFILE } from "../../navigation/routes";
-import { normalizeText } from "../../util/responsivePx";
+import { HASHTAG_SCREEN, PROFILE } from "../../navigation/routes";
 import { RFValue } from "react-native-responsive-fontsize";
 
 const CustomTextRenderer = (props) => {
@@ -36,7 +35,13 @@ const CustomTextRenderer = (props) => {
   }
 
   function handleHashtagPress(hashtag, matchIndex) {
-    // alert(hashtag);
+    if (hashtag) {
+      let pattern = /#(\w+)/;
+      let match = hashtag.match(pattern);
+      navigation.navigate(HASHTAG_SCREEN, {
+        hashtag: match[1],
+      });
+    }
   }
 
   function handlePhonePress(phone, matchIndex /*: number*/) {

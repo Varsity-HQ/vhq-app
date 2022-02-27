@@ -1,11 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import Screen from "../components/Screen";
-import SearchHeader from "../components/Search/SearchHeader";
-import TabNavigator from "../components/TabNavigator";
-
-import { Ionicons } from "@expo/vector-icons";
-import Loader from "../components/Loaders/Loader";
 import TopicTrends from "../components/Search/TopicTrends";
 import SuggestedFriends from "../components/Search/SuggestedFriends";
 import TopPosts from "../components/Search/TopPosts";

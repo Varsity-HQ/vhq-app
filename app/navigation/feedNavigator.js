@@ -27,6 +27,7 @@ import {
   UPDATE_ABOUT,
   POLL_DETAILS,
   NOTIFICATIONS,
+  HASHTAG_SCREEN,
 } from "./routes";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
@@ -48,6 +49,7 @@ import PollDetails from "../screens/PollDetails";
 import Notifications from "../screens/Notifications";
 import DrawerContent from "./DrawerContent";
 import HomeScreen from "../screens/HomeTabs/HomeScreen";
+import HashtagScreen from "../screens/HashtagScreen/index";
 import EventsScreen from "../screens/HomeTabs/EventsScreen";
 import colors from "../config/colors";
 import Screen from "../components/Screen";
@@ -89,6 +91,14 @@ const FeedNavigator = () => (
         }}
         name={HOME}
         component={HomeDrawerNavigator}
+      />
+
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={HASHTAG_SCREEN}
+        component={HashtagScreen}
       />
 
       <Stack.Screen

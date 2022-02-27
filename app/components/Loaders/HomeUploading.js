@@ -18,8 +18,8 @@ function uploadLoader({ overlayloader }) {
           style={styles.lottie}
           autoPlay
           loop
-          speed={2}
-          source={require("../../assets/animations/uploadingbar_2.json")}
+          speed={2.5}
+          source={require("../../assets/animations/cool_loader.json")}
         />
       </View>
     </>

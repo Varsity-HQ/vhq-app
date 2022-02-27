@@ -22,7 +22,6 @@ import { firebaseConfig } from "./util/fb_config";
 import { Image, StatusBar } from "react-native";
 import AppToast from "./components/AppToast";
 import { Asset } from "expo-asset";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import {
   FontAwesome,
@@ -31,13 +30,13 @@ import {
   Feather,
   SimpleLineIcons,
 } from "@expo/vector-icons";
-import RIcon from "react-native-remix-icon";
 
 if (!getApps().length) {
   initializeApp(firebaseConfig);
 }
 
 axios.defaults.baseURL = "http://192.168.68.133:5000";
+// axios.defaults.baseURL = "http://192.168.0.116:5000";
 // axios.defaults.baseURL = "https://api.varsityhq.co.za";
 
 const toastConfig = {

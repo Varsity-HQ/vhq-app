@@ -7,21 +7,22 @@ export const save_local_post = (post) => (dispatch) => {
     payload: post,
   });
 };
-
 export const clear_post_page = () => (dispatch) => {
   dispatch({
     type: "CLEAR_POST_PAGE",
   });
 };
-
 export const get_post_page = (id) => (dispatch) => {
   const saved_post_id = store.getState().postPage.post?.post?.id;
-
+  //|
+  //|
   if (saved_post_id === id) {
+    //
     dispatch({
       type: "POST_DATA_LOADING",
       payload: false,
     });
+
     axios
       .get(`/post/comments/${id}`)
       .then((data) => {
@@ -47,8 +48,9 @@ export const get_post_page = (id) => (dispatch) => {
         console.log(err);
       });
   }
+  //|
+  //|
 };
-
 export const send_post_comment = (txt) => (dispatch) => {
   const auth_user_data = store.getState().core.accData;
   const post_id = store.getState().postPage.post.post.id;
@@ -92,7 +94,6 @@ export const send_post_comment = (txt) => (dispatch) => {
       });
     });
 };
-
 export const replyToComment = (data) => (dispatch) => {
   const id = data.comment_id;
   const ctext = data.comment_text;
@@ -107,15 +108,13 @@ export const replyToComment = (data) => (dispatch) => {
     },
   });
 };
-
-export const cancelReplyComment = () => (dispatch) => {
+export const cancel_reply_comment = () => (dispatch) => {
   dispatch({
     type: "SET_COMMENT_REPLY_TO",
     payload: null,
   });
 };
-
-export const getCommentReplies = (c_id) => (dispatch) => {
+export const get_comment_replies = (c_id) => (dispatch) => {
   dispatch({
     type: "SET_COMMENT_REPLIES_LOADING",
     payload: c_id,

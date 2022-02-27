@@ -232,7 +232,7 @@ const FooterLoadings = ({ loading, tab, loading_more, data = [] }) => {
     return (
       <View
         style={{
-          marginTop: 30,
+          marginTop: 50,
           flexDirection: "row",
           justifyContent: "center",
         }}

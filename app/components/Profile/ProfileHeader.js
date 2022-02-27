@@ -6,7 +6,11 @@ import Button from "../../components/Button";
 import Text from "../../components/AppText";
 import TabNavigator from "../../components/TabNavigator";
 import colors from "../../config/colors";
-import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  MaterialCommunityIcons,
+  FontAwesome5,
+} from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { Image } from "react-native-expo-image-cache";
@@ -220,11 +224,12 @@ function ProfileHeader({
         }}
       >
         <Text style={[styles.user_stream, styles.prof_inf]}>
-          <MaterialCommunityIcons
-            name="chair-school"
+          <FontAwesome5
+            name="user-graduate"
             size={19}
             color={colors.lighish2}
-          />{" "}
+          />
+          {"  "}
           {user.yearOfStudy === "postgraduates" ? (
             <>
               Postgraduate <Text style={styles.user_stream}>Student</Text>
