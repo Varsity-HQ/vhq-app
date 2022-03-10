@@ -6,6 +6,7 @@ import loadersReducer from "../reducers/loadersReducer";
 import profile from "../reducers/profile";
 import notificationsReducer from "./notifications";
 import postPageReducer from "./postPage";
+import hashtagPage from "./hashtagPage";
 
 const rootReducer = combineReducers({
   core,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   profile: profile,
   postPage: postPageReducer,
   notifications: notificationsReducer,
+  hashtagPage: hashtagPage,
 });
 
 export default rootReducer;

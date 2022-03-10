@@ -6,6 +6,13 @@ import Text from "../../components/AppText";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import Header from "../HashtagScreen/Header";
 import colors from "../../config/colors";
+import { connect } from "react-redux";
+import PostCard from "../../components/PostCard";
+import {
+  get_posts,
+  set_hashtag,
+  get_pictures,
+} from "../../store/actions/hashtagPage";
 
 const tabs = [
   {
@@ -26,49 +33,60 @@ const tabs = [
   },
 ];
 
+const mapStateToProps = (state) => {
+  return {
+    loading_posts: state.hashtagPage.loading_posts,
+    loading_more_posts: state.hashtagPage.loading_more_posts,
+    posts: state.hashtagPage.posts,
+    refreshing_posts: state.hashtagPage.refreshing_posts,
+    //
+    loading_pictures: state.hashtagPage.loading_pictures,
+    loading_more_pics: state.hashtagPage.loading_more_pics,
+    pictures: state.hashtagPage.pictures,
+    refreshing_pictures: state.hashtagPage.refreshing_pictures,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get_posts: (state) => dispatch(get_posts(state)),
+    get_pictures: (state) => dispatch(get_pictures(state)),
+    set_hashtag: (h) => dispatch(set_hashtag(h)),
+  };
+};
+
 class index extends Component {
   state = {
     hashtag: null,
     activeTabIndex: 1,
-    mockState: {
-      loading_posts: false,
-      posts: [1, 3],
-      loading_more_posts: false,
-      loading_events: false,
-      events: [3],
-      loading_more_events: false,
-    },
   };
 
   setTabIndex = (index) => {
     this.setState({
       activeTabIndex: index,
     });
+
+    if (index === 1) {
+      this.props.get_posts();
+    }
+    if (index === 2) {
+      this.props.get_pictures();
+    }
   };
 
   componentDidMount = () => {
+    let hashtag = this.props.route.params.hashtag;
+
     this.setState({
-      hashtag: this.props.route.params.hashtag,
+      hashtag: hashtag,
     });
+
+    this.props.set_hashtag(hashtag);
+    this.props.get_posts();
   };
 
   listRenderingHandler = ({ item }) => {
-    if (this.state.activeTabIndex === 1) {
-      return (
-        <View>
-          <Text>tab 1 card {item}</Text>
-        </View>
-      );
-    }
-    if (this.state.activeTabIndex === 2) {
-      return (
-        <View>
-          <Text>tab 2 card {item}</Text>
-        </View>
-      );
-    }
-
-    return null;
+    return <PostCard data={item} navigation={this.props.navigation} />;
   };
 
   refreshHandler = () => {
@@ -79,6 +97,17 @@ class index extends Component {
   };
 
   render() {
+    const {
+      loading_posts,
+      loading_more_posts,
+      posts,
+      refreshing_posts,
+      loading_pictures,
+      loading_more_pics,
+      pictures,
+      refreshing_pictures,
+    } = this.props;
+
     return (
       <Screen>
         <TabbedScreenComponent
@@ -89,36 +118,51 @@ class index extends Component {
           listRenderingHandler={this.listRenderingHandler}
           tabsConfig={[
             {
-              keyExtractor: (item) => item,
-              customLoader: <Text>loading</Text>,
+              keyExtractor: (item) => item.id,
               useCustomLoader: false,
               noDataComponent: (
-                <View>
-                  <Text>no data</Text>
+                <View
+                  style={{
+                    padding: 30,
+                    justifyContent: "center",
+                    flexDirection: "row",
+                  }}
+                >
+                  <Text>no posts</Text>
                 </View>
               ),
-              allowRefresh: true,
+              allowRefresh: false,
               refreshHandler: this.refreshHandler,
             },
             {
-              keyExtractor: (item) => item,
-              noDataComponent: null,
+              keyExtractor: (item) => item.id,
+              noDataComponent: (
+                <View
+                  style={{
+                    padding: 30,
+                    justifyContent: "center",
+                    flexDirection: "row",
+                  }}
+                >
+                  <Text>no pictures</Text>
+                </View>
+              ),
               allowLoadMore: false,
               loadMoreHandler: this.loadMoreHandler,
             },
           ]}
           tabStates={[
             {
-              loading: this.state.mockState.loading_posts,
-              loading_more: this.state.mockState.loading_more_posts,
-              data: this.state.mockState.posts,
-              refreshing: false,
+              loading: loading_posts,
+              loading_more: loading_more_posts,
+              data: posts,
+              refreshing: refreshing_posts,
             },
             {
-              loading: this.state.mockState.loading_events,
-              loading_more: this.state.mockState.loading_more_events,
-              data: this.state.mockState.events,
-              refreshing: false,
+              loading: loading_pictures,
+              loading_more: loading_more_pics,
+              data: pictures,
+              refreshing: refreshing_pictures,
             },
           ]}
         />
@@ -131,4 +175,4 @@ const styles = StyleSheet.create({
   container: {},
 });
 
-export default index;
+export default connect(mapStateToProps, mapDispatchToProps)(index);

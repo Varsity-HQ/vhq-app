@@ -92,7 +92,8 @@ function NavigationStack({ core }) {
         <Stack.Screen
           options={{
             headerShown: false,
-            animation: "slide_from_right",
+            // animation: "slide_from_right",
+            animation: "none",
           }}
           name={routes.POST_PAGE}
           component={PostPage}
