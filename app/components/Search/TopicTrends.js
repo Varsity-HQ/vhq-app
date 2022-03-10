@@ -3,11 +3,13 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import colors from "../../config/colors";
 import Text from "../AppText";
 import { Ionicons } from "@expo/vector-icons";
-
+import { useNavigation } from "@react-navigation/native";
 import ShortenUniName from "../../util/universityShortName";
 import TrendMenu from "./TrendMenu";
+import { HASHTAG_SCREEN, ALL_TRENDING_HASHTAGS } from "../../navigation/routes";
 
 function TopicTrends({ trends }) {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View>
@@ -17,7 +19,10 @@ function TopicTrends({ trends }) {
         <Trend x={x} key={index} />
       ))}
 
-      <TouchableOpacity style={styles.footer}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate(ALL_TRENDING_HASHTAGS)}
+        style={styles.footer}
+      >
         <Text>See all trends</Text>
       </TouchableOpacity>
     </View>
@@ -25,8 +30,15 @@ function TopicTrends({ trends }) {
 }
 
 function Trend({ x }) {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate(HASHTAG_SCREEN, {
+          hashtag: x.hashtag_name.replace(/#/g, ""),
+        })
+      }
+    >
       <View style={styles.trend}>
         <View>
           <Ionicons

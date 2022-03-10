@@ -6,6 +6,10 @@ export const COPY_URL_IN_POST = {
   text1: undefined,
   text2: "Link copied to clipboard",
 };
+export const COPY_HASHTAG_URL = {
+  text1: undefined,
+  text2: "Hashtag copied to clipboard",
+};
 export const COPY_POST_URL = {
   text1: undefined,
   text2: "Post has been copied to clipboard",

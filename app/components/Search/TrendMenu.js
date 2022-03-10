@@ -12,13 +12,14 @@ import Button from "../Button";
 import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { POST_PAGE, PROFILE } from "../../navigation/routes";
+import { HASHTAG_SCREEN, POST_PAGE, PROFILE } from "../../navigation/routes";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
 import {
   ANOTHER_POST_CURRENTLY_DELETING,
   COPY_POST_URL,
   POST_TO_BE_DELETED,
+  COPY_HASHTAG_URL,
 } from "../../util/toast_messages";
 import { delete_post } from "../../store/actions/actions";
 
@@ -53,41 +54,26 @@ function TrendMenu({
   const handleCopyLink = () => {
     handleModal();
     setTimeout(() => {
-      Clipboard.setString(`https://varsityhq.co.za/p/${data.id}`);
+      Clipboard.setString(
+        `https://varsityhq.co.za/explore/topics/${data.hashtag_name.replace(
+          /#/g,
+          "",
+        )}`,
+      );
       Toast.show({
         type: "general",
         autoHide: true,
-        ...COPY_POST_URL,
+        ...COPY_HASHTAG_URL,
       });
     }, 200);
-  };
-
-  const handleDeletePost = () => {
-    if (deleting_post) {
-      return Toast.show({
-        type: "general",
-        autoHide: false,
-        ...ANOTHER_POST_CURRENTLY_DELETING,
-      });
-    }
-
-    if (data.posted_by === auth_acc_id && !deleting_post) {
-      delete_post(data.id);
-      handleModal();
-      return Toast.show({
-        type: "general",
-        autoHide: false,
-        ...POST_TO_BE_DELETED,
-      });
-    }
   };
 
   const options = [
     {
       onPress: () => {
         handleModal();
-        navigation.navigate(POST_PAGE, {
-          post_id: data.id,
+        navigation.navigate(HASHTAG_SCREEN, {
+          hashtag: data.hashtag_name.replace(/#/g, ""),
         });
       },
       title: "See posts",
@@ -113,6 +99,7 @@ function TrendMenu({
     },
     {
       title: "Report",
+      hide: true,
       icon: (
         <Ionicons
           color={colors.secondary}

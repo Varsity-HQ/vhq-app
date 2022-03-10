@@ -11,6 +11,7 @@ export const CHAT_HOME = "ChatHome";
 //Search Screens
 export const SEARCH_RESULTS = "SearchResults";
 export const HASHTAG_SCREEN = "HashtagScreen";
+export const ALL_TRENDING_HASHTAGS = "AllTrendingTopics";
 
 // Dating Screens
 export const DATING_INTRO = "DatingIntro";
