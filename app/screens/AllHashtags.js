@@ -1,5 +1,11 @@
 import React, { PureComponent } from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+} from "react-native";
 import RIcon from "react-native-remix-icon";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
@@ -8,6 +14,8 @@ import { normalizeText } from "../util/responsivePx";
 import { Ionicons } from "@expo/vector-icons";
 import TabNavigator from "../components/TabNavigator";
 import Loading from "../components/Loaders/HomeUploading";
+import axios from "axios";
+import Trend from "../components/Search/Trend";
 
 const tabs = [
   {
@@ -18,9 +26,32 @@ const tabs = [
 ];
 
 class AllHashtags extends PureComponent {
+  state = {
+    trends: [],
+    loading: true,
+  };
+
+  componentDidMount = () => {
+    this.get_hashtags();
+  };
+
+  get_hashtags = () => {
+    axios
+      .get("/explore/trendstoday")
+      .then((data) => {
+        this.setState({
+          trends: data.data,
+          loading: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     return (
-      <Screen>
+      <Screen scroll>
         <View style={styles.container}>
           <View>
             <Text allowFontScaling={false} style={styles.title}>
@@ -45,9 +76,17 @@ class AllHashtags extends PureComponent {
           />
         </View>
         <View>
-          <View style={styles.loading_container}>
-            <Loading />
-          </View>
+          {this.state.loading ? (
+            <View style={styles.loading_container}>
+              <Loading />
+            </View>
+          ) : (
+            <View>
+              {this.state.trends.map((x, index) => (
+                <Trend x={x} key={index} />
+              ))}
+            </View>
+          )}
         </View>
       </Screen>
     );
