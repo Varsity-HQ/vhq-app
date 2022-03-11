@@ -29,11 +29,16 @@ const initialData = {
     loading_more: false,
   },
   home_market_items: [],
+  //
   search_page: {
     loading: true,
     data: {},
   },
-
+  search_page_pictures: {
+    loading: true,
+    pictures: [],
+    cursor: null,
+  },
   poll_details: {
     loading: true,
     poll: null,

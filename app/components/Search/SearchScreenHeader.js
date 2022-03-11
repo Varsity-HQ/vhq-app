@@ -38,7 +38,7 @@ const home_tabs = [
   },
 ];
 
-function SearchScreenHeader({ actionsDisable = false }) {
+function SearchScreenHeader({ actionsDisable = false, active = 1, setTab }) {
   const navigation = useNavigation();
   return (
     <View>
@@ -58,7 +58,7 @@ function SearchScreenHeader({ actionsDisable = false }) {
       <TabNavigator
         type={2}
         style={{ marginBottom: 10 }}
-        active={1}
+        active={active}
         actionsDisable={actionsDisable}
         onPress={(i) => setTab(i)}
         items={home_tabs}

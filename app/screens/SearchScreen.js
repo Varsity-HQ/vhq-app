@@ -41,13 +41,17 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 function SearchScreen({ search_page, get_search_data }) {
-  const [activeTab, setTab] = useState(0);
+  const [activeTab, setTab] = useState(1);
 
   useFocusEffect(
     React.useCallback(() => {
       get_search_data();
     }, []),
   );
+
+  const handleGetPictures = (i) => {
+    setTab(i);
+  };
 
   if (search_page.loading) {
     return (
@@ -60,11 +64,15 @@ function SearchScreen({ search_page, get_search_data }) {
 
   const data = search_page.data;
 
+  console.log({ data });
+
   return (
     <Screen style={styles.container}>
       <ScrollView>
-        <SearchScreenHeader />
-        {/* <View style={styles.devider} /> */}
+        <SearchScreenHeader
+          active={activeTab}
+          setTab={(i) => handleGetPictures(i)}
+        />
         <View>
           <TopPosts posts={data.posts} />
           <TopicTrends trends={data.topics} />
