@@ -9,9 +9,18 @@ import Text from "../AppText";
 import colors from "../../config/colors";
 import { Image } from "react-native-expo-image-cache";
 import { useNavigation } from "@react-navigation/native";
+import { POST_PAGE } from "../../navigation/routes";
+import { save_local_post } from "../../store/actions/postPage";
+import { connect } from "react-redux";
 // import Image from "../Image"
 
-function TopPost({ x }) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    save_local_post: (data) => dispatch(save_local_post(data)),
+  };
+};
+
+function TopPost({ x, save_local_post }) {
   const navigation = useNavigation();
   //
   const returnPicture = () => {
@@ -29,7 +38,13 @@ function TopPost({ x }) {
   //
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate(POST)}
+      onPress={() => {
+        navigation.navigate(POST_PAGE, {
+          post_id: x.id,
+        });
+
+        save_local_post(x);
+      }}
       style={styles.container}
     >
       <View>{returnPicture()}</View>
@@ -93,4 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TopPost;
+export default connect(null, mapDispatchToProps)(TopPost);
