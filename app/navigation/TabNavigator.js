@@ -108,7 +108,8 @@ const AppNavigator = ({ user_id }) => {
           tabBarShowLabel: true,
         }}
         name={routes.DATING_NAVIGATOR}
-        component={DatingNavigator}
+        // component={DatingNavigator}
+        component={FeedNavigator}
       />
       <Tab.Screen
         options={{
@@ -116,9 +117,10 @@ const AppNavigator = ({ user_id }) => {
           tabBarIcon: ({ color, size }) => (
             <RIcon name="store-2-line" color={color} size={size} />
           ),
-          tabBarShowLabel: false,
+          tabBarShowLabel: true,
         }}
         name="Marketplace"
+        // component={FeedNavigator}
         component={FeedNavigator}
       />
       <Tab.Screen
@@ -138,7 +140,8 @@ const AppNavigator = ({ user_id }) => {
           },
         }}
         name="Chat"
-        component={ChatNavigator}
+        // component={ChatNavigator}
+        component={FeedNavigator}
       />
     </Tab.Navigator>
   );

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, Image as ImageLocal, TouchableOpacity } from "react-native";
+import {
+  View,
+  Image as ImageLocal,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import ProfileMenu from "../../components/Profile/ProfileMenu";
 import Ricons from "react-native-remix-icon";
 import Button from "../../components/Button";
@@ -279,6 +284,12 @@ function ProfileHeader({
           (auth_profile && (
             <View style={{ marginTop: 0 }}>
               <Button
+                onPress={() =>
+                  Alert.alert(
+                    "Coming soon",
+                    "This feature will be activated in the next release",
+                  )
+                }
                 type={3}
                 style={{ borderRadius: 100 }}
                 title="My Shop & Services"

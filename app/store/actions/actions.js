@@ -1136,6 +1136,19 @@ export const setAuthState = (state) => (dispatch) => {
   });
 };
 
+export const deleteUserAccount = () => (dispatch) => {
+  axios
+    .get("/account/delete")
+    .then(() => {})
+    .catch((err) => {
+      console.log(err);
+    });
+
+  log_out_function();
+  dispatch({ type: "SET_UNAUTHENTICATED" });
+  dispatch({ type: "RESET_DATA" });
+};
+
 export const logOutUser = () => (dispatch) => {
   log_out_function();
   dispatch({ type: "SET_UNAUTHENTICATED" });

@@ -1,20 +1,13 @@
-import React, { useEffect, useState, PureComponent } from "react";
+import React, { PureComponent } from "react";
 import {
   View,
-  StyleSheet,
   Image as ImageLocal,
-  Touchable,
-  TouchableOpacity,
   FlatList,
   ActivityIndicator,
 } from "react-native";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
-
-import Ricons from "react-native-remix-icon";
-import Button from "../components/Button";
 import Text from "../components/AppText";
-import TabNavigator from "../components/TabNavigator";
 import {
   get_auth_profile,
   get_user_profile,
@@ -26,23 +19,8 @@ import {
 import { follow_account, unfollow_account } from "../store/actions/actions";
 import { connect } from "react-redux";
 import ProfileSkeleton from "../components/Skeletons/ProfileSkeleton";
-import PostsTab from "../components/Profile/PostsTab";
-import PicturesTab from "../components/Profile/PicturesTab";
-import ProfileMenu from "../components/Profile/ProfileMenu";
 import PostLoader from "../components/Skeletons/Post";
-import { Image } from "react-native-expo-image-cache";
-import { useFocusEffect } from "@react-navigation/native";
-import check_if_followed from "../util/check_if_followed";
-
-import {
-  ANONYMOUS_SETTINGS,
-  PROFILE_SETTINGS,
-  EDIT_PROFILE,
-  UPDATE_PROFILE_PAGE,
-} from "../navigation/routes";
-import { normalizeText } from "../util/responsivePx";
 import ProfileHeader from "../components/Profile/ProfileHeader";
-import styles from "../components/Profile/styles";
 import PostCard from "../components/PostCard";
 
 const mapStateToProps = (state) => {

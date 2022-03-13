@@ -25,17 +25,18 @@ const home_tabs = [
     index: 2,
     icon: <SimpleLineIcons color={colors.white} size={16} name="picture" />,
   },
-  {
-    title: "Groups",
-    index: 3,
-    icon: (
-      <MaterialCommunityIcons
-        color={colors.white}
-        size={16}
-        name="account-group-outline"
-      />
-    ),
-  },
+  // {
+  //   title: "Groups",
+  //   index: 3,
+
+  //   icon: (
+  //     <MaterialCommunityIcons
+  //       color={colors.white}
+  //       size={16}
+  //       name="account-group-outline"
+  //     />
+  //   ),
+  // },
 ];
 
 function SearchScreenHeader({ actionsDisable = false, active = 1, setTab }) {

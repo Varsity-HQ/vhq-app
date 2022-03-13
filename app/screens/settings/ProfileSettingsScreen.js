@@ -12,16 +12,17 @@ import {
 
 import Text from "../../components/AppText";
 import colors from "../../config/colors";
-import { logOutUser } from "../../store/actions/actions";
+import { logOutUser, deleteUserAccount } from "../../store/actions/actions";
 import { connect } from "react-redux";
 
 const mapDispatchToProps = (dispatch) => {
   return {
     logOutUser: () => dispatch(logOutUser()),
+    deleteUserAccount: () => dispatch(deleteUserAccount()),
   };
 };
 
-function ProfileSettingsScreen({ navigation, logOutUser }) {
+function ProfileSettingsScreen({ navigation, logOutUser, deleteUserAccount }) {
   const signout = () => {
     Alert.alert(
       "Confirm",
@@ -34,6 +35,23 @@ function ProfileSettingsScreen({ navigation, logOutUser }) {
         {
           text: "Yes, Sign out",
           onPress: logOutUser,
+        },
+      ],
+    );
+  };
+
+  const deleteAccount = () => {
+    Alert.alert(
+      "Delete account ?",
+      "Are you sure you want to delete account ?. All your data on VarsityHQ will be lost and forgotten in our servers.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Yes, Delete",
+          onPress: deleteUserAccount,
         },
       ],
     );
@@ -74,6 +92,19 @@ function ProfileSettingsScreen({ navigation, logOutUser }) {
       <View>
         <Text style={styles.vhq_text}>Ⓒ Varsity Headquarters</Text>
         <Text style={styles.vhq_text2}>All rights reserved</Text>
+      </View>
+      <View style={styles.vhq_text}>
+        <Button
+          onPress={deleteAccount}
+          type={8}
+          textStyle={{
+            color: colors.dark_opacity_2,
+          }}
+          style={{
+            borderWidth: 0,
+          }}
+          title="Delete account"
+        />
       </View>
     </Screen>
   );

@@ -29,6 +29,7 @@ import {
   NOTIFICATIONS,
   HASHTAG_SCREEN,
   SEARCH_RESULTS,
+  POST_PAGE,
 } from "./routes";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
@@ -57,6 +58,7 @@ import Screen from "../components/Screen";
 import { ScrollView, View } from "react-native";
 import VirtualizedView from "../components/VirtualizedViewBacked";
 import SearchResults from "../screens/SearchResults";
+import PostPage from "../screens/PostPage";
 
 const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
@@ -136,6 +138,7 @@ const FeedNavigator = () => (
         name={PROFILE}
         component={Profile}
       />
+
       <Stack.Screen
         options={{
           headerShown: false,

@@ -104,7 +104,9 @@ function DrawerContent({ props, product, account, save_post_user }) {
             @{account.username}
           </Text>
           <View style={[styles.center, styles.row, { marginTop: 15 }]}>
-            <Text style={[styles.subText]}>{account.followers} Followers</Text>
+            <Text style={[styles.subText]}>
+              {account.followers ? account.followers : 0} Followers
+            </Text>
             <Text style={[styles.subText_2]}>&nbsp;|&nbsp;</Text>
             <Text style={[styles.subText]}>{account.following} Following</Text>
           </View>
@@ -142,7 +144,7 @@ function DrawerContent({ props, product, account, save_post_user }) {
             <FontAwesome name="bell-o" size={25} color={colors.secondary} />
             <Text style={{ marginLeft: 20 }}>Notifications</Text>
           </TouchableOpacity>
-          <View
+          {/* <View
             style={{
               paddingHorizontal: 10,
               flexDirection: "row",
@@ -152,8 +154,8 @@ function DrawerContent({ props, product, account, save_post_user }) {
           >
             <FontAwesome name="group" size={25} color={colors.secondary} />
             <Text style={{ marginLeft: 20 }}>Groups</Text>
-          </View>
-          <View
+          </View> */}
+          {/* <View
             style={{
               paddingHorizontal: 10,
               flexDirection: "row",
@@ -163,8 +165,8 @@ function DrawerContent({ props, product, account, save_post_user }) {
           >
             <FontAwesome name="tags" size={25} color={colors.secondary} />
             <Text style={{ marginLeft: 20 }}>Offers</Text>
-          </View>
-          <View
+          </View> */}
+          {/* <View
             style={{
               paddingHorizontal: 10,
               flexDirection: "row",
@@ -178,7 +180,7 @@ function DrawerContent({ props, product, account, save_post_user }) {
               color={colors.secondary}
             />
             <Text style={{ marginLeft: 20 }}>Wallet</Text>
-          </View>
+          </View> */}
           <TouchableOpacity
             onPress={() => {
               navigation.dispatch(DrawerActions.closeDrawer());
@@ -198,7 +200,7 @@ function DrawerContent({ props, product, account, save_post_user }) {
           <View style={styles.divider} />
 
           <View style={{ paddingHorizontal: 10, marginTop: 0 }}>
-            <Button type={3} title="Switch Content" />
+            {/* <Button type={3} title="Switch Content" /> */}
             <Button onPress={handleSignout} type={3} title="Sign out" />
           </View>
         </Drawer.Section>

@@ -159,6 +159,11 @@ function PostMenu({
     },
     {
       title: "Report",
+      onPress: () =>
+        Alert.alert(
+          "Coming soon",
+          "Feature will be made available in the coming releases",
+        ),
       icon: (
         <Ionicons
           color={colors.secondary}

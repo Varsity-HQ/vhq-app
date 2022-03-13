@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Image } from "react-native";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import colors from "../config/colors";
 import AppText from "./AppText";
 import { FontAwesome } from "@expo/vector-icons";
@@ -11,13 +11,13 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import DeleteComment from "./Comment/DeleteComment";
 import { RectButton } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import { replyToComment, getCommentReplies } from "../store/actions/postPage";
+import { replyToComment, get_comment_replies } from "../store/actions/postPage";
 dayjs.extend(relativeTime);
 
 const mapDispatchToProps = (dispatch) => {
   return {
     replyToComment: (comment) => dispatch(replyToComment(comment)),
-    handleOpenResponses: (id) => dispatch(getCommentReplies(id)),
+    handleOpenResponses: (id) => dispatch(get_comment_replies(id)),
   };
 };
 
@@ -34,7 +34,11 @@ function PostPageComment({
   // console.log({ data });
 
   const handleReplyToComment = () => {
-    replyToComment(data);
+    // replyToComment(data);
+    Alert.alert(
+      "Coming soon",
+      "This feature will be activated in the next release",
+    );
   };
 
   const renderRightActions = () => {
