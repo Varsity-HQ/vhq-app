@@ -30,6 +30,7 @@ import {
   HASHTAG_SCREEN,
   SEARCH_RESULTS,
   POST_PAGE,
+  REFER_A_FRIEND,
 } from "./routes";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
@@ -59,6 +60,7 @@ import { ScrollView, View } from "react-native";
 import VirtualizedView from "../components/VirtualizedViewBacked";
 import SearchResults from "../screens/SearchResults";
 import PostPage from "../screens/PostPage";
+import ReferAFriend from "../screens/ReferAFriend";
 
 const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
@@ -138,7 +140,13 @@ const FeedNavigator = () => (
         name={PROFILE}
         component={Profile}
       />
-
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={REFER_A_FRIEND}
+        component={ReferAFriend}
+      />
       <Stack.Screen
         options={{
           headerShown: false,

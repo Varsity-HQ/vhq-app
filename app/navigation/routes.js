@@ -31,6 +31,7 @@ export const ADD_POST = "AddPost";
 export const SEARCH = "Search";
 export const HOME = "Home";
 export const PROFILE = "Profile";
+export const REFER_A_FRIEND = "ReferAFriend";
 export const POST_PAGE = "PostPage";
 export const ANONYMOUS_SETTINGS = "AnonymousSettings";
 export const PROFILE_SETTINGS = "ProfileSettings";

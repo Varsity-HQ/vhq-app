@@ -5,12 +5,26 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   StatusBar,
+  Dimensions,
 } from "react-native";
 import colors from "../../config/colors";
 import AppText from "../AppText";
 import { Ionicons } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import Image from "../Image";
+import { RFValue } from "react-native-responsive-fontsize";
+
+const height = Dimensions.get("window").height;
+
+const mapStateToProps = (state) => {
+  return {
+    account: state.core.accData,
+  };
+};
 
 function header3({
+  account,
+  showAccount,
   bgActive,
   backBtnText = "Cancel",
   backPress,
@@ -62,6 +76,27 @@ function header3({
                   />
                 ) : (
                   <AppText style={[styles.text]}>{backBtnText}</AppText>
+                )}
+
+                {showAccount && (
+                  <View>
+                    <View style={styles.row}>
+                      <Image
+                        style={styles.profilepic}
+                        uri={account.profilepic}
+                      />
+                      <View style={{ marginLeft: 10 }}>
+                        <AppText style={[styles.name]}>
+                          {account.firstname}&nbsp;{account.surname.charAt(0)}
+                        </AppText>
+                        <AppText
+                          style={[styles.text, { color: colors.secondary }]}
+                        >
+                          {backBtnText}
+                        </AppText>
+                      </View>
+                    </View>
+                  </View>
                 )}
               </View>
             </TouchableOpacity>
@@ -116,6 +151,20 @@ function header3({
 }
 
 const styles = StyleSheet.create({
+  name: {
+    fontWeight: "700",
+    fontSize: RFValue(16),
+    marginBottom: 3,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  profilepic: {
+    height: height * 0.058,
+    width: height * 0.058,
+    borderRadius: 100,
+  },
   w33: {
     // width: "33%",
     //   flex: 1,
@@ -158,4 +207,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default header3;
+export default connect(mapStateToProps, null)(header3);

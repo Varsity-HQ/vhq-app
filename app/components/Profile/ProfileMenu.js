@@ -16,6 +16,8 @@ import { connect } from "react-redux";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
 import { COPY_PROFILE_URL } from "../../util/toast_messages";
+import { useNavigation } from "@react-navigation/native";
+import { REFER_A_FRIEND } from "../../navigation/routes";
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -37,6 +39,7 @@ const iconSize = 35;
 function ProfileMenu({ username, auth_username, logOutUser }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
+  const navigation = useNavigation();
   const options = [
     {
       title: "Administration",
@@ -60,6 +63,10 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
     },
     {
       title: "Refer a friend",
+      onPress: () => {
+        navigation.navigate(REFER_A_FRIEND);
+        handleModal();
+      },
       icon: (
         <Ionicons
           color={colors.secondary}
