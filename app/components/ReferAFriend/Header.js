@@ -32,7 +32,10 @@ function Header({ account }) {
           <Text style={styles.heading}>Refer a friend</Text>
           <TouchableOpacity style={styles.button}>
             <Text>Your code</Text>
-            <Text style={styles.code}>{account.referral_code}</Text>
+            <Text style={styles.code}>
+              COMINGSOON!
+              {/* {account.referral_code} */}
+            </Text>
             <Text style={{ color: colors.secondary }}>
               Link copied to clipboard!
             </Text>
