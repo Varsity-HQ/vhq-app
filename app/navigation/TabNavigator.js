@@ -49,6 +49,15 @@ const AppNavigator = ({ user_id }) => {
   const userDocRef = doc(db, "accounts", user_id);
   const [user_snapshot, loading, error] = useDocumentData(userDocRef);
 
+  const padBtm = () => {
+    if (Platform.OS === "android") {
+      return {
+        paddingBottom: 5,
+      };
+    }
+    return {};
+  };
+
   return (
     <Tab.Navigator
       tabBar={TabBar}
@@ -63,9 +72,8 @@ const AppNavigator = ({ user_id }) => {
             Platform.OS === "android" ? colors.dark : colors.transparent,
           borderTopColor: colors.darkish2,
           borderTopWidth: 2,
-          // paddingBottom: 0,
           paddingTop: 2,
-
+          ...padBtm(),
           // shadowColor: colors.black,
           // shadowOpacity: 20,
           // shadowRadius: 5,
