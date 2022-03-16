@@ -119,6 +119,7 @@ class Content extends PureComponent {
         <RenderHtml
           renderers={{
             p: (props) => <CustomTextRenderer {...props} />,
+            div: (props) => <CustomTextRenderer {...props} />,
           }}
           // renderers={(props) => AnimatedSpanRenderer(props)}
           // baseStyle={{}}

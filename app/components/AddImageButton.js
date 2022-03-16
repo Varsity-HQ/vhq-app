@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -25,15 +25,6 @@ function AddImageButton({
   event_picture,
   image,
 }) {
-  const requestPermission = async () => {
-    const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!granted) alert("You need to enable permission to access the library");
-  };
-
-  useEffect(() => {
-    requestPermission();
-  }, []);
-
   const process_image = async (uri) => {
     const manipResult = await manipulateAsync(uri, [], {
       compress: 0.7,
@@ -43,29 +34,38 @@ function AddImageButton({
   };
 
   const selectImage = async () => {
-    if (max <= length) {
-      return Alert.alert(
-        "Limit reached",
-        `You can only post up to ${max} images`,
-      );
-    }
+    const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        quality: 0.7,
-        // aspect: [1, 1],
-        // aspect: [1.91, 1],
-        presentationStyle: 0,
-        allowsEditing: true,
-      });
-
-      if (!result.cancelled) {
-        process_image(result.uri);
-      } else {
+    if (granted) {
+      if (max <= length) {
+        return Alert.alert(
+          "Limit reached",
+          `You can only post up to ${max} images`,
+        );
       }
-    } catch (error) {
-      console.log("Error reading image");
+
+      try {
+        const result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          quality: 0.7,
+          // aspect: [1, 1],
+          // aspect: [1.91, 1],
+          presentationStyle: 0,
+          allowsEditing: true,
+        });
+
+        if (!result.cancelled) {
+          process_image(result.uri);
+        } else {
+        }
+      } catch (error) {
+        console.log("Error reading image");
+      }
+    } else {
+      Alert.alert(
+        "Warning",
+        "You need to enable permission to access the library in settings",
+      );
     }
   };
 

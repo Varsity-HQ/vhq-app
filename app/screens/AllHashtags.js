@@ -76,7 +76,7 @@ class AllHashtags extends PureComponent {
           />
         </View>
         <View>
-          {this.state.loading ? (
+          {this.state.loading || true ? (
             <View style={styles.loading_container}>
               <Loading />
             </View>

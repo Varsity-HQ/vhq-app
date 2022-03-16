@@ -27,9 +27,7 @@ function uploadLoader({ overlayloader, size }) {
 }
 
 const styles = StyleSheet.create({
-  lottie_container: {
-    height: 20,
-  },
+  lottie_container: {},
   lottie: {
     height: 140,
     width: 140,
