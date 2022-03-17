@@ -173,17 +173,19 @@ function HeaderPostContent({
               <Text style={styles.post_meta}>
                 {dayjs(post.created_at).format("LLL")} ~ by{" "}
                 <Text style={[{ color: colors.secondary }, styles.post_meta]}>
-                  VasityHQ &nbsp;{post.application}
+                  VarsityHQ &nbsp;{post.application}
                 </Text>
               </Text>
-              <Text style={[styles.post_meta, { marginTop: 5 }]}>
+              <View style={styles.postUnisec}>
                 <FontAwesome
-                  style={{ marginRight: 10 }}
+                  style={styles.post_meta}
                   name="university"
-                  size={12}
+                  size={10}
                 />
-                &nbsp;{post.fromUniversity}
-              </Text>
+                <Text style={styles.post_meta}>
+                  &nbsp;{post.fromUniversity}
+                </Text>
+              </View>
             </View>
             <View
               style={{
@@ -242,6 +244,11 @@ function HeaderPostContent({
 }
 
 const styles = StyleSheet.create({
+  postUnisec: {
+    marginTop: 5,
+    flexDirection: "row",
+    alignItems: "center",
+  },
   p_avatar: {
     height: 45,
     width: 45,

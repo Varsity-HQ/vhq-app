@@ -26,6 +26,7 @@ import Profile from "../screens/Profile";
 import UpdateUniversityScreen from "../screens/settings/UpdateUniversityScreen";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 import TabNavigator from "./TabNavigator";
+import ChatPage from "../screens/Chat/ChatPage";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -131,6 +132,14 @@ function NavigationStack({ core }) {
           }}
           name={routes.CREATE_EVENT}
           component={CreateEventPage}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+            animation: "slide_from_right",
+          }}
+          name={routes.CHAT_PAGE}
+          component={ChatPage}
         />
       </Stack.Navigator>
     </>

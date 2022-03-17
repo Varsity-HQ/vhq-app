@@ -71,13 +71,6 @@ function ChatHeader({ navigation, user_data }) {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.tabbar_container}>
-        <TabNavigator
-          active={index}
-          onPress={(i) => setTab(i)}
-          items={chat_tabs}
-        />
-      </View>
     </View>
   );
 }

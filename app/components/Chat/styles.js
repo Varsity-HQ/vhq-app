@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
   c_s_container: {
     marginBottom: 10,
-    marginTop: 5,
+    marginTop: 10,
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 10,
@@ -157,8 +157,18 @@ const styles = StyleSheet.create({
     marginVertical: 3,
     flexDirection: "row",
   },
+  sk_c_s_user_time: {
+    marginVertical: 8,
+    flexDirection: "row",
+    height: 18,
+    width: "50%",
+  },
   c_s_name: {
     fontWeight: "700",
+  },
+  sk_c_s_name: {
+    height: 18,
+    width: "80%",
   },
   c_s_msg_preview: {
     color: colors.secondary,
@@ -167,6 +177,13 @@ const styles = StyleSheet.create({
     height: height * 0.013,
     width: height * 0.013,
     backgroundColor: colors.primary,
+    borderRadius: 100,
+    alignSelf: "flex-end",
+  },
+  c_s_dot_them: {
+    height: height * 0.013,
+    width: height * 0.013,
+    backgroundColor: colors.dark_opacity_2,
     borderRadius: 100,
     alignSelf: "flex-end",
   },

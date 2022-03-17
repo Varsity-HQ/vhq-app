@@ -5,6 +5,7 @@ import TabNavigator from "../TabNavigator";
 import Footer from "./Footer";
 
 class TabbedScreenComponent extends React.PureComponent {
+  //
   refreshTrigger = () => {
     if (
       this.props.tabsConfig[this.props.activeTabIndex - 1].allowRefresh &&
@@ -15,6 +16,7 @@ class TabbedScreenComponent extends React.PureComponent {
       ].refreshHandler();
     } else null;
   };
+  //
   reachedEndTrigger = () => {
     if (
       this.props.tabsConfig[this.props.activeTabIndex - 1].allowLoadMore &&
@@ -25,7 +27,7 @@ class TabbedScreenComponent extends React.PureComponent {
       ].loadMoreHandler();
     } else null;
   };
-
+  //
   render() {
     const {
       TopHeader,
@@ -41,6 +43,8 @@ class TabbedScreenComponent extends React.PureComponent {
       initialNumToRender,
       handleRefresh,
       onEndReachedThreshold,
+      tabStyle,
+      tabCounter,
     } = this.props;
     return (
       <FlatList
@@ -51,6 +55,7 @@ class TabbedScreenComponent extends React.PureComponent {
             {TopHeader}
             {showTabHeader ? (
               <TabNavigator
+                type={tabStyle ? tabStyle : 1}
                 active={activeTabIndex}
                 onPress={(i) => setTabIndex(i)}
                 items={tabOptions ? tabOptions : []}

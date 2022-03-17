@@ -104,14 +104,16 @@ const styles = StyleSheet.create({
   container_2: {
     paddingVertical: 0,
     borderBottomColor: colors.primary,
-    borderWidth: 3,
+    borderTopWidth: 3,
+    borderBottomWidth: 3,
     borderRadius: 0,
     // paddingBottom: 5,
   },
   container: {
     paddingVertical: 0,
     borderTopColor: colors.primary,
-    borderWidth: 3,
+    borderTopWidth: 3,
+    borderBottomWidth: 3,
     borderRadius: 0,
     // paddingBottom: 5,
   },
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
     height: 7,
     backgroundColor: colors.primary,
     borderRadius: 10,
-    bottom: 5,
+    bottom: 7,
   },
   tab_indicator_1_2: {
     width: "100%",

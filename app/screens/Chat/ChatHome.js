@@ -19,6 +19,31 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import ChatRoomFooter from "../../components/Chat/ChatRoomFooter";
 import { __get_chatAcc_id } from "../../util/chatRoomUtils";
 import ChatSelector from "../../components/Chat/ChatSelector";
+import TabbedScreenComponent from "../../components/TabbedScreenComponent";
+import {
+  FontAwesome,
+  MaterialCommunityIcons,
+  Ionicons,
+} from "@expo/vector-icons";
+import colors from "../../config/colors";
+
+const chat_tabs = [
+  {
+    title: "Chats",
+    index: 1,
+    icon: <MaterialCommunityIcons color={colors.white} size={18} name="chat" />,
+  },
+  {
+    title: "Strangers",
+    index: 2,
+    icon: <FontAwesome color={colors.white} size={16} name="life-ring" />,
+  },
+  {
+    title: "Accounts",
+    index: 3,
+    icon: <FontAwesome color={colors.white} size={16} name="user-circle-o" />,
+  },
+];
 
 const mapStateToProps = (state) => {
   return {
@@ -31,7 +56,7 @@ function ChatHome({ acc_data }) {
   const [activetab, setactivetab] = useState(0);
   const chat_ref = collection(db, "chats");
 
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(1);
 
   const query_ = query(
     chat_ref,
@@ -43,6 +68,8 @@ function ChatHome({ acc_data }) {
   const [chat_global_loader, set_chat_global_loader] = useState(false);
 
   let accounts_in_chat = [];
+  let filtered_chats_allowed = [];
+  let filtered_chats_requests = [];
 
   if (!chats_loading) {
     chats.forEach((x) => {
@@ -84,29 +111,81 @@ function ChatHome({ acc_data }) {
     //   .catch((err) => {
     //     console.log(err);
     //   });
+
+    let user_following = acc_data.user_following;
+
+    chats.forEach((x) => {
+      let index = user_following.findIndex(
+        (acc) => acc.following_user === __get_chatAcc_id(x),
+      );
+      if (index > -1) {
+        filtered_chats_allowed.push(x);
+      } else {
+        filtered_chats_requests.push(x);
+      }
+    });
   }
+
+  const refreshHandler = () => {
+    console.log("triggered");
+  };
+  const loadMoreHandler = () => {
+    console.log("allowLoadMore triggered");
+  };
+
+  const listRenderingHandler = ({ item }) => {
+    return <ChatSelector data={item} />;
+  };
+
+  const handleSetTabIndex = (index) => {
+    setPageIndex(index);
+  };
+
+  // console.log({ filtered_chats_allowed });
+  // console.log({ filtered_chats_requests });
 
   return (
     <Screen>
-      <FlatList
-        data={chats}
-        renderItem={renderItem}
-        keyExtractor={(x) => __get_chatAcc_id(x)}
-        ListHeaderComponent={<ChatHeader />}
-        ListFooterComponent={
-          <ChatRoomFooter
-            loading={chats_loading}
-            tab={pageIndex}
-            data={chats}
-          />
-        }
+      <TabbedScreenComponent
+        activeTabIndex={pageIndex}
+        setTabIndex={handleSetTabIndex}
+        tabOptions={chat_tabs}
+        TopHeader={<ChatHeader />}
+        listRenderingHandler={listRenderingHandler}
+        tabsConfig={[
+          {
+            keyExtractor: (x) => __get_chatAcc_id(x),
+            customLoader: <Text>loading</Text>,
+            useCustomLoader: false,
+            noDataComponent: <ChatRoomFooter />,
+            allowRefresh: false,
+            refreshHandler: refreshHandler,
+          },
+          {
+            keyExtractor: (x) => __get_chatAcc_id(x),
+            noDataComponent: <ChatRoomFooter />,
+            allowLoadMore: false,
+            loadMoreHandler: loadMoreHandler,
+            tabCounter: filtered_chats_requests.length,
+          },
+        ]}
+        tabStates={[
+          {
+            loading: chats_loading,
+            loading_more: false,
+            data: filtered_chats_allowed,
+            refreshing: false,
+          },
+          {
+            loading: chats_loading,
+            loading_more: false,
+            data: filtered_chats_requests,
+            refreshing: false,
+          },
+        ]}
       />
     </Screen>
   );
 }
-
-const renderItem = ({ item }) => {
-  return <ChatSelector data={item} />;
-};
 
 export default connect(mapStateToProps, null)(ChatHome);
