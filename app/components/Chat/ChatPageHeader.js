@@ -7,7 +7,7 @@ import Text from "../AppText";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useNavigation } from "@react-navigation/native";
 
-function ChatPageHeader({ loading, username }) {
+function ChatPageHeader({ loading, username, account }) {
   const navigation = useNavigation();
 
   if (loading) {
@@ -25,7 +25,7 @@ function ChatPageHeader({ loading, username }) {
             <View style={styles.inner_container}>
               <View
                 style={{
-                  marginLeft: "40%",
+                  marginLeft: 10,
                 }}
               >
                 <Text style={[styles.name]}>{username}</Text>
@@ -46,15 +46,12 @@ function ChatPageHeader({ loading, username }) {
             <Ionicons name="arrow-back-sharp" size={34} color={colors.white} />
           </TouchableOpacity>
           <View style={styles.inner_container}>
-            <Image
-              uri={
-                "https://varsityhq.imgix.net/vhq_781bd74f-10c2-40a6-b2bc-832494da7067.jpeg"
-              }
-              style={styles.profilepic}
-            />
+            <Image uri={account.profilepic} style={styles.profilepic} />
             <View style={{ marginLeft: 10 }}>
-              <Text style={styles.name}>Harmony Chikari</Text>
-              <Text style={styles.sub}>@chikx_12</Text>
+              <Text style={styles.name}>
+                {account.firstname} {account.surname}
+              </Text>
+              <Text style={styles.sub}>@{account.username}</Text>
             </View>
           </View>
         </View>

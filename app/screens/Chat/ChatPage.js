@@ -20,17 +20,92 @@ import {
   InputToolbar,
   Send,
   Composer,
+  Avatar,
 } from "react-native-gifted-chat";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Image from "../../components/Image";
 import Text from "../../components/AppText";
 import LoadingChat from "../../components/Chat/LoadingChat";
+import { useRoute } from "@react-navigation/native";
+import db from "../../util/fb_admin";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  doc,
+  getDoc,
+  limit,
+  addDoc,
+  updateDoc,
+} from "firebase/firestore";
+import {
+  useCollectionData,
+  useDocumentData,
+} from "react-firebase-hooks/firestore";
+import { connect } from "react-redux";
 
-function ChatPage(props) {
+const mapStateToProps = (state) => {
+  return {
+    account: state.core.accData,
+  };
+};
+
+function ChatPage({ account }) {
+  const [textMessage, onInputTextChanged] = useState("");
+
   const [messages, setMessages] = useState([]);
   const insets = useSafeAreaInsets();
+  const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState(null);
+  const [chat_id, set_chat_id] = useState("id");
+  const [user_id, set_uid] = useState(null);
+  const route = useRoute();
+
+  /** get chats */
+  const msgColRef = collection(db, "chatMessages");
+  const queryRef = query(
+    msgColRef,
+    where("chat_id", "==", chat_id),
+    orderBy("sent_date"),
+    limit(25),
+  );
+  const [messages_list, msg_loading, meerror] = useCollectionData(queryRef);
+  /** get user */
+  const accDocRef = doc(db, "accounts", route.params.uid);
+  const [userData, user_loading, error] = useDocumentData(accDocRef);
+
+  let messages_processed = [];
+
+  if (userData && !user_loading && messages_list && !msg_loading) {
+    messages_list.forEach((x) => {
+      messages_processed.push({
+        _id: x.id,
+        text: x.message,
+        createdAt: x.sent_date,
+        user: {
+          _id: x.sent_by,
+          name:
+            account.userID === route.params.uid
+              ? account.firstname
+              : userData.firstname,
+          avatar:
+            account.userID === route.params.uid
+              ? account.profilepic
+              : userData.profilepic,
+        },
+        received: true,
+      });
+    });
+  }
 
   useEffect(() => {
+    setUsername(route.params.username);
+    set_uid(route.params.uid);
+
+    process_chat_id(route.params.uid);
+
     setMessages([
       {
         _id: 1,
@@ -49,16 +124,120 @@ function ChatPage(props) {
     ]);
   }, []);
 
-  const onSend = useCallback((messages = []) => {
-    setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, messages),
+  const process_chat_id = async (other_u_uid) => {
+    let __chat_id = "";
+    let __no_chats = false;
+
+    const chatsRef = collection(db, "chats");
+    const queryChats = query(
+      chatsRef,
+      where("members", "array-contains", account.userID),
     );
+
+    await getDocs(queryChats)
+      .then((data) => {
+        // console.log("got here 71 ?");
+        // console.log("data size", data.size);
+        if (data.size === 0) {
+          __no_chats = true;
+        }
+        // console.log("got here ?");
+        data.forEach((x) => {
+          // console.log("got here ?");
+          x.data().members.forEach((m) => {
+            if (m === other_u_uid) {
+              return (__chat_id = x.id);
+            }
+          });
+        });
+        if (!__chat_id) {
+          __no_chats = true;
+        }
+        // console.log("ran");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (__no_chats && __chat_id === "") {
+      // console.log("got here 93 ?");
+
+      await addDoc(chatsRef, {
+        lastMessageSent: "Say hi",
+        last_update: new Date().toISOString(),
+        members: [account.userID, other_u_uid],
+        sent_by: account.userID,
+      })
+        .then((cdata) => {
+          __chat_id = cdata.id;
+          // console.log("ran");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    if (__chat_id) {
+      // console.log("got here ?");
+      set_chat_id(__chat_id);
+    }
+
+    console.log(__chat_id, __no_chats);
+  };
+
+  const onSend = useCallback(async (messages = []) => {
+    console.log({ messages: messages.length });
+
+    const chatmessagesRef = collection(db, "chatMessages");
+    await addDoc(chatmessagesRef, {
+      message: messages[0].text,
+      sent_date: new Date().toISOString(),
+      sent_by: account.userID,
+      read: "false",
+      id: "",
+      chat_id: chat_id,
+    })
+      .then((data) => {
+        const messageRef = doc(db, "chatMessages", data.id);
+        updateDoc(messageRef, {
+          id: data.id,
+        });
+      })
+      .then(() => {
+        let chatRef = doc(db, "chat", chat_id);
+        updateDoc(chatRef, {
+          lastMessageSent: messages[0].text,
+          last_update: new Date().toISOString(),
+          sent_by: account.userID,
+          opened: false,
+        });
+      })
+      .catch((err) => {});
+
+    // setMessages((previousMessages) =>
+    //   GiftedChat.append(previousMessages, messages),
+    // );
   }, []);
 
   const renderItem = ({ item }) => {
     return <ChatBubble data={item} />;
   };
 
+  const renderAvatar = (props) => {
+    return (
+      <>
+        <Avatar
+          {...props}
+          containerStyle={{
+            left: {
+              backgroundColor: colors.dark_2,
+              borderRadius: 100,
+            },
+          }}
+        ></Avatar>
+      </>
+    );
+  };
   const renderSend = (props) => {
     return (
       <>
@@ -112,20 +291,25 @@ function ChatPage(props) {
     );
   };
 
-  console.log(messages);
-
-  //   return <LoadingChat username="chikx_12" />;
+  if (chat_id === "id" || chat_id === null || msg_loading || user_loading) {
+    return <LoadingChat username={username} />;
+  }
 
   return (
     <Screen style={styles.container}>
-      <Header />
+      <Header account={userData} />
       <GiftedChat
+        renderAvatar={renderAvatar}
+        text={textMessage}
+        onInputTextChanged={(text) => onInputTextChanged(text)}
+        renderUsernameOnMessage
+        inverted={false}
         // isTyping
         bottomOffset={insets.bottom}
-        messages={messages}
+        messages={messages_processed}
         onSend={(messages) => onSend(messages)}
         user={{
-          _id: 1,
+          _id: account.userID,
         }}
         alwaysShowSend={true}
         // messages={this.state.messages}
@@ -160,4 +344,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChatPage;
+export default connect(mapStateToProps, null)(ChatPage);

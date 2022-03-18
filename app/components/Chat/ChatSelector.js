@@ -22,8 +22,13 @@ import colors from "../../config/colors";
 import { CHAT_PAGE } from "../../navigation/routes";
 
 function ChatSelector({ data }) {
+  if (!data) return null;
+
   const navigation = useNavigation();
   const uid = __get_chatAcc_id(data);
+
+  if (!uid) return null;
+
   const accCol = collection(db, "accounts");
   const userDocRef = doc(accCol, uid);
   const [account, account_loading, err] = useDocumentData(userDocRef);
@@ -56,7 +61,10 @@ function ChatSelector({ data }) {
     <TouchableHighlight
       underlayColor={colors.dark_2}
       onPress={() => {
-        navigation.navigate(CHAT_PAGE);
+        navigation.navigate(CHAT_PAGE, {
+          uid: uid,
+          username: account.username,
+        });
       }}
     >
       <View style={styles.c_s_container}>

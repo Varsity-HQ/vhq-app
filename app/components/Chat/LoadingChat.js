@@ -9,7 +9,7 @@ import colors from "../../config/colors";
 function LoadingChat({ username }) {
   return (
     <Screen style={styles.container}>
-      <ChatPageHeader username={username} loading />
+      <ChatPageHeader username={username ? username : "Loading"} loading />
       <View style={styles.inner_container}>
         <Loading speed={5} />
       </View>
