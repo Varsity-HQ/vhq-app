@@ -24,6 +24,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Image from "../../components/Image";
 import Text from "../../components/AppText";
+import LoadingChat from "../../components/Chat/LoadingChat";
 
 function ChatPage(props) {
   const [messages, setMessages] = useState([]);
@@ -113,10 +114,11 @@ function ChatPage(props) {
 
   console.log(messages);
 
+  //   return <LoadingChat username="chikx_12" />;
+
   return (
     <Screen style={styles.container}>
       <Header />
-
       <GiftedChat
         // isTyping
         bottomOffset={insets.bottom}

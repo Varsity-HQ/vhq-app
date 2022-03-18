@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-function uploadLoader({ overlayloader, size }) {
+function uploadLoader({ overlayloader, size, speed }) {
   //   if (!overlayloader) return null;
   return (
     <>
@@ -18,7 +18,7 @@ function uploadLoader({ overlayloader, size }) {
           style={size === "small" ? styles.lottie_small : styles.lottie}
           autoPlay
           loop
-          speed={3}
+          speed={speed ? speed : 3}
           source={require("../../assets/animations/cool_loader.json")}
         />
       </View>
