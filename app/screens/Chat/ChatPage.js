@@ -254,15 +254,7 @@ function ChatPage({ account }) {
 
   const renderInputToolbar = (props) => {
     return (
-      <View
-        style={{
-          flexDirection: "row",
-          //   borderColor: "red",
-          //   borderWidth: 1,
-          flex: 1,
-          width: "100%",
-        }}
-      >
+      <>
         <InputToolbar
           {...props}
           containerStyle={{
@@ -296,7 +288,7 @@ function ChatPage({ account }) {
           }}
         />
         {/* <Image style={styles.profilepic} /> */}
-      </View>
+      </>
     );
   };
 
