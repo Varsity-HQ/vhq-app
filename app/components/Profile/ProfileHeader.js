@@ -21,6 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Image } from "react-native-expo-image-cache";
 import {
   ANONYMOUS_SETTINGS,
+  CHAT_PAGE,
   PROFILE_SETTINGS,
   UPDATE_PROFILE_PAGE,
 } from "../../navigation/routes";
@@ -174,7 +175,15 @@ function ProfileHeader({
                   title={following ? "Following" : "Follow"}
                 />
                 <View>
-                  <TouchableOpacity style={styles.circle_btn}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate(CHAT_PAGE, {
+                        uid: user.userID,
+                        username: user.username,
+                      })
+                    }
+                    style={styles.circle_btn}
+                  >
                     <FontAwesome
                       size={22}
                       name="envelope"

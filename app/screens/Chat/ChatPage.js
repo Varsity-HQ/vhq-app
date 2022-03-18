@@ -167,6 +167,7 @@ function ChatPage({ account }) {
         last_update: new Date().toISOString(),
         members: [account.userID, other_u_uid],
         sent_by: account.userID,
+        opened: true,
       })
         .then((cdata) => {
           __chat_id = cdata.id;
@@ -253,13 +254,21 @@ function ChatPage({ account }) {
 
   const renderInputToolbar = (props) => {
     return (
-      <>
+      <View
+        style={{
+          flexDirection: "row",
+          //   borderColor: "red",
+          //   borderWidth: 1,
+          flex: 1,
+          width: "100%",
+        }}
+      >
         <InputToolbar
           {...props}
           containerStyle={{
             backgroundColor: colors.darkish,
-            marginHorizontal: 0,
-            borderRadius: 0,
+            marginHorizontal: 10,
+            borderRadius: 10,
             borderTopWidth: 0,
             borderTopColor: colors.secondary,
             borderColor: colors.secondary,
@@ -287,7 +296,7 @@ function ChatPage({ account }) {
           }}
         />
         {/* <Image style={styles.profilepic} /> */}
-      </>
+      </View>
     );
   };
 
@@ -299,6 +308,11 @@ function ChatPage({ account }) {
     <Screen style={styles.container}>
       <Header account={userData} />
       <GiftedChat
+        listViewProps={{
+          style: {
+            backgroundColor: colors.dark_opacity,
+          },
+        }}
         renderAvatar={renderAvatar}
         text={textMessage}
         onInputTextChanged={(text) => onInputTextChanged(text)}

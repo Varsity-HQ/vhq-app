@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 10,
-    borderBottomColor: colors.secondary_2,
+    borderBottomColor: colors.dark_opacity_2,
     borderBottomWidth: 1,
   },
 });

@@ -4,7 +4,7 @@ import Text from "../AppText";
 import Button from "../Button";
 import styles from "./styles";
 
-function ChatRoomFooter({ accounts }) {
+function ChatRoomFooter({ accounts, onSCPress }) {
   if (accounts) {
     return (
       <View style={styles.footer_container}>
@@ -28,6 +28,7 @@ function ChatRoomFooter({ accounts }) {
           Go on accounts to start a chat
         </Text>
         <Button
+          onPress={onSCPress}
           type={3}
           style={[styles.s_c_button, { marginTop: 10 }]}
           title="Start conversation"

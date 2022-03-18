@@ -193,13 +193,17 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
             keyExtractor: (x) => __get_chatAcc_id(x),
             customLoader: <Text>loading</Text>,
             useCustomLoader: false,
-            noDataComponent: <ChatRoomFooter />,
+            noDataComponent: (
+              <ChatRoomFooter onSCPress={() => setPageIndex(3)} />
+            ),
             allowRefresh: false,
             refreshHandler: refreshHandler,
           },
           {
             keyExtractor: (x) => __get_chatAcc_id(x),
-            noDataComponent: <ChatRoomFooter />,
+            noDataComponent: (
+              <ChatRoomFooter onSCPress={() => setPageIndex(3)} />
+            ),
             allowLoadMore: false,
             loadMoreHandler: loadMoreHandler,
             tabCounter: filtered_chats_requests.length,
