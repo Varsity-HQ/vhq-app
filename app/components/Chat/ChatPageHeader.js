@@ -13,7 +13,12 @@ function ChatPageHeader(props) {
         <View style={styles.inner_container}>
           <Ionicons name="arrow-back-sharp" size={34} color={colors.white} />
           <View style={styles.inner_container}>
-            <Image style={styles.profilepic} />
+            <Image
+              uri={
+                "https://varsityhq.imgix.net/vhq_781bd74f-10c2-40a6-b2bc-832494da7067.jpeg"
+              }
+              style={styles.profilepic}
+            />
             <View style={{ marginLeft: 10 }}>
               <Text style={styles.name}>Harmony Chikari</Text>
               <Text style={styles.sub}>@chikx_12</Text>
