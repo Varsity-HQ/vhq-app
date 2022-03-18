@@ -127,10 +127,10 @@ const Header = ({
             />
             {/* <FontAwesome name="university" color={colors.secondary} size={20} /> */}
             <Text style={styles.header_uni_text}>
-              {user_snapshot?.new_notications_count}
+              {user_snapshot ? user_snapshot?.new_notications_count : 0}
             </Text>
 
-            {!user_snapshot?.new_notifications_opened ? (
+            {!user_snapshot?.new_notifications_opened && user_snapshot ? (
               <View style={styles.n_badge} />
             ) : null}
 
