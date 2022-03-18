@@ -140,6 +140,7 @@ class Home extends PureComponent {
     return (
       <Screen>
         <FlatList
+          removeClippedSubviews={true}
           // extraData={posts}
           ref={this.props.scrollRef}
           ListHeaderComponent={

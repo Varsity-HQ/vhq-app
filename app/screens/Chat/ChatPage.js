@@ -16,6 +16,8 @@ function ChatPage(props) {
     <Screen style={styles.container}>
       <Header />
       <FlatList
+        showsVerticalScrollIndicator={false}
+        removeClippedSubviews={true}
         inverted
         data={[
           1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -25,7 +27,6 @@ function ChatPage(props) {
         renderItem={renderItem}
         style={styles.inner_container}
       />
-
       <InputAccessoryView>
         <MsgInputContainer />
       </InputAccessoryView>

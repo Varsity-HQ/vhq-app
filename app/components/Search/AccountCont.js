@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-function AccountCont({ data, follow_account, unfollow_account }) {
+function AccountCont({ data, follow_account, unfollow_account, removeButton }) {
   const navigation = useNavigation();
   const [following, setFollowing] = useState(false);
 
@@ -95,11 +95,13 @@ function AccountCont({ data, follow_account, unfollow_account }) {
         </View>
       </TouchableWithoutFeedback>
       <View>
-        <Button
-          onPress={handleAction}
-          type={following ? 5 : 8}
-          title={following ? "Following" : "Follow"}
-        />
+        {!removeButton && (
+          <Button
+            onPress={handleAction}
+            type={following ? 5 : 8}
+            title={following ? "Following" : "Follow"}
+          />
+        )}
       </View>
     </View>
   );

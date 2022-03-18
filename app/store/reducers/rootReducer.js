@@ -7,15 +7,17 @@ import profile from "../reducers/profile";
 import notificationsReducer from "./notifications";
 import postPageReducer from "./postPage";
 import hashtagPage from "./hashtagPage";
+import chatPage from "./chatPage";
 
 const rootReducer = combineReducers({
   core,
   data: dataReducer,
   loaders: loadersReducer,
-  profile: profile,
   postPage: postPageReducer,
   notifications: notificationsReducer,
-  hashtagPage: hashtagPage,
+  profile,
+  hashtagPage,
+  chatPage,
 });
 
 export default rootReducer;

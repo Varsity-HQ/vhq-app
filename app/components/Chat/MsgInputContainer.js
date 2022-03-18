@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     alignSelf: "center",
     fontSize: 15,
+    padding: 6,
   },
   profilepic: {
     height: 35,

@@ -4,7 +4,22 @@ import Text from "../AppText";
 import Button from "../Button";
 import styles from "./styles";
 
-function ChatRoomFooter() {
+function ChatRoomFooter({ accounts }) {
+  if (accounts) {
+    return (
+      <View style={styles.footer_container}>
+        <View style={styles.footer_text_container}>
+          <Text style={[styles.t_center, styles.header3]}>
+            No accounts to show
+          </Text>
+          <Text style={[styles.t_center, styles.subText]}>
+            Follow some accounts first then come back
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.footer_container}>
       <View style={styles.footer_text_container}>

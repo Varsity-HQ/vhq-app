@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   collection,
   getDocs,
@@ -20,12 +20,15 @@ import ChatRoomFooter from "../../components/Chat/ChatRoomFooter";
 import { __get_chatAcc_id } from "../../util/chatRoomUtils";
 import ChatSelector from "../../components/Chat/ChatSelector";
 import TabbedScreenComponent from "../../components/TabbedScreenComponent";
+import { get_accounts } from "../../store/actions/chatPage";
 import {
   FontAwesome,
   MaterialCommunityIcons,
   Ionicons,
 } from "@expo/vector-icons";
+import AccountCont from "../../components/Search/AccountCont";
 import colors from "../../config/colors";
+import uuid from "uuid";
 
 const chat_tabs = [
   {
@@ -48,28 +51,39 @@ const chat_tabs = [
 const mapStateToProps = (state) => {
   return {
     acc_data: state.core.accData,
+    chatPage: state.chatPage,
   };
 };
 
-function ChatHome({ acc_data }) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get_accounts: (paginate) => dispatch(get_accounts(paginate)),
+  };
+};
+
+function ChatHome({ acc_data, get_accounts, chatPage }) {
   const [userAccountsModal, set_modal_state] = useState(false);
   const [activetab, setactivetab] = useState(0);
   const chat_ref = collection(db, "chats");
-
   const [pageIndex, setPageIndex] = useState(1);
-
   const query_ = query(
     chat_ref,
     where("members", "array-contains", acc_data.userID),
     orderBy("last_update", "desc"),
   );
-
   const [chats, chats_loading] = useCollectionData(query_);
   const [chat_global_loader, set_chat_global_loader] = useState(false);
 
   let accounts_in_chat = [];
   let filtered_chats_allowed = [];
   let filtered_chats_requests = [];
+
+  useEffect(() => {
+    if (pageIndex === 3) {
+      console.log("ran");
+      get_accounts();
+    }
+  }, []);
 
   if (!chats_loading) {
     chats.forEach((x) => {
@@ -134,11 +148,33 @@ function ChatHome({ acc_data }) {
   };
 
   const listRenderingHandler = ({ item }) => {
+    if (!item) return null;
+
+    if (pageIndex === 3) {
+      return (
+        <View style={{ paddingHorizontal: 10, marginTop: 10 }}>
+          <AccountCont removeButton data={item} />
+        </View>
+      );
+    }
+
     return <ChatSelector data={item} />;
   };
 
   const handleSetTabIndex = (index) => {
     setPageIndex(index);
+
+    if (index === 3) {
+      get_accounts();
+    }
+  };
+
+  const _accountsKeyExtractor = (item) => {
+    if (!item) {
+      return uuid.v4();
+    }
+
+    return item.userID;
   };
 
   // console.log({ filtered_chats_allowed });
@@ -168,6 +204,12 @@ function ChatHome({ acc_data }) {
             loadMoreHandler: loadMoreHandler,
             tabCounter: filtered_chats_requests.length,
           },
+          {
+            keyExtractor: (item) => _accountsKeyExtractor(item),
+            noDataComponent: <ChatRoomFooter accounts />,
+            allowLoadMore: false,
+            loadMoreHandler: loadMoreHandler,
+          },
         ]}
         tabStates={[
           {
@@ -182,10 +224,16 @@ function ChatHome({ acc_data }) {
             data: filtered_chats_requests,
             refreshing: false,
           },
+          {
+            loading: chatPage.loading_accounts,
+            loading_more: false,
+            data: chatPage.accounts,
+            refreshing: false,
+          },
         ]}
       />
     </Screen>
   );
 }
 
-export default connect(mapStateToProps, null)(ChatHome);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatHome);
