@@ -186,9 +186,7 @@ function ChatPage({ account }) {
     console.log(__chat_id, __no_chats);
   };
 
-  const onSend = useCallback(async (messages = []) => {
-    console.log({ messages: messages.length });
-
+  const onSend = async (messages = []) => {
     const chatmessagesRef = collection(db, "chatMessages");
     await addDoc(chatmessagesRef, {
       message: messages[0].text,
@@ -200,13 +198,13 @@ function ChatPage({ account }) {
     })
       .then((data) => {
         const messageRef = doc(db, "chatMessages", data.id);
-        updateDoc(messageRef, {
+        return updateDoc(messageRef, {
           id: data.id,
         });
       })
       .then(() => {
-        let chatRef = doc(db, "chat", chat_id);
-        updateDoc(chatRef, {
+        let chatRef = doc(db, "chats", chat_id);
+        return updateDoc(chatRef, {
           lastMessageSent: messages[0].text,
           last_update: new Date().toISOString(),
           sent_by: account.userID,
@@ -214,11 +212,15 @@ function ChatPage({ account }) {
         });
       })
       .catch((err) => {});
+  };
 
-    // setMessages((previousMessages) =>
-    //   GiftedChat.append(previousMessages, messages),
-    // );
-  }, []);
+  //   const onSend = useCallback(async (messages = []) => {
+  //     console.log({ messages: messages.length });
+
+  //     // setMessages((previousMessages) =>
+  //     //   GiftedChat.append(previousMessages, messages),
+  //     // );
+  //   }, []);
 
   const renderItem = ({ item }) => {
     return <ChatBubble data={item} />;
