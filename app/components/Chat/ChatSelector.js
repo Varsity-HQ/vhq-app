@@ -103,7 +103,7 @@ function ChatSelector({ data }) {
               paddingRight: 10,
             }}
           >
-            {!sent_by_me ? (
+            {!data.opened && !sent_by_me ? (
               <View style={styles.c_s_dot} />
             ) : (
               <View style={styles.c_s_dot_them} />

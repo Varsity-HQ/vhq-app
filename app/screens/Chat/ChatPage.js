@@ -39,12 +39,14 @@ import {
   limit,
   addDoc,
   updateDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import {
   useCollectionData,
   useDocumentData,
 } from "react-firebase-hooks/firestore";
 import { connect } from "react-redux";
+import { v4 } from "uuid";
 
 const mapStateToProps = (state) => {
   return {
@@ -75,7 +77,6 @@ function ChatPage({ account }) {
   /** get user */
   const accDocRef = doc(db, "accounts", route.params.uid);
   const [userData, user_loading, error] = useDocumentData(accDocRef);
-
   let messages_processed = [];
 
   if (userData && !user_loading && messages_list && !msg_loading) {
@@ -103,7 +104,6 @@ function ChatPage({ account }) {
   useEffect(() => {
     setUsername(route.params.username);
     set_uid(route.params.uid);
-
     process_chat_id(route.params.uid);
 
     setMessages([
@@ -153,7 +153,14 @@ function ChatPage({ account }) {
         if (!__chat_id) {
           __no_chats = true;
         }
+
         // console.log("ran");
+      })
+      .then(() => {
+        const docRef = doc(db, "chats", __chat_id);
+        return updateDoc(docRef, {
+          opened: true,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -193,7 +200,7 @@ function ChatPage({ account }) {
       sent_date: new Date().toISOString(),
       sent_by: account.userID,
       read: "false",
-      id: "",
+      id: v4(),
       chat_id: chat_id,
     })
       .then((data) => {
@@ -256,7 +263,7 @@ function ChatPage({ account }) {
 
   const renderInputToolbar = (props) => {
     return (
-      <>
+      <View>
         <InputToolbar
           {...props}
           containerStyle={{
@@ -267,6 +274,7 @@ function ChatPage({ account }) {
             borderTopColor: colors.secondary,
             borderColor: colors.secondary,
             borderWidth: 0,
+            // marginTop: 10,
           }}
           textInputProps={{
             style: {
@@ -288,9 +296,13 @@ function ChatPage({ account }) {
             //   }
             // },
           }}
+          accessoryStyle={{
+            borderColor: "red",
+            borderWidth: 1,
+          }}
         />
         {/* <Image style={styles.profilepic} /> */}
-      </>
+      </View>
     );
   };
 
