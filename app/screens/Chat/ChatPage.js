@@ -47,6 +47,7 @@ import {
 } from "react-firebase-hooks/firestore";
 import { connect } from "react-redux";
 import { v4 } from "uuid";
+import axios from "axios";
 
 const mapStateToProps = (state) => {
   return {
@@ -218,6 +219,15 @@ function ChatPage({ account }) {
           opened: false,
         });
       })
+      .then(() => {
+        return axios.post("/chat/handle/sentmsg", {
+          //   send_to: userData.userID,
+          send_to: "KreteASYDgVwQebpuINpng6KvZp2",
+          sent_by: account.userID,
+          message: messages[0].text,
+          sent_by_user: account.firstname + " " + account.surname,
+        });
+      })
       .catch((err) => {});
   };
 
@@ -263,7 +273,7 @@ function ChatPage({ account }) {
 
   const renderInputToolbar = (props) => {
     return (
-      <View>
+      <>
         <InputToolbar
           {...props}
           containerStyle={{
@@ -275,6 +285,13 @@ function ChatPage({ account }) {
             borderColor: colors.secondary,
             borderWidth: 0,
             // marginTop: 10,
+            // bottom: 3,
+          }}
+          primaryStyle={{
+            borderColor: "red",
+            borderWidth: 0,
+            borderRadius: 10,
+            alignItems: "center",
           }}
           textInputProps={{
             style: {
@@ -296,13 +313,9 @@ function ChatPage({ account }) {
             //   }
             // },
           }}
-          accessoryStyle={{
-            borderColor: "red",
-            borderWidth: 1,
-          }}
         />
         {/* <Image style={styles.profilepic} /> */}
-      </View>
+      </>
     );
   };
 
@@ -336,6 +349,11 @@ function ChatPage({ account }) {
         // renderBubble={this.renderBubble}
         renderInputToolbar={renderInputToolbar}
         renderSend={renderSend}
+
+        // renderAccessory={() => {
+        //   <></>;
+        // }}
+        //
         // onSend={messages => this.onSend(messages)}
         // user={{
         //   _id: this.state.userId,

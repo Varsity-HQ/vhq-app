@@ -54,7 +54,7 @@ class PostPollSection extends Component {
 
     let total_votes = post_vote_counter(this.props.choices);
 
-    this.props.update_total_votes(total_votes);
+    this.props.update_total_votes && this.props.update_total_votes(total_votes);
 
     this.setState({
       total_votes,
