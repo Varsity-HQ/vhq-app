@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: colors.dark,
-    borderBottomColor: colors.secondary,
+    borderBottomColor: colors.dark_opacity_2,
     borderBottomWidth: 1,
   },
 });

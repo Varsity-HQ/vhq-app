@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import AppNavigator from "./navigation/AppRoutes";
 
@@ -22,7 +22,7 @@ import { firebaseConfig } from "./util/fb_config";
 import { Image, StatusBar } from "react-native";
 import AppToast from "./components/AppToast";
 import { Asset } from "expo-asset";
-
+import * as Notifications from "expo-notifications";
 import {
   FontAwesome,
   Ionicons,
@@ -30,12 +30,16 @@ import {
   Feather,
   SimpleLineIcons,
 } from "@expo/vector-icons";
+import { setNotificationHandler } from "expo-notifications";
+import { COPY_POST_URL } from "./util/toast_messages";
+
+import { navigationRef } from "./navigation/rootNavigation";
 
 if (!getApps().length) {
   initializeApp(firebaseConfig);
 }
 
-axios.defaults.baseURL = "http://192.168.68.125:5000";
+axios.defaults.baseURL = "http://192.168.68.102:5000";
 // axios.defaults.baseURL = "http://192.168.0.116:5000";
 // axios.defaults.baseURL = "https://api.varsityhq.co.za";
 
@@ -72,6 +76,14 @@ function cacheImages(images) {
 function cacheFonts(fonts) {
   return fonts.map((font) => Font.loadAsync(font));
 }
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
 function App({ authenticated, set_user, setAuthState, set_token, userID }) {
   const [isReady, setisReady] = useState();
@@ -156,7 +168,7 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
         showHideTransition="fade"
         hidden={false}
       />
-      <NavigationContainer theme={vhqTheme}>
+      <NavigationContainer ref={navigationRef} theme={vhqTheme}>
         {/* <SafeAreaView style={{ flex: 1 }}> */}
         {authenticated && userID ? <AppNavigator /> : <AuthRoutes />}
         {/* </SafeAreaView> */}

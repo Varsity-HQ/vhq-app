@@ -221,8 +221,8 @@ function ChatPage({ account }) {
       })
       .then(() => {
         return axios.post("/chat/handle/sentmsg", {
-          //   send_to: userData.userID,
-          send_to: "KreteASYDgVwQebpuINpng6KvZp2",
+          send_to: userData.userID,
+          // send_to: "KreteASYDgVwQebpuINpng6KvZp2",
           sent_by: account.userID,
           message: messages[0].text,
           sent_by_user: account.firstname + " " + account.surname,

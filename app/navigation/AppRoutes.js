@@ -27,6 +27,7 @@ import UpdateUniversityScreen from "../screens/settings/UpdateUniversityScreen";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 import TabNavigator from "./TabNavigator";
 import ChatPage from "../screens/Chat/ChatPage";
+import navigation from "./rootNavigation";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -151,6 +152,12 @@ const AppRoutes = ({ core, setExpoPushToken }) => {
     registerForPushNotificationsAsync().then(
       (token) => token && setExpoPushToken(token),
     );
+
+    Notifications.addNotificationResponseReceivedListener((notification) => {
+      console.log({ notification });
+
+      navigation.navigate("LOGIN");
+    });
 
     return () => {};
   }, []);
