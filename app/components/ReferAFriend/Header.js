@@ -39,7 +39,6 @@ function Header({ account }) {
     Clipboard.setString(
       `https://varsityhq.co.za?referralCode=${refData.referral_code}`,
     );
-
     setLinkCopied(true);
   };
 
@@ -51,7 +50,6 @@ function Header({ account }) {
         showAccount
         backIcon
       />
-
       {loading ? (
         <View
           style={[

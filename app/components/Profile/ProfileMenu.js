@@ -17,7 +17,7 @@ import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
 import { COPY_PROFILE_URL } from "../../util/toast_messages";
 import { useNavigation } from "@react-navigation/native";
-import { REFER_A_FRIEND } from "../../navigation/routes";
+import { QCOINS_OFFERS, REFER_A_FRIEND } from "../../navigation/routes";
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -53,6 +53,10 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
     },
     {
       title: "Qcoins & Offers",
+      onPress: () => {
+        navigation.navigate(QCOINS_OFFERS);
+        handleModal();
+      },
       icon: (
         <Ionicons
           color={colors.secondary}

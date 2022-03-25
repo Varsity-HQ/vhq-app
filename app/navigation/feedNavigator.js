@@ -31,6 +31,7 @@ import {
   SEARCH_RESULTS,
   POST_PAGE,
   REFER_A_FRIEND,
+  QCOINS_OFFERS,
 } from "./routes";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
@@ -61,6 +62,7 @@ import VirtualizedView from "../components/VirtualizedViewBacked";
 import SearchResults from "../screens/SearchResults";
 import PostPage from "../screens/PostPage";
 import ReferAFriend from "../screens/ReferAFriend";
+import QcoinsOffersPage from "../screens/QcoinsOffersPage";
 
 const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
@@ -139,6 +141,13 @@ const FeedNavigator = () => (
         }}
         name={PROFILE}
         component={Profile}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={QCOINS_OFFERS}
+        component={QcoinsOffersPage}
       />
       <Stack.Screen
         options={{
