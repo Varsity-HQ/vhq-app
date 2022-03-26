@@ -6,10 +6,12 @@ import Text from "../components/AppText";
 import Button from "../components/Button";
 import { RFValue } from "react-native-responsive-fontsize";
 import colors from "../config/colors";
+import OfferCard from "../components/Post/OfferCard";
+import AppTransaction from "../components/Profile/AppTransaction";
 
 function QcoinsOffersPage({ navigation }) {
   return (
-    <Screen style={styles.container}>
+    <Screen scroll style={styles.container}>
       <HeaderComponent
         backPress={() => navigation.goBack()}
         backBtnText="back to profile"
@@ -52,6 +54,36 @@ function QcoinsOffersPage({ navigation }) {
           }}
         >
           <Text style={styles.sub_header}>Available Offers</Text>
+        </View>
+
+        <View
+          style={{
+            marginTop: 20,
+          }}
+        >
+          {/* <OfferCard   /> */}
+          <Text style={{}}>eses</Text>
+        </View>
+      </View>
+
+      <View style={styles.inner_container}>
+        <View
+          style={{
+            borderBottomColor: colors.secondary_2,
+            borderBottomWidth: 1,
+            paddingBottom: 20,
+          }}
+        >
+          <Text style={styles.sub_header}>Recent Transactions</Text>
+        </View>
+        <View
+          style={{
+            marginTop: 20,
+          }}
+        >
+          <AppTransaction />
+          <AppTransaction />
+          <AppTransaction />
         </View>
       </View>
     </Screen>
@@ -103,7 +135,9 @@ const styles = StyleSheet.create({
   inner_container: {
     padding: 10,
   },
-  container: {},
+  container: {
+    paddingBottom: 10,
+  },
 });
 
 export default QcoinsOffersPage;

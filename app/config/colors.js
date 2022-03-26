@@ -17,6 +17,7 @@ export default {
   light: "#f9f9f9",
   lighish: "#7d868c",
   lighish2: "#daf3ff",
+  green: "#28a745",
   gray: "#eff4f7",
   grayer: "#e7e7e7",
   black: "#000",
