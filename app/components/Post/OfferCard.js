@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Platform } from "react-native";
+import { View, StyleSheet, Platform, Dimensions } from "react-native";
 import Button from "../Button";
 import Text from "../AppText";
 import Image from "../Image";
@@ -8,10 +8,19 @@ import colors from "../../config/colors";
 import dayjs from "dayjs";
 import PostPictures from "./PostPictures";
 
-function OfferCard({ navigation, data }) {
+const width = Dimensions.get("window").width;
+
+function OfferCard({ navigation, data, useWindowWidth }) {
   console.log(data.attachments[0]);
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          width: useWindowWidth ? width : null,
+        },
+      ]}
+    >
       <View style={styles.top_section}>
         <PostPictures offer images={data.attachments} />
       </View>

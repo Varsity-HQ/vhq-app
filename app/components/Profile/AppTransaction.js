@@ -2,8 +2,9 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import Text from "../AppText";
 import colors from "../../config/colors";
+import dayjs from "dayjs";
 
-function AppTransaction(props) {
+function AppTransaction({ data }) {
   return (
     <View style={styles.container}>
       <View
@@ -14,8 +15,10 @@ function AppTransaction(props) {
           padding: 10,
         }}
       >
-        <Text style={{ fontWeight: "700" }}>Refer rewards</Text>
-        <Text style={{ color: colors.secondary }}>Refer rewards</Text>
+        <Text style={{ fontWeight: "700" }}>{data.transaction_name}</Text>
+        <Text style={{ color: colors.secondary, marginTop: 5, fontSize: 14 }}>
+          {dayjs(data.date_of_trans).format("llll")}
+        </Text>
       </View>
       <View
         style={{
@@ -23,7 +26,15 @@ function AppTransaction(props) {
           padding: 10,
         }}
       >
-        <Text style={{ color: colors.green, fontWeight: "700" }}>+3</Text>
+        {data.type === "in" ? (
+          <Text style={{ color: colors.green, fontWeight: "700" }}>
+            +{data.credits}
+          </Text>
+        ) : (
+          <Text style={{ color: colors.redish_2, fontWeight: "700" }}>
+            -{data.credits}
+          </Text>
+        )}
       </View>
     </View>
   );
