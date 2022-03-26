@@ -1,0 +1,177 @@
+import React, { useState } from "react";
+import { View, StyleSheet, ScrollView, ImageBackground } from "react-native";
+import FancyHeader from "../components/headers/FancyHeader";
+import Screen from "../components/Screen";
+import {
+  MaterialCommunityIcons,
+  Ionicons,
+  SimpleLineIcons,
+  FontAwesome,
+} from "@expo/vector-icons";
+import colors from "../config/colors";
+import { connect } from "react-redux";
+import universityShortName from "../util/universityShortName";
+import store from "../store/store";
+import { DATING_NAVIGATOR, PROFILE_SETTINGS } from "../navigation/routes";
+import MarketplaceAds from "../components/Marketplace/MarketplaceAds";
+import AccountsGrid from "../components/AccountsGrid";
+import Button from "../components/Button";
+import Text from "../components/AppText";
+import { RFValue } from "react-native-responsive-fontsize";
+import { useNavigation } from "@react-navigation/native";
+import { DATING_INTRO } from "../navigation/routes";
+
+import navigate from "../navigation/rootNavigation";
+
+const tabs = [
+  {
+    title: `..at ${universityShortName(
+      store.getState().core.accData.university,
+    )}`,
+    index: 1,
+    icon: <FontAwesome color={colors.white} size={14} name="university" />,
+  },
+  {
+    textColor: colors.secondary,
+    title: "Settings",
+    index: 2,
+    navTo: PROFILE_SETTINGS,
+    // icon: <SimpleLineIcons color={colors.white} size={16} name="picture" />,
+  },
+  // {
+  //   title: "Groups",
+  //   index: 3,
+
+  //   icon: (
+  //     <MaterialCommunityIcons
+  //       color={colors.white}
+  //       size={16}
+  //       name="account-group-outline"
+  //     />
+  //   ),
+  // },
+];
+
+const mapStateToProps = (state) => {
+  return {
+    university: state.core.accData.university,
+  };
+};
+
+function DiscoverPage({ university }) {
+  const [activeTab, setActiveTab] = useState(1);
+
+  const handleChangeTab = (index) => {
+    setActiveTab(index);
+  };
+
+  return (
+    <Screen scroll style={styles.container}>
+      <FancyHeader
+        headerTextTitle="Discover"
+        headerTextFaded={`@${universityShortName(university)}`}
+        active={activeTab}
+        tabs={tabs}
+        // type={1}
+        setTab={(i) => handleChangeTab(i)}
+      />
+      <View style={styles.section_container}>
+        <View>
+          <View style={styles.header}>
+            <Text style={{ fontWeight: "700" }}>3rd year students </Text>
+            <View style={styles.adLabel}>
+              <Text style={{ fontSize: 14 }}>Based on your stream </Text>
+            </View>
+          </View>
+        </View>
+        <MarketplaceAds />
+      </View>
+      <View style={{ padding: 10 }}>
+        <DatingSuggestion />
+      </View>
+      <AccountsGrid />
+    </Screen>
+  );
+}
+
+const DatingSuggestion = () => {
+  const navigation = useNavigation();
+  return (
+    <ImageBackground
+      //   source={require("../assets/signup-img-1.jpg")}
+      source={{
+        uri: "https://www.stockvault.net/data/2021/01/30/282748/preview16.jpg",
+      }}
+      resizeMode="cover"
+      imageStyle={{
+        borderRadius: 10,
+      }}
+      style={{
+        padding: 20,
+        backgroundColor: colors.dark_opacity_2,
+        borderRadius: 10,
+        borderWidth: 0,
+        // borderColor: colors.secondary_2,
+        flexDirection: "column",
+        alignItems: "center",
+        paddingTop: 30,
+      }}
+    >
+      <Text style={{ color: colors.white, fontWeight: "600" }}>
+        Intrested in something more fun ?
+      </Text>
+      <Text
+        style={{
+          fontSize: 25,
+          fontWeight: "700",
+          marginTop: 10,
+          textAlign: "center",
+          color: colors.lighish2,
+        }}
+      >
+        Switch to dating and meet encounters at{" "}
+        {universityShortName(store.getState().core.accData.university)}
+      </Text>
+      <View style={{ marginTop: 10 }}>
+        <Button
+          onPress={() => {
+            navigation.navigate(DATING_NAVIGATOR);
+          }}
+          type={5}
+          style={{
+            borderColor: colors.primary,
+            borderWidth: 2,
+            borderRadius: 100,
+          }}
+          textStyle={{
+            color: colors.secondary,
+          }}
+          title="Switch to dating"
+        />
+      </View>
+    </ImageBackground>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {},
+  adLabel: {
+    backgroundColor: colors.redish,
+    padding: 3,
+    borderRadius: 5,
+    display: "flex",
+  },
+  section_container: {
+    backgroundColor: colors.darkish,
+    paddingVertical: 10,
+  },
+  header: {
+    paddingHorizontal: 10,
+    // fontSize: RFValue(16),
+    fontWeight: "700",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+});
+
+export default connect(mapStateToProps, null)(DiscoverPage);

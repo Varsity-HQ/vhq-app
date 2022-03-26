@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import colors from "../config/colors";
+import { useNavigation } from "@react-navigation/native";
 
 function TabNavigator({
   active = 1,
@@ -16,10 +17,16 @@ function TabNavigator({
   type,
   actionsDisable,
 }) {
+  const navigation = useNavigation();
+
   const handlePress = (x) => {
     if (actionsDisable) return;
 
     if (x.navTo === null) return;
+
+    if (x.navTo) {
+      return navigation.navigate(x.navTo);
+    }
 
     onPress(x.index);
   };
@@ -45,7 +52,16 @@ function TabNavigator({
 
                 <View style={styles.tab_Container}>
                   {x.icon && x.icon}
-                  <Text style={styles.text}>{x.title}</Text>
+                  <Text
+                    style={[
+                      styles.text,
+                      x.textColor && {
+                        color: x.textColor,
+                      },
+                    ]}
+                  >
+                    {x.title}
+                  </Text>
                 </View>
                 <View
                   style={[

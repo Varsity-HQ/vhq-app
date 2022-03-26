@@ -23,7 +23,7 @@ import { normalizeText } from "../../util/responsivePx";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { doc } from "firebase/firestore";
 import db from "../../util/fb_admin";
-import { NOTIFICATIONS } from "../../navigation/routes";
+import { DISCOVER_PAGE, NOTIFICATIONS } from "../../navigation/routes";
 import { RFValue } from "react-native-responsive-fontsize";
 import OffersHeader from "./OffersHeader";
 
@@ -47,7 +47,7 @@ const home_tabs = [
   {
     title: "Discover",
     index: 3,
-    navTo: null,
+    navTo: DISCOVER_PAGE,
     icon: (
       <FontAwesome color={colors.white} size={16} name="arrow-circle-o-right" />
     ),
