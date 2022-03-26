@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ADD_POST } from "../navigation/routes";
 import { connect } from "react-redux";
 import HomeUploading from "../components/Loaders/HomeUploading.js";
-
+import { useRoute } from "@react-navigation/native";
 const height = Dimensions.get("window").height;
 
 const mapStateToProps = (state) => {
@@ -26,6 +26,9 @@ const mapStateToProps = (state) => {
 
 function FloatingButton({ uploading }) {
   const navigation = useNavigation();
+  // const route = useRoute();
+  // console.log({ routes: route });
+
   return (
     <>
       {Platform.OS === "ios" && <View style={styles.shadow} />}

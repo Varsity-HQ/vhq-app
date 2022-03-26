@@ -22,6 +22,7 @@ import { useNavigation } from "@react-navigation/native";
 import { DATING_INTRO } from "../navigation/routes";
 
 import navigate from "../navigation/rootNavigation";
+import AccountsSlider from "../components/AccountsSlider";
 
 const tabs = [
   {
@@ -77,19 +78,54 @@ function DiscoverPage({ university }) {
       />
       <View style={styles.section_container}>
         <View>
+          <Text
+            style={{
+              fontWeight: "700",
+              fontSize: RFValue(16),
+              marginHorizontal: 10,
+              marginBottom: 10,
+              backgroundColor: colors.dark_opacity_2,
+              paddingHorizontal: 10,
+              paddingVertical: 5,
+              borderRadius: 10,
+              borderColor: colors.secondary_2,
+              borderWidth: 0,
+              overflow: "hidden",
+              color: colors.secondary,
+            }}
+          >
+            Suggested Peers
+          </Text>
           <View style={styles.header}>
-            <Text style={{ fontWeight: "700" }}>3rd year students </Text>
+            <Text style={{ fontWeight: "700" }}>~ 3rd year's students </Text>
             <View style={styles.adLabel}>
               <Text style={{ fontSize: 14 }}>Based on your stream </Text>
             </View>
           </View>
         </View>
-        <MarketplaceAds />
+        <AccountsSlider />
       </View>
       <View style={{ padding: 10 }}>
         <DatingSuggestion />
       </View>
-      <AccountsGrid />
+      <View
+        style={[
+          styles.section_container,
+          {
+            marginBottom: 100,
+          },
+        ]}
+      >
+        <View style={styles.header}>
+          <Text style={{ fontWeight: "700" }}>~ New friends </Text>
+          <View style={styles.adLabel}>
+            <Text style={{ fontSize: 14 }}> - at the {university}</Text>
+          </View>
+        </View>
+        <View>
+          <AccountsGrid />
+        </View>
+      </View>
     </Screen>
   );
 }
@@ -122,14 +158,15 @@ const DatingSuggestion = () => {
       </Text>
       <Text
         style={{
-          fontSize: 25,
+          fontSize: 26,
           fontWeight: "700",
           marginTop: 10,
           textAlign: "center",
           color: colors.lighish2,
+          //   fontFamily: "Lobster-Regular",
         }}
       >
-        Switch to dating and meet encounters at{" "}
+        Meet local encounters and friends at{" "}
         {universityShortName(store.getState().core.accData.university)}
       </Text>
       <View style={{ marginTop: 10 }}>
