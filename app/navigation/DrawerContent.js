@@ -25,7 +25,12 @@ import Image from "../components/Image";
 import { normalizeText } from "../util/responsivePx";
 import Button from "../components/Button";
 import { connect } from "react-redux";
-import { PROFILE, NOTIFICATIONS, PROFILE_SETTINGS } from "./routes";
+import {
+  PROFILE,
+  NOTIFICATIONS,
+  PROFILE_SETTINGS,
+  QCOINS_OFFERS,
+} from "./routes";
 import { logOutUser } from "../store/actions/actions";
 import { save_post_user } from "../store/actions/profile";
 
@@ -155,7 +160,11 @@ function DrawerContent({ props, product, account, save_post_user }) {
             <FontAwesome name="group" size={25} color={colors.secondary} />
             <Text style={{ marginLeft: 20 }}>Groups</Text>
           </View> */}
-          {/* <View
+          <TouchableOpacity
+            onPress={() => {
+              navigation.dispatch(DrawerActions.closeDrawer());
+              navigation.navigate(QCOINS_OFFERS);
+            }}
             style={{
               paddingHorizontal: 10,
               flexDirection: "row",
@@ -164,8 +173,8 @@ function DrawerContent({ props, product, account, save_post_user }) {
             }}
           >
             <FontAwesome name="tags" size={25} color={colors.secondary} />
-            <Text style={{ marginLeft: 20 }}>Offers</Text>
-          </View> */}
+            <Text style={{ marginLeft: 20 }}>Qcoins & Offers</Text>
+          </TouchableOpacity>
           {/* <View
             style={{
               paddingHorizontal: 10,
