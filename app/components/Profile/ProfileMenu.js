@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
 
 const iconSize = 35;
 //|
-
+//|
 //|
 
 function ProfileMenu({ username, auth_username, logOutUser }) {
@@ -41,16 +41,17 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
   const navigation = useNavigation();
   const options = [
-    {
-      title: "Administration",
-      icon: (
-        <Ionicons
-          color={colors.secondary}
-          name="shield-outline"
-          size={iconSize}
-        />
-      ),
-    },
+    // {
+    //   hidden: true,
+    //   title: "Administration",
+    //   icon: (
+    //     <Ionicons
+    //       color={colors.secondary}
+    //       name="shield-outline"
+    //       size={iconSize}
+    //     />
+    //   ),
+    // },
     {
       title: "Qcoins & Offers",
       onPress: () => {
