@@ -2,7 +2,20 @@ import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import AccountCard from "./Profile/AccountCard";
 
-function AccountsSlider(props) {
+function AccountsSlider({ loading }) {
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <ScrollView style={{ paddingLeft: 10 }} horizontal>
+          <AccountCard loading />
+          <AccountCard loading />
+          <AccountCard loading />
+          <AccountCard loading />
+        </ScrollView>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView style={{ paddingLeft: 10 }} horizontal>

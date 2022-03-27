@@ -70,24 +70,25 @@ const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
 
 const Drawer = createDrawerNavigator();
+//
 const HomeDrawerNavigator = () => {
-  // return <Home />;
-
   return (
-    <Drawer.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-      drawerContent={(props) => <DrawerContent {...props} />}
-    >
-      <Drawer.Screen name="HomeScreen" component={Home} />
-    </Drawer.Navigator>
+    <>
+      <FloatingButton />
+      <Drawer.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+        drawerContent={(props) => <DrawerContent {...props} />}
+      >
+        <Drawer.Screen name="HomeScreen" component={Home} />
+      </Drawer.Navigator>
+    </>
   );
 };
 
 const FeedNavigator = () => (
   <>
-    <FloatingButton />
     <Stack.Navigator
       defaultScreenOptions={{
         headerShown: false,

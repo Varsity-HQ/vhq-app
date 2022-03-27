@@ -24,35 +24,6 @@ import { DATING_INTRO } from "../navigation/routes";
 import navigate from "../navigation/rootNavigation";
 import AccountsSlider from "../components/AccountsSlider";
 
-const tabs = [
-  {
-    title: `..at ${universityShortName(
-      store.getState().core.accData.university,
-    )}`,
-    index: 1,
-    icon: <FontAwesome color={colors.white} size={14} name="university" />,
-  },
-  {
-    textColor: colors.secondary,
-    title: "Settings",
-    index: 2,
-    navTo: PROFILE_SETTINGS,
-    // icon: <SimpleLineIcons color={colors.white} size={16} name="picture" />,
-  },
-  // {
-  //   title: "Groups",
-  //   index: 3,
-
-  //   icon: (
-  //     <MaterialCommunityIcons
-  //       color={colors.white}
-  //       size={16}
-  //       name="account-group-outline"
-  //     />
-  //   ),
-  // },
-];
-
 const mapStateToProps = (state) => {
   return {
     university: state.core.accData.university,
@@ -61,10 +32,82 @@ const mapStateToProps = (state) => {
 
 function DiscoverPage({ university }) {
   const [activeTab, setActiveTab] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const tabs = [
+    {
+      title: `..at ${universityShortName(university)}`,
+      index: 1,
+      icon: <FontAwesome color={colors.white} size={14} name="university" />,
+    },
+    {
+      textColor: colors.secondary,
+      title: "Settings",
+      index: 2,
+      navTo: PROFILE_SETTINGS,
+      // icon: <SimpleLineIcons color={colors.white} size={16} name="picture" />,
+    },
+    // {
+    //   title: "Groups",
+    //   index: 3,
+
+    //   icon: (
+    //     <MaterialCommunityIcons
+    //       color={colors.white}
+    //       size={16}
+    //       name="account-group-outline"
+    //     />
+    //   ),
+    // },
+  ];
 
   const handleChangeTab = (index) => {
     setActiveTab(index);
   };
+
+  if (loading) {
+    return (
+      <Screen scroll style={styles.container}>
+        <FancyHeader
+          headerTextTitle="Discover"
+          headerTextFaded={`@${universityShortName(university)}`}
+          active={activeTab}
+          tabs={tabs}
+          // type={1}
+          setTab={(i) => handleChangeTab(i)}
+        />
+        <View style={styles.section_container}>
+          <View>
+            <Text
+              style={{
+                fontWeight: "700",
+                fontSize: RFValue(16),
+                marginHorizontal: 10,
+                marginBottom: 10,
+                backgroundColor: colors.dark_opacity_2,
+                paddingHorizontal: 10,
+                paddingVertical: 5,
+                borderRadius: 10,
+                borderColor: colors.secondary_2,
+                borderWidth: 0,
+                overflow: "hidden",
+                color: colors.secondary,
+              }}
+            >
+              Loading..
+            </Text>
+            <View style={styles.header}>
+              <View style={{ fontWeight: "700", marginTop: 14 }}></View>
+            </View>
+          </View>
+          <AccountsSlider loading />
+        </View>
+        <View style={{ padding: 10 }}>
+          <DatingSuggestion loading />
+        </View>
+      </Screen>
+    );
+  }
 
   return (
     <Screen scroll style={styles.container}>
@@ -130,8 +173,53 @@ function DiscoverPage({ university }) {
   );
 }
 
-const DatingSuggestion = () => {
+const DatingSuggestion = ({ loading }) => {
   const navigation = useNavigation();
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          padding: 20,
+          backgroundColor: colors.dark_2,
+          borderRadius: 10,
+          borderWidth: 0,
+          // borderColor: colors.secondary_2,
+          flexDirection: "column",
+          alignItems: "center",
+          paddingTop: 30,
+        }}
+      >
+        <Text style={{ color: colors.dark_2, fontWeight: "600" }}>-</Text>
+        <Text
+          style={{
+            fontSize: 30,
+            //   fontWeight: "700",
+            marginTop: 10,
+            textAlign: "center",
+            color: colors.dark_2,
+            fontFamily: "Lobster-Regular",
+          }}
+        >
+          Meet local encounters and friends at{" "}
+        </Text>
+        <View style={{ marginTop: 10 }}>
+          <Button
+            type={5}
+            style={{
+              borderColor: colors.dark,
+              borderWidth: 2,
+              borderRadius: 100,
+            }}
+            textStyle={{
+              color: colors.dark,
+            }}
+            title="Loading"
+          />
+        </View>
+      </View>
+    );
+  }
   return (
     <ImageBackground
       //   source={require("../assets/signup-img-1.jpg")}
@@ -158,12 +246,12 @@ const DatingSuggestion = () => {
       </Text>
       <Text
         style={{
-          fontSize: 26,
-          fontWeight: "700",
+          fontSize: 30,
+          //   fontWeight: "700",
           marginTop: 10,
           textAlign: "center",
           color: colors.lighish2,
-          //   fontFamily: "Lobster-Regular",
+          fontFamily: "Lobster-Regular",
         }}
       >
         Meet local encounters and friends at{" "}
