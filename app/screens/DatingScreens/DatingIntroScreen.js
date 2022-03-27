@@ -1,12 +1,13 @@
 import React from "react";
 import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 import { connect } from "react-redux";
 import Text from "../../components/AppText";
 import Button from "../../components/Button";
 import Image from "../../components/Image";
 import Screen from "../../components/Screen";
 import colors from "../../config/colors";
-import { DATING_ENCOUNTERS } from "../../navigation/routes";
+import { CREATE_SHOW, DATING_ENCOUNTERS } from "../../navigation/routes";
 import { normalizeText } from "../../util/responsivePx";
 
 const height = Dimensions.get("window").height;
@@ -37,7 +38,7 @@ function DatingIntroScreen({ profilepic, navigation }) {
           />
         </View>
         <Text style={[styles.center, styles.heading]}>
-          Want to meet someone ?
+          Ready to meet someone ?
         </Text>
         <Text style={styles.subText}>
           Create a show to meet and chat to more encounters around your
@@ -45,7 +46,7 @@ function DatingIntroScreen({ profilepic, navigation }) {
           encounter and no dead profiles
         </Text>
         <Button
-          onPress={() => navigation.navigate(DATING_ENCOUNTERS)}
+          onPress={() => navigation.navigate(CREATE_SHOW)}
           style={[styles.center]}
           title="Create Show"
         />
@@ -96,13 +97,13 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   heading: {
-    fontSize: normalizeText(22),
+    fontSize: RFValue(22),
     fontWeight: "700",
     marginBottom: 10,
   },
   subText: {
     color: colors.secondary,
-    fontSize: normalizeText(14),
+    fontSize: RFValue(13),
     textAlign: "center",
     marginBottom: 10,
   },

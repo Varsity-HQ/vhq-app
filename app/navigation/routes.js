@@ -17,7 +17,17 @@ export const ALL_TRENDING_HASHTAGS = "AllTrendingTopics";
 
 // Dating Screens
 export const DATING_INTRO = "DatingIntro";
+export const CREATE_SHOW = "CreateShow";
 export const DATING_ENCOUNTERS = "DatingEncouters";
+
+//
+export const CS_CONFIRM_GENDER = "CSConfirmGender";
+export const CS_NAME = "CSName";
+export const CS_LOOKING_FOR = "CSLookingFor";
+export const CS_SEXUAL_ORIENTATION = "CSSexualOrientation";
+export const CS_INTERESTED_IN = "CSInterestedIn";
+export const CS_PHOTOS = "CSPhotos";
+// End of Dating Screens
 
 //Screens
 //===> Auth Screens

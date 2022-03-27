@@ -116,8 +116,8 @@ const AppNavigator = ({ user_id }) => {
           tabBarShowLabel: true,
         }}
         name={routes.DATING_NAVIGATOR}
-        // component={DatingNavigator}
-        component={FeedNavigator}
+        component={DatingNavigator}
+        // component={FeedNavigator}
       />
       <Tab.Screen
         options={{

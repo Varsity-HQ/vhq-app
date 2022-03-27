@@ -30,6 +30,7 @@ import {
   NOTIFICATIONS,
   PROFILE_SETTINGS,
   QCOINS_OFFERS,
+  DISCOVER_PAGE,
 } from "./routes";
 import { logOutUser } from "../store/actions/actions";
 import { save_post_user } from "../store/actions/profile";
@@ -149,7 +150,11 @@ function DrawerContent({ props, product, account, save_post_user }) {
             <FontAwesome name="bell-o" size={25} color={colors.secondary} />
             <Text style={{ marginLeft: 20 }}>Notifications</Text>
           </TouchableOpacity>
-          {/* <View
+          <TouchableOpacity
+            onPress={() => {
+              navigation.dispatch(DrawerActions.closeDrawer());
+              navigation.navigate(DISCOVER_PAGE);
+            }}
             style={{
               paddingHorizontal: 10,
               flexDirection: "row",
@@ -157,9 +162,9 @@ function DrawerContent({ props, product, account, save_post_user }) {
               marginBottom: 30,
             }}
           >
-            <FontAwesome name="group" size={25} color={colors.secondary} />
-            <Text style={{ marginLeft: 20 }}>Groups</Text>
-          </View> */}
+            <Ionicons name="earth" size={25} color={colors.secondary} />
+            <Text style={{ marginLeft: 20 }}>Discover Friends</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               navigation.dispatch(DrawerActions.closeDrawer());
