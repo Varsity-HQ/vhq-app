@@ -2,14 +2,14 @@ import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import MarketplaceAdCard from "./Marketplace/MarketplaceAdCard";
 import AccountCard from "./Profile/AccountCard";
+import { v4 } from "uuid";
 
-function AccountsGrid(props) {
+function AccountsGrid({ data }) {
   return (
     <View style={styles.container}>
-      <AccountCard type={2} />
-      <AccountCard type={2} />
-      <AccountCard type={2} />
-      <AccountCard type={2} />
+      {data.map((x) => (
+        <AccountCard key={v4()} data={x} type={2} />
+      ))}
     </View>
   );
 }

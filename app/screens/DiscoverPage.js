@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView, ImageBackground } from "react-native";
 import FancyHeader from "../components/headers/FancyHeader";
 import Screen from "../components/Screen";
@@ -20,23 +20,36 @@ import Text from "../components/AppText";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useNavigation } from "@react-navigation/native";
 import { DATING_INTRO } from "../navigation/routes";
-
+import { load_page_data } from "../store/actions/discoveryPage";
 import navigate from "../navigation/rootNavigation";
 import AccountsSlider from "../components/AccountsSlider";
+import axios from "axios";
 
 const mapStateToProps = (state) => {
   return {
     university: state.core.accData.university,
+    user_following: state.core.accData.user_following,
+    discoveryPage: state.discoveryPage,
   };
 };
 
-function DiscoverPage({ university }) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    load_page_data: () => dispatch(load_page_data()),
+  };
+};
+
+function DiscoverPage({ university, discoveryPage, load_page_data }) {
   const [activeTab, setActiveTab] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [dData, setdData] = useState(null);
+
+  useEffect(() => {
+    load_page_data();
+  }, []);
 
   const tabs = [
     {
-      title: `..at ${universityShortName(university)}`,
+      title: `at ${universityShortName(university)}`,
       index: 1,
       icon: <FontAwesome color={colors.white} size={14} name="university" />,
     },
@@ -65,7 +78,7 @@ function DiscoverPage({ university }) {
     setActiveTab(index);
   };
 
-  if (loading) {
+  if (discoveryPage.loading) {
     return (
       <Screen scroll style={styles.container}>
         <FancyHeader
@@ -146,7 +159,7 @@ function DiscoverPage({ university }) {
             </View>
           </View>
         </View>
-        <AccountsSlider />
+        <AccountsSlider data={discoveryPage.related} />
       </View>
       <View style={{ padding: 10 }}>
         <DatingSuggestion />
@@ -166,7 +179,7 @@ function DiscoverPage({ university }) {
           </View>
         </View>
         <View>
-          <AccountsGrid />
+          <AccountsGrid data={discoveryPage.theRest} />
         </View>
       </View>
     </Screen>
@@ -299,4 +312,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, null)(DiscoverPage);
+export default connect(mapStateToProps, mapDispatchToProps)(DiscoverPage);

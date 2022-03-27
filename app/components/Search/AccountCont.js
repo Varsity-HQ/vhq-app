@@ -97,8 +97,8 @@ function AccountCont({ data, follow_account, unfollow_account, removeButton }) {
       <View>
         {!removeButton && (
           <Button
-            onPress={handleAction}
             type={following ? 5 : 8}
+            onPress={handleAction}
             title={following ? "Following" : "Follow"}
           />
         )}

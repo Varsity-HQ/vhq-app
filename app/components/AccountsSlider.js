@@ -1,8 +1,11 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import AccountCard from "./Profile/AccountCard";
+import { v4 } from "uuid";
 
-function AccountsSlider({ loading }) {
+function AccountsSlider({ data, loading }) {
+  console.log({ data });
+
   if (loading) {
     return (
       <View style={styles.container}>
@@ -19,10 +22,9 @@ function AccountsSlider({ loading }) {
   return (
     <View style={styles.container}>
       <ScrollView style={{ paddingLeft: 10 }} horizontal>
-        <AccountCard />
-        <AccountCard />
-        <AccountCard />
-        <AccountCard />
+        {data.map((x) => (
+          <AccountCard data={x} key={v4()} />
+        ))}
       </ScrollView>
     </View>
   );

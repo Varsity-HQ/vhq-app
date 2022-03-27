@@ -1,17 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import colors from "../../config/colors";
 import Image from "../Image";
 import Text from "../AppText";
 import Button from "../Button";
-
 import { Feather } from "@expo/vector-icons";
 import { RFValue } from "react-native-responsive-fontsize";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { PROFILE } from "../../navigation/routes";
+import { connect } from "react-redux";
+import check_if_followed from "../../util/check_if_followed";
+import { follow_account, unfollow_account } from "../../store/actions/actions";
 
 const width = Dimensions.get("window").width;
 
-function AccountCard({ type, loading }) {
-  if (loading) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    follow_account: (uid) => dispatch(follow_account(uid)),
+    unfollow_account: (uid) => dispatch(unfollow_account(uid)),
+  };
+};
+
+function AccountCard({
+  type,
+  loading,
+  data,
+  follow_account,
+  unfollow_account,
+}) {
+  const [following, setFollowing] = useState(false);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    let userid = data.userID;
+    setFollowing(check_if_followed(userid));
+  }, []);
+
+  const handleAction = () => {
+    if (following) return unfollowAccount();
+    if (!following) return followAccount();
+  };
+
+  const unfollowAccount = () => {
+    setFollowing(false);
+    unfollow_account(data.userID);
+  };
+  const followAccount = () => {
+    setFollowing(true);
+    follow_account(data.userID);
+  };
+
+  if (loading || !data) {
     return (
       <View style={[styles.container, { borderWidth: 0 }]}>
         <Image skeleton style={styles.profilepage} />
@@ -68,18 +107,28 @@ function AccountCard({ type, loading }) {
         ]}
       >
         <View>
-          <Image style={styles.profilepage2} />
+          <Image uri={data.profilepic} style={styles.profilepage2} />
           <Button
             type={3}
             content={
-              <Feather name="external-link" size={18} color={colors.white} />
+              <Feather
+                name="external-link"
+                size={18}
+                color={colors.secondary}
+              />
+            }
+            onPress={() =>
+              navigation.navigate(PROFILE, {
+                username: data.username,
+              })
             }
             style={{
+              padding: 8,
               backgroundColor: colors.dark_2,
               borderColor: colors.secondary,
-              borderWidth: 2,
+              borderWidth: 1,
               borderRadius: 100,
-              marginLeft: 5,
+              //   marginLeft: 5,
               position: "absolute",
               right: 0,
               //   bottom: 0,
@@ -91,32 +140,61 @@ function AccountCard({ type, loading }) {
         <Text
           numberOfLines={1}
           ellipsizeMode="tail"
-          style={{ marginTop: 15, fontWeight: "700", fontSize: RFValue(15) }}
+          style={{ marginTop: 10, fontWeight: "700", fontSize: RFValue(12) }}
         >
-          Odendaal M
+          {data.firstname}
         </Text>
         <Text
           numberOfLines={1}
           ellipsizeMode="tail"
-          style={{ marginTop: 5, color: colors.secondary }}
+          style={{
+            marginTop: 0,
+            color: colors.secondary,
+            fontSize: RFValue(12),
+          }}
         >
-          2nd year, BEnd Electrical
+          {data.yearOfStudy === "postgraduates"
+            ? "Postgraduate"
+            : `${data.yearOfStudy} year`}
         </Text>
         <View
-          style={{ flexDirection: "row", alignItems: "center", paddingTop: 5 }}
+          style={{ flexDirection: "row", alignItems: "center", paddingTop: 0 }}
         >
-          <Button
-            type={3}
-            style={{
-              borderColor: colors.secondary_2,
-              borderWidth: 1,
-              borderRadius: 100,
-              paddingHorizontal: 10,
-              width: "100%",
-              paddingVertical: 6,
-            }}
-            title="Follow"
-          />
+          {!following ? (
+            <Button
+              type={3}
+              style={{
+                borderColor: colors.dark_opacity_2,
+                backgroundColor: colors.dark_opacity_2,
+                borderWidth: 1,
+                borderRadius: 100,
+                paddingHorizontal: 10,
+                width: "100%",
+                paddingVertical: 6,
+              }}
+              onPress={handleAction}
+              title={following ? "Following" : "Follow"}
+            />
+          ) : (
+            <Button
+              type={3}
+              style={{
+                borderColor: colors.dark_opacity_2,
+                backgroundColor: colors.dark_opacity_2,
+                borderWidth: 1,
+                borderRadius: 100,
+                paddingHorizontal: 10,
+                width: "100%",
+                paddingVertical: 6,
+              }}
+              onPress={() =>
+                navigation.navigate(PROFILE, {
+                  username: data.username,
+                })
+              }
+              title={"Visit"}
+            />
+          )}
         </View>
         {/* <View style={styles.container}></View> */}
       </View>
@@ -125,19 +203,24 @@ function AccountCard({ type, loading }) {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.profilepage} />
-      <Text style={{ marginTop: 15, fontWeight: "700" }}>chikx_12</Text>
+      <Image uri={data.profilepic} style={styles.profilepage} />
+      <Text style={{ marginTop: 15, fontWeight: "700" }}>{data.firstname}</Text>
       <Text
         numberOfLines={1}
         ellipsizeMode="tail"
-        style={{ marginTop: 7, color: colors.secondary }}
+        style={{ marginTop: 0, color: colors.secondary, fontSize: RFValue(12) }}
       >
-        Harmony Chikari oepjspej eisoe
+        {data.degree ? data.degree : `${data.yearOfStudy} year`}
       </Text>
       <View
         style={{ flexDirection: "row", alignItems: "center", paddingTop: 5 }}
       >
         <Button
+          onPress={() =>
+            navigation.navigate(PROFILE, {
+              username: data.username,
+            })
+          }
           type={3}
           style={{
             borderColor: colors.dark_opacity_2,
@@ -163,18 +246,18 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dark_opacity_2,
   },
   profilepage2: {
-    height: width * 0.26,
-    width: width * 0.26,
+    height: width * 0.28,
+    width: width * 0.28,
     borderRadius: 100,
     marginTop: 10,
     borderColor: colors.secondary,
-    borderWidth: 2,
+    borderWidth: 1,
   },
   container: {
     marginRight: 10,
     padding: 10,
     borderWidth: 1,
-    borderColor: colors.secondary_2,
+    borderColor: colors.dark_opacity_2,
     width: 200,
     // height: 300,
     // height: "100%",
@@ -184,4 +267,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AccountCard;
+export default connect(null, mapDispatchToProps)(AccountCard);
