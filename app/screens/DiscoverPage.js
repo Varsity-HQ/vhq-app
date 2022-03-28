@@ -2,12 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView, ImageBackground } from "react-native";
 import FancyHeader from "../components/headers/FancyHeader";
 import Screen from "../components/Screen";
-import {
-  MaterialCommunityIcons,
-  Ionicons,
-  SimpleLineIcons,
-  FontAwesome,
-} from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import colors from "../config/colors";
 import { connect } from "react-redux";
 import universityShortName from "../util/universityShortName";

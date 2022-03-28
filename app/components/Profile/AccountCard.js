@@ -11,6 +11,7 @@ import { PROFILE } from "../../navigation/routes";
 import { connect } from "react-redux";
 import check_if_followed from "../../util/check_if_followed";
 import { follow_account, unfollow_account } from "../../store/actions/actions";
+import { save_post_user } from "../../store/actions/profile";
 
 const width = Dimensions.get("window").width;
 
@@ -18,6 +19,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     follow_account: (uid) => dispatch(follow_account(uid)),
     unfollow_account: (uid) => dispatch(unfollow_account(uid)),
+    save_post_user: (user) => dispatch(save_post_user(user)),
   };
 };
 
@@ -27,14 +29,24 @@ function AccountCard({
   data,
   follow_account,
   unfollow_account,
+  save_post_user,
 }) {
   const [following, setFollowing] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
-    let userid = data.userID;
-    setFollowing(check_if_followed(userid));
+    if (data) {
+      let userid = data.userID;
+      setFollowing(check_if_followed(userid));
+    }
   }, []);
+
+  const handleGoToAccount = (user) => {
+    navigation.navigate(PROFILE, {
+      username: user,
+    });
+    save_post_user(data);
+  };
 
   const handleAction = () => {
     if (following) return unfollowAccount();
@@ -117,11 +129,7 @@ function AccountCard({
                 color={colors.secondary}
               />
             }
-            onPress={() =>
-              navigation.navigate(PROFILE, {
-                username: data.username,
-              })
-            }
+            onPress={() => handleGoToAccount(data.username)}
             style={{
               padding: 8,
               backgroundColor: colors.dark_2,
@@ -187,11 +195,7 @@ function AccountCard({
                 width: "100%",
                 paddingVertical: 6,
               }}
-              onPress={() =>
-                navigation.navigate(PROFILE, {
-                  username: data.username,
-                })
-              }
+              onPress={() => handleGoToAccount(data.username)}
               title={"Visit"}
             />
           )}
@@ -216,11 +220,7 @@ function AccountCard({
         style={{ flexDirection: "row", alignItems: "center", paddingTop: 5 }}
       >
         <Button
-          onPress={() =>
-            navigation.navigate(PROFILE, {
-              username: data.username,
-            })
-          }
+          onPress={() => handleGoToAccount(data.username)}
           type={3}
           style={{
             borderColor: colors.dark_opacity_2,

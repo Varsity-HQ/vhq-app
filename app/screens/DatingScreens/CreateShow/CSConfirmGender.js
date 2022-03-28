@@ -5,6 +5,7 @@ import Text from "../../../components/AppText";
 import Button from "../../../components/Button";
 import OptionSelector from "../../../components/OptionSelector";
 import Screen from "../../../components/Screen";
+import colors from "../../../config/colors";
 import { CS_NAME } from "../../../navigation/routes";
 import styles from "./styles";
 
@@ -24,26 +25,43 @@ function CSConfirmGender({ navigation }) {
 
   const handleChange = (i) => {
     setActive(i);
+    // navigation.navigate(CS_NAME);
   };
 
   return (
     <Screen style={styles.container}>
-      <View>
+      <View style={{ marginTop: "30%" }}>
         <View>
           <Text style={[styles.text_center, styles.header]}>
-            Confirm Gender
+            Let's set you up
+          </Text>
+          <Text style={[styles.text_center, styles.subText]}>
+            Before we start, how do you identify ?
           </Text>
         </View>
         <View style={styles.form_container}>
           <View>
             <OptionSelector
+              type={2}
               onChange={handleChange}
               active={active}
               options={options}
             />
           </View>
         </View>
-        <View style={styles.bottomButtonContainer}>
+        <Text
+          style={[
+            styles.text_center,
+            styles.subText,
+            {
+              color: colors.primary,
+            },
+          ]}
+        >
+          Coming soon
+          {/* Another gender */}
+        </Text>
+        {/* <View style={styles.bottomButtonContainer}>
           <Button
             style={styles.bottomBtn}
             onPress={() => {
@@ -51,7 +69,7 @@ function CSConfirmGender({ navigation }) {
             }}
             title={"Continue"}
           />
-        </View>
+        </View> */}
       </View>
     </Screen>
   );

@@ -8,6 +8,7 @@ import DatingEncountersScreen from "../screens/DatingScreens/DatingEncountersScr
 import * as routes from "./routes";
 import CSConfirmGender from "../screens/DatingScreens/CreateShow/CSConfirmGender";
 import CSName from "../screens/DatingScreens/CreateShow/CSName";
+import CSLookingFor from "../screens/DatingScreens/CreateShow/CSLookingFor";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ const CreateShowStack = () => {
         component={CSConfirmGender}
       />
       <Stack.Screen name={routes.CS_NAME} component={CSName} />
+      <Stack.Screen name={routes.CS_LOOKING_FOR} component={CSLookingFor} />
     </Stack.Navigator>
   );
 };
