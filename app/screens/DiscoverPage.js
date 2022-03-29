@@ -25,6 +25,7 @@ const mapStateToProps = (state) => {
     university: state.core.accData.university,
     user_following: state.core.accData.user_following,
     discoveryPage: state.discoveryPage,
+    yearOfStudy: state.core.accData.yearOfStudy,
   };
 };
 
@@ -34,7 +35,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-function DiscoverPage({ university, discoveryPage, load_page_data }) {
+function DiscoverPage({
+  university,
+  discoveryPage,
+  load_page_data,
+  yearOfStudy,
+}) {
   const [activeTab, setActiveTab] = useState(1);
   const [dData, setdData] = useState(null);
 
@@ -148,9 +154,14 @@ function DiscoverPage({ university, discoveryPage, load_page_data }) {
             Suggested Peers
           </Text>
           <View style={styles.header}>
-            <Text style={{ fontWeight: "700" }}>~ 3rd year's students </Text>
+            <Text style={{ fontWeight: "700" }}>
+              ~{" "}
+              {yearOfStudy === "postgraduates"
+                ? "Postgraduate"
+                : yearOfStudy + " year students"}{" "}
+            </Text>
             <View style={styles.adLabel}>
-              <Text style={{ fontSize: 14 }}>Based on your stream </Text>
+              <Text style={{ fontSize: 14 }}> Based on your stream </Text>
             </View>
           </View>
         </View>
@@ -250,7 +261,7 @@ const DatingSuggestion = ({ loading }) => {
       }}
     >
       <Text style={{ color: colors.white, fontWeight: "600" }}>
-        Intrested in something more fun ?
+        Interested in something more fun ?
       </Text>
       <Text
         style={{

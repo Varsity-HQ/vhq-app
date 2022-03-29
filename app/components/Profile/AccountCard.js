@@ -42,10 +42,10 @@ function AccountCard({
   }, []);
 
   const handleGoToAccount = (user) => {
+    save_post_user(data);
     navigation.navigate(PROFILE, {
       username: user,
     });
-    save_post_user(data);
   };
 
   const handleAction = () => {

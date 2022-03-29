@@ -262,6 +262,27 @@ export const get_user_posts = (load_more, dispatch) => {
         ? data.data.user_posts
         : currentPosts.concat(data.data.user_posts);
 
+      console.log("before set new data");
+
+      if (
+        data.data.lastVisible === null &&
+        store.getState().profile.posts_lv === null
+      ) {
+        dispatch({
+          type: "SET_PROFILE_DATA",
+          payload: data.data.user_data,
+        });
+
+        dispatch({
+          type: "SET_PROFILE_POSTS",
+          payload: {
+            posts: [...new Set(new_posts)],
+            lastVisible: data.data.lastVisible,
+            // lastVisible: null,
+          },
+        });
+      }
+
       if (data.data.lastVisible !== store.getState().profile.posts_lv) {
         console.log("set new data");
         dispatch({
