@@ -44,7 +44,12 @@ function QcoinsOffersPage({ navigation }) {
 
       {loading ? (
         <View
-          style={{ flexDirection: "row", justifyContent: "center", top: 50 }}
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            top: 50,
+            flex: 1,
+          }}
         >
           <Loading />
         </View>
@@ -107,7 +112,6 @@ function QcoinsOffersPage({ navigation }) {
               </ScrollView>
             </View>
           </View>
-
           <View style={styles.inner_container}>
             <View
               style={{
