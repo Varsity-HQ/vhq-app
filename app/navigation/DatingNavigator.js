@@ -13,13 +13,13 @@ import CSLookingFor from "../screens/DatingScreens/CreateShow/CSLookingFor";
 const Stack = createNativeStackNavigator();
 
 const CreateShowStack = () => {
-  return (
+  return ( 
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
         animation: "slide_from_bottom",
       }}
-    >
+    > 
       <Stack.Screen
         name={routes.CS_CONFIRM_GENDER}
         component={CSConfirmGender}
@@ -27,7 +27,7 @@ const CreateShowStack = () => {
       <Stack.Screen name={routes.CS_NAME} component={CSName} />
       <Stack.Screen name={routes.CS_LOOKING_FOR} component={CSLookingFor} />
     </Stack.Navigator>
-  );
+  ); 
 };
 
 const DatingNavigator = () => (

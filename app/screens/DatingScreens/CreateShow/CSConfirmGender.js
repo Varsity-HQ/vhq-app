@@ -58,7 +58,7 @@ function CSConfirmGender({ navigation }) {
             },
           ]}
         >
-          Coming soon
+          Coming sooner !!
           {/* Another gender */}
         </Text>
         {/* <View style={styles.bottomButtonContainer}>
@@ -68,7 +68,7 @@ function CSConfirmGender({ navigation }) {
               navigation.navigate(CS_NAME);
             }}
             title={"Continue"}
-          />
+          />//exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40varsityhq/vhq-2a2e7d172fc74069b5cafa587945e2c6-signed.aab
         </View> */}
       </View>
     </Screen>

@@ -34,7 +34,7 @@ function QcoinsOffersPage({ navigation }) {
   }, []);
 
   return (
-    <Screen scroll style={styles.container}>
+    <Screen scroll={!loading} style={styles.container}>
       <HeaderComponent
         backPress={() => navigation.goBack()}
         backBtnText="back to profile"
@@ -185,6 +185,8 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingBottom: 10,
+    borderBottomColor: colors.primary,
+    borderBottomWidth: 1,
   },
 });
 

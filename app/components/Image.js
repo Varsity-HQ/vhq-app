@@ -6,7 +6,7 @@ import imageurl_cleaner from "../util/image_url_cleaner";
 
 function Image({ style, uri, local, skeleton }) {
   if (skeleton) return <View style={style} />;
-  if (local) return <ImageLocal source={{ uri: uri }} style={style} />;
+  if (local) return <ImageLocal source={uri} style={style} />;
   if (uri) {
     return (
       <CachedImage

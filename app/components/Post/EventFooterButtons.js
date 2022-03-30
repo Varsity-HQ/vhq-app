@@ -52,7 +52,7 @@ class EventFooterButtons extends React.PureComponent {
           <Button
             onPress={this.handleIntrested}
             style={[
-              { height: height * 0.05 },
+              { height: height * 0.05, padding: 0 },
               !this.state.intrested && {
                 borderWidth: 2,
                 borderColor: colors.secondary,

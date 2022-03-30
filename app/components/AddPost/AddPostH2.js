@@ -175,7 +175,7 @@ function AddPostH2({
                 }}
               >
                 <TouchableOpacity onPress={() => handlePickEmoji(index)}>
-                  <Image style={styles.emoji_pic} local uri={x} />
+                  <Image style={styles.emoji_pic} local uri={{ uri: x }} />
                 </TouchableOpacity>
               </View>
             ))}
@@ -210,11 +210,11 @@ function AddPostH2({
                     flexDirection: "column",
                     alignItems: "center",
                     marginRight: 10,
-                  }}
+                  }} 
                 >
                   <Image
                     local
-                    uri={emojis[new_post.anonymous_emoji_index]}
+                    uri={{ uri: emojis[new_post.anonymous_emoji_index] }}
                     style={[styles.emojipp]}
                   />
                   <Text

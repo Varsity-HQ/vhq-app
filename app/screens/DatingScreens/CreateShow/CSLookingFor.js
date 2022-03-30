@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import Screen from "../../../components/Screen";
 
@@ -9,13 +9,37 @@ import styles from "./styles";
 import { CS_NAME } from "../../../navigation/routes";
 import OptionSelector from "../../../components/OptionSelector";
 
+const options = [
+  {
+    icon: require("../../../assets/heart.png"),
+    title: "To date",
+    desc: "I'm looking for a relationship or something that lasts",
+    value: "to_date",
+  },
+  {
+    icon: require("../../../assets/friends.png"),
+    title: "To find friends",
+    desc: "I'm here to find friends and meet new people",
+    value: "to_find_friends",
+  },
+  {
+    icon: require("../../../assets/winking-face.png"),
+    title: "For vibes",
+    sub: " & the streets",
+    desc: "I'm open to anything other than a relationship",
+    value: "to_have_fun",
+  },
+];
+
 function CSLookingFor({ navigation }) {
+  const [active, setActive] = useState("");
+
   return (
-    <Screen style={styles.container}>
+    <Screen scroll style={styles.container}>
       <View>
         <View>
           <Text style={[styles.text_center, styles.header2]}>
-            Nice to meet you Harmony ! Care to tell people why are you here ?
+            Nice to meet you Harmony. Tell people why are you here.
           </Text>
 
           <Text
@@ -24,20 +48,20 @@ function CSLookingFor({ navigation }) {
               styles.subText,
               {
                 marginTop: 10,
+                paddingHorizontal: 10,
               },
             ]}
           >
             Choose an option that best describes what you looking for. Be honest
-            and don't be shy.
           </Text>
         </View>
         <View style={styles.form_container}>
           <View>
             <OptionSelector
               type={3}
-              // onChange={handleChange}
-              // active={active}
-              // options={options}
+              onChange={setActive}
+              active={active}
+              options={options}
             />
           </View>
         </View>
