@@ -13,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import Image from "../Image";
 import { RFValue } from "react-native-responsive-fontsize";
+import { useNavigation } from "@react-navigation/native";
 
 const height = Dimensions.get("window").height;
 
@@ -34,7 +35,18 @@ function header3({
   loading = false,
   backIcon,
   style,
+  noBorder,
 }) {
+  const navigation = useNavigation();
+
+  const handleBackPress = () => {
+    if (backPress) {
+      backPress();
+    } else {
+      navigation.goBack();
+    }
+  };
+
   return (
     <>
       {/* <StatusBar animated={true} backgroundColor={colors.primary} /> */}
@@ -42,6 +54,9 @@ function header3({
         style={[
           styles.container,
           style,
+          noBorder && {
+            borderBottomWidth: 0,
+          },
           bgActive && {
             backgroundColor: colors.primary,
             borderBottomWidth: 0,
@@ -52,7 +67,7 @@ function header3({
           <View style={styles.w33}>
             <TouchableOpacity
               disabled={loading}
-              onPress={backPress}
+              onPress={handleBackPress}
               style={[
                 styles.button,
                 {

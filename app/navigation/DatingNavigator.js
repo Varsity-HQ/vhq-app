@@ -9,25 +9,29 @@ import * as routes from "./routes";
 import CSConfirmGender from "../screens/DatingScreens/CreateShow/CSConfirmGender";
 import CSName from "../screens/DatingScreens/CreateShow/CSName";
 import CSLookingFor from "../screens/DatingScreens/CreateShow/CSLookingFor";
+import CSInterestedIn from "../screens/DatingScreens/CreateShow/CSInterestedIn";
+import CSPhotos from "../screens/DatingScreens/CreateShow/CSPhotos";
 
 const Stack = createNativeStackNavigator();
 
 const CreateShowStack = () => {
-  return ( 
+  return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        animation: "slide_from_bottom",
+        animation: "fade",
       }}
-    > 
+    >
       <Stack.Screen
         name={routes.CS_CONFIRM_GENDER}
         component={CSConfirmGender}
       />
       <Stack.Screen name={routes.CS_NAME} component={CSName} />
       <Stack.Screen name={routes.CS_LOOKING_FOR} component={CSLookingFor} />
+      <Stack.Screen name={routes.CS_INTERESTED_IN} component={CSInterestedIn} />
+      <Stack.Screen name={routes.CS_PHOTOS} component={CSPhotos} />
     </Stack.Navigator>
-  ); 
+  );
 };
 
 const DatingNavigator = () => (
@@ -37,12 +41,13 @@ const DatingNavigator = () => (
       animation: "slide_from_right",
     }}
   >
-    {/* <Stack.Screen name={routes.DATING_INTRO} component={DatingIntroScreen} /> */}
-    <Stack.Screen name={routes.CREATE_SHOW} component={CreateShowStack} />
-    <Stack.Screen
+    <Stack.Screen name={routes.DATING_INTRO} component={DatingIntroScreen} />
+
+    {/* <Stack.Screen name={routes.CREATE_SHOW} component={CreateShowStack} /> */}
+    {/* <Stack.Screen
       name={routes.DATING_ENCOUNTERS}
       component={DatingEncountersScreen}
-    />
+    /> */}
   </Stack.Navigator>
 );
 

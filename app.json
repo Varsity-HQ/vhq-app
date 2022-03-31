@@ -22,7 +22,8 @@
       "infoPlist": {
         "UIBackgroundModes": ["remote-notification"]
       },
-      "bundleIdentifier": "com.varsityheadquarters.varsityhq"
+      "bundleIdentifier": "com.varsityheadquarters.varsityhq",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "googleServicesFile": "./google-services.json",

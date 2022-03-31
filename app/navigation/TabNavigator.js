@@ -72,7 +72,7 @@ const AppNavigator = ({ user_id }) => {
             Platform.OS === "android" ? colors.dark : colors.transparent,
           borderTopColor: colors.darkish2,
           borderTopWidth: 2,
-          paddingTop: 2,
+          paddingTop: 5,
           ...padBtm(),
           // shadowColor: colors.black,
           // shadowOpacity: 20,

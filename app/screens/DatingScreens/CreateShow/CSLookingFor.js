@@ -3,10 +3,11 @@ import { View, StyleSheet } from "react-native";
 import Screen from "../../../components/Screen";
 
 import Text from "../../../components/AppText";
+import Header from "../../../components/headers/header3";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import styles from "./styles";
-import { CS_NAME } from "../../../navigation/routes";
+import { CS_INTERESTED_IN, CS_NAME } from "../../../navigation/routes";
 import OptionSelector from "../../../components/OptionSelector";
 
 const options = [
@@ -35,8 +36,9 @@ function CSLookingFor({ navigation }) {
   const [active, setActive] = useState("");
 
   return (
-    <Screen scroll style={styles.container}>
-      <View>
+    <Screen scroll>
+      <Header noBorder backIcon />
+      <View style={styles.container}>
         <View>
           <Text style={[styles.text_center, styles.header2]}>
             Nice to meet you Harmony. Tell people why are you here.
@@ -68,7 +70,7 @@ function CSLookingFor({ navigation }) {
         <View style={styles.bottomButtonContainer}>
           <Button
             onPress={() => {
-              navigation.navigate(CS_NAME);
+              navigation.navigate(CS_INTERESTED_IN);
             }}
             style={styles.bottomBtn}
             title={"Continue"}

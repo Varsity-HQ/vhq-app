@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Text from "../../components/AppText";
 import Button from "../../components/Button";
 import Image from "../../components/Image";
+import DatingLoader from "../../components/Loaders/DatingLoader";
 import Screen from "../../components/Screen";
 import colors from "../../config/colors";
 import { CREATE_SHOW, DATING_ENCOUNTERS } from "../../navigation/routes";
@@ -19,6 +20,32 @@ const mapStateToProps = (state) => {
 };
 
 function DatingIntroScreen({ profilepic, navigation }) {
+  if (true) {
+    return (
+      <Screen style={styles.container}>
+        <View style={{ width: "85%" }}>
+          <View style={styles.pp_images}>
+            <Image
+              style={styles.other_pp1}
+              uri={
+                "https://image.shutterstock.com/image-photo/close-beauty-portrait-young-charming-600w-1931216711.jpg"
+              }
+            />
+            <DatingLoader />
+            <Image
+              style={styles.other_pp2}
+              uri={
+                "https://image.shutterstock.com/image-photo/portrait-beautiful-african-american-female-600w-721419679.jpg"
+              }
+            />
+          </View>
+          <Text style={[styles.center, styles.heading]}>Hold on</Text>
+          <Text style={styles.subText}></Text>
+        </View>
+      </Screen>
+    );
+  }
+
   return (
     <Screen style={styles.container}>
       <View style={{ width: "85%" }}>
