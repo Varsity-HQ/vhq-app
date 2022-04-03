@@ -11,6 +11,7 @@ import CSName from "../screens/DatingScreens/CreateShow/CSName";
 import CSLookingFor from "../screens/DatingScreens/CreateShow/CSLookingFor";
 import CSInterestedIn from "../screens/DatingScreens/CreateShow/CSInterestedIn";
 import CSPhotos from "../screens/DatingScreens/CreateShow/CSPhotos";
+import DatingContainer from "../screens/DatingScreens/DatingContainer";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,7 +42,8 @@ const DatingNavigator = () => (
       animation: "slide_from_right",
     }}
   >
-    <Stack.Screen name={routes.DATING_INTRO} component={DatingIntroScreen} />
+    <Stack.Screen name={routes.DATING_CONTAINER} component={DatingContainer} />
+    {/* <Stack.Screen name={routes.DATING_INTRO} component={DatingIntroScreen} /> */}
 
     {/* <Stack.Screen name={routes.CREATE_SHOW} component={CreateShowStack} /> */}
     {/* <Stack.Screen

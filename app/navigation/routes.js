@@ -19,6 +19,7 @@ export const ALL_TRENDING_HASHTAGS = "AllTrendingTopics";
 export const DATING_INTRO = "DatingIntro";
 export const CREATE_SHOW = "CreateShow";
 export const DATING_ENCOUNTERS = "DatingEncouters";
+export const DATING_CONTAINER = "DatingContainer";
 
 //
 export const CS_CONFIRM_GENDER = "CSConfirmGender";

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import Text from "../../components/AppText";
 import Button from "../../components/Button";
 import Image from "../../components/Image";
-import DatingLoader from "../../components/Loaders/DatingLoader";
+import DatingLoader from "../../components/Loaders/HomeUploading";
 import Screen from "../../components/Screen";
 import colors from "../../config/colors";
 import { CREATE_SHOW, DATING_ENCOUNTERS } from "../../navigation/routes";
@@ -20,26 +20,53 @@ const mapStateToProps = (state) => {
 };
 
 function DatingIntroScreen({ profilepic, navigation }) {
-  if (true) {
+  if (false) {
     return (
       <Screen style={styles.container}>
         <View style={{ width: "85%" }}>
           <View style={styles.pp_images}>
             <Image
+              local
               style={styles.other_pp1}
-              uri={
-                "https://image.shutterstock.com/image-photo/close-beauty-portrait-young-charming-600w-1931216711.jpg"
-              }
+              uri={{
+                uri: "https://image.shutterstock.com/image-photo/women-beauty-health-wellness-make-600w-731113330.jpg",
+              }}
             />
             <DatingLoader />
             <Image
+              local
               style={styles.other_pp2}
-              uri={
-                "https://image.shutterstock.com/image-photo/portrait-beautiful-african-american-female-600w-721419679.jpg"
-              }
+              uri={{
+                uri: "https://image.shutterstock.com/image-photo/women-beauty-health-wellness-make-600w-731113330.jpg",
+              }}
             />
           </View>
-          <Text style={[styles.center, styles.heading]}>Hold on</Text>
+          <Text
+            style={[
+              styles.center,
+              styles.heading,
+              {
+                marginBottom: 30,
+              },
+            ]}
+          >
+            Preparing
+          </Text>
+          <View style={styles.hContainer}>
+            <Text style={[styles.center, styles.subText]}>
+              Make new friends
+            </Text>
+          </View>
+          <View style={styles.hContainer}>
+            <Text style={[styles.center, styles.subText]}>
+              Chat with new people
+            </Text>
+          </View>
+          <View style={styles.hContainer}>
+            <Text style={[styles.center, styles.subText]}>
+              Discover encounters
+            </Text>
+          </View>
           <Text style={styles.subText}></Text>
         </View>
       </Screen>
@@ -90,12 +117,22 @@ function DatingIntroScreen({ profilepic, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  hContainer: {
+    backgroundColor: colors.dark_opacity_2,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 10,
+    borderTopEndRadius: 30,
+    borderBottomLeftRadius: 30,
+    marginBottom: 10,
+  },
   other_pp1: {
     height: height * 0.15,
     width: height * 0.15,
     borderRadius: 100,
     // zIndex: 1,
-    right: -15,
+    right: -25,
     position: "relative",
   },
   other_pp2: {
@@ -104,7 +141,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     zIndex: -1,
     position: "relative",
-    left: -15,
+    left: -25,
   },
   pp_images: {
     marginBottom: 20,

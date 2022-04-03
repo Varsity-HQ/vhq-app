@@ -316,7 +316,11 @@ class AddPostPage extends Component {
                     >
                       <Ionicons name="close" size={30} color={colors.primary} />
                     </TouchableOpacity>
-                    <Image local uri={x} style={styles.selected_image} />
+                    <Image
+                      local
+                      uri={{ uri: x }}
+                      style={styles.selected_image}
+                    />
                   </View>
                 </TouchableWithoutFeedback>
               ))}
