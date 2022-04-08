@@ -8,6 +8,7 @@ import {
   POST_DELETED,
   POST_POST_SUCCESS_POSTED,
 } from "../../util/toast_messages";
+import { clearPostScheduledNotifications } from "../../notifications";
 
 export const get_home_offers = () => (dispatch) => {
   axios
@@ -118,6 +119,7 @@ export const post_new = (post, attach) => async (dispatch) => {
           autoHide: false,
           ...POST_POST_SUCCESS_POSTED,
         });
+        clearPostScheduledNotifications();
       })
       .catch((err) => {
         dispatch({
@@ -160,6 +162,7 @@ export const post_new = (post, attach) => async (dispatch) => {
           autoHide: false,
           ...POST_POST_SUCCESS_POSTED,
         });
+        clearPostScheduledNotifications();
       })
 
       .catch((err) => {

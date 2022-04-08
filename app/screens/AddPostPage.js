@@ -26,6 +26,10 @@ import he from "he";
 import { post_new } from "../store/actions/actions";
 import AddImageButton from "../components/AddImageButton";
 import PollCreate from "../components/Poll/PollCreate";
+import {
+  clearPostScheduledNotifications,
+  setPostReminders,
+} from "../notifications";
 
 const { width: deviceWidth } = Dimensions.get("window");
 
@@ -159,9 +163,7 @@ class AddPostPage extends Component {
     });
   };
 
-  componentDidMount = () => {
-    console.log("harmony");
-
+  componentDidMount = async () => {
     this._isMounted = true;
     KeyboardEventListener.subscribe(
       ({ keyboardHeight, layoutAnimationConfig }) => {
@@ -169,6 +171,8 @@ class AddPostPage extends Component {
         if (this._isMounted) this.setState({ keyboardHeight });
       },
     );
+    await clearPostScheduledNotifications();
+    await setPostReminders();
   };
 
   componentWillUnmount() {
