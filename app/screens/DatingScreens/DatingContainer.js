@@ -5,6 +5,7 @@ import TabbedScreenComponent from "../../components/TabbedScreenComponent";
 import Text from "../../components/AppText";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../config/colors";
+import Header from "../../components/Dating/Header";
 
 const tabs = [
   {
@@ -76,8 +77,8 @@ class DatingContainer extends React.Component {
         <TabbedScreenComponent
           activeTabIndex={this.state.activeTabIndex}
           setTabIndex={this.setTabIndex}
-          tabOptions={tabs}
-          TopHeader={<Text>header component</Text>}
+          //   tabOptions={tabs}
+          TopHeader={<Header />}
           listRenderingHandler={this.listRenderingHandler}
           tabsConfig={[
             {

@@ -45,6 +45,7 @@ class TabbedScreenComponent extends React.PureComponent {
       onEndReachedThreshold,
       tabStyle,
       tabCounter,
+      specifyPageHeader,
     } = this.props;
     return (
       <FlatList
