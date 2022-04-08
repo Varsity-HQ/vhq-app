@@ -30,10 +30,12 @@ import {
   Feather,
   SimpleLineIcons,
 } from "@expo/vector-icons";
+
 import { setNotificationHandler } from "expo-notifications";
 import { COPY_POST_URL } from "./util/toast_messages";
 
 import { navigationRef } from "./navigation/rootNavigation";
+import { setPromoNots } from "./notifications";
 
 if (!getApps().length) {
   initializeApp(firebaseConfig);
@@ -136,6 +138,7 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
         .then((data) => {
           set_user(data.data);
           setAuthState(true);
+          setPromoNots();
         })
         .catch((err) => {
           console.log(err);

@@ -6,19 +6,34 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const MINUTE = 60;
 const HOUR = 3600;
 
-/**
- * opens app
- * Remove all scheduled noti
- * Schedule new noti group
- */
+const setPromoNots = async () => {
+  await clearScheduledNotifications();
+  let length = messages.general_promos.length;
+  schedulePushNotification(messages.general_promos[randomNumber(length)], HOUR);
+  schedulePushNotification(
+    messages.general_promos[randomNumber(length)],
+    HOUR * 4,
+  );
+  schedulePushNotification(
+    messages.general_promos[randomNumber(length)],
+    HOUR * 6,
+  );
+  schedulePushNotification(
+    messages.general_promos[randomNumber(length)],
+    HOUR * 9,
+  );
+  schedulePushNotification(
+    messages.general_promos[randomNumber(length)],
+    HOUR * 24,
+  );
+  schedulePushNotification(messages.bring_back[0], HOUR * 24);
+  schedulePushNotification(messages.bring_back[1], HOUR * 48);
+  schedulePushNotification(messages.bring_back[2], HOUR * 72);
 
-/**
- * opens add post
- * add reminder and remove if posts
- */
+  console.log("shceuled");
+};
 
 const setPostReminders = async () => {
-  let length = messages.post_reminders.length;
   let noti_ids = [];
   let sch1 = await schedulePushNotification(
     messages.post_reminders[0],
@@ -91,4 +106,5 @@ export {
   cancelNotification,
   setPostReminders,
   clearPostScheduledNotifications,
+  setPromoNots,
 };

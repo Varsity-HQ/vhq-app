@@ -29,6 +29,11 @@ const general_promos = [
     title: "Need new friends ? ⚽",
     body: "Try checking out the discover page and find new friends or potential buddies 😉 lol",
   },
+  {
+    id: 29,
+    title: "Trends at your university ? 💡",
+    body: "Don't miss out on trends at your university, tap message to find out whats trending on VarsityHQ",
+  },
 ];
 
 const bring_back = [
@@ -36,6 +41,16 @@ const bring_back = [
     id: 3,
     title: "You're missing out 😥",
     body: "It's been a while since we've seen you on VarsityHQ, is everything okay ?.. tap to see what you've been missing ✨",
+  },
+  {
+    id: 23,
+    title: "Still there ? 👀",
+    body: "Come back on the app and see new posts from others and check out whats trending today 🍂",
+  },
+  {
+    id: 25,
+    title: "We starting to miss you 😢",
+    body: "Are you okay, is everything good ?.. let us make your day, tap this message to see what you're missing on.",
   },
 ];
 
