@@ -97,6 +97,8 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
     "Ubuntu-bold": require("./Fonts/Ubuntu-Bold.ttf"),
     "Ubuntu-italic": require("./Fonts/Ubuntu-Italic.ttf"),
     "Ubuntu-medium": require("./Fonts/Ubuntu-Medium.ttf"),
+    "SF-Pro-Rounded-Regular": require("./Fonts/FontsFree-Net-SF-Pro-Rounded-Regular.ttf"),
+    "SF-Pro-Rounded-Bold": require("./Fonts/FontsFree-Net-SF-Pro-Rounded-Bold.ttf"),
   });
 
   const _loadAssetsAsync = async () => {

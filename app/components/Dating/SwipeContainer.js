@@ -9,9 +9,9 @@ import {
   ScrollView,
 } from "react-native";
 import CardStack, { Card } from "react-native-card-stack-swiper";
-
 import { Ionicons } from "@expo/vector-icons";
-import Screen from "../../components/Screen";
+import Screen from "../Screen";
+import colors from "../../config/colors";
 
 export const PRIMARY_COLOR = "#7444C0";
 export const SECONDARY_COLOR = "#5636B8";
@@ -185,12 +185,12 @@ const Home = () => {
   const swiper = useRef(null);
 
   return (
-    <Screen style={styles.bg}>
+    <View style={styles.mainContainer}>
       <View style={styles.containerHome}>
-        <View style={styles.top}>
-          <City onPress={() => swiper.current.swipeRight()} />
-          <Filters />
-        </View>
+        {/* <View style={styles.top}> */}
+        {/* <City onPress={() => swiper.current.swipeRight()} /> */}
+        {/* <Filters /> */}
+        {/* </View> */}
 
         <View
           style={{
@@ -214,7 +214,7 @@ const Home = () => {
           <CardStack
             useNativeDriver={true}
             // horizontalSwipe={false}
-            // disableRightSwipe={true}
+            disableRightSwipe={true}
             duration={500}
             cardContainerStyle={{
               height: "100%",
@@ -255,7 +255,7 @@ const Home = () => {
           </CardStack>
         </View>
       </View>
-    </Screen>
+    </View>
   );
 };
 
@@ -461,11 +461,13 @@ const styles = StyleSheet.create({
   },
 
   // CONTAINER - GENERAL
-  bg: {
-    flex: 1,
-    resizeMode: "cover",
+  mainContainer: {
+    // flex: 1,
+    // resizeMode: "cover",
     width: DIMENSION_WIDTH,
-    height: DIMENSION_HEIGHT,
+    height: "100%",
+    minHeight: DIMENSION_HEIGHT,
+    backgroundColor: colors.dark,
   },
   top: {
     paddingTop: 10,
@@ -687,14 +689,8 @@ const CardItem = ({
                 </TouchableOpacity>
               </View>
             )}
-            <Image source={{ uri: image }} style={imageStyle} />
-            <Text style={nameStyle}>{name}</Text>
 
-            {/* DESCRIPTION */}
-            {description && (
-              <Text style={styles.descriptionCardItem}>{description}</Text>
-            )}
-            <Image source={{ uri: image }} style={imageStyle} />
+            {/* <Image source={{ uri: image }} style={imageStyle} /> */}
           </View>
         </View>
       </View>

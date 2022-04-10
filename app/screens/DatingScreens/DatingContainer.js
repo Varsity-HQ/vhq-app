@@ -9,20 +9,12 @@ import Header from "../../components/Dating/Header";
 
 const tabs = [
   {
-    title: "Posts",
+    title: "Explore",
     index: 1,
-    icon: (
-      <MaterialCommunityIcons
-        color={colors.white}
-        size={18}
-        name="post-outline"
-      />
-    ),
   },
   {
-    title: "Events",
+    title: "Chats",
     index: 2,
-    icon: <FontAwesome color={colors.white} size={16} name="calendar-o" />,
   },
 ];
 
@@ -76,9 +68,16 @@ class DatingContainer extends React.Component {
       <Screen>
         <TabbedScreenComponent
           activeTabIndex={this.state.activeTabIndex}
-          setTabIndex={this.setTabIndex}
+          // setTabIndex={this.setTabIndex}
           //   tabOptions={tabs}
-          TopHeader={<Header />}
+          removeTabBorder={true}
+          TopHeader={
+            <Header
+              setTabIndex={this.setTabIndex}
+              activeTabIndex={this.state.activeTabIndex}
+              tabs={tabs}
+            />
+          }
           listRenderingHandler={this.listRenderingHandler}
           tabsConfig={[
             {

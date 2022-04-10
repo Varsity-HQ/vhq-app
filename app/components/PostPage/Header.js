@@ -272,7 +272,9 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: colors.secondary,
   },
-  container: {},
+  container: {
+    paddingBottom: 15,
+  },
   h_username: {
     fontSize: 17,
     color: colors.white,

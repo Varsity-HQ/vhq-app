@@ -46,6 +46,7 @@ class TabbedScreenComponent extends React.PureComponent {
       tabStyle,
       tabCounter,
       specifyPageHeader,
+      removeTabBorder,
     } = this.props;
     return (
       <FlatList
@@ -56,6 +57,7 @@ class TabbedScreenComponent extends React.PureComponent {
             {TopHeader}
             {showTabHeader ? (
               <TabNavigator
+                style={removeTabBorder ? styles.borderlessTabStyle : {}}
                 type={tabStyle ? tabStyle : 1}
                 active={activeTabIndex}
                 onPress={(i) => setTabIndex(i)}
@@ -97,6 +99,10 @@ class TabbedScreenComponent extends React.PureComponent {
 
 const styles = StyleSheet.create({
   container: {},
+  borderlessTabStyle: {
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+  },
 });
 
 export default TabbedScreenComponent;

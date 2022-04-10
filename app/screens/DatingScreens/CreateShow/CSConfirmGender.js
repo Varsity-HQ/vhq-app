@@ -25,7 +25,7 @@ function CSConfirmGender({ navigation }) {
 
   const handleChange = (i) => {
     setActive(i);
-    // navigation.navigate(CS_NAME);
+    navigation.navigate(CS_NAME);
   };
 
   return (

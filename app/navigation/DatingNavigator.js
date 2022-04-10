@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Profile from "../screens/Profile";
 import DatingIntroScreen from "../screens/DatingScreens/DatingIntroScreen";
-import DatingEncountersScreen from "../screens/DatingScreens/DatingEncountersScreen";
+// import DatingEncountersScreen from "../components/Dating/SwipeContainer";
 
 import * as routes from "./routes";
 import CSConfirmGender from "../screens/DatingScreens/CreateShow/CSConfirmGender";
@@ -41,11 +41,12 @@ const DatingNavigator = () => (
       headerShown: false,
       animation: "slide_from_right",
     }}
+    initialRouteName={routes.DATING_INTRO}
   >
-    <Stack.Screen name={routes.DATING_CONTAINER} component={DatingContainer} />
-    {/* <Stack.Screen name={routes.DATING_INTRO} component={DatingIntroScreen} /> */}
-
     {/* <Stack.Screen name={routes.CREATE_SHOW} component={CreateShowStack} /> */}
+    {/* <Stack.Screen name={routes.DATING_INTRO} component={DatingIntroScreen} /> */}
+    <Stack.Screen name={routes.DATING_CONTAINER} component={DatingContainer} />
+
     {/* <Stack.Screen
       name={routes.DATING_ENCOUNTERS}
       component={DatingEncountersScreen}
