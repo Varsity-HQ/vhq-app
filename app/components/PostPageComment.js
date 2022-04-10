@@ -56,29 +56,46 @@ function PostPageComment({
       <View
         style={{
           flexDirection: "row",
+          flex: 1,
+
           // paddingTop: 10,
           // paddingBottom: 5,
         }}
       >
         <Image style={styles.p_avatar} uri={data.commenter_profilepic} />
         {/* {returnProfilePicture(data.commenter_profilepic, styles.p_avatar)} */}
-        <View style={styles.comment_line} />
-        <View>
-          <View style={{ flex: 1 }}>
-            <View style={[styles.commentContainer, { marginLeft: 10 }]}>
-              <AppText style={styles.u_name}>
-                {data.commenter_username}
-                <AppText style={styles.date_posted}>
-                  &nbsp;•&nbsp;{dayjs(data.date_created).fromNow()}
+        {/* <View style={styles.comment_line} /> */}
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
+          <View>
+            <View
+              style={{
+                display: "flex",
+                position: "relative",
+                flexWrap: "wrap",
+
+                flex: 1,
+                paddingBottom: 0,
+              }}
+            >
+              <View style={[styles.commentContainer, { marginLeft: 10 }]}>
+                <AppText style={styles.u_name}>
+                  {data.commenter_username}
+                  <AppText style={styles.date_posted}>
+                    &nbsp;•&nbsp;{dayjs(data.date_created).fromNow()}
+                  </AppText>
                 </AppText>
-              </AppText>
-              <View
-                style={{
-                  paddingVertical: 5,
-                  marginRight: 0,
-                }}
-              >
-                <AppText>{data.comment_text}</AppText>
+                <View
+                  style={{
+                    paddingVertical: 5,
+                    marginRight: 0,
+                  }}
+                >
+                  <AppText>{data.comment_text}</AppText>
+                </View>
               </View>
             </View>
             <View
@@ -124,8 +141,8 @@ function PostPageComment({
                       <View
                         style={{
                           flexDirection: "row",
-                          paddingTop: 13,
-                          paddingBottom: 5,
+                          paddingTop: 10,
+                          // paddingBottom: 5,
                         }}
                       >
                         <Image
@@ -133,25 +150,64 @@ function PostPageComment({
                           style={styles.p_avatar}
                         />
                         <View
-                          style={[
-                            styles.commentContainer,
-                            { marginLeft: 10, flex: 1 },
-                          ]}
+                          style={{
+                            flex: 1,
+                          }}
                         >
-                          <AppText style={styles.u_name}>
-                            {x.commenter_username}
-                            <AppText style={styles.date_posted}>
-                              &nbsp;•&nbsp;
-                              {dayjs(x.date_created).fromNow()}
+                          <View
+                            style={[
+                              styles.commentContainer,
+                              {
+                                marginLeft: 10,
+                                flex: 1,
+                                paddingBottom: 5,
+                                marginBottom: 0,
+                              },
+                            ]}
+                          >
+                            <AppText style={styles.u_name}>
+                              {x.commenter_username}
+                              <AppText style={styles.date_posted}>
+                                &nbsp;•&nbsp;
+                                {dayjs(x.date_created).fromNow()}
+                              </AppText>
                             </AppText>
-                          </AppText>
+                            <View
+                              style={{
+                                paddingVertical: 5,
+                                marginRight: 0,
+                              }}
+                            >
+                              <AppText>{x.comment_text}</AppText>
+                            </View>
+                          </View>
                           <View
                             style={{
                               paddingVertical: 5,
-                              marginRight: 0,
+                              flexDirection: "row",
+                              alignItems: "center",
+                              paddingHorizontal: 10,
                             }}
                           >
-                            <AppText>{x.comment_text}</AppText>
+                            <FontAwesome
+                              name="heart"
+                              size={18}
+                              color={colors.secondary}
+                            />
+                            <TouchableOpacity onPress={handleReplyToComment}>
+                              <AppText
+                                style={{
+                                  marginHorizontal: 15,
+                                  color: colors.secondary,
+                                }}
+                              >
+                                Reply{" "}
+                                {data.comment_comments > 0 ||
+                                data.comment_comments !== "0"
+                                  ? `${data.comment_comments}`
+                                  : ""}
+                              </AppText>
+                            </TouchableOpacity>
                           </View>
                         </View>
                       </View>
@@ -172,7 +228,10 @@ const styles = StyleSheet.create({
   commentContainer: {
     backgroundColor: colors.dark_2,
     padding: 12,
+    paddingBottom: 0,
+    marginBottom: 5,
     borderRadius: 25,
+    // width: "100%",
   },
   comment_line: {
     // width: 2,
@@ -203,6 +262,7 @@ const styles = StyleSheet.create({
 
   container: {
     paddingHorizontal: 10,
+    flex: 1,
     // backgroundColor: colors.dark_2,
   },
 });
