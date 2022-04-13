@@ -828,7 +828,46 @@ export const get_user_page = (username) => {
     });
 };
 
+export const showFilteredPosts = (filter) => (dispatch) => {
+  let isShowingUnfilteredPosts =
+    store.getState().core.accData.isShowingUnfilteredPosts;
+
+  // if (isShowingUnfilteredPosts === filter) return;
+
+  if (filter) switch_to_filtered_posts(dispatch);
+  else switch_to_unfiltered_posts(dispatch);
+};
+
+const switch_to_filtered_posts = (dispatch) => {
+  dispatch({
+    type: "SWITCTH_IS_LOADING_FILTERED_POSTS",
+    payload: false,
+  });
+  dispatch({
+    type: "RESET_HOME_POSTS_STATE",
+  });
+
+  handle_get_home_posts(false, dispatch);
+};
+
+const switch_to_unfiltered_posts = (dispatch) => {
+  dispatch({
+    type: "SWITCTH_IS_LOADING_FILTERED_POSTS",
+    payload: true,
+  });
+
+  dispatch({
+    type: "RESET_HOME_POSTS_STATE",
+  });
+
+  handle_get_home_posts(false, dispatch);
+};
+
 export const get_home_posts = (props) => (dispatch) => {
+  handle_get_home_posts(props, dispatch);
+};
+
+const handle_get_home_posts = (props, dispatch) => {
   let lastVisible = null;
 
   if (props.init) {

@@ -49,6 +49,9 @@ const init_accdata = {
   createdAt: new Date().toISOString(),
   read_update_notes: true,
   credits: 0,
+
+  //settings
+  isShowingUnfilteredPosts: true,
 };
 
 export default init_accdata;

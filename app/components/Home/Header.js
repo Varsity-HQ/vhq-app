@@ -14,8 +14,8 @@ import universityShortName from "../../util/universityShortName";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import Text from "../AppText";
 import TabNavigator from "../TabNavigator";
+import Button from "../Button";
 import colors from "../../config/colors";
-import { ProgressBar } from "react-native-paper";
 import HomeUploading from "../Loaders/HomeUploading";
 import { connect } from "react-redux";
 import { useFocusEffect } from "@react-navigation/native";
@@ -26,6 +26,7 @@ import db from "../../util/fb_admin";
 import { DISCOVER_PAGE, NOTIFICATIONS } from "../../navigation/routes";
 import { RFValue } from "react-native-responsive-fontsize";
 import OffersHeader from "./OffersHeader";
+import HomeFeedMenu from "./HomeFeedMenu";
 
 const home_tabs = [
   {
@@ -66,6 +67,7 @@ const mapStateToProps = (state) => {
     uploading: state.data.new_post.uploading,
     user_id: state.core.accData.userID,
     university: state.core.accData.university,
+    isShowingUnfilteredPosts: state.core.accData.isShowingUnfilteredPosts,
   };
 };
 
@@ -78,6 +80,7 @@ const Header = ({
   user_id,
   index = 1,
   setTab,
+  isShowingUnfilteredPosts,
 }) => {
   const userDocRef = doc(db, "accounts", user_id);
   const [user_snapshot, loading, error] = useDocumentData(userDocRef);
@@ -192,29 +195,44 @@ const Header = ({
           />
         </View>
       ) : (
-        <View
-          style={{
-            // padding: 10,
-            borderBottomColor: "black",
-            position: "relative",
-            borderTopWidth: 2,
-            // marginTop: 10,
-            height: index !== 4 ? null : 0,
-          }}
-        >
-          <Text
+        <View>
+          <View
             style={{
-              padding: 18,
-              fontSize: 18,
-              color: "#fff",
-              zIndex: 1,
-              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
               alignItems: "center",
-              flexDirection: "column",
+              height: index !== 4 ? null : 0,
+              zIndex: 1,
             }}
           >
-            <SimpleHeaderText university={university} tab={index} />
-          </Text>
+            <View>
+              <Text
+                style={{
+                  padding: 18,
+                  fontSize: 18,
+                  color: "#fff",
+                  zIndex: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <SimpleHeaderText
+                  isShowingUnfilteredPosts={isShowingUnfilteredPosts}
+                  university={university}
+                  tab={index}
+                />
+              </Text>
+            </View>
+            <View
+              style={{
+                paddingRight: 18,
+              }}
+            >
+              <HomeFeedMenu />
+            </View>
+          </View>
+
           <LinearGradient
             colors={["#1160af", "#9e7b9b"]}
             // colors={["red", "white"]}oin
@@ -230,7 +248,10 @@ const Header = ({
   );
 };
 
-const SimpleHeaderText = ({ tab, university }) => {
+const SimpleHeaderText = ({ tab, university, isShowingUnfilteredPosts }) => {
+  let textder = isShowingUnfilteredPosts
+    ? "showing all posts"
+    : "showing posts from " + universityShortName(university);
   if (tab === 4) {
     return null;
   }
@@ -238,7 +259,7 @@ const SimpleHeaderText = ({ tab, university }) => {
     return (
       <>
         <Text style={{ fontWeight: "700" }}>Timeline | </Text>
-        <Text style={{ fontSize: 14 }}>showing recent posts</Text>
+        <Text style={{ fontSize: 14 }}>{textder}</Text>
       </>
     );
   }
@@ -255,7 +276,7 @@ const SimpleHeaderText = ({ tab, university }) => {
   return (
     <>
       <Text style={{ fontWeight: "700" }}>Timeline | </Text>
-      <Text style={{ fontSize: 14 }}>showing recent posts</Text>
+      <Text style={{ fontSize: 14 }}>{textder}</Text>
     </>
   );
 };
@@ -281,7 +302,17 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-
+  grad_diverder_2: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
+    height: "100%",
+    width: "100%",
+    // padding: 10,
+    // borderRadius: 100,
+  },
   tab: {
     marginLeft: 10,
     height: "100%",

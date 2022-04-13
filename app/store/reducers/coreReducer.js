@@ -483,6 +483,14 @@ const coreReducer = (state = initialData, actions) => {
         logging_in_user: actions.payload,
         logging_in_error: {},
       };
+    case "SWITCTH_IS_LOADING_FILTERED_POSTS":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          isShowingUnfilteredPosts: actions.payload,
+        },
+      };
     case "SET_USER_DATA":
       return {
         ...state,

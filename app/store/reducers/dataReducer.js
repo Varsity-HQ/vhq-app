@@ -225,6 +225,22 @@ const dataReducer = (state = initialData, actions) => {
         },
       };
 
+    case "RESET_HOME_POSTS_STATE":
+      let home_data_to_reset = {
+        ...state.home_data,
+        loading: true,
+        page_cursor: null,
+        posts: [],
+        error: false,
+        refreshing: false,
+        loading_more: false,
+      };
+
+      return {
+        ...state,
+        home_data: home_data_to_reset,
+      };
+
     case "SET_HOME_POSTS":
       let updated_home_data = {
         ...state.home_data,
