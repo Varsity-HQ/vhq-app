@@ -78,11 +78,12 @@ class Home extends PureComponent {
   }
 
   handleLoadMore() {
-    this.props.get_home_posts({
-      refresh: true,
-      init: false,
-      more: true,
-    });
+    console.log("load more");
+    // this.props.get_home_posts({
+    //   refresh: true,
+    //   init: false,
+    //   more: true,
+    // });
   }
 
   handleListRendering = ({ item }) => {
@@ -92,11 +93,9 @@ class Home extends PureComponent {
     if (this.state.index === 2) {
       return <PostCard navigation={this.props.navigation} data={item} />;
     }
-
     if (this.state.index === 4) {
       return <OfferCard navigation={this.props.navigation} data={item} />;
     }
-
     return null;
   };
 

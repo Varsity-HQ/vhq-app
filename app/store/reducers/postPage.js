@@ -3,7 +3,6 @@ const initialState = {
   post_loading: true,
   comments: null,
   comments_loading: true,
-  comment_replies: [],
   replyTo: null,
   commenting: false,
 };
@@ -15,6 +14,25 @@ const postPageReducer = (state = initialState, actions) => {
         ...state,
         commenting: actions.payload,
       };
+    case "PP_CLOSE_COMMENT_REPLIES":
+      let comment_to_close_replies = state.comments;
+
+      if (comment_to_close_replies) {
+        comment_to_close_replies.forEach((x, index) => {
+          if (x.comment_id === actions.payload) {
+            comment_to_close_replies[index] = {
+              ...x,
+              comments_loading: false,
+              replies_isOpen: false,
+            };
+          }
+        });
+      }
+
+      return {
+        ...state,
+        comments: comment_to_close_replies,
+      };
 
     case "SET_COMMENT_REPLIES":
       let comment_to_set_replies = state.comments;
@@ -25,6 +43,7 @@ const postPageReducer = (state = initialState, actions) => {
             comment_to_set_replies[index] = {
               ...x,
               comments_loading: false,
+              replies_isOpen: true,
               comments_replies: actions.payload.comments,
             };
           }

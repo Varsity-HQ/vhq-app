@@ -114,6 +114,14 @@ export const cancel_reply_comment = () => (dispatch) => {
     payload: null,
   });
 };
+
+export const close_comment_replies = (c_id) => (dispatch) => {
+  dispatch({
+    type: "PP_CLOSE_COMMENT_REPLIES",
+    payload: c_id,
+  });
+};
+
 export const get_comment_replies = (c_id) => (dispatch) => {
   dispatch({
     type: "SET_COMMENT_REPLIES_LOADING",

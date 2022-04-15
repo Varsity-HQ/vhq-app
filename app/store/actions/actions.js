@@ -847,7 +847,14 @@ const switch_to_filtered_posts = (dispatch) => {
     type: "RESET_HOME_POSTS_STATE",
   });
 
-  handle_get_home_posts(false, dispatch);
+  axios
+    .get(`/home/posts/filterposts/true`)
+    .then(() => {
+      handle_get_home_posts(false, dispatch);
+    })
+    .catch((err) => {
+      console.err(err);
+    });
 };
 
 const switch_to_unfiltered_posts = (dispatch) => {
@@ -860,7 +867,14 @@ const switch_to_unfiltered_posts = (dispatch) => {
     type: "RESET_HOME_POSTS_STATE",
   });
 
-  handle_get_home_posts(false, dispatch);
+  axios
+    .get(`/home/posts/filterposts/false`)
+    .then(() => {
+      handle_get_home_posts(false, dispatch);
+    })
+    .catch((err) => {
+      console.err(err);
+    });
 };
 
 export const get_home_posts = (props) => (dispatch) => {

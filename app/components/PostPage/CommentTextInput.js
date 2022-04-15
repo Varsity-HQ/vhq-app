@@ -15,7 +15,7 @@ import { PROFILE } from "../../navigation/routes";
 import emojis from "../../util/emojis";
 import Image from "../../components/Image";
 import {
-  cancelReplyComment,
+  cancel_reply_comment,
   send_post_comment,
 } from "../../store/actions/postPage";
 
@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     sendPostComment: (txt) => dispatch(send_post_comment(txt)),
-    cancelReplyComment: () => dispatch(cancelReplyComment()),
+    cancelReplyComment: () => dispatch(cancel_reply_comment()),
   };
 };
 

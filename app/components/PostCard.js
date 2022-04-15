@@ -43,6 +43,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+const mapStateToProps = (state) => {
+  return {
+    isShowingUnfilteredPosts: state.core.accData.isShowingUnfilteredPosts,
+  };
+};
+
 class PostCard extends PureComponent {
   state = {
     show_comment_bar: false,
@@ -164,16 +170,53 @@ class PostCard extends PureComponent {
                         : data.firstname + " " + data.surname.charAt(0)}
                     </Text>
                   </View>
-                  <Text style={styles.username}>
-                    {data.anonymous_post ? (
-                      <>anonymous - </>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View>
+                      <Text style={styles.username}>
+                        {data.anonymous_post ? (
+                          <>anonymous - </>
+                        ) : (
+                          <>@{data.username} - </>
+                        )}
+                      </Text>
+                    </View>
+
+                    {this.props.isShowingUnfilteredPosts ? (
+                      <View
+                        style={{
+                          borderRadius: 100,
+                          borderWidth: 1,
+                          borderColor: colors.secondary,
+                          paddingHorizontal: 10,
+                          paddingVertical: 2,
+                          backgroundColor: colors.dark_opacity_2,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            color: colors.secondary,
+                            fontWeight: "700",
+                          }}
+                        >
+                          {universityShortName(data.university)}
+                        </Text>
+                      </View>
                     ) : (
-                      <>@{data.username} - </>
+                      <FontAwesome
+                        style={styles.username}
+                        name="university"
+                        size={10}
+                      />
                     )}
 
                     {/* @{data.username} -{" "} */}
-                    <FontAwesome name="university" size={12} />
-                  </Text>
+                  </View>
                 </View>
               </View>
             </TouchableWithoutFeedback>
@@ -360,8 +403,9 @@ const EventPost = ({ data, profilepic, handleOpenPost, handleOpenProfile }) => {
                     <>@{data.username} - </>
                   )}
 
-                  {/* @{data.username} -{" "} */}
                   <FontAwesome name="university" size={12} />
+
+                  {/* @{data.username} -{" "} */}
                 </Text>
               </View>
             </View>
@@ -528,4 +572,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, mapDispatchToProps)(PostCard);
+export default connect(mapStateToProps, mapDispatchToProps)(PostCard);
