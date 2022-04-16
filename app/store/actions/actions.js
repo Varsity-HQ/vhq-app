@@ -273,6 +273,7 @@ export const unlike_post = (post_id) => (dispatch) => {
   dispatch({ type: "UNLIKE_POST", payload: post_id });
   dispatch({ type: "UPDATE_UNLIKED_POST", payload: post_id });
   dispatch({ type: "UPDATE_UNLIKED_POST_PP", payload: post_id });
+  dispatch({ type: "UPDATE_UNLIKED_POST_POST_PAGE", payload: post_id });
 
   // if (store.getState().core.currentPost) {
   //   dispatch({ type: "UPDATE_LIKED_POST_PP_DEC" });
@@ -292,6 +293,7 @@ export const like_post = (post_id) => (dispatch) => {
   dispatch({ type: "LIKE_POST", payload: post_id });
   dispatch({ type: "UPDATE_LIKED_POST", payload: post_id });
   dispatch({ type: "UPDATE_LIKED_POST_PP", payload: post_id });
+  dispatch({ type: "UPDATE_LIKED_POST_POST_PAGE", payload: post_id });
 
   // if (store.getState().core.currentPost) {
   //   dispatch({ type: "UPDATE_LIKED_POST_PP" });

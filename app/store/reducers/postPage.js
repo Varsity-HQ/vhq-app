@@ -53,6 +53,34 @@ const postPageReducer = (state = initialState, actions) => {
         ...state,
         comments: comment_to_set_replies,
       };
+
+    case "ADD_POST_COMMENT_REPLY":
+      let comment_to_add_reply = state.comments;
+
+      if (comment_to_add_reply) {
+        comment_to_add_reply.forEach((x, index) => {
+          if (x.comment_id === actions.payload.parent_comment_id) {
+            let comment_replies = x.comments_replies;
+            if (comment_replies) {
+              comment_replies.unshift(actions.payload);
+            } else {
+              comment_replies = [{ ...actions.payload }];
+            }
+
+            comment_to_add_reply[index] = {
+              ...x,
+              comments_loading: false,
+              replies_isOpen: true,
+              comments_replies: comment_replies,
+            };
+          }
+        });
+      }
+      return {
+        ...state,
+        comments: comment_to_add_reply,
+      };
+
     case "SET_COMMENT_REPLIES_LOADING":
       let comments_to_set_loading = state.comments;
 
@@ -127,6 +155,43 @@ const postPageReducer = (state = initialState, actions) => {
         post_loading: false,
         comments: actions.payload,
         comments_loading: false,
+      };
+
+    case "UPDATE_LIKED_POST_POST_PAGE":
+      let updated_post = state.post?.post;
+
+      if (updated_post) {
+        let updated_like_count = parseInt(updated_post.likes_count) + 1;
+        updated_post = {
+          ...updated_post,
+          likes_count: updated_like_count,
+        };
+      }
+
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          post: updated_post,
+        },
+      };
+    case "UPDATE_UNLIKED_POST_POST_PAGE":
+      let updated_post_d = state.post?.post;
+
+      if (updated_post_d) {
+        let updated_d_like_count = parseInt(updated_post_d.likes_count) - 1;
+        updated_post_d = {
+          ...updated_post_d,
+          likes_count: updated_d_like_count,
+        };
+      }
+
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          post: updated_post_d,
+        },
       };
 
     case "POST_DATA_LOADING":

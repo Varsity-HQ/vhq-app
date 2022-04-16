@@ -24,7 +24,7 @@ const setPromoNots = async () => {
   );
   schedulePushNotification(
     messages.general_promos[randomNumber(length)],
-    HOUR * 24,
+    HOUR * 14,
   );
   schedulePushNotification(messages.bring_back[0], HOUR * 24);
   schedulePushNotification(messages.bring_back[1], HOUR * 48);

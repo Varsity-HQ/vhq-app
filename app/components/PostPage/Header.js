@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -20,6 +20,15 @@ import { PROFILE } from "../../navigation/routes";
 import PostMenu from "../Post/PostMenu";
 import PostPictures from "../Post/PostPictures";
 import PollSection from "../Post/PollSection";
+import { check_post_bookmarked, check_post_liked } from "../../util/postUtil";
+import {
+  bookmark_post,
+  like_post,
+  remove_bookmark,
+  unlike_post,
+} from "../../store/actions/actions";
+import { BOOKMARKED_POST, REMOVE_BOOKMARK } from "../../util/toast_messages";
+import Toast from "react-native-toast-message";
 
 dayjs.extend(localizedFormat);
 
@@ -31,14 +40,64 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    unlike_post: (pid) => dispatch(unlike_post(pid)),
+    like_post: (pid) => dispatch(like_post(pid)),
+    remove_bookmark: (pid) => dispatch(remove_bookmark(pid)),
+    bookmark_post: (pid) => dispatch(bookmark_post(pid)),
+  };
+};
+
 function HeaderPostContent({
   returnProfilePicture,
   post_page,
   loading = post_page.post_loading,
   post,
   account,
+  unlike_post,
+  like_post,
+  remove_bookmark,
+  bookmark_post,
 }) {
   const navigation = useNavigation();
+  const [isBookMarked, setIsBookMarked] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    setIsLiked(check_post_liked(post.id));
+    setIsBookMarked(check_post_bookmarked(post.id));
+  }, []);
+
+  const handleBookMark = () => {
+    if (isBookMarked) {
+      remove_bookmark(post.id);
+      Toast.show({
+        type: "general",
+        autoHide: true,
+        ...REMOVE_BOOKMARK,
+      });
+    } else {
+      bookmark_post(post.id);
+      Toast.show({
+        type: "general",
+        autoHide: true,
+        ...BOOKMARKED_POST,
+      });
+    }
+
+    setIsBookMarked(!isBookMarked);
+  };
+
+  const handleLikePost = () => {
+    if (isLiked) {
+      unlike_post(post.id);
+    } else {
+      like_post(post.id);
+    }
+    setIsLiked(!isLiked);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -207,8 +266,18 @@ function HeaderPostContent({
                     alignItems: "center",
                     flexDirection: "row",
                   }}
+                  onPress={handleLikePost}
                 >
-                  <FontAwesome color={colors.white} name="heart-o" size={20} />
+                  {isLiked ? (
+                    <Ionicons name="heart" size={25} color={colors.redish_2} />
+                  ) : (
+                    <Ionicons
+                      name="heart-outline"
+                      size={25}
+                      color={colors.white}
+                    />
+                  )}
+
                   <Text style={{ fontSize: 15 }}>
                     &nbsp;{post.likes_count} Likes
                   </Text>
@@ -225,16 +294,22 @@ function HeaderPostContent({
                   </Text>
                 </View>
               </View>
-              <View
-                style={{
-                  marginLeft: 10,
-                  marginRight: 10,
-                  alignItems: "center",
-                  flexDirection: "row",
-                }}
-              >
-                <FontAwesome color={colors.white} name="bookmark-o" size={25} />
-              </View>
+              <TouchableOpacity onPress={handleBookMark}>
+                <View
+                  style={{
+                    marginLeft: 10,
+                    marginRight: 10,
+                    alignItems: "center",
+                    flexDirection: "row",
+                  }}
+                >
+                  <FontAwesome
+                    color={colors.white}
+                    name={!isBookMarked ? "bookmark-o" : "bookmark"}
+                    size={25}
+                  />
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -295,4 +370,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, null)(HeaderPostContent);
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderPostContent);

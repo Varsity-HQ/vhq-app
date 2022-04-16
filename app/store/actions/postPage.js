@@ -51,14 +51,45 @@ export const get_post_page = (id) => (dispatch) => {
   //|
   //|
 };
+
+const send_comment_comment = (txt, dispatch) => {
+  const auth_user_data = store.getState().core.accData;
+  const post_id = store.getState().postPage.post.post.id;
+  const commentToReplyId = store.getState().postPage.replyTo?.parentCommentId;
+  dispatch({
+    type: "ADD_POST_COMMENT_REPLY",
+    payload: {
+      comment_by: auth_user_data.userID,
+      date_created: new Date().toISOString(),
+      commenter_surname: auth_user_data.surname,
+      comment_text: txt,
+      comment_id: "c_id",
+      commenter_username: auth_user_data.username,
+      commenter_firstname: auth_user_data.firstname,
+      commenter_profilepic: auth_user_data.profilepic,
+      parent_comment_id: commentToReplyId,
+    },
+  });
+  dispatch({
+    type: "SET_COMMENTING",
+    payload: false,
+  });
+};
+
 export const send_post_comment = (txt) => (dispatch) => {
   const auth_user_data = store.getState().core.accData;
   const post_id = store.getState().postPage.post.post.id;
+  const isReplyingToComment =
+    store.getState().postPage.replyTo?.parentCommentId;
 
   dispatch({
     type: "SET_COMMENTING",
     payload: true,
   });
+
+  if (isReplyingToComment) {
+    return send_comment_comment(txt, dispatch);
+  }
 
   axios
     .post(`/post/comment/${post_id}`, {
