@@ -62,7 +62,7 @@ const postPageReducer = (state = initialState, actions) => {
           if (x.comment_id === actions.payload.parent_comment_id) {
             let comment_replies = x.comments_replies;
             if (comment_replies) {
-              comment_replies.unshift(actions.payload);
+              comment_replies.push(actions.payload);
             } else {
               comment_replies = [{ ...actions.payload }];
             }
@@ -72,6 +72,7 @@ const postPageReducer = (state = initialState, actions) => {
               comments_loading: false,
               replies_isOpen: true,
               comments_replies: comment_replies,
+              replyTo: null,
             };
           }
         });

@@ -162,11 +162,17 @@ export const get_comment_replies = (c_id) => (dispatch) => {
     .get(`/comment/${c_id}/replies`)
     .then((data) => {
       console.log(data.data);
+
+      let comments = data.data;
+      if (comments) {
+        comments.reverse();
+      }
+
       dispatch({
         type: "SET_COMMENT_REPLIES",
         payload: {
           comment_id: c_id,
-          comments: data.data,
+          comments: comments,
         },
       });
       dispatch({
