@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
-import { FlatList, ActivityIndicator, View } from "react-native";
+import { FlatList, ActivityIndicator, View, StyleSheet } from "react-native";
 import Screen from "../components/Screen";
 import PostCard from "../components/PostCard";
+import Text from "../components/AppText";
 import { connect } from "react-redux";
 import {
   get_home_posts,
@@ -11,11 +12,12 @@ import {
 import Header from "../components/Home/Header";
 import Footer from "../components/Home/Footer";
 import Post from "../components/Skeletons/Post";
-import { useScrollToTop } from "@react-navigation/native";
+import { useFocusEffect, useScrollToTop } from "@react-navigation/native";
 import colors from "../config/colors";
 import Loader from "../components/Loaders/Loader";
 import HomeUploading from "../components/Loaders/HomeUploading";
 import OfferCard from "../components/Post/OfferCard";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const mapStateToProps = (state) => {
   return {
@@ -48,6 +50,15 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 function HomeWrapper(props) {
+  useFocusEffect(
+    React.useCallback(() => {
+      props.get_home_posts({
+        refresh: false,
+        init: true,
+        more: false,
+      });
+    }, []),
+  );
   const ref = React.useRef(null);
   useScrollToTop(ref);
   return <Home {...props} scrollRef={ref} />;
@@ -78,12 +89,12 @@ class Home extends PureComponent {
   }
 
   handleLoadMore() {
-    console.log("load more");
-    // this.props.get_home_posts({
-    //   refresh: true,
-    //   init: false,
-    //   more: true,
-    // });
+    // console.log("load more");
+    this.props.get_home_posts({
+      refresh: true,
+      init: false,
+      more: true,
+    });
   }
 
   handleListRendering = ({ item }) => {
@@ -228,6 +239,44 @@ const FooterLoadings = ({ loading, tab, loading_more, data = [] }) => {
     );
   }
 
+  if (data.length === 0 && tab === 1) {
+    return (
+      <View
+        style={{
+          marginTop: 50,
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        <View>
+          <Text
+            style={[
+              styles.textCenter,
+              {
+                fontWeight: "700",
+                fontSize: RFValue(16),
+              },
+            ]}
+          >
+            No posts to show
+          </Text>
+          <Text
+            style={[
+              styles.textCenter,
+              {
+                paddingHorizontal: 20,
+              },
+            ]}
+          >
+            Create a post to see something here or switch content timeline to
+            everything :)
+          </Text>
+        </View>
+        {/* <ActivityIndicator size="large" color={colors.secondary} /> */}
+      </View>
+    );
+  }
+
   if (tab === 2 && loading) {
     return (
       <View
@@ -263,5 +312,12 @@ const FooterLoadings = ({ loading, tab, loading_more, data = [] }) => {
   }
   return null;
 };
+
+const styles = StyleSheet.create({
+  textCenter: {
+    textAlign: "center",
+    marginBottom: 5,
+  },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeWrapper);

@@ -905,10 +905,17 @@ const handle_get_home_posts = (props, dispatch) => {
     });
   }
 
+  if (props.more && lastVisible === null) {
+    return dispatch({
+      type: "HOME_LOADING_MORE",
+      payload: false,
+    });
+  }
+
   axios
     .get(`/get/home${lastVisible ? "?pt_ad=" + lastVisible : ""}`)
     .then((data) => {
-      // console.log("home=>", data.data);
+      console.log("home=>", data.data);
       let currentPosts = store.getState().data.home_data.posts;
       let new_posts = !lastVisible
         ? data.data.posts
@@ -930,10 +937,30 @@ const handle_get_home_posts = (props, dispatch) => {
         payload: data.data.items,
       });
 
+      if (props.more && data.data.lastVisible === null) {
+        return dispatch({
+          type: "SET_HOME_POSTS",
+          payload: {
+            posts: [...new Set(new_posts)],
+            cursor: null,
+          },
+        });
+      }
+
+      if (data.data.lastVisible === null && new_posts.length === 0) {
+        return dispatch({
+          type: "SET_HOME_POSTS",
+          payload: {
+            posts: [],
+            cursor: null,
+          },
+        });
+      }
+
       if (
         data.data.lastVisible !== store.getState().data.home_data.page_cursor
       ) {
-        dispatch({
+        return dispatch({
           type: "SET_HOME_POSTS",
           payload: {
             posts: [...new Set(new_posts)],
