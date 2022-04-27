@@ -148,8 +148,8 @@ const AppNavigator = ({ user_id }) => {
           },
         }}
         name="Chat"
-        // component={ChatNavigator}
-        component={FeedNavigator}
+        component={ChatNavigator}
+        // component={FeedNavigator}
       />
     </Tab.Navigator>
   );

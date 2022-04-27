@@ -56,24 +56,39 @@ const send_comment_comment = (txt, dispatch) => {
   const auth_user_data = store.getState().core.accData;
   const post_id = store.getState().postPage.post.post.id;
   const commentToReplyId = store.getState().postPage.replyTo?.parentCommentId;
-  dispatch({
-    type: "ADD_POST_COMMENT_REPLY",
-    payload: {
-      comment_by: auth_user_data.userID,
-      date_created: new Date().toISOString(),
-      commenter_surname: auth_user_data.surname,
-      comment_text: txt,
-      comment_id: "c_id",
-      commenter_username: auth_user_data.username,
-      commenter_firstname: auth_user_data.firstname,
-      commenter_profilepic: auth_user_data.profilepic,
-      parent_comment_id: commentToReplyId,
-    },
-  });
-  dispatch({
-    type: "SET_COMMENTING",
-    payload: false,
-  });
+
+  axios
+    .post(`/post/comment/${commentToReplyId}/reply`, {
+      comment_text: req.body.txt,
+    })
+    .then((data) => {
+      console.log(data.data.comment_id);
+      dispatch({
+        type: "ADD_POST_COMMENT_REPLY",
+        payload: {
+          comment_by: auth_user_data.userID,
+          date_created: new Date().toISOString(),
+          commenter_surname: auth_user_data.surname,
+          comment_text: txt,
+          comment_id: data.data.comment_id,
+          commenter_username: auth_user_data.username,
+          commenter_firstname: auth_user_data.firstname,
+          commenter_profilepic: auth_user_data.profilepic,
+          parent_comment_id: commentToReplyId,
+        },
+      });
+      dispatch({
+        type: "SET_COMMENTING",
+        payload: false,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "SET_COMMENTING",
+        payload: false,
+      });
+    });
 };
 
 export const send_post_comment = (txt) => (dispatch) => {

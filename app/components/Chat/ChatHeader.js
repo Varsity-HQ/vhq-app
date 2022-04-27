@@ -60,7 +60,7 @@ function ChatHeader({ navigation, user_data }) {
         </View>
         <View style={styles.header_uni_container}>
           <TouchableOpacity
-            onPress={() => navigation.navigate(NOTIFICATIONS)}
+            // onPress={() => navigation.navigate(NOTIFICATIONS)}
             style={styles.header_uni_wrapper}
           >
             <Ionicons
