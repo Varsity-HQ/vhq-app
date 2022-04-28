@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import HeaderUserProfile from "../components/Search/HeaderUserProfile";
 import HashtagScreen from "../screens/HashtagScreen";
 import AllHashtags from "../screens/AllHashtags";
+import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
 
 const SearchNavigator = () => {
   const navigation = useNavigation();
@@ -55,6 +56,13 @@ const SearchNavigator = () => {
         }}
         name={routes.HASHTAG_SCREEN}
         component={HashtagScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={routes.PROFILE_SETTINGS}
+        component={ProfileSettingsScreen}
       />
       <Stack.Screen
         options={{

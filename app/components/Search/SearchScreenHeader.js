@@ -15,6 +15,8 @@ import {
 import TabNavigator from "../TabNavigator";
 import Adverts from "./Adverts";
 
+import { PROFILE_SETTINGS } from "../../navigation/routes";
+
 const home_tabs = [
   {
     title: "Trends",
@@ -22,9 +24,10 @@ const home_tabs = [
     icon: <Ionicons color={colors.white} size={18} name="trending-up" />,
   },
   {
-    title: "Pictures",
+    navTo: PROFILE_SETTINGS,
+    title: "Settings",
     index: 2,
-    icon: <SimpleLineIcons color={colors.white} size={16} name="picture" />,
+    icon: <SimpleLineIcons color={colors.white} size={16} name="settings" />,
   },
   // {
   //   title: "Groups",
