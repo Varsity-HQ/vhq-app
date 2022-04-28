@@ -99,13 +99,16 @@ const postPageReducer = (state = initialState, actions) => {
               replies_isOpen: true,
               comments_replies: comment_replies,
               replyTo: null,
+              comment_comments: parseInt(x.comment_comments) + 1,
             };
           }
         });
       }
       return {
         ...state,
+
         comments: comment_to_add_reply,
+        replyTo: null,
       };
 
     case "SET_COMMENT_REPLIES_LOADING":

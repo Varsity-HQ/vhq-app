@@ -56,10 +56,12 @@ const send_comment_comment = (txt, dispatch) => {
   const auth_user_data = store.getState().core.accData;
   const post_id = store.getState().postPage.post.post.id;
   const commentToReplyId = store.getState().postPage.replyTo?.parentCommentId;
+  const username = store.getState().postPage.replyTo?.username;
 
   axios
     .post(`/post/comment/${commentToReplyId}/reply`, {
-      comment_text: req.body.txt,
+      comment_text: txt,
+      replyingTo: username,
     })
     .then((data) => {
       console.log(data.data.comment_id);
@@ -75,6 +77,7 @@ const send_comment_comment = (txt, dispatch) => {
           commenter_firstname: auth_user_data.firstname,
           commenter_profilepic: auth_user_data.profilepic,
           parent_comment_id: commentToReplyId,
+          replyingTo: username,
         },
       });
       dispatch({
