@@ -13,6 +13,7 @@ import {
   SimpleLineIcons,
 } from "@expo/vector-icons";
 import TabNavigator from "../TabNavigator";
+import Adverts from "./Adverts";
 
 const home_tabs = [
   {
@@ -39,7 +40,12 @@ const home_tabs = [
   // },
 ];
 
-function SearchScreenHeader({ actionsDisable = false, active = 1, setTab }) {
+function SearchScreenHeader({
+  actionsDisable = false,
+  active = 1,
+  setTab,
+  data,
+}) {
   const navigation = useNavigation();
   return (
     <View>
@@ -56,6 +62,7 @@ function SearchScreenHeader({ actionsDisable = false, active = 1, setTab }) {
           <RIcon name="search-2-line" size={22} color={colors.primary} />
         </TouchableOpacity>
       </View>
+      <Adverts ads={data.adverts} />
       <TabNavigator
         type={2}
         style={{ marginBottom: 10 }}

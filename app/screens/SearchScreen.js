@@ -10,6 +10,7 @@ import colors from "../config/colors";
 import { get_search_data } from "../store/actions/actions";
 import { useFocusEffect } from "@react-navigation/native";
 import SearchScreenHeader from "../components/Search/SearchScreenHeader";
+import Adverts from "../components/Search/Adverts";
 
 const iconSize = 20;
 
@@ -70,6 +71,7 @@ function SearchScreen({ search_page, get_search_data }) {
     <Screen style={styles.container}>
       <ScrollView>
         <SearchScreenHeader
+          data={data}
           active={activeTab}
           setTab={(i) => handleGetPictures(i)}
         />

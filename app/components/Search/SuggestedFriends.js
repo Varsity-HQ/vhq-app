@@ -4,8 +4,10 @@ import Text from "../AppText";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import AccountCont from "./AccountCont";
+import { v4 } from "uuid";
 
 function SuggestedFriends({ accounts }) {
+  if (accounts.length === 0) return;
   return (
     <View style={styles.container}>
       <View style={styles.header_container}>

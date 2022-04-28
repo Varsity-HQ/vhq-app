@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import TrendMenu from "./TrendMenu";
 import { HASHTAG_SCREEN, ALL_TRENDING_HASHTAGS } from "../../navigation/routes";
 import Trend from "./Trend";
+import { RFValue } from "react-native-responsive-fontsize";
 
 function TopicTrends({ trends }) {
   const navigation = useNavigation();
@@ -20,12 +21,39 @@ function TopicTrends({ trends }) {
         <Trend x={x} key={index} />
       ))}
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate(ALL_TRENDING_HASHTAGS)}
-        style={styles.footer}
-      >
-        <Text>See all trends</Text>
-      </TouchableOpacity>
+      {trends.length > 0 ? (
+        <TouchableOpacity
+          onPress={() => navigation.navigate(ALL_TRENDING_HASHTAGS)}
+          style={styles.footer}
+        >
+          <Text>See all trends</Text>
+        </TouchableOpacity>
+      ) : (
+        <View
+          style={{
+            padding: 30,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              fontWeight: "700",
+              fontSize: RFValue(16),
+              marginBottom: 10,
+            }}
+          >
+            No Trends
+          </Text>
+          <Text
+            style={{
+              textAlign: "center",
+              color: colors.secondary,
+            }}
+          >
+            Create a new hashtag by posting with a hashtag of your choice
+          </Text>
+        </View>
+      )}
     </View>
   );
 }

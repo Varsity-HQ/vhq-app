@@ -14,6 +14,7 @@ const mapStateToPropsToProps = (state) => {
 };
 
 function TopPosts({ university, posts }) {
+  if (posts.length === 0) return;
   return (
     <View style={styles.container}>
       <View
