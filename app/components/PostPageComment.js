@@ -1,5 +1,11 @@
-import React, { useRef } from "react";
-import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import React, { useRef, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  TouchableWithoutFeedback,
+} from "react-native";
 import colors from "../config/colors";
 import AppText from "./AppText";
 import { FontAwesome } from "@expo/vector-icons";
@@ -16,6 +22,7 @@ import {
   close_comment_replies,
 } from "../store/actions/postPage";
 import Image from "./Image";
+import CommentMenu from "./Post/CommentMenu";
 dayjs.extend(relativeTime);
 
 const mapDispatchToProps = (dispatch) => {
@@ -35,6 +42,19 @@ function PostPageComment({
   handleCloseResponses,
 }) {
   const updateRef = useRef();
+
+  const [isCommentModalVisible, setIsCommentModalVisible] =
+    React.useState(false);
+
+  const [selectedComment, setSelectedComment] = useState(null);
+
+  const handleCommentModal = (data) => {
+    // if (!isCommentModalVisible) {
+    // }
+    setSelectedComment(data);
+    setIsCommentModalVisible(!isCommentModalVisible);
+  };
+
   if (skeleton) return <CommentSkeleton />;
 
   // console.log({ data });
@@ -57,189 +77,222 @@ function PostPageComment({
     );
   };
 
+  const handleeCommentLongPress = (data) => {
+    handleCommentModal(data);
+  };
+
   console.log({ data });
 
   return (
     // <Swipeable ref={updateRef} renderRightActions={renderRightActions}>
-    <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          flex: 1,
 
-          // paddingTop: 10,
-          // paddingBottom: 5,
+    <>
+      <TouchableWithoutFeedback
+        onLongPress={() => {
+          handleeCommentLongPress(data);
         }}
       >
-        <Image style={styles.p_avatar} uri={data.commenter_profilepic} />
-        {/* {returnProfilePicture(data.commenter_profilepic, styles.p_avatar)} */}
-        {/* <View style={styles.comment_line} /> */}
-        <View
-          style={{
-            flex: 1,
-          }}
-        >
-          <View>
+        <View style={styles.container}>
+          <CommentMenu
+            handleReply={() => {
+              handleReplyToComment();
+              handleCommentModal();
+            }}
+            isCommentModalVisible={isCommentModalVisible}
+            handleCommentModal={handleCommentModal}
+            data={selectedComment}
+          />
+          <View
+            style={{
+              flexDirection: "row",
+              flex: 1,
+
+              // paddingTop: 10,
+              // paddingBottom: 5,
+            }}
+          >
+            <Image style={styles.p_avatar} uri={data.commenter_profilepic} />
+            {/* {returnProfilePicture(data.commenter_profilepic, styles.p_avatar)} */}
+            {/* <View style={styles.comment_line} /> */}
             <View
               style={{
-                display: "flex",
-                position: "relative",
-                flexWrap: "wrap",
-
                 flex: 1,
-                paddingBottom: 0,
               }}
             >
-              <View style={[styles.commentContainer, { marginLeft: 10 }]}>
-                <AppText style={styles.u_name}>
-                  {data.commenter_username}
-                  <AppText style={styles.date_posted}>
-                    &nbsp;•&nbsp;{dayjs(data.date_created).fromNow()}
-                  </AppText>
-                </AppText>
+              <View>
                 <View
                   style={{
-                    paddingVertical: 5,
-                    marginRight: 0,
+                    display: "flex",
+                    position: "relative",
+                    flexWrap: "wrap",
+
+                    flex: 1,
+                    paddingBottom: 0,
                   }}
                 >
-                  <AppText>{data.comment_text}</AppText>
+                  <View style={[styles.commentContainer, { marginLeft: 10 }]}>
+                    <AppText style={styles.u_name}>
+                      {data.commenter_username}
+                      <AppText style={styles.date_posted}>
+                        &nbsp;•&nbsp;{dayjs(data.date_created).fromNow()}
+                      </AppText>
+                    </AppText>
+                    <View
+                      style={{
+                        paddingVertical: 5,
+                        marginRight: 0,
+                      }}
+                    >
+                      <AppText>{data.comment_text}</AppText>
+                    </View>
+                  </View>
                 </View>
-              </View>
-            </View>
-            <View
-              style={{
-                paddingHorizontal: 10,
-              }}
-            >
-              <View
-                style={{
-                  paddingVertical: 5,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesome name="heart" size={18} color={colors.secondary} />
-                <TouchableOpacity onPress={handleReplyToComment}>
-                  <AppText
-                    style={{ marginHorizontal: 15, color: colors.secondary }}
+                <View
+                  style={{
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      paddingVertical: 5,
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
                   >
-                    Reply{" "}
-                    {data.comment_comments > 0 || data.comment_comments !== "0"
-                      ? `${data.comment_comments}`
-                      : ""}
-                  </AppText>
-                </TouchableOpacity>
-              </View>
-              <View style={{ marginBottom: 10, marginTop: 5 }}>
-                {data.comment_comments > 0 || data.comment_comments !== "0" ? (
-                  data?.replies_isOpen ? (
-                    <TouchableOpacity
-                      onPress={() => handleCloseResponses(data.comment_id)}
-                    >
-                      <AppText style={styles.responses_text}>
-                        Hide replies
+                    <FontAwesome
+                      name="heart"
+                      size={18}
+                      color={colors.secondary}
+                    />
+                    <TouchableOpacity onPress={handleReplyToComment}>
+                      <AppText
+                        style={{
+                          marginHorizontal: 15,
+                          color: colors.secondary,
+                        }}
+                      >
+                        Reply{" "}
+                        {data.comment_comments > 0 ||
+                        data.comment_comments !== "0"
+                          ? `${data.comment_comments}`
+                          : ""}
                       </AppText>
                     </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity
-                      onPress={() => handleOpenResponses(data.comment_id)}
-                    >
-                      <AppText style={styles.responses_text}>
-                        {data.comments_loading
-                          ? "-loading responses-"
-                          : "See responses"}
-                      </AppText>
-                    </TouchableOpacity>
-                  )
-                ) : null}
-
-                <View>
-                  {data?.replies_isOpen &&
-                    data.comments_replies?.map((x) => (
-                      <View key={x.comment_id}>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            paddingTop: 10,
-                            // paddingBottom: 5,
-                          }}
+                  </View>
+                  <View style={{ marginBottom: 10, marginTop: 5 }}>
+                    {data.comment_comments > 0 ||
+                    data.comment_comments !== "0" ? (
+                      data?.replies_isOpen ? (
+                        <TouchableOpacity
+                          onPress={() => handleCloseResponses(data.comment_id)}
                         >
-                          <Image
-                            uri={x.commenter_profilepic}
-                            style={styles.p_avatar}
-                          />
-                          <View
-                            style={{
-                              flex: 1,
-                            }}
-                          >
-                            <View
-                              style={[
-                                styles.commentContainer,
-                                {
-                                  marginLeft: 10,
-                                  flex: 1,
-                                  paddingBottom: 5,
-                                  marginBottom: 0,
-                                },
-                              ]}
-                            >
-                              <AppText style={styles.u_name}>
-                                {x.commenter_username}
-                                <AppText style={styles.date_posted}>
-                                  &nbsp;•&nbsp;
-                                  {dayjs(x.date_created).fromNow()}
-                                </AppText>
-                              </AppText>
-                              <View
-                                style={{
-                                  paddingVertical: 5,
-                                  marginRight: 0,
-                                }}
-                              >
-                                <AppText>{x.comment_text}</AppText>
-                              </View>
-                            </View>
+                          <AppText style={styles.responses_text}>
+                            Hide replies
+                          </AppText>
+                        </TouchableOpacity>
+                      ) : (
+                        <TouchableOpacity
+                          onPress={() => handleOpenResponses(data.comment_id)}
+                        >
+                          <AppText style={styles.responses_text}>
+                            {data.comments_loading
+                              ? "-loading responses-"
+                              : "See responses"}
+                          </AppText>
+                        </TouchableOpacity>
+                      )
+                    ) : null}
+
+                    <View>
+                      {data?.replies_isOpen &&
+                        data.comments_replies?.map((x) => (
+                          <View key={x.comment_id}>
                             <View
                               style={{
-                                paddingVertical: 5,
                                 flexDirection: "row",
-                                alignItems: "center",
-                                paddingHorizontal: 10,
+                                paddingTop: 10,
+                                // paddingBottom: 5,
                               }}
                             >
-                              <FontAwesome
-                                name="heart"
-                                size={18}
-                                color={colors.secondary}
+                              <Image
+                                uri={x.commenter_profilepic}
+                                style={styles.p_avatar}
                               />
-                              <TouchableOpacity onPress={handleReplyToComment}>
-                                <AppText
+                              <View
+                                style={{
+                                  flex: 1,
+                                }}
+                              >
+                                <View
+                                  style={[
+                                    styles.commentContainer,
+                                    {
+                                      marginLeft: 10,
+                                      flex: 1,
+                                      paddingBottom: 5,
+                                      marginBottom: 0,
+                                    },
+                                  ]}
+                                >
+                                  <AppText style={styles.u_name}>
+                                    {x.commenter_username}
+                                    <AppText style={styles.date_posted}>
+                                      &nbsp;•&nbsp;
+                                      {dayjs(x.date_created).fromNow()}
+                                    </AppText>
+                                  </AppText>
+                                  <View
+                                    style={{
+                                      paddingVertical: 5,
+                                      marginRight: 0,
+                                    }}
+                                  >
+                                    <AppText>{x.comment_text}</AppText>
+                                  </View>
+                                </View>
+                                <View
                                   style={{
-                                    marginHorizontal: 15,
-                                    color: colors.secondary,
+                                    paddingVertical: 5,
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    paddingHorizontal: 10,
                                   }}
                                 >
-                                  Reply{" "}
-                                  {data.comment_comments > 0 ||
-                                  data.comment_comments !== "0"
-                                    ? `${data.comment_comments}`
-                                    : ""}
-                                </AppText>
-                              </TouchableOpacity>
+                                  <FontAwesome
+                                    name="heart"
+                                    size={18}
+                                    color={colors.secondary}
+                                  />
+                                  <TouchableOpacity
+                                    onPress={handleReplyToComment}
+                                  >
+                                    <AppText
+                                      style={{
+                                        marginHorizontal: 15,
+                                        color: colors.secondary,
+                                      }}
+                                    >
+                                      Reply{" "}
+                                      {data.comment_comments > 0 ||
+                                      data.comment_comments !== "0"
+                                        ? `${data.comment_comments}`
+                                        : ""}
+                                    </AppText>
+                                  </TouchableOpacity>
+                                </View>
+                              </View>
                             </View>
                           </View>
-                        </View>
-                      </View>
-                    ))}
+                        ))}
+                    </View>
+                  </View>
                 </View>
               </View>
             </View>
           </View>
         </View>
-      </View>
-    </View>
+      </TouchableWithoutFeedback>
+    </>
     // </Swipeable>
   );
 }

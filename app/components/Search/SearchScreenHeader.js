@@ -65,7 +65,7 @@ function SearchScreenHeader({
           <RIcon name="search-2-line" size={22} color={colors.primary} />
         </TouchableOpacity>
       </View>
-      <Adverts ads={data.adverts} />
+      {data && <Adverts ads={data.adverts} />}
       <TabNavigator
         type={2}
         style={{ marginBottom: 10 }}

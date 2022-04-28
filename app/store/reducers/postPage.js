@@ -9,6 +9,32 @@ const initialState = {
 
 const postPageReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "PP_DELETE_COMMENT":
+      let c_comments = state.comments;
+      let filtered_comments = [];
+
+      if (c_comments) {
+        c_comments.forEach((x) => {
+          if (x.comment_id !== actions.payload) {
+            filtered_comments.push(x);
+          }
+        });
+      }
+
+      let p_d_post = {
+        ...state.post,
+        post: {
+          ...state.post.post,
+          comments_count: parseInt(state.post.post.comments_count) - 1,
+        },
+      };
+
+      return {
+        ...state,
+        post: p_d_post,
+        comments: filtered_comments,
+      };
+
     case "SET_COMMENTING":
       return {
         ...state,

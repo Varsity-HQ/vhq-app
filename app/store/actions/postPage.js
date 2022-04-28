@@ -154,6 +154,30 @@ export const replyToComment = (data) => (dispatch) => {
     },
   });
 };
+
+export const delete_comment = (cid) => (dispatch) => {
+  console.log({ cid });
+  let post_id = store.getState().postPage.post.post.id;
+
+  if (!cid) return;
+
+  dispatch({
+    type: "PP_DELETE_COMMENT",
+    payload: cid,
+  });
+  dispatch({
+    type: "POST_COMMENT_DECREMENT",
+    payload: post_id,
+  });
+
+  axios
+    .get(`/post/comment/${cid}/delete`)
+    .then(() => {})
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const cancel_reply_comment = () => (dispatch) => {
   dispatch({
     type: "SET_COMMENT_REPLY_TO",

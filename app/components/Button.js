@@ -1,5 +1,5 @@
-import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
+import { LinearGradient } from "expo-linear-gradient";
 import {
   ActivityIndicator,
   StyleSheet,

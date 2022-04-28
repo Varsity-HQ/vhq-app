@@ -139,6 +139,25 @@ const dataReducer = (state = initialData, actions) => {
           posts: filtered_home_posts,
         },
       };
+
+    case "POST_COMMENT_DECREMENT":
+      let updated_home_posts_cD = [];
+
+      state.home_data.posts.forEach((x) => {
+        if (x.id === actions.payload) {
+          let updated_liked_count = (parseInt(x.comments_count) - 1).toString();
+          let post_r = { ...x, comments_count: updated_liked_count };
+          updated_home_posts_cD.push(post_r);
+        } else {
+          updated_home_posts_cD.push(x);
+        }
+      });
+
+      return {
+        ...state,
+        home_data: { ...state.home_data, posts: updated_home_posts_cD },
+      };
+
     case "UPDATE_UNLIKED_POST":
       // console.log("fired with id ", actions.payload);
 
