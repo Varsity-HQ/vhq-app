@@ -16,6 +16,7 @@ const init_accdata = {
   bookmarks: [],
   liked_posts: [],
   poll_votes: [],
+  liked_comments: [],
 
   anonymous_name: "",
   anonymous_emoji_index: 20,

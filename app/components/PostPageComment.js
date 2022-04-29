@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -20,16 +20,21 @@ import {
   replyToComment,
   get_comment_replies,
   close_comment_replies,
+  like_main_comment,
+  unlike_main_comment,
 } from "../store/actions/postPage";
 import Image from "./Image";
 import CommentMenu from "./Post/CommentMenu";
+import { check_comment_liked } from "../util/postUtil";
 dayjs.extend(relativeTime);
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    replyToComment: (comment) => dispatch(replyToComment(comment)),
+    replyToComment: (data) => dispatch(replyToComment(data)),
     handleOpenResponses: (id) => dispatch(get_comment_replies(id)),
     handleCloseResponses: (id) => dispatch(close_comment_replies(id)),
+    like_main_comment: (id) => dispatch(like_main_comment(id)),
+    unlike_main_comment: (id) => dispatch(unlike_main_comment(id)),
   };
 };
 
@@ -40,13 +45,20 @@ function PostPageComment({
   replyToComment,
   handleOpenResponses,
   handleCloseResponses,
+  like_main_comment,
+  unlike_main_comment,
 }) {
   const updateRef = useRef();
 
   const [isCommentModalVisible, setIsCommentModalVisible] =
     React.useState(false);
-
   const [selectedComment, setSelectedComment] = useState(null);
+  const [commentLiked, setCommentLiked] = useState(false);
+
+  useEffect(() => {
+    if (!data) return;
+    setCommentLiked(check_comment_liked(data.comment_id));
+  }, []);
 
   const handleCommentModal = (data) => {
     // if (!isCommentModalVisible) {
@@ -59,9 +71,24 @@ function PostPageComment({
 
   // console.log({ data });
 
+  const handleLikeComment = () => {
+    if (commentLiked) {
+      setCommentLiked(!commentLiked);
+      unlike_main_comment(data.comment_id);
+    } else {
+      setCommentLiked(!commentLiked);
+      like_main_comment(data.comment_id);
+    }
+  };
+
   const handleReplyToComment = () => {
-    // console.log(data);
+    // if (comment) {
+    //   replyToComment(comment);
+    // } else {
     replyToComment(data);
+    // }
+    // console.log(data);
+
     // Alert.alert(
     //   "Coming soon",
     //   "This feature will be activated in the next release",
@@ -159,11 +186,31 @@ function PostPageComment({
                       alignItems: "center",
                     }}
                   >
-                    <FontAwesome
-                      name="heart"
-                      size={18}
-                      color={colors.secondary}
-                    />
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                      onPress={handleLikeComment}
+                    >
+                      <FontAwesome
+                        name="heart"
+                        size={18}
+                        color={
+                          commentLiked ? colors.redish_2 : colors.secondary
+                        }
+                      />
+                      <AppText
+                        style={{
+                          color: colors.secondary,
+                        }}
+                      >
+                        {" "}
+                        {data.comment_likes > 0 || data.comment_likes !== "0"
+                          ? `${data.comment_likes}`
+                          : ""}
+                      </AppText>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={handleReplyToComment}>
                       <AppText
                         style={{
@@ -236,10 +283,12 @@ function PostPageComment({
                                 >
                                   <AppText style={styles.u_name}>
                                     {x.commenter_username}
-                                    <AppText style={styles.date_posted}>
-                                      &nbsp;•&nbsp;
-                                      {dayjs(x.date_created).fromNow()}
-                                    </AppText>
+                                    {x.replyingTo && (
+                                      <AppText style={styles.date_posted}>
+                                        &nbsp;&#x27A4;&nbsp;
+                                        {x.replyingTo ? x.replyingTo : ""}
+                                      </AppText>
+                                    )}
                                   </AppText>
                                   <View
                                     style={{
@@ -258,13 +307,26 @@ function PostPageComment({
                                     paddingHorizontal: 10,
                                   }}
                                 >
-                                  <FontAwesome
+                                  {/* <FontAwesome
                                     name="heart"
                                     size={18}
                                     color={colors.secondary}
-                                  />
+                                  /> */}
+
+                                  <AppText
+                                    style={[
+                                      styles.u_name,
+                                      {
+                                        color: colors.secondary,
+                                        fontWeight: "500",
+                                      },
+                                    ]}
+                                  >
+                                    {dayjs(x.date_created).format("LT")}
+                                  </AppText>
+
                                   <TouchableOpacity
-                                    onPress={handleReplyToComment}
+                                    onPress={() => handleReplyToComment(x)}
                                   >
                                     <AppText
                                       style={{
@@ -273,10 +335,6 @@ function PostPageComment({
                                       }}
                                     >
                                       Reply{" "}
-                                      {data.comment_comments > 0 ||
-                                      data.comment_comments !== "0"
-                                        ? `${data.comment_comments}`
-                                        : ""}
                                     </AppText>
                                   </TouchableOpacity>
                                 </View>

@@ -65,9 +65,10 @@ function HeaderPostContent({
   const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
+    if (!post) return;
     setIsLiked(check_post_liked(post.id));
     setIsBookMarked(check_post_bookmarked(post.id));
-  }, []);
+  }, [post_page]);
 
   const handleBookMark = () => {
     if (isBookMarked) {

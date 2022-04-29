@@ -1,5 +1,17 @@
 import store from "../store/store";
 
+export function check_comment_liked(comment_id) {
+  let liked = false;
+  let liked_comments = store.getState().core.accData.liked_comments;
+
+  liked_comments.forEach((x) => {
+    if (x.comment_id === comment_id) {
+      liked = true;
+    }
+  });
+
+  return liked;
+}
 export function check_post_liked(post_id) {
   let liked = false;
   let liked_posts = store.getState().core.accData.liked_posts;

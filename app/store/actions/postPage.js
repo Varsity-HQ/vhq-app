@@ -52,6 +52,42 @@ export const get_post_page = (id) => (dispatch) => {
   //|
 };
 
+export const unlike_main_comment = (id) => (dispatch) => {
+  dispatch({
+    type: "UNLIKE_MAIN_COMMENT",
+    payload: id,
+  });
+  dispatch({
+    type: "UNLIKE_MAIN_COMMENT_UC",
+    payload: id,
+  });
+
+  axios
+    .get(`/comment/unlike/${id}`)
+    .then((data) => {
+      console.log(data.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const like_main_comment = (id) => (dispatch) => {
+  dispatch({
+    type: "LIKED_MAIN_COMMENT",
+    payload: id,
+  });
+
+  axios
+    .get(`/comment/like/${id}`)
+    .then((data) => {
+      console.log(data.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 const send_comment_comment = (txt, dispatch) => {
   const auth_user_data = store.getState().core.accData;
   const post_id = store.getState().postPage.post.post.id;
@@ -61,7 +97,7 @@ const send_comment_comment = (txt, dispatch) => {
   axios
     .post(`/post/comment/${commentToReplyId}/reply`, {
       comment_text: txt,
-      replyingTo: username,
+      replyingTo: "",
     })
     .then((data) => {
       console.log(data.data.comment_id);
@@ -77,7 +113,7 @@ const send_comment_comment = (txt, dispatch) => {
           commenter_firstname: auth_user_data.firstname,
           commenter_profilepic: auth_user_data.profilepic,
           parent_comment_id: commentToReplyId,
-          replyingTo: username,
+          replyingTo: "",
         },
       });
       dispatch({
@@ -144,6 +180,9 @@ export const send_post_comment = (txt) => (dispatch) => {
     });
 };
 export const replyToComment = (data) => (dispatch) => {
+  // console.log({ c_data: data });
+
+  // return;
   const id = data.comment_id;
   const ctext = data.comment_text;
   const username = data.commenter_username;
@@ -154,6 +193,7 @@ export const replyToComment = (data) => (dispatch) => {
       parentCommentId: id,
       username: username,
       commentText: ctext,
+      // reply: reply,
     },
   });
 };

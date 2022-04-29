@@ -9,6 +9,43 @@ const initialState = {
 
 const postPageReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "UNLIKE_MAIN_COMMENT":
+      let main_comments_to_unlike = state.comments;
+
+      if (main_comments_to_unlike) {
+        main_comments_to_unlike.forEach((x, index) => {
+          if (x.comment_id === actions.payload) {
+            main_comments_to_unlike[index] = {
+              ...x,
+              comment_likes: parseInt(x.comment_likes) - 1,
+            };
+          }
+        });
+      }
+
+      return {
+        ...state,
+        comments: main_comments_to_unlike,
+      };
+    case "LIKED_MAIN_COMMENT":
+      let main_comments_to_like = state.comments;
+
+      if (main_comments_to_like) {
+        main_comments_to_like.forEach((x, index) => {
+          if (x.comment_id === actions.payload) {
+            main_comments_to_like[index] = {
+              ...x,
+              comment_likes: parseInt(x.comment_likes) + 1,
+            };
+          }
+        });
+      }
+
+      return {
+        ...state,
+        comments: main_comments_to_like,
+      };
+
     case "PP_DELETE_COMMENT":
       let c_comments = state.comments;
       let filtered_comments = [];

@@ -127,6 +127,23 @@ const coreReducer = (state = initialData, actions) => {
           ).toString(),
         },
       };
+    case "UNLIKE_MAIN_COMMENT_UC":
+      let liked_comments = state.accData.liked_comments;
+
+      let liked_comments_up = [];
+      liked_comments.forEach((x) => {
+        if (x.comment_id !== actions.payload) {
+          liked_comments_up.push(x);
+        }
+      });
+
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          liked_comments: liked_comments_up,
+        },
+      };
     case "REMOVE_BOOKMARKED_POST_CORE":
       let bookmarks_br = state.accData.bookmarks;
 
