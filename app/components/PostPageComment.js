@@ -81,18 +81,21 @@ function PostPageComment({
     }
   };
 
+  const handleReplyToReply = () => {
+    Alert.alert(
+      "Coming soon",
+      "This feature will be activated in the next release",
+    );
+  };
+
   const handleReplyToComment = () => {
     // if (comment) {
     //   replyToComment(comment);
     // } else {
-    replyToComment(data);
     // }
     // console.log(data);
 
-    // Alert.alert(
-    //   "Coming soon",
-    //   "This feature will be activated in the next release",
-    // );
+    replyToComment(data);
   };
 
   const renderRightActions = () => {
@@ -326,7 +329,7 @@ function PostPageComment({
                                   </AppText>
 
                                   <TouchableOpacity
-                                    onPress={() => handleReplyToComment(x)}
+                                    onPress={() => handleReplyToReply(x)}
                                   >
                                     <AppText
                                       style={{

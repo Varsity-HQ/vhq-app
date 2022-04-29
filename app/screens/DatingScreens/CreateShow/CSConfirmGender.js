@@ -25,7 +25,7 @@ function CSConfirmGender({ navigation }) {
 
   const handleChange = (i) => {
     setActive(i);
-    navigation.navigate(CS_NAME);
+    // navigation.navigate(CS_NAME);
   };
 
   return (
@@ -33,10 +33,13 @@ function CSConfirmGender({ navigation }) {
       <View style={{ marginTop: "30%" }}>
         <View>
           <Text style={[styles.text_center, styles.header]}>
-            Let's set you up
+            {/* Let's set you up */}
+            Meet ?
           </Text>
           <Text style={[styles.text_center, styles.subText]}>
-            Before we start, how do you identify ?
+            {/* Before we start, how do you identify ? */}
+            We are currently builing this page but we will notify you once we
+            launch it
           </Text>
         </View>
         <View style={styles.form_container}>
@@ -58,7 +61,7 @@ function CSConfirmGender({ navigation }) {
             },
           ]}
         >
-          Coming sooner !!
+          Coming soon !!
           {/* Another gender */}
         </Text>
         {/* <View style={styles.bottomButtonContainer}>

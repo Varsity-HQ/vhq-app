@@ -16,6 +16,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import db from "../util/fb_admin";
 import { collection, doc } from "firebase/firestore";
 import { connect } from "react-redux";
+import MarketplaceComingSoon from "../screens/MarketplaceComingSoon";
 const Tab = createBottomTabNavigator();
 
 const TabBar = (props) => {
@@ -107,10 +108,10 @@ const AppNavigator = ({ user_id }) => {
       />
       <Tab.Screen
         options={{
-          tabBarLabel: "Dating",
+          tabBarLabel: "Meet",
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <RIcon name="hearts-line" color={color} size={size + 3} />
+            <RIcon name="group-2-line" color={color} size={size + 3} />
           ),
 
           tabBarShowLabel: true,
@@ -129,7 +130,7 @@ const AppNavigator = ({ user_id }) => {
         }}
         name="Marketplace"
         // component={FeedNavigator}
-        component={FeedNavigator}
+        component={MarketplaceComingSoon}
       />
       <Tab.Screen
         options={{
