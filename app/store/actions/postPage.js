@@ -77,6 +77,10 @@ export const like_main_comment = (id) => (dispatch) => {
     type: "LIKED_MAIN_COMMENT",
     payload: id,
   });
+  dispatch({
+    type: "LIKED_MAIN_COMMENT_UC",
+    payload: id,
+  });
 
   axios
     .get(`/comment/like/${id}`)

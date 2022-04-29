@@ -127,6 +127,21 @@ const coreReducer = (state = initialData, actions) => {
           ).toString(),
         },
       };
+
+    case "LIKED_MAIN_COMMENT_UC":
+      let liked_comments_bu = state.accData.liked_comments;
+      liked_comments_bu.push({
+        comment_id: actions.payload,
+      });
+
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          liked_comments: liked_comments_bu,
+        },
+      };
+
     case "UNLIKE_MAIN_COMMENT_UC":
       let liked_comments = state.accData.liked_comments;
 
