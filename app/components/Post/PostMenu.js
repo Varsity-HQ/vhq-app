@@ -23,6 +23,7 @@ import {
 } from "../../util/toast_messages";
 import { delete_post } from "../../store/actions/actions";
 import { save_post_user } from "../../store/actions/profile";
+import ReportPostMenu from "../ReportMenus/ReportPostMenu";
 
 const mapStateToProps = (state) => {
   return {
@@ -52,6 +53,11 @@ function PostMenu({
 }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
+
+  const [isReportModalVisible, setIsReportModalVisible] = React.useState(false);
+  const handleReportModal = () =>
+    setIsReportModalVisible(() => !isReportModalVisible);
+
   const navigation = useNavigation();
 
   if (!data) return null;
@@ -159,11 +165,10 @@ function PostMenu({
     },
     {
       title: "Report",
-      onPress: () =>
-        Alert.alert(
-          "Coming soon",
-          "Feature will be made available in the coming releases",
-        ),
+      onPress: () => {
+        setIsModalVisible(false);
+        setTimeout(() => setIsReportModalVisible(true), 400);
+      },
       icon: (
         <Ionicons
           color={colors.secondary}
@@ -205,7 +210,14 @@ function PostMenu({
       )}
       {/* // <View style={styles.container}> */}
 
+      <ReportPostMenu
+        key={"report-modal"}
+        isReportModalVisible={isReportModalVisible}
+        handleReportModal={handleReportModal}
+      />
+
       <Modal
+        key={"post-menu-modal"}
         // animationIn={"fadeIn"}
         // animationOut={"fadeOut"}
         hideModalContentWhileAnimating={true}
