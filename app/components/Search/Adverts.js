@@ -19,6 +19,7 @@ import Toast from "react-native-toast-message";
 const height = Dimensions.get("window").height;
 
 function Adverts({ ads }) {
+  if (ads.length === 0) return null;
   return (
     <ScrollView horizontal style={styles.container}>
       {ads.map((x, index) => (
