@@ -30,7 +30,7 @@ class Notifications extends React.PureComponent {
 
   render() {
     const notifications = this.props.notifications;
-    console.log({ notifications });
+
     return (
       <Screen style={styles.container}>
         <SectionList
@@ -49,7 +49,6 @@ class Notifications extends React.PureComponent {
             },
           ]}
           renderSectionHeader={({ section }) => {
-            console.log({ section });
             if (section.data.length === 0) {
               return null;
             }

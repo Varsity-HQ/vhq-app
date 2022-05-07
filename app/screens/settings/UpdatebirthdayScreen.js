@@ -48,7 +48,6 @@ function UpdatebirthdayScreen({ loading, dob, navigation, update_dob }) {
   //
   const handleDateConfirm = (e) => {
     setModalVisible(false);
-    console.log({ e: new Date(e).toDateString() });
 
     const date1 = new Date(e);
     const date2 = new Date();

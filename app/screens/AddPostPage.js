@@ -194,7 +194,6 @@ class AddPostPage extends Component {
   handleImageAdd = (uri) => {
     let new_image_arr = this.state.local_attachments;
     new_image_arr.unshift(uri);
-    console.log({ new_image_arr });
     this.setState({
       local_attachments: new_image_arr,
     });

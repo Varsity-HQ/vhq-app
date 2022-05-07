@@ -32,10 +32,9 @@ export const get_post_page = (id) => (dispatch) => {
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   } else {
-    // console.log("fetch whole post");
     axios
       .get(`/post/${id}`)
       .then((data) => {
@@ -45,7 +44,7 @@ export const get_post_page = (id) => (dispatch) => {
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }
   //|
@@ -64,11 +63,9 @@ export const unlike_main_comment = (id) => (dispatch) => {
 
   axios
     .get(`/comment/unlike/${id}`)
-    .then((data) => {
-      console.log(data.data);
-    })
+    .then((data) => {})
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 
@@ -84,11 +81,9 @@ export const like_main_comment = (id) => (dispatch) => {
 
   axios
     .get(`/comment/like/${id}`)
-    .then((data) => {
-      console.log(data.data);
-    })
+    .then((data) => {})
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 
@@ -104,7 +99,6 @@ const send_comment_comment = (txt, dispatch) => {
       replyingTo: "",
     })
     .then((data) => {
-      console.log(data.data.comment_id);
       dispatch({
         type: "ADD_POST_COMMENT_REPLY",
         payload: {
@@ -126,7 +120,7 @@ const send_comment_comment = (txt, dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       dispatch({
         type: "SET_COMMENTING",
         payload: false,
@@ -176,7 +170,7 @@ export const send_post_comment = (txt) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       dispatch({
         type: "SET_COMMENTING",
         payload: false,
@@ -184,9 +178,6 @@ export const send_post_comment = (txt) => (dispatch) => {
     });
 };
 export const replyToComment = (data) => (dispatch) => {
-  // console.log({ c_data: data });
-
-  // return;
   const id = data.comment_id;
   const ctext = data.comment_text;
   const username = data.commenter_username;
@@ -203,7 +194,6 @@ export const replyToComment = (data) => (dispatch) => {
 };
 
 export const delete_comment = (cid) => (dispatch) => {
-  console.log({ cid });
   let post_id = store.getState().postPage.post.post.id;
 
   if (!cid) return;
@@ -221,7 +211,7 @@ export const delete_comment = (cid) => (dispatch) => {
     .get(`/post/comment/${cid}/delete`)
     .then(() => {})
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 
@@ -247,8 +237,6 @@ export const get_comment_replies = (c_id) => (dispatch) => {
   axios
     .get(`/comment/${c_id}/replies`)
     .then((data) => {
-      console.log(data.data);
-
       let comments = data.data;
       if (comments) {
         comments.reverse();
@@ -267,6 +255,6 @@ export const get_comment_replies = (c_id) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };

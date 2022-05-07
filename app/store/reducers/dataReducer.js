@@ -125,13 +125,6 @@ const dataReducer = (state = initialData, actions) => {
         }
       });
 
-      // console.group("Post filtering");
-      // console.log({
-      //   ...state,
-      //   homePosts: filtered_home_posts,
-      //   myPosts: filtered_my_posts,
-      // });
-      // console.groupEnd();
       return {
         ...state,
         home_data: {
@@ -159,8 +152,6 @@ const dataReducer = (state = initialData, actions) => {
       };
 
     case "UPDATE_UNLIKED_POST":
-      // console.log("fired with id ", actions.payload);
-
       let updated_home_posts_unl = [];
 
       state.home_data.posts.forEach((x) => {
@@ -179,8 +170,6 @@ const dataReducer = (state = initialData, actions) => {
       };
 
     case "UPDATE_LIKED_POST":
-      // console.log("fired with id ", actions.payload);
-
       let updated_home_posts = [];
 
       state.home_data.posts.forEach((x) => {

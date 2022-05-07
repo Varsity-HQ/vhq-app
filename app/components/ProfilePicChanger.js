@@ -19,16 +19,12 @@ function ProfilePicChanger({ image, onImgChange }) {
   }, []);
 
   const process_image = async (uri) => {
-    // console.log({ uri });
-
     const manipResult = await manipulateAsync(
       uri,
       [{ resize: { height: 300, width: 300 } }],
       { compress: 0.4, format: SaveFormat.JPEG },
     );
     onImgChange(manipResult.uri);
-
-    // console.log({ manipResult });
   };
 
   const selectImage = async () => {
@@ -44,14 +40,9 @@ function ProfilePicChanger({ image, onImgChange }) {
       //
       if (!result.cancelled) {
         process_image(result.uri);
-
-        // console.log({ result });
-      } else {
-        // console.log(result);
       }
-      //
     } catch (error) {
-      console.log("Error reading image");
+      console.error("Error reading image");
     }
   };
 

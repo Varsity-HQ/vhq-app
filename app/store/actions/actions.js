@@ -20,7 +20,7 @@ export const get_home_offers = () => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 
@@ -34,7 +34,7 @@ export const get_home_events = () => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 
@@ -45,8 +45,6 @@ export const reset_poll_details_page = () => (dispatch) => {
 };
 
 export const save_poll_details = (poll_post) => (dispatch) => {
-  // console.log({ poll_post });
-
   if (
     poll_post.postType === "poll_post" &&
     store.getState().core.accData.userID === poll_post?.posted_by
@@ -126,8 +124,6 @@ export const post_new = (post, attach) => async (dispatch) => {
           type: "SET_UPLOADING",
           payload: false,
         });
-
-        console.log(err);
       });
   } else {
     axios
@@ -166,7 +162,6 @@ export const post_new = (post, attach) => async (dispatch) => {
       })
 
       .catch((err) => {
-        console.log(err);
         dispatch({
           type: "SET_POST_UPLOADING",
           payload: false,
@@ -234,7 +229,6 @@ export const delete_post = (p_id) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       dispatch({
         type: "DELETING_POST",
         payload: false,
@@ -250,9 +244,7 @@ export const remove_bookmark = (post_id) => (dispatch) => {
   axios
     .get(`/post/${post_id}/removebookmark`)
     .then((data) => {})
-    .catch((err) => {
-      console.log(err.response);
-    });
+    .catch((err) => {});
 };
 
 export const bookmark_post = (post_id) => (dispatch) => {
@@ -263,13 +255,10 @@ export const bookmark_post = (post_id) => (dispatch) => {
   axios
     .get(`/post/${post_id}/bookmark`)
     .then((data) => {})
-    .catch((err) => {
-      console.log(err.response);
-    });
+    .catch((err) => {});
 };
 
 export const unlike_post = (post_id) => (dispatch) => {
-  // console.log("unlike");
   dispatch({ type: "UNLIKE_POST", payload: post_id });
   dispatch({ type: "UPDATE_UNLIKED_POST", payload: post_id });
   dispatch({ type: "UPDATE_UNLIKED_POST_PP", payload: post_id });
@@ -281,15 +270,10 @@ export const unlike_post = (post_id) => (dispatch) => {
 
   axios
     .get(`/post/unlike/${post_id}`)
-    .then((data) => {
-      // console.log(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    .then((data) => {})
+    .catch((err) => {});
 };
 export const like_post = (post_id) => (dispatch) => {
-  // console.log("like");
   dispatch({ type: "LIKE_POST", payload: post_id });
   dispatch({ type: "UPDATE_LIKED_POST", payload: post_id });
   dispatch({ type: "UPDATE_LIKED_POST_PP", payload: post_id });
@@ -300,11 +284,9 @@ export const like_post = (post_id) => (dispatch) => {
   // }
   axios
     .get(`/post/like/${post_id}`)
-    .then((data) => {
-      // console.log(data);
-    })
+    .then((data) => {})
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 
@@ -329,7 +311,6 @@ export const update_profile_pic = (uri) => async (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       dispatch({
         type: "UPDATE_SAVING_PROFILE_PIC",
         payload: false,
@@ -357,7 +338,6 @@ export const update_firstname = (firstname) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       dispatch({
         type: "UPDATE_SAVING_FIRSTNAME",
         payload: false,
@@ -384,7 +364,6 @@ export const update_surname = (surname) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       dispatch({
         type: "UPDATE_SAVING_SURNAME",
         payload: false,
@@ -412,7 +391,6 @@ export const update_username = (username) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       dispatch({
         type: "UPDATE_SAVING_USERNAME",
         payload: false,
@@ -440,7 +418,6 @@ export const update_about = (about) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       dispatch({
         type: "UPDATE_SAVING_ABOUT",
         payload: false,
@@ -472,7 +449,6 @@ export const updates_gender_pref = (s_target, show_s_target) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       dispatch({
         type: "UPDATE_SAVING_S_TARGET_SETTINGS",
         payload: false,
@@ -570,7 +546,6 @@ export const update_gender = (gender) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       dispatch({
         type: "UPDATE_SAVING_GENDER_SETTINGS",
         payload: false,
@@ -599,7 +574,6 @@ export const update_dob = (date, age) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       dispatch({
         type: "UPDATE_SAVING_DOB_SETTINGS",
         payload: false,
@@ -636,7 +610,6 @@ export const update_degree = (degree) => (dispatch) => {
         type: "UPDATE_SAVING_DEGREE_SETTINGS",
         payload: false,
       });
-      console.log(err);
     });
 };
 
@@ -669,7 +642,6 @@ export const update_yearofstudy = (yos) => (dispatch) => {
         type: "UPDATE_SAVING_YOS_SETTINGS",
         payload: false,
       });
-      console.log(err);
     });
 };
 
@@ -681,9 +653,7 @@ export const turn_off_anonymous = () => (dispatch) => {
   axios
     .get("/set-anonymous-off")
     .then(() => {})
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => {});
 };
 
 export const switch_to_anonymous = (name, index) => (dispatch) => {
@@ -711,7 +681,6 @@ export const switch_to_anonymous = (name, index) => (dispatch) => {
         type: "UPDATE_SAVING_ANON_SETTINGS",
         payload: false,
       });
-      console.log(err);
     });
 };
 
@@ -752,9 +721,7 @@ export const follow_account = (uid) => (dispatch) => {
   axios
     .get(`/follow/${uid}`)
     .then((data) => {})
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => {});
 };
 
 export const unfollow_account = (uid) => (dispatch) => {
@@ -774,9 +741,7 @@ export const unfollow_account = (uid) => (dispatch) => {
   axios
     .get(`/unfollow/${uid}`)
     .then(() => {})
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => {});
 };
 
 export const get_search_data = () => (dispatch) => {
@@ -792,7 +757,7 @@ export const get_search_data = () => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 
@@ -817,7 +782,7 @@ export const get_auth_user_posts = () => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 
@@ -826,7 +791,7 @@ export const get_user_page = (username) => {
     .get(`/user/${username}/get`)
     .then((data) => {})
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 
@@ -915,13 +880,10 @@ const handle_get_home_posts = (props, dispatch) => {
   axios
     .get(`/get/home${lastVisible ? "?pt_ad=" + lastVisible : ""}`)
     .then((data) => {
-      console.log("home=>", data.data);
       let currentPosts = store.getState().data.home_data.posts;
       let new_posts = !lastVisible
         ? data.data.posts
         : currentPosts.concat(data.data.posts);
-
-      // console.log("updated home");
 
       dispatch({
         type: "HOME_LOAD_REFRESH",
@@ -981,7 +943,7 @@ const handle_get_home_posts = (props, dispatch) => {
         type: "HOME_LOADING_MORE",
         payload: false,
       });
-      console.log(err);
+      console.error(err);
     });
 };
 
@@ -1034,7 +996,7 @@ export const save_profileDefaults = (uObj) => async (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       dispatch({
         type: "SET_FINALIZING_ACC_STTNGS",
         payload: false,
@@ -1070,7 +1032,7 @@ export const update_university = (uni) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       dispatch({
         type: "UPDATE_SAVING_UNI_SETTINGS",
         payload: false,
@@ -1117,8 +1079,7 @@ export const get_user = (props) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
-
+      console.error(err);
       dispatch({
         type: "SET_GETTING_USER_LOADER",
         payload: false,
@@ -1151,14 +1112,9 @@ export const login_user = (email, password) => (dispatch) => {
       password,
     })
     .then((data) => {
-      // console.log({ token: data.data.token });
-
-      //
       setAuthorizationHeader(data.data.token);
 
       return axios.get("/get/account").then((user_data) => {
-        // console.log({ res: user_data.data });
-
         if (user_data.data.userID) {
           dispatch({
             type: "SET_USER_DATA",
@@ -1226,7 +1182,7 @@ export const deleteUserAccount = () => (dispatch) => {
     .get("/account/delete")
     .then(() => {})
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 
   log_out_function();
@@ -1241,12 +1197,11 @@ export const logOutUser = () => (dispatch) => {
 };
 
 const log_out_function = async () => {
-  // console.log("logging out");
   delete axios.defaults.headers.common[`Authorization`];
   try {
     await auth_storage.removeToken();
   } catch (error) {
-    console.log("failed to sign out", error);
+    console.error("failed to sign out", error);
   }
 };
 
@@ -1260,7 +1215,7 @@ const setAuthorizationHeader = async (token) => {
   try {
     await auth_storage.storeToken(token);
   } catch (error) {
-    console.log("failed to set token", error);
+    console.error("failed to set token", error);
   }
 };
 
@@ -1273,7 +1228,7 @@ const uploadMultipleImagesAsync = async (images) => {
     .then((upload_res) => {
       return upload_res;
     })
-    .catch((err) => console.log(err.code));
+    .catch((err) => console.error(err.code));
 };
 
 const uploadImageAsync = async (uri) => {
@@ -1284,7 +1239,6 @@ const uploadImageAsync = async (uri) => {
         resolve(xhr.response);
       };
       xhr.onerror = function (e) {
-        // console.log(e);
         reject(new TypeError("Network request failed"));
       };
       xhr.responseType = "blob";
@@ -1294,7 +1248,6 @@ const uploadImageAsync = async (uri) => {
 
     const fileRef = ref(getStorage(), `vhq_${uuid.v4()}.jpeg`);
     const result = await uploadBytes(fileRef, blob);
-    // console.log({ result });
 
     // We're done with the blob, close and release it
     blob.close();

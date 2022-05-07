@@ -112,7 +112,7 @@ class PostCardFooter extends PureComponent {
           });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 
@@ -143,7 +143,7 @@ class PostCardFooter extends PureComponent {
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         this.setState({
           posting_comment: false,
         });

@@ -68,9 +68,6 @@ function PostPageComment({
   };
 
   if (skeleton) return <CommentSkeleton />;
-
-  // console.log({ data });
-
   const handleLikeComment = () => {
     if (commentLiked) {
       setCommentLiked(!commentLiked);
@@ -89,12 +86,6 @@ function PostPageComment({
   };
 
   const handleReplyToComment = () => {
-    // if (comment) {
-    //   replyToComment(comment);
-    // } else {
-    // }
-    // console.log(data);
-
     replyToComment(data);
   };
 
@@ -110,9 +101,6 @@ function PostPageComment({
   const handleeCommentLongPress = (data) => {
     handleCommentModal(data);
   };
-
-  console.log({ data });
-
   return (
     // <Swipeable ref={updateRef} renderRightActions={renderRightActions}>
 

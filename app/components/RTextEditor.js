@@ -26,12 +26,9 @@ class RTextEditor extends Component {
     this.richText.blurContentEditor();
   };
 
-  onInput = (e) => {
-    // console.log({ input: e });
-  };
+  onInput = (e) => {};
 
   handleChange = (e) => {
-    // console.log({ e });
     this.props.handleChange(e);
   };
 

@@ -17,7 +17,5 @@ export const get_accounts = (paginate) => (dispatch) => {
         payload: data.data,
       });
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => {});
 };

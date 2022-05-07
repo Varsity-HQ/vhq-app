@@ -143,7 +143,6 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
           onPress: () => {
             // handleModal();
             logOutUser();
-            // console.log("logout");
           },
         },
       ],

@@ -11,7 +11,6 @@ import PostPictures from "./PostPictures";
 const width = Dimensions.get("window").width;
 
 function OfferCard({ navigation, data, useWindowWidth }) {
-  console.log(data.attachments[0]);
   return (
     <View
       style={[

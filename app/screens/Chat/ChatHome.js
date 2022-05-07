@@ -80,7 +80,6 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
 
   useEffect(() => {
     if (pageIndex === 3) {
-      console.log("ran");
       get_accounts();
     }
   }, []);
@@ -105,8 +104,6 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
     }
 
     const set_array_to_state = (n) => {
-      // console.log("fire");
-      // console.log({ n });
       // set_parsed_acc({ n });
     };
 
@@ -118,12 +115,10 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
     //     });
 
     //     set_array_to_state(accounts_parsed_local);
-    //     // console.log(accounts_parsed_local);
 
     //     set_accounts_loading(false);
     //   })
     //   .catch((err) => {
-    //     console.log(err);
     //   });
 
     let user_following = acc_data.user_following;
@@ -140,12 +135,8 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
     });
   }
 
-  const refreshHandler = () => {
-    console.log("triggered");
-  };
-  const loadMoreHandler = () => {
-    console.log("allowLoadMore triggered");
-  };
+  const refreshHandler = () => {};
+  const loadMoreHandler = () => {};
 
   const listRenderingHandler = ({ item }) => {
     if (!item) return null;
@@ -176,9 +167,6 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
 
     return item.userID;
   };
-
-  // console.log({ filtered_chats_allowed });
-  // console.log({ filtered_chats_requests });
 
   return (
     <Screen>

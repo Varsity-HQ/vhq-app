@@ -111,7 +111,6 @@ const profileReducer = (state = initialState, actions) => {
       };
 
     case "RESET_PROFILE_PAGE":
-      console.log("reset");
       return (state = initialState);
 
     case "REMOVE_DELETED_POST":

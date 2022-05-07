@@ -582,13 +582,10 @@ const CardItem = ({
   handleLeftSwipeUp,
 }) => {
   const handleLeftSwipe = () => {
-    console.log("eses");
     handleLeftSwipeUp();
   };
 
-  useEffect(() => {
-    console.log("got here", name);
-  }, []);
+  useEffect(() => {}, []);
 
   // Custom styling
   const fullWidth = Dimensions.get("window").width;

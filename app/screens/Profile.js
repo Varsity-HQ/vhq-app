@@ -51,13 +51,11 @@ class Profile extends PureComponent {
   };
 
   componentDidMount = () => {
-    console.log("page first load");
     this.props.get_posts();
     this.props.get_user_profile(this.props.route.params.username);
   };
 
   componentWillUnmount = () => {
-    console.log("bye");
     this.props.profile_screen_moved_away();
   };
 

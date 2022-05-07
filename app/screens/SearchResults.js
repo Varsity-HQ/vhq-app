@@ -48,8 +48,6 @@ function SearchResults(props) {
     setSearchState({ ...searchState, ...nextState });
   };
 
-  console.log({ index });
-
   return (
     <Screen style={styles.container}>
       <InstantSearch

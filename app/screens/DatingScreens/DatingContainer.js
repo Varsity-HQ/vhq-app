@@ -56,12 +56,8 @@ class DatingContainer extends React.Component {
     return null;
   };
 
-  refreshHandler = () => {
-    console.log("triggered");
-  };
-  loadMoreHandler = () => {
-    console.log("allowLoadMore triggered");
-  };
+  refreshHandler = () => {};
+  loadMoreHandler = () => {};
 
   render() {
     return (

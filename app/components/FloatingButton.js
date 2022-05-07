@@ -26,9 +26,6 @@ const mapStateToProps = (state) => {
 
 function FloatingButton({ uploading }) {
   const navigation = useNavigation();
-  // const route = useRoute();
-  // console.log({ routes: route });
-
   return (
     <>
       {Platform.OS === "ios" && <View style={styles.shadow} />}

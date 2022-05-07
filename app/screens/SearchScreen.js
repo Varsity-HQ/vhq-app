@@ -65,8 +65,6 @@ function SearchScreen({ search_page, get_search_data }) {
 
   const data = search_page.data;
 
-  console.log({ data });
-
   return (
     <Screen style={styles.container}>
       <ScrollView>

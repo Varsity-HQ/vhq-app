@@ -7,16 +7,15 @@ const storeToken = async (authToken) => {
   try {
     await SecureStore.setItemAsync(key, authToken);
   } catch (error) {
-    console.log("Error storing auth token", error);
+    console.error("Error storing auth token", error);
   }
 };
 
 const getToken = async () => {
   try {
-    // console.log(jwtDecode(SecureStore.getItemAsync(key)));
     return await SecureStore.getItemAsync(key);
   } catch (error) {
-    console.log("Error getting auth token", error);
+    console.error("Error getting auth token", error);
     removeToken();
   }
 };
@@ -25,7 +24,7 @@ const removeToken = async () => {
   try {
     await SecureStore.deleteItemAsync(key);
   } catch (error) {
-    console.log("Error removing auth token", error);
+    console.error("Error removing auth token", error);
   }
 };
 

@@ -4,11 +4,6 @@ import colors from "../config/colors";
 import Text from "./AppText";
 
 function AppToast({ text1, text2 }) {
-  console.log({
-    text1,
-    text2,
-  });
-
   if (!text2) return null;
   //   if (!text1) return null;
 

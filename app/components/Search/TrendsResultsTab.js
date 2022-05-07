@@ -6,7 +6,6 @@ import colors from "../../config/colors";
 import Searchinindicator from "./Searchinindicator";
 
 function TrendsResultsTab({ hits }) {
-  console.log({ hits });
   return (
     <View style={styles.container}>
       <FlatList

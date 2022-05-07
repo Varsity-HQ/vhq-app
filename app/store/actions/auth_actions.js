@@ -15,7 +15,7 @@ export const setExpoPushToken = (token) => (dispatch) => {
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }
 };
@@ -43,9 +43,6 @@ export const request_password_reset = (email) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
-      console.log({ ...err.response.data });
-
       dispatch({
         type: "SET_RESETTING_LOADING_N_CLEAR_ERR",
         payload: false,

@@ -5,7 +5,6 @@ import Image from "../Image";
 const height = Dimensions.get("window").height;
 
 function HeaderUserProfile(props) {
-  console.log(props);
   return (
     <View style={styles.container}>
       <Image style={styles.user_avatar} />

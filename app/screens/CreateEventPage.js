@@ -113,7 +113,6 @@ class CreateEventPage extends Component {
   };
 
   onImgChange = (uri) => {
-    // console.log(uri);
     this.setState({
       attachments: [uri],
     });
@@ -241,8 +240,6 @@ class CreateEventPage extends Component {
 
   render() {
     const { navigation } = this.props;
-
-    console.log(this.state);
     return (
       <Screen scroll style={styles.container}>
         <Header

@@ -35,7 +35,6 @@ class PollVoters extends PureComponent {
 
   fetchVoters = (p_id) => {
     let poll_id = this.props.poll_details.poll.id;
-    console.log({ poll_id });
     axios
       .get(`/poll/voters/${poll_id}`)
       .then((data) => {
@@ -45,11 +44,8 @@ class PollVoters extends PureComponent {
           loading: false,
           refreshing: false,
         });
-        console.log(data.data);
       })
       .catch((err) => {
-        console.log(err);
-
         this.setState({
           refreshing: false,
         });
@@ -98,8 +94,6 @@ class PollVoters extends PureComponent {
 }
 
 function VoteComponent({ data, poll_fields }) {
-  console.log({ poll_fields });
-
   const returnVotedChoice = (index) => {
     let choice = "Choice " + index;
 

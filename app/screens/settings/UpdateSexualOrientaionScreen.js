@@ -60,9 +60,6 @@ function UpdateSexualOrientationScreen({
   const save_so = () => {
     update_sexual_orientation(l_so, isEnabled);
   };
-
-  console.log({ show_sorientation });
-
   return (
     <Screen>
       <Header

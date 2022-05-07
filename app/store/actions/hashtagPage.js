@@ -16,7 +16,7 @@ export const get_posts = () => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 export const get_pictures = () => (dispatch) => {
@@ -30,7 +30,7 @@ export const get_pictures = () => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 

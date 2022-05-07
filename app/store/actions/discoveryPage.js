@@ -17,6 +17,6 @@ export const load_page_data = () => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };

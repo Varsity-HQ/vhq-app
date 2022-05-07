@@ -32,8 +32,6 @@ function ChatSelector({ data }) {
   const accCol = collection(db, "accounts");
   const userDocRef = doc(accCol, uid);
   const [account, account_loading, err] = useDocumentData(userDocRef);
-  // console.log({ account });
-
   if (account_loading) {
     return (
       <View style={styles.c_s_container}>

@@ -19,7 +19,6 @@ function QcoinsOffersPage({ navigation }) {
     axios
       .get("/get/coins-offers")
       .then((data) => {
-        console.log(data.data);
         setData(data.data);
         setLoading(false);
 
@@ -29,7 +28,7 @@ function QcoinsOffersPage({ navigation }) {
         //   });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, []);
 

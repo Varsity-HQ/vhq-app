@@ -4,8 +4,6 @@ import AccountCard from "./Profile/AccountCard";
 import { v4 } from "uuid";
 
 function AccountsSlider({ data, loading }) {
-  console.log({ data });
-
   if (loading) {
     return (
       <View style={styles.container}>

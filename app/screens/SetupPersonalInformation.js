@@ -60,8 +60,6 @@ function SetupPersonalInformation({
     });
   };
 
-  console.log(image_selected);
-
   return (
     <Screen scroll avoidkeyboard style={styles.container}>
       <Header title="Personal information (1/1)" />

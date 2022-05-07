@@ -58,8 +58,6 @@ function ForgotPassword({
     request_password_reset(email);
   };
 
-  console.log(errors);
-
   return (
     <ImageBackground
       // blurRadius={4}

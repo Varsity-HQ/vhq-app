@@ -94,11 +94,9 @@ class PostPollSection extends Component {
 
     axios
       .get(`/poll/vote/${this.props.poll_id}/${c}`)
-      .then((data) => {
-        // console.log(data.data);
-      })
+      .then((data) => {})
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 
@@ -111,9 +109,6 @@ class PostPollSection extends Component {
         choice_votes = x.vote_count;
       }
     });
-
-    // console.log({ choice_votes });
-
     if (index === this.state.selected) {
       width = (
         ((choice_votes + 1) / (this.state.total_votes + 1)) *
@@ -122,15 +117,10 @@ class PostPollSection extends Component {
     } else {
       width = (choice_votes / (this.state.total_votes + 1)) * 100;
     }
-
-    // console.log({ width });
-
     return width;
   };
 
   render() {
-    // console.log(this.state);
-
     if (
       this.state.selected ||
       this.state.time_left === "Votes closed" ||

@@ -99,11 +99,7 @@ class PostCard extends PureComponent {
 
   render() {
     const data = this.props.data;
-
     const hideFollowBtn = this.props.hideFollowBtn;
-
-    // console.log({ data });
-
     if (!data) return <SkeletonPost />;
 
     if (data.postType === "event_post") {

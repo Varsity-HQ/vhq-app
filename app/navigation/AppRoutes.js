@@ -154,8 +154,6 @@ const AppRoutes = ({ core, setExpoPushToken }) => {
     );
 
     Notifications.addNotificationResponseReceivedListener((notification) => {
-      console.log({ notification });
-
       navigation.navigate("LOGIN");
     });
 

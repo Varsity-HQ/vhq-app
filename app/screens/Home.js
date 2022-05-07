@@ -89,7 +89,6 @@ class Home extends PureComponent {
   }
 
   handleLoadMore() {
-    // console.log("load more");
     this.props.get_home_posts({
       refresh: true,
       init: false,
@@ -143,9 +142,6 @@ class Home extends PureComponent {
       loading_offers,
       offers_error,
     } = this.props;
-    //|
-
-    // console.log({ loading_events });
 
     return (
       <Screen>

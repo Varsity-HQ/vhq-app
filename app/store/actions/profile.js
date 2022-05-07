@@ -26,7 +26,6 @@ export const get_pictures = (load_more) => (dispatch) => {
     get_auth_pictures(load_more, dispatch);
   } else {
     get_user_pictures(load_more, dispatch);
-    // console.log("get posts");
   }
 };
 
@@ -55,14 +54,13 @@ export const get_auth_bookmarks = (load_more) => (dispatch) => {
       post_ids: store.getState().core.accData.bookmarks,
     })
     .then((data) => {
-      console.log(data.data);
       dispatch({
         type: "SET_BOOKMARKS",
         payload: data.data,
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 export const get_auth_pictures = (load_more, dispatch) => {
@@ -85,12 +83,9 @@ export const get_auth_pictures = (load_more, dispatch) => {
 
   if (stop) return;
 
-  console.log("called");
-
   axios
     .get(`/profile/images${lastVisible ? "?plv=" + lastVisible : ""}`)
     .then((data) => {
-      console.log(data.data);
       dispatch({
         type: "SET_PICTURES",
         payload: {
@@ -100,7 +95,7 @@ export const get_auth_pictures = (load_more, dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 export const get_user_pictures = (load_more, dispatch) => {
@@ -132,8 +127,6 @@ export const get_user_pictures = (load_more, dispatch) => {
       }`,
     )
     .then((data) => {
-      console.log(data.data);
-
       const last_visible = data.data.lastVisible;
 
       let currentPosts = store.getState().profile.posts;
@@ -143,7 +136,7 @@ export const get_user_pictures = (load_more, dispatch) => {
         : currentPosts.concat(data.data.user_posts);
 
       // if (data.data.lastVisible !== store.getState().profile.pictures_lv) {
-      console.log("set new data");
+
       dispatch({
         type: "SET_PROFILE_DATA",
         payload: data.data.user_data,
@@ -160,7 +153,7 @@ export const get_user_pictures = (load_more, dispatch) => {
       // }
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       if (load_more) {
         dispatch({
           type: "STOP_LOADING_MORE_PICTURES",
@@ -179,7 +172,6 @@ export const get_posts = (load_more) => (dispatch) => {
     get_auth_posts(load_more, dispatch);
   } else {
     get_user_posts(load_more, dispatch);
-    // console.log("get posts");
   }
 };
 
@@ -203,8 +195,6 @@ export const get_auth_posts = (load_more, dispatch) => {
 
   if (stop) return;
 
-  console.log("called");
-
   axios
     .get(`/profile/posts${lastVisible ? "?plv=" + lastVisible : ""}`)
     .then((data) => {
@@ -220,7 +210,7 @@ export const get_auth_posts = (load_more, dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };
 export const get_user_posts = (load_more, dispatch) => {
@@ -245,15 +235,11 @@ export const get_user_posts = (load_more, dispatch) => {
 
   if (stop) return;
 
-  console.log("start req");
-
   axios
     .get(
       `/user/${username}/posts/get${lastVisible ? "?plv=" + lastVisible : ""}`,
     )
     .then((data) => {
-      console.log(data.data);
-
       const last_visible = data.data.lastVisible;
 
       let currentPosts = store.getState().profile.posts;
@@ -261,8 +247,6 @@ export const get_user_posts = (load_more, dispatch) => {
       let new_posts = !lastVisible
         ? data.data.user_posts
         : currentPosts.concat(data.data.user_posts);
-
-      console.log("before set new data");
 
       if (
         data.data.lastVisible === null &&
@@ -284,7 +268,6 @@ export const get_user_posts = (load_more, dispatch) => {
       }
 
       if (data.data.lastVisible !== store.getState().profile.posts_lv) {
-        console.log("set new data");
         dispatch({
           type: "SET_PROFILE_DATA",
           payload: data.data.user_data,
@@ -301,7 +284,7 @@ export const get_user_posts = (load_more, dispatch) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       if (load_more) {
         dispatch({
           type: "STOP_LOADING_MORE",
@@ -365,15 +348,12 @@ export const get_user_profile = (username) => (dispatch) => {
   let previous_errors = store.getState().profile.errors;
 
   if (set_user !== username || previous_errors.notFound) {
-    // console.log("set loading", { previous_user, username });
     dispatch({
       type: "SET_LOADING_PROFILE",
     });
   }
 
   if (set_user) return;
-
-  console.log({ username });
 
   axios
     .get(`/user/${username}/posts/get`)
@@ -405,6 +385,6 @@ export const get_user_profile = (username) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 };

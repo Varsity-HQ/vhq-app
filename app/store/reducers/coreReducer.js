@@ -184,8 +184,6 @@ const coreReducer = (state = initialData, actions) => {
         user_id: state.accData.userID,
       });
 
-      // console.log({ bookmarks });
-
       return {
         ...state,
         accData: {

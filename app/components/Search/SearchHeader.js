@@ -39,8 +39,6 @@ function SearchHeader({ currentRefinement, refine }) {
     // if (props.route.name !== SEARCH_RESULTS) searchBarFocus();
   };
 
-  // console.log(props);
-
   return (
     <SafeAreaView>
       <TouchableWithoutFeedback onPress={handlePress}>

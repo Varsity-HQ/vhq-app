@@ -89,12 +89,8 @@ class index extends Component {
     return <PostCard data={item} navigation={this.props.navigation} />;
   };
 
-  refreshHandler = () => {
-    console.log("triggered");
-  };
-  loadMoreHandler = () => {
-    console.log("allowLoadMore triggered");
-  };
+  refreshHandler = () => {};
+  loadMoreHandler = () => {};
 
   render() {
     const {

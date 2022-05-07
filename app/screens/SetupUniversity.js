@@ -92,14 +92,12 @@ function SetupUniversity({
         yearOfStudy: yearOfStudy,
       })
       .then((data) => {
-        console.log(data.data);
         set_overlay_state(false);
         set_loading(false);
 
         navigation.navigate("SetupPersonalInformation");
       })
       .catch((err) => {
-        console.log(err);
         set_overlay_state(false);
         set_loading(false);
         setErrors({ error: "We enountered an error, please try again" });

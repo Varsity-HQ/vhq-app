@@ -75,7 +75,6 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
   };
 
   const handle_signup = ({ email, password, confirm_pass }) => {
-    console.log({ email, password });
     set_processing(true);
 
     let newUserData = {
@@ -89,7 +88,6 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
       .post("/signup", newUserData)
       .then((res) => {
         set_token(res.data.token);
-        console.log(res.data);
 
         store.dispatch(get_user(true));
         // set_processing(false);
@@ -98,7 +96,6 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
         set_processing(false);
 
         if (err.response) {
-          console.log(err.response.data);
           let errors = err.response.data;
           set_errors({ ...errors });
 
@@ -189,13 +186,11 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
     axios
       .get(`/checkusername/${username}`)
       .then((data) => {
-        console.log(data.data);
         set_processing(false);
         set_username(username);
         setPage(1);
       })
       .catch((err) => {
-        console.log(err);
         set_processing(false);
 
         if (err.response.data.error === "user-exists")

@@ -23,9 +23,6 @@ function Screen({
   removeInsets = false,
 }) {
   const insets = useSafeAreaInsets();
-
-  // console.log({ insets });
-
   return (
     <View
       style={[

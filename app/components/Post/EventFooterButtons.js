@@ -43,9 +43,6 @@ class EventFooterButtons extends React.PureComponent {
 
   render() {
     const { data } = this.props;
-
-    // console.log({ intrested: this.state.intrested });
-
     return (
       <View style={[styles.row, { paddingHorizontal: 10, marginTop: 0 }]}>
         <View style={styles.width80}>

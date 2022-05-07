@@ -29,8 +29,6 @@ const setPromoNots = async () => {
   schedulePushNotification(messages.bring_back[0], HOUR * 24);
   schedulePushNotification(messages.bring_back[1], HOUR * 48);
   schedulePushNotification(messages.bring_back[2], HOUR * 72);
-
-  console.log("shceuled");
 };
 
 const setPostReminders = async () => {
@@ -50,7 +48,6 @@ const setPostReminders = async () => {
   try {
     const postNotiIds = JSON.stringify(noti_ids);
     await AsyncStorage.setItem("@post_notifications", postNotiIds);
-    console.log("set");
   } catch (e) {
     console.error("failed to save ids");
   }
@@ -65,7 +62,6 @@ const clearPostScheduledNotifications = async () => {
         cancelNotification(x);
       });
       await AsyncStorage.removeItem("@post_notifications");
-      console.log("removed all");
     }
   } catch (e) {}
 };

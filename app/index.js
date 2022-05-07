@@ -143,7 +143,7 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
           setPromoNots();
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
     } else {
       setAuthState(false);
@@ -157,7 +157,7 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
         <AppLoading
           startAsync={restoreToken}
           onFinish={() => setisReady(true)}
-          onError={(e) => console.log(e)}
+          onError={(e) => console.error(e)}
         />
       </>
     );

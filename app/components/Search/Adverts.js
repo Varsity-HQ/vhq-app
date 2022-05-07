@@ -29,8 +29,6 @@ function Adverts({ ads }) {
 }
 
 const Advert = ({ x }) => {
-  console.log(x);
-
   const handleLink = async (url) => {
     const supported = await Linking.canOpenURL(url);
     if (supported) {

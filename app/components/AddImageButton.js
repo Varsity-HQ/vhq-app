@@ -59,7 +59,7 @@ function AddImageButton({
         } else {
         }
       } catch (error) {
-        console.log("Error reading image");
+        console.error("Error reading image");
       }
     } else {
       Alert.alert(

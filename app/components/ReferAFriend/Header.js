@@ -31,7 +31,7 @@ function Header({ account }) {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, []);
 

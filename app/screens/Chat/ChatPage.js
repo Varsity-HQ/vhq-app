@@ -137,14 +137,11 @@ function ChatPage({ account }) {
 
     await getDocs(queryChats)
       .then((data) => {
-        // console.log("got here 71 ?");
-        // console.log("data size", data.size);
         if (data.size === 0) {
           __no_chats = true;
         }
-        // console.log("got here ?");
+
         data.forEach((x) => {
-          // console.log("got here ?");
           x.data().members.forEach((m) => {
             if (m === other_u_uid) {
               return (__chat_id = x.id);
@@ -154,8 +151,6 @@ function ChatPage({ account }) {
         if (!__chat_id) {
           __no_chats = true;
         }
-
-        // console.log("ran");
       })
       .then(() => {
         const docRef = doc(db, "chats", __chat_id);
@@ -163,13 +158,9 @@ function ChatPage({ account }) {
           opened: true,
         });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
 
     if (__no_chats && __chat_id === "") {
-      // console.log("got here 93 ?");
-
       await addDoc(chatsRef, {
         lastMessageSent: "Say hi",
         last_update: new Date().toISOString(),
@@ -179,19 +170,15 @@ function ChatPage({ account }) {
       })
         .then((cdata) => {
           __chat_id = cdata.id;
-          // console.log("ran");
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
     }
 
     if (__chat_id) {
-      // console.log("got here ?");
       set_chat_id(__chat_id);
     }
-
-    console.log(__chat_id, __no_chats);
   };
 
   const onSend = async (messages = []) => {
@@ -232,7 +219,6 @@ function ChatPage({ account }) {
   };
 
   //   const onSend = useCallback(async (messages = []) => {
-  //     console.log({ messages: messages.length });
 
   //     // setMessages((previousMessages) =>
   //     //   GiftedChat.append(previousMessages, messages),
