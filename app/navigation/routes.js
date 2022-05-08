@@ -21,6 +21,9 @@ export const CREATE_SHOW = "CreateShow";
 export const DATING_ENCOUNTERS = "DatingEncouters";
 export const DATING_CONTAINER = "DatingContainer";
 
+//Marketplace Screens
+export const MARKETPLACE_HOME = "MarketplaceHome";
+
 //
 export const CS_CONFIRM_GENDER = "CSConfirmGender";
 export const CS_NAME = "CSName";

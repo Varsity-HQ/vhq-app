@@ -24,6 +24,7 @@ import { set_token, get_user } from "../store/actions/actions";
 import { connect } from "react-redux";
 import store from "../store/store";
 import { LOGIN } from "../navigation/routes";
+import * as WebBrowser from "expo-web-browser";
 
 const u_name_validationSchema = Yup.object().shape({
   username: Yup.string()
@@ -64,6 +65,7 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
   const [processing, set_processing] = useState(false);
   const [errors, set_errors] = useState({});
   const [username, set_username] = useState("");
+  const [result, setResult] = useState(null);
 
   const componentSwitcher = () => {
     switch (page) {
@@ -75,6 +77,7 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
   };
 
   const handle_signup = ({ email, password, confirm_pass }) => {
+    console.log({ email, password });
     set_processing(true);
 
     let newUserData = {
@@ -88,6 +91,7 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
       .post("/signup", newUserData)
       .then((res) => {
         set_token(res.data.token);
+        console.log(res.data);
 
         store.dispatch(get_user(true));
         // set_processing(false);
@@ -96,6 +100,7 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
         set_processing(false);
 
         if (err.response) {
+          console.log(err.response.data);
           let errors = err.response.data;
           set_errors({ ...errors });
 
@@ -106,6 +111,13 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
           }
         }
       });
+  };
+
+  const handleOpenPP = async () => {
+    let result = await WebBrowser.openBrowserAsync(
+      "https://www.privacypolicies.com/live/4b3b5e94-17f9-4d31-9f0b-b71cff0b6512",
+    );
+    setResult(result);
   };
 
   const signupform = () => {
@@ -186,11 +198,13 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
     axios
       .get(`/checkusername/${username}`)
       .then((data) => {
+        console.log(data.data);
         set_processing(false);
         set_username(username);
         setPage(1);
       })
       .catch((err) => {
+        console.log(err);
         set_processing(false);
 
         if (err.response.data.error === "user-exists")
@@ -279,19 +293,44 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
               </TouchableOpacity>
             </View>
 
-            <Text
-              style={[
-                styles.text,
-                {
-                  textAlign: "center",
-                  fontSize: 12,
-                  paddingHorizontal: 30,
-                  color: colors.secondary,
-                },
-              ]}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
             >
-              By clicking the signup, you agree to our terms and conditions
-            </Text>
+              <View>
+                <Text
+                  style={[
+                    styles.text,
+                    {
+                      textAlign: "center",
+                      fontSize: 12,
+                      color: colors.secondary,
+                    },
+                  ]}
+                >
+                  By clicking the signup,
+                </Text>
+              </View>
+              <View>
+                <TouchableOpacity onPress={handleOpenPP}>
+                  <Text
+                    style={[
+                      styles.text,
+                      {
+                        textAlign: "center",
+                        fontSize: 12,
+                        color: colors.secondary,
+                        marginLeft: 5,
+                      },
+                    ]}
+                  >
+                    you agree to our terms and conditions
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
         </View>
       </Screen>

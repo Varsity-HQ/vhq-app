@@ -54,6 +54,7 @@
     "expo-status-bar": "~1.2.0",
     "expo-system-ui": "~1.1.0",
     "expo-task-manager": "~10.1.0",
+    "expo-web-browser": "~10.1.0",
     "firebase": "^9.6.1",
     "formik": "^2.2.9",
     "he": "^1.2.0",

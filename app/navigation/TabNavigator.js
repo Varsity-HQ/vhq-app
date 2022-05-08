@@ -16,7 +16,9 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import db from "../util/fb_admin";
 import { collection, doc } from "firebase/firestore";
 import { connect } from "react-redux";
+import MarketplaceNavigator from "./MarketplaceNavigator";
 import MarketplaceComingSoon from "../screens/MarketplaceComingSoon";
+
 const Tab = createBottomTabNavigator();
 
 const TabBar = (props) => {
@@ -130,7 +132,8 @@ const AppNavigator = ({ user_id }) => {
         }}
         name="Marketplace"
         // component={FeedNavigator}
-        component={MarketplaceComingSoon}
+        // component={MarketplaceComingSoon}
+        component={MarketplaceNavigator}
       />
       <Tab.Screen
         options={{
