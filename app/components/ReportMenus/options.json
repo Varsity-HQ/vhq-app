@@ -1,0 +1,42 @@
+{
+  "post_options": [
+    {
+      "title": "I'm just not interested in this post",
+      "sub_options": null
+    },
+    {
+      "title": "It's a suspicious post or spam",
+      "sub_options": null
+    },
+    {
+      "title": "It's abusive or harmful",
+      "sub_options": null
+    },
+    {
+      "title": "Contains actions of bullying or harrassment",
+      "sub_options_heading": {
+        "heading": "Who is being bullied or harrassed",
+        "subHeading": "Your report will remain anonymous"
+      },
+      "sub_options": [
+        {
+          "title": "Me"
+        },
+        {
+          "title": "Someone i know"
+        },
+        {
+          "title": "Someone else"
+        }
+      ]
+    },
+    {
+      "title": "It expresses intentions of self-harm or suicide",
+      "sub_options": null
+    },
+    {
+      "title": "Something else",
+      "sub_options": "text"
+    }
+  ]
+}
