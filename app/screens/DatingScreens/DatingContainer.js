@@ -6,6 +6,7 @@ import Text from "../../components/AppText";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import Header from "../../components/Dating/Header";
+import DatingCard from "../../components/Dating/DatingCard";
 
 const tabs = [
   {
@@ -23,7 +24,7 @@ class DatingContainer extends React.Component {
     activeTabIndex: 1,
     mockState: {
       loading_posts: false,
-      posts: [1, 3],
+      posts: [1, 3, 2, 4, 6],
       loading_more_posts: false,
       loading_events: false,
       events: [3],
@@ -39,11 +40,7 @@ class DatingContainer extends React.Component {
 
   listRenderingHandler = ({ item }) => {
     if (this.state.activeTabIndex === 1) {
-      return (
-        <View>
-          <Text>tab 1 card {item}</Text>
-        </View>
-      );
+      return <DatingCard />;
     }
     if (this.state.activeTabIndex === 2) {
       return (
@@ -66,6 +63,7 @@ class DatingContainer extends React.Component {
           activeTabIndex={this.state.activeTabIndex}
           // setTabIndex={this.setTabIndex}
           //   tabOptions={tabs}
+          numColumns={2}
           removeTabBorder={true}
           TopHeader={
             <Header

@@ -47,6 +47,7 @@ class TabbedScreenComponent extends React.PureComponent {
       tabCounter,
       specifyPageHeader,
       removeTabBorder,
+      numColumns = 1,
     } = this.props;
     return (
       <FlatList
@@ -71,6 +72,7 @@ class TabbedScreenComponent extends React.PureComponent {
             ? []
             : tabStates[activeTabIndex - 1].data
         }
+        numColumns={numColumns}
         renderItem={listRenderingHandler}
         ListFooterComponent={
           <Footer

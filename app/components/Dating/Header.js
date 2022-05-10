@@ -103,7 +103,7 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex }) {
           <Text style={styles.university}>UJ</Text>
         </View>
       </View>
-      <SwipeContainer />
+      {/* <SwipeContainer /> */}
     </View>
   );
 }

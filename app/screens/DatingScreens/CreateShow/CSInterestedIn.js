@@ -38,7 +38,7 @@ function CSInterestedIn({ navigation }) {
       <View style={[{ marginTop: "0%" }, styles.container]}>
         <View>
           <Text style={[styles.text_center, styles.header]}>
-            Where do your interests lie
+            Who should we show
           </Text>
           <Text style={[styles.text_center, styles.subText]}>
             You can change this setting later
