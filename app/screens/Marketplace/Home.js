@@ -5,7 +5,7 @@ import Text from "../../components/AppText";
 import HomeHeader from "../../components/Marketplace/HomeHeader";
 import CategoryMenu from "../../components/Marketplace/CategoryMenu";
 import TopServices from "../../components/Marketplace/TopServices";
-import AdSpace from "../../components/AdComponents/FullWidth";
+import PageInviter from "../../components/PageInviter";
 import TopJobs from "../../components/Marketplace/TopJobs";
 
 function Home(props) {
@@ -15,6 +15,7 @@ function Home(props) {
       <CategoryMenu />
       <TopServices />
       {/* <AdSpace /> */}
+      <PageInviter page="marketplace-home" />
       <TopServices />
       <TopJobs />
     </Screen>

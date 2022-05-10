@@ -1,61 +1,70 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import colors from "../../config/colors";
 import Image from "../Image";
 import Text from "../AppText";
 import { FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
+import { MARKETPLACE_ITEM_PAGE } from "../../navigation/routes";
 
 function ItemCard({ props }) {
+  const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <View>
-        <Image
-          uri="https://firebasestorage.googleapis.com/v0/b/varsityhq-bd225.appspot.com/o/vhq_img202113350535.jpeg?alt=media"
-          style={styles.image}
-        />
-      </View>
-      <View
-        style={{
-          padding: 10,
-        }}
-      >
-        <Text
-          style={[
-            styles.boldCapital,
-            {
-              fontSize: 14,
-              marginBottom: 5,
-              fontWeight: "700",
-            },
-          ]}
-        >
-          Gadgets
-        </Text>
-        <Text>Colgone for less come buy</Text>
-      </View>
-      <View style={styles.footer_section}>
-        <View style={[styles.row]}>
-          <View
-            style={[styles.row, { paddingHorizontal: 5, paddingVertical: 2 }]}
-          >
-            <FontAwesome name="eye" size={20} color={colors.primary} />
-            <Text>1</Text>
-          </View>
-          <LinearGradient
-            style={styles.gradient}
-            colors={["#9e7b9b", "#1160af"]}
-            start={[1, 0]}
-            end={[0, 1]}
+    <TouchableWithoutFeedback
+      onPress={() => {
+        navigation.navigate(MARKETPLACE_ITEM_PAGE);
+      }}
+    >
+      <View style={styles.container}>
+        <View>
+          <Image
+            uri="https://firebasestorage.googleapis.com/v0/b/varsityhq-bd225.appspot.com/o/vhq_img202113350535.jpeg?alt=media"
+            style={styles.image}
           />
         </View>
-        <View style={styles.row}>
-          <Text style={styles.boldCapital}>ZAR</Text>
-          <Text> </Text>
-          <Text style={styles.price}>300</Text>
+        <View
+          style={{
+            padding: 10,
+          }}
+        >
+          <Text
+            style={[
+              styles.boldCapital,
+              {
+                fontSize: 14,
+                marginBottom: 5,
+                fontWeight: "700",
+              },
+            ]}
+          >
+            Gadgets
+          </Text>
+          <Text>Colgone for less come buy</Text>
+        </View>
+        <View style={styles.footer_section}>
+          <View style={[styles.row]}>
+            <View
+              style={[styles.row, { paddingHorizontal: 5, paddingVertical: 2 }]}
+            >
+              <FontAwesome name="eye" size={20} color={colors.primary} />
+              <Text>1</Text>
+            </View>
+            <LinearGradient
+              style={styles.gradient}
+              colors={["#9e7b9b", "#1160af"]}
+              start={[1, 0]}
+              end={[0, 1]}
+            />
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.boldCapital}>ZAR</Text>
+            <Text> </Text>
+            <Text style={styles.price}>300</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 

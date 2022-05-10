@@ -24,6 +24,7 @@ export const DATING_CONTAINER = "DatingContainer";
 //Marketplace Screens
 export const MARKETPLACE_HOME = "MarketplaceHome";
 export const MARKETPLACE_CAT_PAGE = "MarketplaceCatPage";
+export const MARKETPLACE_ITEM_PAGE = "MarketplaceItemPage";
 
 //
 export const CS_CONFIRM_GENDER = "CSConfirmGender";
