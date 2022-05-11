@@ -26,6 +26,7 @@ import {
 import Image from "./Image";
 import CommentMenu from "./Post/CommentMenu";
 import { check_comment_liked } from "../util/postUtil";
+import ReportMenu from "./ReportMenus/ReportMenu";
 dayjs.extend(relativeTime);
 
 const mapDispatchToProps = (dispatch) => {
@@ -54,6 +55,10 @@ function PostPageComment({
     React.useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
   const [commentLiked, setCommentLiked] = useState(false);
+
+  const [isReportModalVisible, setIsReportModalVisible] = React.useState(false);
+  const handleReportModal = () =>
+    setIsReportModalVisible(() => !isReportModalVisible);
 
   useEffect(() => {
     if (!data) return;
@@ -101,10 +106,18 @@ function PostPageComment({
   const handleeCommentLongPress = (data) => {
     handleCommentModal(data);
   };
+
   return (
     // <Swipeable ref={updateRef} renderRightActions={renderRightActions}>
 
     <>
+      <ReportMenu
+        key={"report-modal"}
+        type="comment"
+        isReportModalVisible={isReportModalVisible}
+        handleReportModal={handleReportModal}
+      />
+
       <TouchableWithoutFeedback
         onLongPress={() => {
           handleeCommentLongPress(data);
@@ -214,6 +227,16 @@ function PostPageComment({
                         data.comment_comments !== "0"
                           ? `${data.comment_comments}`
                           : ""}
+                      </AppText>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleReportModal}>
+                      <AppText
+                        style={{
+                          // margin: 15,
+                          color: colors.secondary,
+                        }}
+                      >
+                        Report
                       </AppText>
                     </TouchableOpacity>
                   </View>

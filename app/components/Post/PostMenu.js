@@ -23,7 +23,7 @@ import {
 } from "../../util/toast_messages";
 import { delete_post } from "../../store/actions/actions";
 import { save_post_user } from "../../store/actions/profile";
-import ReportPostMenu from "../ReportMenus/ReportPostMenu";
+import ReportPostMenu from "../ReportMenus/ReportMenu";
 
 const mapStateToProps = (state) => {
   return {
@@ -212,6 +212,7 @@ function PostMenu({
 
       <ReportPostMenu
         key={"report-modal"}
+        type="post"
         isReportModalVisible={isReportModalVisible}
         handleReportModal={handleReportModal}
       />

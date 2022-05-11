@@ -3,7 +3,7 @@ import {
   View,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
+  TouchableOpacity as TouchableWithoutFeedback,
   Alert,
 } from "react-native";
 //
@@ -18,6 +18,7 @@ import Toast from "react-native-toast-message";
 import { COPY_PROFILE_URL } from "../../util/toast_messages";
 import { useNavigation } from "@react-navigation/native";
 import { QCOINS_OFFERS, REFER_A_FRIEND } from "../../navigation/routes";
+import ReportMenu from "../ReportMenus/ReportMenu";
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -39,6 +40,11 @@ const iconSize = 35;
 function ProfileMenu({ username, auth_username, logOutUser }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
+
+  const [isReportModalVisible, setIsReportModalVisible] = React.useState(false);
+  const handleReportModal = () =>
+    setIsReportModalVisible(() => !isReportModalVisible);
+
   const navigation = useNavigation();
   const options = [
     // {
@@ -117,12 +123,29 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
       ),
     },
     {
-      disabled: true,
       title: "Report",
+      onPress: () => {
+        setIsModalVisible(false);
+        setTimeout(() => setIsReportModalVisible(true), 400);
+      },
       icon: (
         <Ionicons
           color={colors.secondary}
           name="flag-outline"
+          size={iconSize}
+        />
+      ),
+    },
+    {
+      title: "Block account",
+      onPress: () => {
+        setIsModalVisible(false);
+        setTimeout(() => setIsReportModalVisible(true), 400);
+      },
+      icon: (
+        <MaterialCommunityIcons
+          color={colors.secondary}
+          name="block-helper"
           size={iconSize}
         />
       ),
@@ -171,6 +194,13 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
         />
       </TouchableWithoutFeedback>
 
+      <ReportMenu
+        key={"report-modal"}
+        type="profile"
+        isReportModalVisible={isReportModalVisible}
+        handleReportModal={handleReportModal}
+      />
+
       <Modal
         useNativeDriver={true}
         // animationIn={"fadeIn"}
@@ -192,7 +222,7 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
               <>
                 {options_2.map((x, index) => (
                   <TouchableWithoutFeedback
-                    style={{ paddingVertical: 10 }}
+                    // style={{ paddingVertical: 10 }}
                     key={index}
                     onPress={x.onPress}
                   >
@@ -212,7 +242,7 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
               <>
                 {options.map((x, index) => (
                   <TouchableWithoutFeedback
-                    style={{ paddingVertical: 10 }}
+                    // style={{ paddingVertical: 10 }}
                     key={index}
                     onPress={x.onPress}
                   >

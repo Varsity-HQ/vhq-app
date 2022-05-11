@@ -16,14 +16,14 @@ function DatingCard(props) {
 const styles = StyleSheet.create({
   image: {
     width: "100%",
-    height: width / 2,
-    borderRadius: 10,
+    height: width / 3,
+    borderRadius: 1000,
     // aspectRatio: 9 / 3,
   },
   container: {
-    width: width / 2,
+    width: width / 3,
     padding: 6,
-    borderRadius: 10,
+    borderRadius: 100,
     borderColor: colors.primary,
     overflow: "hidden",
   },

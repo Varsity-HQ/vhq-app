@@ -1,4 +1,40 @@
 {
+  "trend_options": [
+    {
+      "title": "Not interested in this",
+      "sub_options": null
+    },
+    {
+      "title": "Harmful or spammy",
+      "sub_options": null
+    }
+  ],
+  "account_options": [
+    {
+      "title": "Pretending to be someone else",
+      "sub_options": null
+    },
+    {
+      "title": "Fake account",
+      "sub_options": null
+    },
+    {
+      "title": "Fake name",
+      "sub_options": null
+    },
+    {
+      "title": "Posting inappropriate things",
+      "sub_options": null
+    },
+    {
+      "title": "Harrassment or bullying",
+      "sub_options": null
+    },
+    {
+      "title": "Inproper name",
+      "sub_options": null
+    }
+  ],
   "post_options": [
     {
       "title": "I'm just not interested in this post",
@@ -16,7 +52,7 @@
       "title": "Contains actions of bullying or harrassment",
       "sub_options_heading": {
         "heading": "Who is being bullied or harrassed",
-        "subHeading": "Your report will remain anonymous"
+        "subHeading": "Choose an option about who is being mentioned in this post to help us understand the issue"
       },
       "sub_options": [
         {
@@ -36,7 +72,47 @@
     },
     {
       "title": "Something else",
-      "sub_options": "text"
+      "sub_options": null
+    }
+  ],
+  "comment_options": [
+    {
+      "title": "I just don't like this comment",
+      "sub_options": null
+    },
+    {
+      "title": "It's a suspicious comment or spam",
+      "sub_options": null
+    },
+    {
+      "title": "It's abusive or harmful",
+      "sub_options": null
+    },
+    {
+      "title": "Contains actions of bullying or harrassment",
+      "sub_options_heading": {
+        "heading": "Who is being bullied or harrassed",
+        "subHeading": "Choose an option about who is being mentioned in this post to help us understand the issue"
+      },
+      "sub_options": [
+        {
+          "title": "Me"
+        },
+        {
+          "title": "Someone i know"
+        },
+        {
+          "title": "Someone else"
+        }
+      ]
+    },
+    {
+      "title": "It expresses intentions of self-harm or suicide",
+      "sub_options": null
+    },
+    {
+      "title": "Something else",
+      "sub_options": null
     }
   ]
 }

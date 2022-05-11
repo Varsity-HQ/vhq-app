@@ -63,7 +63,7 @@ class DatingContainer extends React.Component {
           activeTabIndex={this.state.activeTabIndex}
           // setTabIndex={this.setTabIndex}
           //   tabOptions={tabs}
-          numColumns={2}
+          numColumns={3}
           removeTabBorder={true}
           TopHeader={
             <Header

@@ -22,6 +22,7 @@ import {
   COPY_HASHTAG_URL,
 } from "../../util/toast_messages";
 import { delete_post } from "../../store/actions/actions";
+import ReportMenu from "../ReportMenus/ReportMenu";
 
 const mapStateToProps = (state) => {
   return {
@@ -47,6 +48,11 @@ function TrendMenu({
 }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
+
+  const [isReportModalVisible, setIsReportModalVisible] = React.useState(false);
+  const handleReportModal = () =>
+    setIsReportModalVisible(() => !isReportModalVisible);
+
   const navigation = useNavigation();
 
   if (!data) return null;
@@ -99,7 +105,10 @@ function TrendMenu({
     },
     {
       title: "Report",
-      hide: true,
+      onPress: () => {
+        setIsModalVisible(false);
+        setTimeout(() => setIsReportModalVisible(true), 400);
+      },
       icon: (
         <Ionicons
           color={colors.secondary}
@@ -120,6 +129,13 @@ function TrendMenu({
           size={30}
         />
       </TouchableOpacity>
+
+      <ReportMenu
+        key={"report-modal"}
+        type="trend"
+        isReportModalVisible={isReportModalVisible}
+        handleReportModal={handleReportModal}
+      />
 
       <Modal
         // animationIn={"fadeIn"}

@@ -24,6 +24,7 @@ import {
 import { delete_post } from "../../store/actions/actions";
 
 import { delete_comment } from "../../store/actions/postPage";
+import ReportMenu from "../ReportMenus/ReportMenu";
 
 const mapStateToProps = (state) => {
   return {
@@ -40,7 +41,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const iconSize = 32;
 
-function TrendMenu({
+function CommentMenu({
   data,
   auth_acc_id,
   delete_post,
@@ -52,6 +53,10 @@ function TrendMenu({
   isCommentModalVisible,
   handleCommentModal,
 }) {
+  const [isReportModalVisible, setIsReportModalVisible] = React.useState(false);
+  const handleReportModal = () =>
+    setIsReportModalVisible(() => !isReportModalVisible);
+
   const navigation = useNavigation();
 
   if (!data) return null;
@@ -95,6 +100,10 @@ function TrendMenu({
     {
       title: "Report",
       hide: true,
+      onPress: () => {
+        handleCommentModal();
+        setTimeout(() => setIsReportModalVisible(true), 400);
+      },
       icon: (
         <Ionicons
           color={colors.secondary}
@@ -196,4 +205,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TrendMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(CommentMenu);
