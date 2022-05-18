@@ -31,6 +31,7 @@ import Text from "./AppText";
 import { FontAwesome, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import EventFooterButtons from "./Post/EventFooterButtons";
 import { RFValue } from "react-native-responsive-fontsize";
+import ReportedTemplate from "./ReportedTemplate";
 
 dayjs.extend(Localize);
 
@@ -53,11 +54,18 @@ class PostCard extends PureComponent {
   state = {
     show_comment_bar: false,
     total_votes: 0,
+    reported: false,
   };
 
   update_total_votes = (t_votes) => {
     this.setState({
       total_votes: t_votes,
+    });
+  };
+
+  reportedToggle = () => {
+    this.setState({
+      reported: true,
     });
   };
 
@@ -98,6 +106,10 @@ class PostCard extends PureComponent {
   };
 
   render() {
+    if (this.state.reported) {
+      return <ReportedTemplate type="post" />;
+    }
+
     const data = this.props.data;
     const hideFollowBtn = this.props.hideFollowBtn;
     if (!data) return <SkeletonPost />;
@@ -217,7 +229,7 @@ class PostCard extends PureComponent {
               </View>
             </TouchableWithoutFeedback>
             <View style={{ marginRight: 10 }}>
-              <PostMenu data={data} />
+              <PostMenu reportedToggle={this.reportedToggle} data={data} />
             </View>
           </View>
 
