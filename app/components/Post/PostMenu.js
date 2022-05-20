@@ -214,6 +214,7 @@ function PostMenu({
       <ReportPostMenu
         key={"report-modal"}
         type="post"
+        node_id={data.id}
         isReportModalVisible={isReportModalVisible}
         handleReportModal={handleReportModal}
         onReportSubmitted={onReportSubmitted ? onReportSubmitted : null}

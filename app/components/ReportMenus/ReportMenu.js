@@ -8,6 +8,8 @@ import Text from "../AppText";
 import report_options from "./options.json";
 import { submit_report } from "../../store/actions/actions";
 import { connect } from "react-redux";
+import Toast from "react-native-toast-message";
+import axios from "axios";
 
 const mapStateToProps = (state) => {
   return {};
@@ -25,6 +27,7 @@ function ReportMenu({
   type = "post",
   submit_report,
   onReportSubmitted,
+  node_id,
 }) {
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
@@ -38,6 +41,7 @@ function ReportMenu({
   const [page, setPage] = useState(0);
 
   const [submited, setSubmitted] = useState(false);
+  const [reporting, setReporting] = useState(false);
 
   useEffect(() => {
     initializeOptions();
@@ -119,11 +123,33 @@ function ReportMenu({
   const handle_submit_report = () => {
     // submit_report();
 
-    if (onReportSubmitted) return onReportSubmitted();
-  };
+    setReporting(true);
+    const reported_obj = {
+      node_id: node_id,
+      contentType: type,
+      reason: selectedOption,
+      sub_reason: selectedSubOption,
+    };
 
-  console.log({ selectedOption });
-  console.log({ selectedSubOption });
+    axios
+      .post("/report", reported_obj)
+      .then(() => {
+        console.log("reported");
+        if (onReportSubmitted) return onReportSubmitted();
+        setReporting(false);
+        Toast.show({
+          type: "general",
+          autoHide: true,
+          text1: undefined,
+          text2: `Your report has been submitted`,
+        });
+        handleReportModal();
+      })
+      .catch((err) => {
+        console.log(err);
+        setReporting(false);
+      });
+  };
 
   const renderComponent = () => {
     if (submited) return submitedPage();
@@ -274,7 +300,7 @@ function ReportMenu({
           style={{
             borderWidth: 0,
           }}
-          title="Submit report"
+          title={reporting ? "Submitting report.." : "Submit report"}
           onPress={handle_submit_report}
         />
       </>
@@ -402,7 +428,6 @@ function ReportMenu({
           }}
         >
           <Text style={styles.header_text}>Report {reportingFor}</Text>
-
           <View
             style={{
               borderBottomColor: colors.secondary,
