@@ -50,6 +50,7 @@ function PostMenu({
   save_post_user,
   height,
   event,
+  onReportSubmitted,
 }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
@@ -215,6 +216,7 @@ function PostMenu({
         type="post"
         isReportModalVisible={isReportModalVisible}
         handleReportModal={handleReportModal}
+        onReportSubmitted={onReportSubmitted ? onReportSubmitted : null}
       />
 
       <Modal

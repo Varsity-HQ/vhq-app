@@ -10,6 +10,13 @@ import {
 } from "../../util/toast_messages";
 import { clearPostScheduledNotifications } from "../../notifications";
 
+export const submit_report = () => (dispatch) => {
+  dispatch({
+    type: "SET_REPORTING",
+    payload: true,
+  });
+};
+
 export const get_home_offers = () => (dispatch) => {
   axios
     .get("/get/offers")

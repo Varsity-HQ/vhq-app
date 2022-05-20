@@ -229,7 +229,7 @@ class PostCard extends PureComponent {
               </View>
             </TouchableWithoutFeedback>
             <View style={{ marginRight: 10 }}>
-              <PostMenu reportedToggle={this.reportedToggle} data={data} />
+              <PostMenu onReportSubmitted={this.reportedToggle} data={data} />
             </View>
           </View>
 
