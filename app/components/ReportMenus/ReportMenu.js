@@ -135,7 +135,6 @@ function ReportMenu({
       .post("/report", reported_obj)
       .then(() => {
         console.log("reported");
-        if (onReportSubmitted) return onReportSubmitted();
         setReporting(false);
         Toast.show({
           type: "general",
@@ -143,6 +142,7 @@ function ReportMenu({
           text1: undefined,
           text2: `Your report has been submitted`,
         });
+        if (onReportSubmitted) return onReportSubmitted();
         handleReportModal();
       })
       .catch((err) => {

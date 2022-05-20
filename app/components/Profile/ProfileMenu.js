@@ -37,7 +37,13 @@ const iconSize = 35;
 //|
 //|
 
-function ProfileMenu({ username, auth_username, logOutUser }) {
+function ProfileMenu({
+  username,
+  auth_username,
+  logOutUser,
+  data,
+  onReportSubmitted,
+}) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
 
@@ -197,6 +203,8 @@ function ProfileMenu({ username, auth_username, logOutUser }) {
       <ReportMenu
         key={"report-modal"}
         type="profile"
+        node_id={data.userID}
+        onReportSubmitted={onReportSubmitted}
         isReportModalVisible={isReportModalVisible}
         handleReportModal={handleReportModal}
       />

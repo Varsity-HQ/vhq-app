@@ -79,6 +79,7 @@ function ProfileHeader({
   follow_account,
   unfollow_account,
   set_following,
+  onReportSubmitted = { onReportSubmitted },
 }) {
   const navigation = useNavigation();
 
@@ -108,7 +109,11 @@ function ProfileHeader({
           ) : null}
 
           <View>
-            <ProfileMenu username={username} />
+            <ProfileMenu
+              onReportSubmitted={onReportSubmitted}
+              data={user}
+              username={username}
+            />
           </View>
         </View>
       </View>

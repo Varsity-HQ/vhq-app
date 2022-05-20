@@ -48,6 +48,13 @@ const mapDispatchToProps = (dispatch) => {
 class Profile extends PureComponent {
   state = {
     tabActive: 1,
+    reported: false,
+  };
+
+  onReportSubmitted = () => {
+    this.setState({
+      reported: true,
+    });
   };
 
   componentDidMount = () => {
@@ -126,6 +133,10 @@ class Profile extends PureComponent {
       );
     }
 
+    if (this.state.reported) {
+      return <ProfileSkeleton notFound={false} reported username={username} />;
+    }
+
     const {
       posts,
       pictures,
@@ -161,6 +172,7 @@ class Profile extends PureComponent {
           }
           ListHeaderComponent={
             <ProfileHeader
+              onReportSubmitted={this.onReportSubmitted}
               handleTabChange={this.handleTabChange}
               tabActive={this.state.tabActive}
               username={username}
