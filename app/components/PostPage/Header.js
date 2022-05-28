@@ -231,7 +231,7 @@ function HeaderPostContent({
               }}
             >
               <Text style={styles.post_meta}>
-                {dayjs(post.created_at).format("LLL")} ~ by{" "}
+                {dayjs(post.created_at).format("LT")} ~ by{" "}
                 <Text style={[{ color: colors.secondary }, styles.post_meta]}>
                   VarsityHQ &nbsp;{post.application}
                 </Text>

@@ -299,7 +299,7 @@ class PostCard extends PureComponent {
               <Text style={{ fontSize: RFValue(11), color: colors.secondary }}>
                 {parseInt(data.likes_count) + parseInt(data.comments_count)}{" "}
                 interactions&nbsp;•&nbsp;
-                {dayjs(data.created_at).fromNow()}
+                {dayjs(data.created_at).format("LT")}
               </Text>
             )}
 
