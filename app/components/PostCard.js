@@ -33,6 +33,7 @@ import EventFooterButtons from "./Post/EventFooterButtons";
 import { RFValue } from "react-native-responsive-fontsize";
 import ReportedTemplate from "./ReportedTemplate";
 import { check_post_reported } from "../util/postUtil";
+import check_user_blocked from "../util/check_user_blocked";
 
 dayjs.extend(Localize);
 
@@ -56,6 +57,7 @@ class PostCard extends PureComponent {
     show_comment_bar: false,
     total_votes: 0,
     reported: false,
+    blockedAcc: false,
   };
 
   update_total_votes = (t_votes) => {
@@ -79,6 +81,7 @@ class PostCard extends PureComponent {
     }
     this.setState({
       reported: check_post_reported(this.props.data.id),
+      blockedAcc: check_user_blocked(this.props.data.username),
     });
   };
 
@@ -112,6 +115,11 @@ class PostCard extends PureComponent {
 
   render() {
     ////|
+
+    if (this.state.blockedAcc) {
+      return null;
+    }
+
     if (this.state.reported) {
       return <ReportedTemplate type="post" />;
     }
