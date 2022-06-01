@@ -132,8 +132,8 @@ const AppNavigator = ({ user_id }) => {
         }}
         name="Marketplace"
         // component={FeedNavigator}
-        // component={MarketplaceComingSoon}
-        component={MarketplaceNavigator}
+        component={MarketplaceComingSoon}
+        // component={MarketplaceNavigator}
       />
       <Tab.Screen
         options={{

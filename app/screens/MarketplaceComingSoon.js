@@ -9,7 +9,7 @@ function MarketplaceComingSoon(props) {
       <View>
         <Text style={[styles.center, styles.bold]}>Coming Soon</Text>
         <Text style={[styles.center]}>
-          We are currently builing this page but we will notify you once we
+          We are currently building this page but we will notify you once we
           launch it
         </Text>
         {/* <Text style={[styles.center]}>VarsityHQ @ 2022</Text> */}

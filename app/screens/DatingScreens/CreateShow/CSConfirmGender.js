@@ -25,7 +25,7 @@ function CSConfirmGender({ navigation }) {
 
   const handleChange = (i) => {
     setActive(i);
-    navigation.navigate(CS_NAME);
+    // navigation.navigate(CS_NAME);
   };
 
   return (
@@ -38,7 +38,7 @@ function CSConfirmGender({ navigation }) {
           </Text>
           <Text style={[styles.text_center, styles.subText]}>
             {/* Before we start, how do you identify ? */}
-            We are currently builing this page but we will notify you once we
+            We are currently building this page but we will notify you once we
             launch it
           </Text>
         </View>
