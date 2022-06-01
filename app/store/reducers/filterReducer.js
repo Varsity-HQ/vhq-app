@@ -8,6 +8,11 @@ const filterReducer = (state = initialState, actions) => {
   let blocked_ids = [];
   let new_blocked = [];
   switch (actions.type) {
+    case "SET_BLOCKED_USERS":
+      return {
+        ...state,
+        blocked_profile_ids: actions.payload,
+      };
     case "SET_REPORTED_IDS":
       return {
         ...state,

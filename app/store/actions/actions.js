@@ -1129,6 +1129,11 @@ export const login_user = (email, password) => (dispatch) => {
           });
 
           dispatch({
+            type: "SET_BLOCKED_USERS",
+            payload: user_data.data?.blocked_users,
+          });
+
+          dispatch({
             type: "SET_AUTH_STATE",
             payload: true,
           });

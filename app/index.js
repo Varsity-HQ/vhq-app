@@ -36,6 +36,7 @@ import { COPY_POST_URL } from "./util/toast_messages";
 
 import { navigationRef } from "./navigation/rootNavigation";
 import { setPromoNots } from "./notifications";
+import store from "./store/store";
 
 if (!getApps().length) {
   initializeApp(firebaseConfig);
@@ -139,6 +140,10 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
         .get("/get/account")
         .then((data) => {
           set_user(data.data);
+          store.dispatch({
+            type: "SET_BLOCKED_USERS",
+            payload: data.data?.blocked_users,
+          });
           setAuthState(true);
           setPromoNots();
         })
