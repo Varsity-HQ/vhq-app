@@ -4,6 +4,30 @@ import colors from "../config/colors";
 import Text from "./AppText";
 
 function ReportedTemplate({ type = "" }) {
+  if (type === "comment") {
+    return (
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: colors.dark,
+            borderColor: colors.secondary_2,
+            borderWidth: 1,
+            marginBottom: 30,
+          },
+        ]}
+      >
+        <Text
+          style={{
+            textAlign: "center",
+            color: colors.secondary_2,
+          }}
+        >
+          Comment not available
+        </Text>
+      </View>
+    );
+  }
   if (type === "post") {
     return (
       <View style={styles.container}>

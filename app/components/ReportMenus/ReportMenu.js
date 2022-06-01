@@ -140,6 +140,7 @@ function ReportMenu({
       setSubOptions([]);
       setText("");
       setReadToSubmit(false);
+      setReporting(false);
       set_sub_options_heading(null);
     }, 100);
   };
@@ -157,6 +158,12 @@ function ReportMenu({
 
     console.log({ reported_obj });
 
+    setTimeout(() => {
+      if (onReportSubmitted) return onReportSubmitted();
+      handleBeforeModalStateChange();
+      handleReportModal();
+    }, 300);
+
     report_content_id(node_id);
 
     axios
@@ -171,6 +178,7 @@ function ReportMenu({
           text2: `Your report has been submitted`,
         });
         if (onReportSubmitted) return onReportSubmitted();
+        handleBeforeModalStateChange();
         handleReportModal();
       })
       .catch((err) => {

@@ -25,8 +25,10 @@ import {
 } from "../store/actions/postPage";
 import Image from "./Image";
 import CommentMenu from "./Post/CommentMenu";
-import { check_comment_liked } from "../util/postUtil";
+import { check_comment_liked, check_post_reported } from "../util/postUtil";
 import ReportMenu from "./ReportMenus/ReportMenu";
+import SkeletonComponent from "./Skeletons/SkeletonComponent";
+import ReportedTemplate from "./ReportedTemplate";
 dayjs.extend(relativeTime);
 
 const mapDispatchToProps = (dispatch) => {
@@ -51,6 +53,8 @@ function PostPageComment({
 }) {
   const updateRef = useRef();
 
+  const [commentReported, setCommentReported] = useState(false);
+
   const [isCommentModalVisible, setIsCommentModalVisible] =
     React.useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
@@ -63,6 +67,7 @@ function PostPageComment({
   useEffect(() => {
     if (!data) return;
     setCommentLiked(check_comment_liked(data.comment_id));
+    setCommentReported(check_post_reported(data.comment_id));
   }, []);
 
   const handleCommentModal = (data) => {
@@ -107,6 +112,10 @@ function PostPageComment({
     handleCommentModal(data);
   };
 
+  if (commentReported) {
+    return <ReportedTemplate type="comment" />;
+  }
+
   return (
     // <Swipeable ref={updateRef} renderRightActions={renderRightActions}>
 
@@ -114,6 +123,8 @@ function PostPageComment({
       <ReportMenu
         key={"report-modal"}
         type="comment"
+        node_id={data.comment_id}
+        onReportSubmitted={() => setCommentReported(true)}
         isReportModalVisible={isReportModalVisible}
         handleReportModal={handleReportModal}
       />
