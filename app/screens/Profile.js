@@ -22,6 +22,7 @@ import ProfileSkeleton from "../components/Skeletons/ProfileSkeleton";
 import PostLoader from "../components/Skeletons/Post";
 import ProfileHeader from "../components/Profile/ProfileHeader";
 import PostCard from "../components/PostCard";
+import { check_post_reported } from "../util/postUtil";
 
 const mapStateToProps = (state) => {
   return {
@@ -60,6 +61,14 @@ class Profile extends PureComponent {
   componentDidMount = () => {
     this.props.get_posts();
     this.props.get_user_profile(this.props.route.params.username);
+  };
+
+  componentDidUpdate = (pP, pS) => {
+    if (pP.profile_page.user?.userID) {
+      this.setState({
+        reported: check_post_reported(pP.profile_page.user?.userID),
+      });
+    }
   };
 
   componentWillUnmount = () => {

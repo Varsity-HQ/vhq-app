@@ -153,9 +153,9 @@ function ReportMenu({
       sub_reason: selectedSubOption,
     };
 
-    if (type !== "profile") {
-      report_content_id(node_id);
-    }
+    console.log({ reported_obj });
+
+    report_content_id(node_id);
 
     axios
       .post("/report", reported_obj)

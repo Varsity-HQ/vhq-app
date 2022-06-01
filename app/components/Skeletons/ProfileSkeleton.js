@@ -192,9 +192,10 @@ function ProfileSkeleton({ username = "User", notFound, reported }) {
               paddingTop: 0,
               paddingBottom: 150,
               color: colors.secondary,
+              textAlign: "center",
             }}
           >
-            Our team will review your issue and take action.
+            We won't show you this accounts' content to protect you
           </Text>
           <Text
             style={{
@@ -206,8 +207,8 @@ function ProfileSkeleton({ username = "User", notFound, reported }) {
               fontSize: 12,
             }}
           >
-            To provide further protection from this user you can report this
-            account when you come back next time
+            To provide further protection from this user you can block this
+            account if you're still able to see their page next time
           </Text>
         </View>
       </Screen>
