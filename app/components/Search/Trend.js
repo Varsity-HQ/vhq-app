@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { HASHTAG_SCREEN } from "../../navigation/routes";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,7 +9,15 @@ import TrendMenu from "./TrendMenu";
 import Text from "../AppText";
 
 function Trend({ x }) {
+  const [reported, setReported] = useState(false);
   const navigation = useNavigation();
+
+  const onReportSubmitted = () => {
+    setReported(true);
+  };
+
+  if (reported) return null;
+
   return (
     <TouchableOpacity
       onPress={() =>
@@ -43,7 +51,7 @@ function Trend({ x }) {
           </View>
         </View>
         <View>
-          <TrendMenu data={x} />
+          <TrendMenu onReportSubmitted={onReportSubmitted} data={x} />
           {/* <Ionicons
               name="ios-ellipsis-horizontal-outline"
               color={colors.white}

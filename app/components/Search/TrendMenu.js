@@ -45,6 +45,7 @@ function TrendMenu({
   delete_post,
   deleting_post,
   post_page,
+  onReportSubmitted,
 }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
@@ -119,6 +120,8 @@ function TrendMenu({
     },
   ];
 
+  console.log({ data });
+
   return (
     <>
       {/* // <View style={styles.container}> */}
@@ -133,6 +136,8 @@ function TrendMenu({
       <ReportMenu
         key={"report-modal"}
         type="trend"
+        node_id={data.hashtag_name}
+        onReportSubmitted={onReportSubmitted}
         isReportModalVisible={isReportModalVisible}
         handleReportModal={handleReportModal}
       />

@@ -74,7 +74,7 @@ function SearchScreen({ search_page, get_search_data }) {
           setTab={(i) => handleGetPictures(i)}
         />
         <View>
-          <TopPosts posts={data.posts} />
+          {/* <TopPosts posts={data.posts} /> */}
           <TopicTrends trends={data.topics} />
           <SuggestedFriends accounts={data.accounts} />
         </View>
