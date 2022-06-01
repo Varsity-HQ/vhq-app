@@ -8,7 +8,13 @@ import Button from "../Button";
 
 import { Feather } from "@expo/vector-icons";
 
-function ProfileSkeleton({ username = "User", notFound, reported }) {
+function ProfileSkeleton({
+  username = "User",
+  notFound,
+  reported,
+  blocked,
+  handleUnblock,
+}) {
   if (notFound) {
     return (
       <Screen>
@@ -94,6 +100,138 @@ function ProfileSkeleton({ username = "User", notFound, reported }) {
           >
             Account @{username} not found
           </Text>
+        </View>
+      </Screen>
+    );
+  }
+  if (blocked) {
+    return (
+      <Screen>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.header_username}>{username}</Text>
+            <View style={styles.toggle_anonymous_2}>
+              <Text style={styles.toggle_anonymous_text}>Toggle anonymous</Text>
+            </View>
+            <View></View>
+          </View>
+        </View>
+        <View
+          style={{
+            paddingVertical: 20,
+            paddingHorizontal: 10,
+            borderBottomColor: colors.black,
+            borderBottomWidth: 4,
+          }}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <View>
+              <SkeletonComponent
+                animationOff={true}
+                style={styles.profilepic}
+              />
+            </View>
+            <View style={{ marginLeft: 18, width: "100%" }}>
+              <SkeletonComponent animationOff={true} style={styles.username} />
+              <SkeletonComponent
+                animationOff={true}
+                style={styles.user_stream}
+              />
+              <View style={{ flexDirection: "row" }}>
+                <View type={3} title="Edit Profile" />
+                <View
+                  style={{
+                    marginLeft: 8,
+                    paddingVertical: 7,
+                    paddingHorizontal: 18,
+                  }}
+                  type={3}
+                  title="Settings"
+                />
+              </View>
+            </View>
+          </View>
+          <View style={{ marginTop: 8 }}>
+            <SkeletonComponent
+              animationOff={true}
+              style={styles.anon_state}
+            ></SkeletonComponent>
+            <SkeletonComponent
+              animationOff={true}
+              style={styles.user_f_name}
+            ></SkeletonComponent>
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: 8,
+                alignItems: "center",
+              }}
+            >
+              <SkeletonComponent
+                animationOff={true}
+                style={{ height: 18, width: "20%" }}
+              ></SkeletonComponent>
+              <Text>&nbsp;|&nbsp;</Text>
+              <SkeletonComponent
+                animationOff={true}
+                style={{ height: 18, width: "20%" }}
+              ></SkeletonComponent>
+            </View>
+          </View>
+        </View>
+        <View>
+          <Text
+            style={{
+              alignSelf: "center",
+              padding: 20,
+              paddingBottom: 10,
+              color: colors.white,
+              fontWeight: "700",
+            }}
+          >
+            You blocked account @{username}.
+          </Text>
+          <Text
+            style={{
+              alignSelf: "center",
+              padding: 20,
+              paddingTop: 0,
+              paddingBottom: 150,
+              color: colors.secondary,
+              textAlign: "center",
+            }}
+          >
+            We won't show you this accounts' content to protect you
+          </Text>
+          <View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              <View>
+                <Button
+                  onPress={handleUnblock}
+                  type={3}
+                  title="Unblock account"
+                />
+              </View>
+            </View>
+            <Text
+              style={{
+                alignSelf: "center",
+                paddingHorizontal: 20,
+                paddingTop: 0,
+                color: colors.secondary,
+                textAlign: "center",
+                fontSize: 12,
+              }}
+            >
+              You can choose to unblock the acount if you wish to. After this
+              action you will be able to see posts from this user again
+            </Text>
+          </View>
         </View>
       </Screen>
     );

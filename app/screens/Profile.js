@@ -23,6 +23,8 @@ import PostLoader from "../components/Skeletons/Post";
 import ProfileHeader from "../components/Profile/ProfileHeader";
 import PostCard from "../components/PostCard";
 import { check_post_reported } from "../util/postUtil";
+import check_user_blocked from "../util/check_user_blocked";
+import { unblock_user } from "../store/actions/filterActions";
 
 const mapStateToProps = (state) => {
   return {
@@ -43,6 +45,7 @@ const mapDispatchToProps = (dispatch) => {
     get_pictures: (more) => dispatch(get_pictures(more)),
     get_auth_bookmarks: (more) => dispatch(get_auth_bookmarks(more)),
     profile_screen_moved_away: () => dispatch(profile_screen_moved_away()),
+    unblock_user: (u) => dispatch(unblock_user(u)),
   };
 };
 
@@ -50,6 +53,7 @@ class Profile extends PureComponent {
   state = {
     tabActive: 1,
     reported: false,
+    blocked: false,
   };
 
   onReportSubmitted = () => {
@@ -57,10 +61,30 @@ class Profile extends PureComponent {
       reported: true,
     });
   };
+  onBlockSubmitted = () => {
+    this.setState({
+      blocked: true,
+    });
+  };
 
-  componentDidMount = () => {
+  handleUnblock = () => {
     this.props.get_posts();
     this.props.get_user_profile(this.props.route.params.username);
+    this.props.unblock_user(this.props.route.params.username);
+    this.setState({
+      blocked: false,
+    });
+  };
+
+  componentDidMount = () => {
+    this.setState({
+      blocked: check_user_blocked(this.props.route.params.username),
+    });
+
+    if (!check_user_blocked(this.props.route.params.username)) {
+      this.props.get_posts();
+      this.props.get_user_profile(this.props.route.params.username);
+    }
   };
 
   componentDidUpdate = (pP, pS) => {
@@ -142,6 +166,16 @@ class Profile extends PureComponent {
       );
     }
 
+    if (this.state.blocked) {
+      return (
+        <ProfileSkeleton
+          handleUnblock={this.handleUnblock}
+          notFound={false}
+          blocked
+          username={username}
+        />
+      );
+    }
     if (this.state.reported) {
       return <ProfileSkeleton notFound={false} reported username={username} />;
     }
@@ -182,6 +216,7 @@ class Profile extends PureComponent {
           ListHeaderComponent={
             <ProfileHeader
               onReportSubmitted={this.onReportSubmitted}
+              onBlockSubmitted={this.onBlockSubmitted}
               handleTabChange={this.handleTabChange}
               tabActive={this.state.tabActive}
               username={username}

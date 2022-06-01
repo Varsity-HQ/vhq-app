@@ -11,3 +11,10 @@ export const block_profile_by_id = (id) => (dispatch) => {
     payload: id,
   });
 };
+
+export const unblock_user = (username) => (dispatch) => {
+  dispatch({
+    type: "UNBLOCK_PROFILE_USERNAME",
+    payload: username,
+  });
+};

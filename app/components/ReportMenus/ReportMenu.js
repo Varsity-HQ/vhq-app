@@ -91,6 +91,8 @@ function ReportMenu({
   const handleBlockAccount = () => {
     console.log("block this account", node_id);
     block_profile_by_id(node_id);
+
+    if (onReportSubmitted) return onReportSubmitted();
   };
 
   const handleOptionPress = (x) => {

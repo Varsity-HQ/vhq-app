@@ -43,6 +43,7 @@ function ProfileMenu({
   logOutUser,
   data,
   onReportSubmitted,
+  onBlockSubmitted,
 }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
@@ -214,9 +215,9 @@ function ProfileMenu({
       <ReportMenu
         key={"block-modal"}
         type="profile-block"
-        node_id={data.userID}
+        node_id={data.username}
         data={data}
-        onReportSubmitted={null}
+        onReportSubmitted={onBlockSubmitted}
         isReportModalVisible={isBlockModalVisible}
         handleReportModal={handleBlockModal}
       />
