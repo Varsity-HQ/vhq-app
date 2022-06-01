@@ -11,6 +11,11 @@ import { connect } from "react-redux";
 import Toast from "react-native-toast-message";
 import axios from "axios";
 
+import {
+  block_profile_by_id,
+  report_content_id,
+} from "../../store/actions/filterActions";
+
 const mapStateToProps = (state) => {
   return {};
 };
@@ -18,12 +23,16 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     submit_report: () => dispatch(submit_report()),
+    report_content_id: (id) => dispatch(report_content_id(id)),
+    block_profile_by_id: (id) => dispatch(block_profile_by_id(id)),
   };
 };
 
 function ReportMenu({
   isReportModalVisible,
   handleReportModal,
+  report_content_id,
+  block_profile_by_id,
   type = "post",
   submit_report,
   onReportSubmitted,
@@ -64,6 +73,10 @@ function ReportMenu({
       setReportingFor("comment");
       return setOptions(report_options.comment_options);
     }
+    if (type === "profile-block") {
+      setReportingFor("profile");
+      return setOptions(report_options.block_profile_options);
+    }
 
     setReportingFor("");
     return setOptions([]);
@@ -75,7 +88,16 @@ function ReportMenu({
     set_sub_options_heading(null);
   };
 
+  const handleBlockAccount = () => {
+    console.log("block this account", node_id);
+    block_profile_by_id(node_id);
+  };
+
   const handleOptionPress = (x) => {
+    if (x.title === report_options.block_profile_options[0].title) {
+      return handleBlockAccount();
+    }
+
     setSelectedOption(x.title);
 
     if (x.sub_options && x.sub_options !== "text" && x.sub_options_heading) {
@@ -131,6 +153,10 @@ function ReportMenu({
       sub_reason: selectedSubOption,
     };
 
+    if (type !== "profile") {
+      report_content_id(node_id);
+    }
+
     axios
       .post("/report", reported_obj)
       .then(() => {
@@ -167,35 +193,64 @@ function ReportMenu({
   };
 
   const renderFirstPage = () => {
-    return (
-      <>
-        <Text style={styles.bold_text}>
-          Help us understand why you are reporting this {reportingFor}
-        </Text>
-        <Text style={styles.report_text}>
-          Your report will be anonymous and our support team will go through it
-          as soon as possible
-        </Text>
-        <View style={styles.inner_content}>
-          {options.map((x, index) => {
-            if (!x.hide) {
-              return (
-                <TouchableOpacity
-                  style={styles.menuButton}
-                  key={index}
-                  onPress={() => handleOptionPress(x)}
-                >
-                  <View style={styles.touchableInner}>
-                    {x.icon}
-                    <Text style={styles.text}>{x.title}</Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            }
-          })}
-        </View>
-      </>
-    );
+    if (type !== "profile-block") {
+      return (
+        <>
+          <Text style={styles.bold_text}>
+            Help us understand why you are reporting this {reportingFor}
+          </Text>
+          <Text style={styles.report_text}>
+            Your report will be anonymous and our support team will go through
+            it as soon as possible
+          </Text>
+          <View style={styles.inner_content}>
+            {options.map((x, index) => {
+              if (!x.hide) {
+                return (
+                  <TouchableOpacity
+                    style={styles.menuButton}
+                    key={index}
+                    onPress={() => handleOptionPress(x)}
+                  >
+                    <View style={styles.touchableInner}>
+                      {x.icon}
+                      <Text style={styles.text}>{x.title}</Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              }
+            })}
+          </View>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Text style={styles.report_text}>
+            Warning : You won't see posts or content from this account after you
+            block this profile
+          </Text>
+          <View style={styles.inner_content}>
+            {options.map((x, index) => {
+              if (!x.hide) {
+                return (
+                  <TouchableOpacity
+                    style={styles.menuButton}
+                    key={index}
+                    onPress={() => handleOptionPress(x)}
+                  >
+                    <View style={styles.touchableInner}>
+                      {x.icon}
+                      <Text style={styles.text}>{x.title}</Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              }
+            })}
+          </View>
+        </>
+      );
+    }
   };
 
   const renderSecondPage = () => {
@@ -427,7 +482,12 @@ function ReportMenu({
             paddingBottom: 50,
           }}
         >
-          <Text style={styles.header_text}>Report {reportingFor}</Text>
+          {type === "profile-block" ? (
+            <Text style={styles.header_text}>Block {reportingFor}</Text>
+          ) : (
+            <Text style={styles.header_text}>Report {reportingFor}</Text>
+          )}
+
           <View
             style={{
               borderBottomColor: colors.secondary,

@@ -48,8 +48,11 @@ function ProfileMenu({
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
 
   const [isReportModalVisible, setIsReportModalVisible] = React.useState(false);
+  const [isBlockModalVisible, setIsBlockModalVisible] = React.useState(false);
   const handleReportModal = () =>
     setIsReportModalVisible(() => !isReportModalVisible);
+  const handleBlockModal = () =>
+    setIsBlockModalVisible(() => !isBlockModalVisible);
 
   const navigation = useNavigation();
   const options = [
@@ -146,7 +149,7 @@ function ProfileMenu({
       title: "Block account",
       onPress: () => {
         setIsModalVisible(false);
-        setTimeout(() => setIsReportModalVisible(true), 400);
+        setTimeout(() => setIsBlockModalVisible(true), 400);
       },
       icon: (
         <MaterialCommunityIcons
@@ -207,6 +210,15 @@ function ProfileMenu({
         onReportSubmitted={onReportSubmitted}
         isReportModalVisible={isReportModalVisible}
         handleReportModal={handleReportModal}
+      />
+      <ReportMenu
+        key={"block-modal"}
+        type="profile-block"
+        node_id={data.userID}
+        data={data}
+        onReportSubmitted={null}
+        isReportModalVisible={isBlockModalVisible}
+        handleReportModal={handleBlockModal}
       />
 
       <Modal

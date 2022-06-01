@@ -15,7 +15,6 @@ import Content from "../Post/content";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import emojis from "../../util/emojis";
-
 import { PROFILE } from "../../navigation/routes";
 import PostMenu from "../Post/PostMenu";
 import PostPictures from "../Post/PostPictures";

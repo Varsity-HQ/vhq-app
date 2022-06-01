@@ -9,6 +9,12 @@
       "sub_options": null
     }
   ],
+  "block_profile_options": [
+    {
+      "title": "Block this profile",
+      "sub_options": null
+    }
+  ],
   "account_options": [
     {
       "title": "Pretending to be someone else",

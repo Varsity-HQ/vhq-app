@@ -10,6 +10,7 @@ import hashtagPage from "./hashtagPage";
 import chatPage from "./chatPage";
 import discoveryPage from "./discoveryPage";
 import datingReducer from "./datingReducer";
+import filterReducer from "./filterReducer";
 
 const rootReducer = combineReducers({
   core,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   chatPage,
   discoveryPage,
   datingReducer,
+  filterReducer,
 });
 
 export default rootReducer;

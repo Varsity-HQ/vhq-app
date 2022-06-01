@@ -13,7 +13,7 @@ function ReportedTemplate({ type = "" }) {
             color: colors.secondary_2,
           }}
         >
-          This {type} is unavailable to you
+          Content not available to you
         </Text>
       </View>
     );

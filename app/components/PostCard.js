@@ -32,6 +32,7 @@ import { FontAwesome, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import EventFooterButtons from "./Post/EventFooterButtons";
 import { RFValue } from "react-native-responsive-fontsize";
 import ReportedTemplate from "./ReportedTemplate";
+import { check_post_reported } from "../util/postUtil";
 
 dayjs.extend(Localize);
 
@@ -76,6 +77,9 @@ class PostCard extends PureComponent {
           total_votes: post_vote_counter(this.props.data.poll_fields),
         });
     }
+    this.setState({
+      reported: check_post_reported(this.props.data.id),
+    });
   };
 
   handleOpenPost = () => {
@@ -100,16 +104,18 @@ class PostCard extends PureComponent {
 
   handleOpenProfile = () => {
     this.props.save_post_user(this.props.data);
+    //
     this.props.navigation.push(routes.PROFILE, {
       username: this.props.data.username,
     });
   };
 
   render() {
+    ////|
     if (this.state.reported) {
       return <ReportedTemplate type="post" />;
     }
-
+    ////|
     const data = this.props.data;
     const hideFollowBtn = this.props.hideFollowBtn;
     if (!data) return <SkeletonPost />;

@@ -215,7 +215,6 @@ function ProfileHeader({
           {auth_profile && user.anonymous_profile ? (
             <Text style={styles.anon_state}>Anonymous</Text>
           ) : null}
-
           <Text style={styles.user_f_name}>
             {user.firstname} {user.surname}
           </Text>
