@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { get_notification } from "../store/actions/notifications";
 import colors from "../config/colors";
 import { RFValue } from "react-native-responsive-fontsize";
+import PropTypes from "prop-types";
 
 const mapStateToProps = (state) => {
   return {

@@ -110,7 +110,8 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex }) {
 
 const styles = StyleSheet.create({
   main_container: {
-    backgroundColor: colors.secondary_2,
+    backgroundColor: colors.secondary,
+    marginBottom: 15,
   },
   university: {
     fontSize: RFValue(15),
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
     color: colors.dark_2,
   },
   sideItem: {
-    backgroundColor: colors.secondary_2,
+    backgroundColor: colors.secondary,
     paddingHorizontal: 20,
     paddingRight: 20,
     paddingVertical: 15,
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   subtab_button: {
-    backgroundColor: colors.secondary_2,
+    backgroundColor: colors.secondary,
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 14,

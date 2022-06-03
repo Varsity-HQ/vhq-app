@@ -29,6 +29,7 @@ function ReportedTemplate({ type = "" }) {
     );
   }
   if (type === "post") {
+    return null;
     return (
       <View style={styles.container}>
         <Text

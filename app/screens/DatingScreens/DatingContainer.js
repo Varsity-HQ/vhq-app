@@ -24,7 +24,7 @@ class DatingContainer extends React.Component {
     activeTabIndex: 1,
     mockState: {
       loading_posts: false,
-      posts: [1, 3, 2, 4, 6],
+      posts: [1, 3, 2, 4, 6, 7, 8, 10, 11, 12, 13, 21, 22, 23],
       loading_more_posts: false,
       loading_events: false,
       events: [3],

@@ -6,6 +6,9 @@ export const DATING_NAVIGATOR = "DatingNavigator";
 
 export const NOTIFICATIONS = "Notifications";
 
+//Admin Screens
+export const ADMIN_HOME = "AdminHome";
+
 //Chat Screens
 export const CHAT_HOME = "ChatHome";
 export const CHAT_PAGE = "ChatPage";

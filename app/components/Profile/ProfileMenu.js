@@ -17,7 +17,11 @@ import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
 import { COPY_PROFILE_URL } from "../../util/toast_messages";
 import { useNavigation } from "@react-navigation/native";
-import { QCOINS_OFFERS, REFER_A_FRIEND } from "../../navigation/routes";
+import {
+  ADMIN_HOME,
+  QCOINS_OFFERS,
+  REFER_A_FRIEND,
+} from "../../navigation/routes";
 import ReportMenu from "../ReportMenus/ReportMenu";
 
 const mapDispatchToProps = (dispatch) => {
@@ -29,6 +33,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     auth_username: state.core.accData.username,
+    accountStatus: state.core.accData.accountStatus,
   };
 };
 
@@ -44,6 +49,8 @@ function ProfileMenu({
   data,
   onReportSubmitted,
   onBlockSubmitted,
+  accountStatus,
+  admin = accountStatus === "admin" ? true : false,
 }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
@@ -57,17 +64,21 @@ function ProfileMenu({
 
   const navigation = useNavigation();
   const options = [
-    // {
-    //   hidden: true,
-    //   title: "Administration",
-    //   icon: (
-    //     <Ionicons
-    //       color={colors.secondary}
-    //       name="shield-outline"
-    //       size={iconSize}
-    //     />
-    //   ),
-    // },
+    {
+      hidden: !admin,
+      title: "Administration",
+      icon: (
+        <Ionicons
+          color={colors.secondary}
+          name="shield-outline"
+          size={iconSize}
+        />
+      ),
+      onPress: () => {
+        navigation.navigate(ADMIN_HOME);
+        handleModal();
+      },
+    },
     {
       title: "Qcoins & Offers",
       onPress: () => {
@@ -261,18 +272,21 @@ function ProfileMenu({
               </>
             ) : (
               <>
-                {options.map((x, index) => (
-                  <TouchableWithoutFeedback
-                    // style={{ paddingVertical: 10 }}
-                    key={index}
-                    onPress={x.onPress}
-                  >
-                    <View style={styles.touchableInner}>
-                      {x.icon}
-                      <Text style={styles.text}>{x.title}</Text>
-                    </View>
-                  </TouchableWithoutFeedback>
-                ))}
+                {options.map((x, index) => {
+                  if (x.hidden) return;
+                  return (
+                    <TouchableWithoutFeedback
+                      // style={{ paddingVertical: 10 }}
+                      key={index}
+                      onPress={x.onPress}
+                    >
+                      <View style={styles.touchableInner}>
+                        {x.icon}
+                        <Text style={styles.text}>{x.title}</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  );
+                })}
               </>
             )}
           </View>

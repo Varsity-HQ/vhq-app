@@ -43,9 +43,9 @@ const DatingNavigator = () => (
     }}
     initialRouteName={routes.DATING_INTRO}
   >
-    <Stack.Screen name={routes.CREATE_SHOW} component={CreateShowStack} />
+    {/* <Stack.Screen name={routes.CREATE_SHOW} component={CreateShowStack} /> */}
     {/* <Stack.Screen name={routes.DATING_INTRO} component={DatingIntroScreen} /> */}
-    {/* <Stack.Screen name={routes.DATING_CONTAINER} component={DatingContainer} /> */}
+    <Stack.Screen name={routes.DATING_CONTAINER} component={DatingContainer} />
 
     {/* <Stack.Screen
       name={routes.DATING_ENCOUNTERS}
