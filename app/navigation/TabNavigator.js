@@ -131,9 +131,8 @@ const AppNavigator = ({ user_id }) => {
           tabBarShowLabel: true,
         }}
         name="Marketplace"
-        // component={FeedNavigator}
-        component={MarketplaceComingSoon}
-        // component={MarketplaceNavigator}
+        // component={MarketplaceComingSoon}
+        component={MarketplaceNavigator}
       />
       <Tab.Screen
         options={{
@@ -153,7 +152,6 @@ const AppNavigator = ({ user_id }) => {
         }}
         name="Chat"
         component={ChatNavigator}
-        // component={FeedNavigator}
       />
     </Tab.Navigator>
   );

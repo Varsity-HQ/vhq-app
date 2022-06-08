@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import Screen from "../../components/Screen";
 import Text from "../../components/AppText";
 import HomeHeader from "../../components/Marketplace/HomeHeader";
@@ -10,7 +10,7 @@ import TopJobs from "../../components/Marketplace/TopJobs";
 
 function Home(props) {
   return (
-    <Screen scroll style={styles.container}>
+    <ScrollView style={[styles.container]}>
       <HomeHeader />
       <CategoryMenu />
       <TopServices />
@@ -18,7 +18,7 @@ function Home(props) {
       <PageInviter page="marketplace-home" />
       <TopServices />
       <TopJobs />
-    </Screen>
+    </ScrollView>
   );
 }
 

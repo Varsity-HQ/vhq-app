@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
   container: {
     margin: 10,
     borderRadius: 10,
-    backgroundColor: colors.dark_opacity_2,
-    borderWidth: 2,
+    backgroundColor: colors.darkish,
+    borderWidth: 0,
     borderColor: colors.skblue,
     padding: 10,
     paddingVertical: 20,

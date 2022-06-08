@@ -6,10 +6,19 @@ import Input from "../Input";
 import { LinearGradient } from "expo-linear-gradient";
 import colors from "../../config/colors";
 import Button from "../Button";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function HomeHeader(props) {
+  const insets = useSafeAreaInsets();
   return (
-    <View>
+    <View
+      style={{
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        overflow: "hidden",
+        position: "relative",
+      }}
+    >
       <StatusBar
         animated={true}
         backgroundColor={colors.dark_opacity_2}
@@ -17,7 +26,14 @@ function HomeHeader(props) {
         showHideTransition="fade"
         hidden={false}
       />
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {
+            paddingTop: insets.top + 15,
+          },
+        ]}
+      >
         <Text style={styles.header}>Marketplace</Text>
         <Text>
           Find services, products or jobs offered by students around you.
@@ -29,12 +45,12 @@ function HomeHeader(props) {
         />
         <Button type={3} title="Search market.." />
       </View>
-      {/* <LinearGradient
+      <LinearGradient
         style={styles.gradient}
-        colors={["#1acfff", "#1c83f9"]}
+        colors={["#1acfff", "#1c83f3"]}
         start={[0, 1]}
         end={[1, 0]}
-      /> */}
+      />
     </View>
   );
 }
