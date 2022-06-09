@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import Text from "../components/AppText";
@@ -6,16 +6,16 @@ import Screen from "../components/Screen";
 import SearchHeader from "../components/Search/SearchHeader";
 import colors from "../config/colors";
 import algoliasearch from "algoliasearch/lite";
-import {
-  InstantSearch,
-  connectRefinementList,
-  Configure,
-} from "react-instantsearch-native";
+import { InstantSearch, Configure } from "react-instantsearch-native";
 import AccountsResultsTab from "../components/Search/AccountsResultsTab";
 import TrendsResultsTab from "../components/Search/TrendsResultsTab";
 import Searchinindicator from "../components/Search/Searchinindicator";
 import MarketplaceTab from "../components/Search/MarketplaceTab";
-import { useNavigation } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  useFocusEffect,
+} from "@react-navigation/native";
 
 const searchClient = algoliasearch(
   "R37EQ47X30",
@@ -35,6 +35,7 @@ const renderScene = SceneMap({
 function SearchResults(props) {
   const [searchState, setSearchState] = React.useState({});
   const navigation = useNavigation();
+  const route = useRoute();
 
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
@@ -43,6 +44,15 @@ function SearchResults(props) {
     { key: "trends", title: "Trends" },
     { key: "marketplace", title: "Marketplace" },
   ]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      let page = route.params?.page;
+      if (page) {
+        setIndex(page - 1);
+      }
+    }, []),
+  );
 
   const onSearchStateChange = (nextState) => {
     setSearchState({ ...searchState, ...nextState });
@@ -53,7 +63,13 @@ function SearchResults(props) {
       <InstantSearch
         searchClient={searchClient}
         indexName={
-          index === 0 ? "accounts" : index === 1 ? "hashtags" : "accounts"
+          index === 0
+            ? "accounts"
+            : index === 1
+            ? "hashtags"
+            : index === 2
+            ? "marketplace"
+            : "accounts"
         }
         searchState={searchState}
         onSearchStateChange={onSearchStateChange}

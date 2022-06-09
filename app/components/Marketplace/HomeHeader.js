@@ -7,9 +7,12 @@ import { LinearGradient } from "expo-linear-gradient";
 import colors from "../../config/colors";
 import Button from "../Button";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
+import { SEARCH_RESULTS } from "../../navigation/routes";
 
 function HomeHeader(props) {
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
   return (
     <View
       style={{
@@ -38,10 +41,16 @@ function HomeHeader(props) {
         <Text>
           Find services, products or jobs offered by students around you.
         </Text>
-        <Input
+        <Button
+          onPress={() =>
+            navigation.navigate(SEARCH_RESULTS, {
+              page: 3,
+            })
+          }
+          type="search"
+          title="Search services or items..."
+          placeholderTextColor={colors.secondary}
           style={styles.searchbox}
-          type={2}
-          placeholder="Search services or items"
         />
         <Button type={3} title="Search market.." />
       </View>

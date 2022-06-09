@@ -5,6 +5,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import colors from "../config/colors";
@@ -19,6 +21,7 @@ function AppButton({
   onPress,
   type = 1,
   content,
+  placeholderTextColor,
   ...props
 }) {
   const navigation = useNavigation();
@@ -139,10 +142,37 @@ function AppButton({
     );
   }
 
+  if (type === "search") {
+    return (
+      <TouchableWithoutFeedback {...props} onPress={handleOnPress}>
+        <View style={[styles.tibutton, style]}>
+          <Text
+            style={[
+              styles.titext,
+              textStyle,
+              {
+                color: placeholderTextColor,
+              },
+            ]}
+          >
+            {title}
+          </Text>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  }
+
   return null;
 }
 
 const styles = StyleSheet.create({
+  tibutton: {
+    padding: 12,
+    borderRadius: 5,
+  },
+  titext: {
+    fontSize: 17,
+  },
   button_8: {
     position: "relative",
     backgroundColor: colors.dark,
