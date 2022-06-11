@@ -5,8 +5,46 @@ import FilterByCategory from "./FilterByCategory";
 import Text from "../AppText";
 import colors from "../../config/colors";
 import { RFValue } from "react-native-responsive-fontsize";
+import Loading from "../Loaders/HomeUploading";
+import { connect } from "react-redux";
 
-function CategoryPageHeader(props) {
+const mapStateToProps = (state) => {
+  return {
+    university: state.core.accData.university,
+  };
+};
+
+function CategoryPageHeader({ category, skeleton, data, university }) {
+  if (skeleton) {
+    return (
+      <View style={styles.container}>
+        <CommonHeader />
+        <View style={styles.subHeader_container}>
+          <Text
+            style={{
+              fontWeight: "700",
+              fontSize: 15,
+            }}
+          >
+            MARKETPLACE
+          </Text>
+          <Text style={styles.header}>{category}</Text>
+          <Text style={styles.sub_text}>
+            Loading {category}, Please wait...
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            paddingVertical: 50,
+          }}
+        >
+          <Loading />
+        </View>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <CommonHeader />
@@ -19,8 +57,8 @@ function CategoryPageHeader(props) {
         >
           MARKETPLACE
         </Text>
-        <Text style={styles.header}>Services</Text>
-        <Text style={styles.sub_text}>Browse and discover services.</Text>
+        <Text style={styles.header}>{category}</Text>
+        <Text style={styles.sub_text}>Browse and discover {category}.</Text>
       </View>
       <View style={styles.second_sec}>
         <Text
@@ -28,9 +66,9 @@ function CategoryPageHeader(props) {
             fontSize: 14,
           }}
         >
-          Found 6 services at the University of Johannesburg
+          Found {data.total_count} {category} at the {university}
         </Text>
-        <FilterByCategory />
+        <FilterByCategory category={category} data={data.categories} />
       </View>
     </View>
   );
@@ -50,6 +88,7 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     color: colors.white,
     fontFamily: "Lobster-Regular",
+    textTransform: "capitalize",
   },
   subHeader_container: {
     padding: 10,
@@ -57,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CategoryPageHeader;
+export default connect(mapStateToProps, null)(CategoryPageHeader);

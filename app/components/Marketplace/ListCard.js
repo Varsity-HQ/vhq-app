@@ -16,17 +16,19 @@ import { MARKETPLACE_ITEM_PAGE } from "../../navigation/routes";
 
 const height = Dimensions.get("window").height;
 
-function ListCard(props) {
+function ListCard({ x }) {
   const navigation = useNavigation();
   return (
     <TouchableWithoutFeedback
       onPress={() => {
-        navigation.navigate(MARKETPLACE_ITEM_PAGE);
+        navigation.navigate(MARKETPLACE_ITEM_PAGE, {
+          id: x.id,
+        });
       }}
     >
       <View style={styles.container}>
         <View>
-          <Image style={styles.card_image} />
+          <Image uri={x.attachments[0]} style={styles.card_image} />
         </View>
         <View style={styles.content_section}>
           <View
@@ -35,12 +37,11 @@ function ListCard(props) {
             }}
           >
             <View style={styles.row}>
-              <Text style={styles.cat_text1}>SERVICE</Text>
-              <Text style={styles.cat_text}> - ANY</Text>
+              <Text style={styles.cat_text1}>{x.department}</Text>
+              <Text style={styles.cat_text}> - {x.category}</Text>
             </View>
             <Text numberOfLines={2} ellipsizeMode="tail" style={styles.title}>
-              Self fix Here at self fix we aim to help you help yourself hence
-              the name “Self fix” all we do is assist/guide you through
+              {x.title}
             </Text>
           </View>
           <View style={styles.bottom_section}>
@@ -60,7 +61,7 @@ function ListCard(props) {
                     size={20}
                     color={colors.primary}
                   />
-                  <Text style={styles.bold}>1</Text>
+                  <Text style={styles.bold}>{x.seen_by}</Text>
                 </View>
                 <LinearGradient
                   style={styles.gradient}
@@ -71,7 +72,11 @@ function ListCard(props) {
               </View>
             </View>
             <View>
-              <Text style={styles.bold}>Free</Text>
+              {x.pricing ? (
+                <Text style={styles.bold}>R {x.pricing}</Text>
+              ) : (
+                <Text style={styles.bold}>Free</Text>
+              )}
             </View>
           </View>
         </View>
@@ -98,10 +103,12 @@ const styles = StyleSheet.create({
     fontSize: RFValue(12),
     fontWeight: "700",
     color: colors.secondary,
+    textTransform: "capitalize",
   },
   cat_text: {
     fontSize: RFValue(12),
     fontWeight: "700",
+    textTransform: "capitalize",
   },
   content_section: {
     flex: 1,

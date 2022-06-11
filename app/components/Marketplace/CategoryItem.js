@@ -4,7 +4,7 @@ import Text from "../AppText";
 import { LinearGradient } from "expo-linear-gradient";
 import colors from "../../config/colors";
 
-function CategoryItem(props) {
+function CategoryItem({ x }) {
   return (
     <View style={styles.container}>
       <View
@@ -18,7 +18,7 @@ function CategoryItem(props) {
             fontWeight: "700",
           }}
         >
-          Any
+          {x.categoryTitle}
         </Text>
       </View>
       <LinearGradient

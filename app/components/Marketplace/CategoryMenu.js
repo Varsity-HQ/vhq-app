@@ -3,25 +3,30 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import Service from "./Service";
 import Text from "../../components/AppText";
 import { RFValue } from "react-native-responsive-fontsize";
+import {
+  JOBS_CATEGORY,
+  LISTINGS_CATEGORY,
+  SERVICES_CATEGORY,
+} from "../../navigation/routes";
 
 const services = [
-  {
-    title: "Jobs",
-    subText: "for students",
-    icon: "suitcase",
-    link: "jobs",
-  },
   {
     title: "Services",
     subText: "by students",
     icon: "list-alt",
-    link: "services",
+    category: SERVICES_CATEGORY,
   },
   {
     title: "Listings",
     subText: "by students",
     icon: "vcard-o",
-    link: "listings",
+    category: LISTINGS_CATEGORY,
+  },
+  {
+    title: "Jobs",
+    subText: "for students",
+    icon: "suitcase",
+    category: JOBS_CATEGORY,
   },
 ];
 

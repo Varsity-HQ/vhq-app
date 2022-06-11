@@ -12,7 +12,7 @@ function Service({ x, skeleton }) {
   const navigation = useNavigation();
 
   const handleCatPress = () => {
-    navigation.navigate(MARKETPLACE_CAT_PAGE);
+    navigation.navigate(MARKETPLACE_CAT_PAGE, { category: x.category });
   };
   if (skeleton) {
     return (

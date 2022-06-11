@@ -4,14 +4,14 @@ import { RFValue } from "react-native-responsive-fontsize";
 import Text from "../AppText";
 import CategoryItem from "./CategoryItem";
 
-function FilterByCategory(props) {
+function FilterByCategory({ data, category = "services" }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.filter_text}>Filter service by category</Text>
+      <Text style={styles.filter_text}>Filter {category} by category</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <CategoryItem />
-        <CategoryItem />
-        <CategoryItem />
+        {data.map((x, index) => (
+          <CategoryItem key={index} x={x} />
+        ))}
       </ScrollView>
     </View>
   );
