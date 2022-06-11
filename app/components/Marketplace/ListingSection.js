@@ -6,20 +6,12 @@ import { connect } from "react-redux";
 import colors from "../../config/colors";
 import ItemSlider from "./ItemSlider";
 
-const mapStateToProps = (state) => {
-  return {
-    university: state.core.accData.university,
-  };
-};
-
-function TopServices({ university }) {
+function ListingSection({ name, data, t1, t2 }) {
   return (
     <View style={styles.container}>
       <View style={styles.default_padding}>
-        <Text style={styles.heading}>Top services</Text>
-        <Text>
-          Browse services offered by students or people at the {university}
-        </Text>
+        <Text style={styles.heading}>{t1}</Text>
+        <Text>{t2}</Text>
         <View style={styles.break_header}>
           <View>
             <Text
@@ -27,7 +19,7 @@ function TopServices({ university }) {
                 fontWeight: "700",
               }}
             >
-              Services
+              {name}
             </Text>
           </View>
           <View>
@@ -35,7 +27,7 @@ function TopServices({ university }) {
           </View>
         </View>
       </View>
-      <ItemSlider />
+      <ItemSlider data={data} />
     </View>
   );
 }
@@ -62,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, null)(TopServices);
+export default connect(null, null)(ListingSection);

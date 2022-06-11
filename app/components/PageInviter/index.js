@@ -5,8 +5,11 @@ import Button from "../Button";
 import { FontAwesome } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import { RFValue } from "react-native-responsive-fontsize";
+import { useNavigation } from "@react-navigation/native";
+import { REFER_A_FRIEND } from "../../navigation/routes";
 
 function index({ page = "" }) {
+  const navigation = useNavigation();
   if (page === "marketplace-home") {
     return (
       <View style={styles.mh_container}>
@@ -26,6 +29,7 @@ function index({ page = "" }) {
         >
           <Button
             type={3}
+            onPress={() => navigation.navigate(REFER_A_FRIEND)}
             style={{
               backgroundColor: colors.transparent,
               paddingHorizontal: 0,

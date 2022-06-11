@@ -5,7 +5,7 @@ import colors from "../../config/colors";
 import Text from "../AppText";
 import JobItem from "./JobItem";
 
-function TopJobs(props) {
+function TopJobs({ data }) {
   return (
     <View style={styles.container}>
       <View style={styles.heading_section}>
@@ -19,9 +19,9 @@ function TopJobs(props) {
         </View>
       </View>
       <View>
-        <JobItem />
-        <JobItem />
-        <JobItem />
+        {data.map((x, index) => (
+          <JobItem x={x} key={index} />
+        ))}
       </View>
     </View>
   );

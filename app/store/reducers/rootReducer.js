@@ -11,6 +11,7 @@ import chatPage from "./chatPage";
 import discoveryPage from "./discoveryPage";
 import datingReducer from "./datingReducer";
 import filterReducer from "./filterReducer";
+import marketplaceReducer from "./marketplaceReducer";
 
 const rootReducer = combineReducers({
   core,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   discoveryPage,
   datingReducer,
   filterReducer,
+  marketplaceReducer,
 });
 
 export default rootReducer;

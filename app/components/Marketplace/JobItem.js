@@ -3,33 +3,38 @@ import { View, StyleSheet } from "react-native";
 import colors from "../../config/colors";
 import Text from "../AppText";
 import { FontAwesome } from "@expo/vector-icons";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
-function JobItem(props) {
+function JobItem({ x }) {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.header}>VarsityHQ app promoter / influencer</Text>
+        <Text style={styles.header}>{x.title}</Text>
       </View>
       <View
         style={{
           marginTop: 10,
         }}
       >
-        <Text style={styles.content_text}>Varsity Headquarters</Text>
-        <Text style={styles.content_text}>Job Type : Permanent</Text>
-        <Text style={styles.content_text}>Posted : 6 May 2022</Text>
+        {x.company && <Text style={styles.content_text}>{x.company}</Text>}
+        {x.type && <Text style={styles.content_text}>Job Type : {x.type}</Text>}
+        <Text style={styles.content_text}>
+          Posted : {dayjs(x.created_at).fromNow()}
+        </Text>
       </View>
       <View style={styles.row_between}>
         <View />
         <View style={styles.row}>
-          <FontAwesome size={20} color={colors.white} name="envelope-o" />
+          {/* <FontAwesome size={20} color={colors.white} name="envelope-o" /> */}
           <FontAwesome
             size={20}
             style={{
               marginLeft: 10,
             }}
             color={colors.white}
-            name="external-link"
+            name="share-alt"
           />
         </View>
       </View>

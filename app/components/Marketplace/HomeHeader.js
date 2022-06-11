@@ -9,6 +9,7 @@ import Button from "../Button";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { SEARCH_RESULTS } from "../../navigation/routes";
+import AppButton from "../Button";
 
 function HomeHeader(props) {
   const insets = useSafeAreaInsets();
@@ -37,7 +38,25 @@ function HomeHeader(props) {
           },
         ]}
       >
-        <Text style={styles.header}>Marketplace</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Text style={styles.header}>Marketplace</Text>
+          <View>
+            <Button
+              style={{
+                borderRadius: 100,
+                paddingVertical: 10,
+              }}
+              type={5}
+              title="Create +"
+            />
+          </View>
+        </View>
         <Text>
           Find services, products or jobs offered by students around you.
         </Text>

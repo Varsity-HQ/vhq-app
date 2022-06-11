@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import ItemCard from "./ItemCard";
 
-function ItemSlider(props) {
+function ItemSlider({ data }) {
   return (
     <View style={styles.container}>
       <ScrollView
@@ -12,10 +12,9 @@ function ItemSlider(props) {
         }}
         horizontal
       >
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
+        {data.map((x) => (
+          <ItemCard key={x.id} x={x} />
+        ))}
       </ScrollView>
     </View>
   );

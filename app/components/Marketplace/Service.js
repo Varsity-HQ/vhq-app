@@ -8,12 +8,46 @@ import { useNavigation } from "@react-navigation/native";
 
 import { MARKETPLACE_CAT_PAGE } from "../../navigation/routes";
 
-function Service(props) {
+function Service({ x, skeleton }) {
   const navigation = useNavigation();
 
   const handleCatPress = () => {
     navigation.navigate(MARKETPLACE_CAT_PAGE);
   };
+  if (skeleton) {
+    return (
+      <TouchableWithoutFeedback onPress={handleCatPress}>
+        <View style={styles.sk_container}>
+          <View style={styles.content}>
+            <FontAwesome
+              style={{
+                marginBottom: 5,
+              }}
+              name="anchor"
+              size={25}
+              color={colors.darkish}
+            />
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "700",
+                color: colors.darkish,
+              }}
+            >
+              -
+            </Text>
+            <Text
+              style={{
+                color: colors.darkish,
+              }}
+            >
+              -
+            </Text>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  }
   return (
     <TouchableWithoutFeedback onPress={handleCatPress}>
       <View style={styles.container}>
@@ -22,7 +56,7 @@ function Service(props) {
             style={{
               marginBottom: 5,
             }}
-            name="suitcase"
+            name={x.icon}
             size={25}
             color={colors.white}
           />
@@ -32,9 +66,9 @@ function Service(props) {
               fontWeight: "700",
             }}
           >
-            Jobs
+            {x.title}
           </Text>
-          <Text>for students</Text>
+          <Text>{x.subText}</Text>
         </View>
         <LinearGradient
           style={styles.gradient}
@@ -56,6 +90,16 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   container: {
+    borderColor: colors.white,
+    borderWidth: 0,
+    width: 170,
+    height: "100%",
+    borderRadius: 10,
+    marginRight: 15,
+    overflow: "hidden",
+  },
+  sk_container: {
+    backgroundColor: colors.darkish,
     borderColor: colors.white,
     borderWidth: 0,
     width: 170,

@@ -4,21 +4,68 @@ import Service from "./Service";
 import Text from "../../components/AppText";
 import { RFValue } from "react-native-responsive-fontsize";
 
-function CategoryMenu(props) {
+const services = [
+  {
+    title: "Jobs",
+    subText: "for students",
+    icon: "suitcase",
+    link: "jobs",
+  },
+  {
+    title: "Services",
+    subText: "by students",
+    icon: "list-alt",
+    link: "services",
+  },
+  {
+    title: "Listings",
+    subText: "by students",
+    icon: "vcard-o",
+    link: "listings",
+  },
+];
+
+function CategoryMenu({ skeleton }) {
   return (
     <View style={styles.container}>
       <View
         style={{
           marginBottom: 15,
+          paddingHorizontal: 10,
         }}
       >
-        <Text style={styles.header}>Browse Services</Text>
+        {skeleton ? (
+          <Text style={styles.header}>Loading...</Text>
+        ) : (
+          <Text style={styles.header}>Browse Services</Text>
+        )}
       </View>
-      <ScrollView showsHorizontalScrollIndicator={false} horizontal>
-        <Service />
-        <Service />
-        <Service />
-      </ScrollView>
+      {skeleton ? (
+        <ScrollView
+          style={{
+            paddingLeft: 10,
+          }}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+        >
+          <Service skeleton={skeleton} />
+          <Service skeleton={skeleton} />
+          <Service skeleton={skeleton} />
+          <Service skeleton={skeleton} />
+        </ScrollView>
+      ) : (
+        <ScrollView
+          style={{
+            paddingLeft: 10,
+          }}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+        >
+          {services.map((x, index) => (
+            <Service x={x} key={index} />
+          ))}
+        </ScrollView>
+      )}
     </View>
   );
 }
@@ -30,7 +77,7 @@ const styles = StyleSheet.create({
   },
   container: {
     marginTop: 10,
-    padding: 10,
+    paddingVertical: 10,
   },
 });
 

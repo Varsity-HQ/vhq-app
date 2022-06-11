@@ -8,7 +8,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { MARKETPLACE_ITEM_PAGE } from "../../navigation/routes";
 
-function ItemCard({ props }) {
+function ItemCard({ x }) {
   const navigation = useNavigation();
   return (
     <TouchableWithoutFeedback
@@ -18,10 +18,7 @@ function ItemCard({ props }) {
     >
       <View style={styles.container}>
         <View>
-          <Image
-            uri="https://firebasestorage.googleapis.com/v0/b/varsityhq-bd225.appspot.com/o/vhq_img202113350535.jpeg?alt=media"
-            style={styles.image}
-          />
+          <Image uri={x.attachments[0]} style={styles.image} />
         </View>
         <View
           style={{
@@ -38,9 +35,9 @@ function ItemCard({ props }) {
               },
             ]}
           >
-            Gadgets
+            {x.category}
           </Text>
-          <Text>Colgone for less come buy</Text>
+          <Text numberOfLines={2}>{x.title}</Text>
         </View>
         <View style={styles.footer_section}>
           <View style={[styles.row]}>
@@ -48,7 +45,7 @@ function ItemCard({ props }) {
               style={[styles.row, { paddingHorizontal: 5, paddingVertical: 2 }]}
             >
               <FontAwesome name="eye" size={20} color={colors.primary} />
-              <Text>1</Text>
+              <Text> {x.seen_by}</Text>
             </View>
             <LinearGradient
               style={styles.gradient}
@@ -58,9 +55,15 @@ function ItemCard({ props }) {
             />
           </View>
           <View style={styles.row}>
-            <Text style={styles.boldCapital}>ZAR</Text>
-            <Text> </Text>
-            <Text style={styles.price}>300</Text>
+            {x.pricing ? (
+              <>
+                <Text style={styles.boldCapital}>ZAR</Text>
+                <Text> </Text>
+                <Text style={styles.price}>{x.pricing}</Text>
+              </>
+            ) : (
+              <Text style={[styles.boldCapital, styles.price]}>FREE</Text>
+            )}
           </View>
         </View>
       </View>
