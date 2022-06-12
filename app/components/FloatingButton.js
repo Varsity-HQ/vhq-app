@@ -24,15 +24,19 @@ const mapStateToProps = (state) => {
   };
 };
 
-function FloatingButton({ uploading }) {
+function FloatingButton({ uploading, dating, onPress }) {
   const navigation = useNavigation();
+
+  const handlePress = () => {
+    if (dating) return onPress();
+
+    navigation.navigate(ADD_POST);
+  };
+
   return (
     <>
       {Platform.OS === "ios" && <View style={styles.shadow} />}
-      <TouchableOpacity
-        onPress={() => navigation.navigate(ADD_POST)}
-        style={styles.container}
-      >
+      <TouchableOpacity onPress={handlePress} style={styles.container}>
         <LinearGradient
           style={styles.gradient}
           colors={["#f50057", colors.primary]}
@@ -45,7 +49,11 @@ function FloatingButton({ uploading }) {
             <HomeUploading />
           ) : (
             <Text style={{ color: colors.white, zIndex: 2 }}>
-              <Ricons size={40} color={colors.white} name="quill-pen-fill" />
+              {dating ? (
+                <Ricons size={40} color={colors.white} name="menu-4-line" />
+              ) : (
+                <Ricons size={40} color={colors.white} name="quill-pen-fill" />
+              )}
             </Text>
           )}
         </View>

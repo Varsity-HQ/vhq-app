@@ -8,6 +8,7 @@ import DatingCard from "../../components/Dating/DatingCard";
 import * as geofire from "geofire-common";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import colors from "../../config/colors";
+import FloatingButton from "../../components/FloatingButton";
 
 const icon_size = 35;
 const color_active = colors.white;
@@ -15,7 +16,7 @@ const color_inactive = colors.secondary_2;
 
 const tabs = [
   {
-    title: "Explore",
+    title: "Browse",
     index: 1,
     icon: (
       <MaterialIcons name="explore" size={icon_size} color={color_inactive} />
@@ -89,11 +90,7 @@ class DatingContainer extends React.Component {
       return <DatingCard />;
     }
     if (this.state.activeTabIndex === 2) {
-      return (
-        <View>
-          <Text>tab 2 card {item}</Text>
-        </View>
-      );
+      return <DatingCard />;
     }
 
     return null;
@@ -154,6 +151,7 @@ class DatingContainer extends React.Component {
             },
           ]}
         />
+        <FloatingButton dating />
       </Screen>
     );
   }

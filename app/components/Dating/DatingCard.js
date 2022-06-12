@@ -1,65 +1,86 @@
 import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions, ImageBackground } from "react-native";
 import colors from "../../config/colors";
 import Image from "../Image";
 import Text from "../AppText";
 import Button from "../Button";
 import { Feather } from "@expo/vector-icons";
-
+import FindsMotive from "./FindsMotive";
+import FindsMatchPercentage from "./FindsMatchPercentage";
+import { LinearGradient } from "expo-linear-gradient";
 const width = Dimensions.get("window").width;
 
 function DatingCard(props) {
   return (
-    <View style={styles.container}>
-      <View>
-        <Image style={styles.image} />
-        <Button
-          type={3}
-          content={
-            <Feather name="external-link" size={18} color={colors.secondary} />
-          }
-          style={{
-            padding: 10,
-            backgroundColor: colors.dark_2,
-            borderColor: colors.secondary,
-            borderWidth: 1,
-            borderRadius: 100,
-            //   marginLeft: 5,
-            position: "absolute",
-            right: 0,
-            bottom: -8,
-            //   height: 50,
-          }}
-        />
-      </View>
-      <View
-        style={{
-          flexDirection: "column",
-          alignItems: "center",
-          paddingVertical: 10,
+    <View
+      style={{
+        padding: 5,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        overflow: "hidden",
+      }}
+    >
+      <ImageBackground
+        source={{
+          uri: "https://varsityhq.imgix.net/vhq_img202145455255.jpeg",
         }}
+        style={styles.container}
       >
-        <Text
+        <View
           style={{
-            fontWeight: "700",
+            flex: 1,
+            padding: 10,
           }}
         >
-          chikx_12
-        </Text>
-        <Text
-          style={{
-            color: colors.secondary_2,
-            marginTop: 5,
-          }}
-        >
-          Vibes
-        </Text>
-      </View>
+          <View style={{ flexDirection: "row" }}>
+            <FindsMotive />
+          </View>
+        </View>
+        <View>
+          <View
+            style={{
+              padding: 10,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <FindsMatchPercentage />
+            </View>
+            <Text style={styles.name}>Peter</Text>
+            <Text style={styles.about}>2nd Year, UJ</Text>
+          </View>
+          <LinearGradient
+            style={styles.gradient}
+            colors={[colors.dark, colors.transparent]}
+            // colors={["red", "white"]}
+            start={[0, 1]}
+            end={[0, 0]}
+          />
+        </View>
+      </ImageBackground>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  gradient: {
+    position: "absolute",
+    height: "100%",
+    width: "100%",
+    borderRadius: 10,
+    zIndex: -1,
+  },
+  name: {
+    fontWeight: "700",
+  },
+  about: {
+    fontSize: 13,
+    fontWeight: "600",
+  },
   image: {
     width: width / 2 - width * 0.05,
     height: width / 2 - width * 0.05,
@@ -67,16 +88,11 @@ const styles = StyleSheet.create({
     // aspectRatio: 9 / 3,
   },
   container: {
-    width: width / 2,
-    // height: width / 3,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    // padding: 6,
-    // borderRadius: 100,
-    borderColor: colors.primary,
-    borderWidth: 0,
+    width: width / 2 - width * 0.03,
+    height: width / 2 - width * 0.03,
     overflow: "hidden",
+    padding: 0,
+    borderRadius: 8,
   },
 });
 

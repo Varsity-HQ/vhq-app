@@ -46,7 +46,21 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex }) {
   return (
     <View style={styles.main_container}>
       <View style={styles.top_container}>
-        <Image style={styles.profilepic} uri={profilepic} />
+        <View style={styles.left_container}>
+          <Image style={styles.profilepic} uri={profilepic} />
+          <Text
+            style={[
+              styles.titleStyle,
+              {
+                color: colors.light,
+                fontSize: RFValue(15),
+                marginLeft: 10,
+              },
+            ]}
+          >
+            {tabs[activeTabIndex - 1].title}
+          </Text>
+        </View>
         <View style={[styles.menu_container]}>
           {tabs.map((x) => (
             <TouchableOpacity
@@ -62,26 +76,12 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex }) {
                     activeTabIndex === x.index
                       ? colors.circleColor
                       : colors.transparent,
+                  paddingHorizontal: activeTabIndex === x.index ? 10 : 5,
                 },
               ]}
               key={x.index}
             >
               {activeTabIndex === x.index ? x.icon_a : x.icon}
-              {/* <Text
-                style={[
-                  styles.titleStyle,
-                  {
-                    color:
-                      activeTabIndex === x.index
-                        ? colors.light
-                        : colors.secondary_2,
-                    fontSize:
-                      activeTabIndex === x.index ? RFValue(25) : RFValue(20),
-                  },
-                ]}
-              >
-                {x.title}
-              </Text> */}
             </TouchableOpacity>
           ))}
         </View>
@@ -98,6 +98,10 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex }) {
 }
 
 const styles = StyleSheet.create({
+  left_container: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   icon: {
     height: 40,
     width: 40,
@@ -181,8 +185,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dark,
   },
   profilepic: {
-    height: height * 0.05,
-    width: height * 0.05,
+    height: height * 0.045,
+    width: height * 0.045,
     borderRadius: 100,
     marginLeft: 10,
   },
