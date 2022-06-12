@@ -23,6 +23,7 @@ export const DATING_INTRO = "DatingIntro";
 export const CREATE_SHOW = "CreateShow";
 export const DATING_ENCOUNTERS = "DatingEncouters";
 export const DATING_CONTAINER = "DatingContainer";
+export const DATING_PROFILE_PAGE = "DatingProfilePage";
 
 //Marketplace Screens
 export const MARKETPLACE_HOME = "MarketplaceHome";

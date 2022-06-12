@@ -1,5 +1,11 @@
 import React from "react";
-import { View, StyleSheet, Dimensions, ImageBackground } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  ImageBackground,
+  TouchableWithoutFeedback,
+} from "react-native";
 import colors from "../../config/colors";
 import Image from "../Image";
 import Text from "../AppText";
@@ -8,61 +14,69 @@ import { Feather } from "@expo/vector-icons";
 import FindsMotive from "./FindsMotive";
 import FindsMatchPercentage from "./FindsMatchPercentage";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
+import { DATING_PROFILE_PAGE } from "../../navigation/routes";
+
 const width = Dimensions.get("window").width;
 
 function DatingCard(props) {
+  const navigation = useNavigation();
   return (
-    <View
-      style={{
-        padding: 5,
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        overflow: "hidden",
-      }}
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate(DATING_PROFILE_PAGE)}
     >
-      <ImageBackground
-        source={{
-          uri: "https://varsityhq.imgix.net/vhq_img202145455255.jpeg",
+      <View
+        style={{
+          padding: 5,
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          overflow: "hidden",
         }}
-        style={styles.container}
       >
-        <View
-          style={{
-            flex: 1,
-            padding: 10,
+        <ImageBackground
+          source={{
+            uri: "https://varsityhq.imgix.net/vhq_img202145455255.jpeg",
           }}
+          style={styles.container}
         >
-          <View style={{ flexDirection: "row" }}>
-            <FindsMotive />
-          </View>
-        </View>
-        <View>
           <View
             style={{
+              flex: 1,
               padding: 10,
             }}
           >
+            <View style={{ flexDirection: "row" }}>
+              <FindsMotive />
+            </View>
+          </View>
+          <View>
             <View
               style={{
-                flexDirection: "row",
+                padding: 10,
               }}
             >
-              <FindsMatchPercentage />
+              <View
+                style={{
+                  flexDirection: "row",
+                }}
+              >
+                <FindsMatchPercentage />
+              </View>
+              <Text style={styles.name}>Peter</Text>
+              <Text style={styles.about}>2nd Year, UJ</Text>
             </View>
-            <Text style={styles.name}>Peter</Text>
-            <Text style={styles.about}>2nd Year, UJ</Text>
+            <LinearGradient
+              style={styles.gradient}
+              colors={[colors.dark, colors.transparent]}
+              // colors={["red", "white"]}
+              start={[0, 1]}
+              end={[0, 0]}
+            />
           </View>
-          <LinearGradient
-            style={styles.gradient}
-            colors={[colors.dark, colors.transparent]}
-            // colors={["red", "white"]}
-            start={[0, 1]}
-            end={[0, 0]}
-          />
-        </View>
-      </ImageBackground>
-    </View>
+        </ImageBackground>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
