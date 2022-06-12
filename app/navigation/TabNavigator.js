@@ -18,6 +18,7 @@ import { collection, doc } from "firebase/firestore";
 import { connect } from "react-redux";
 import MarketplaceNavigator from "./MarketplaceNavigator";
 import MarketplaceComingSoon from "../screens/MarketplaceComingSoon";
+import { AntDesign, FontAwesome5 } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -110,10 +111,11 @@ const AppNavigator = ({ user_id }) => {
       />
       <Tab.Screen
         options={{
-          tabBarLabel: "Meet",
+          tabBarLabel: "Discover",
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <RIcon name="group-2-line" color={color} size={size + 3} />
+            <FontAwesome5 name="user-astronaut" color={color} size={size} />
+            // <AntDesign name="find" color={color} size={size + 3} />
           ),
 
           tabBarShowLabel: true,

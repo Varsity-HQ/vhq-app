@@ -83,7 +83,7 @@ function DiscoverPage({
     return (
       <Screen scroll style={styles.container}>
         <FancyHeader
-          headerTextTitle="Discover"
+          headerTextTitle="Friends"
           headerTextFaded={`@${universityShortName(university)}`}
           active={activeTab}
           tabs={tabs}
@@ -126,7 +126,7 @@ function DiscoverPage({
   return (
     <Screen scroll style={styles.container}>
       <FancyHeader
-        headerTextTitle="Discover"
+        headerTextTitle="Friends"
         headerTextFaded={`@${universityShortName(university)}`}
         active={activeTab}
         tabs={tabs}

@@ -1,3 +1,9 @@
+/**
+ * VarsityHQ theme colors
+ * @author Harmony
+ * @version 1.0.1
+ * @ownedby VarsityHQ
+ */
 export default {
   transparent: "#ffffff00",
   primary: "#1acfff",

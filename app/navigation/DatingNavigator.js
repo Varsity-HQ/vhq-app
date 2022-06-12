@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Profile from "../screens/Profile";
@@ -12,6 +12,7 @@ import CSLookingFor from "../screens/DatingScreens/CreateShow/CSLookingFor";
 import CSInterestedIn from "../screens/DatingScreens/CreateShow/CSInterestedIn";
 import CSPhotos from "../screens/DatingScreens/CreateShow/CSPhotos";
 import DatingContainer from "../screens/DatingScreens/DatingContainer";
+import * as Location from "expo-location";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,23 +36,54 @@ const CreateShowStack = () => {
   );
 };
 
-const DatingNavigator = () => (
-  <Stack.Navigator
-    screenOptions={{
-      headerShown: false,
-      animation: "slide_from_right",
-    }}
-    initialRouteName={routes.DATING_INTRO}
-  >
-    {/* <Stack.Screen name={routes.CREATE_SHOW} component={CreateShowStack} /> */}
-    {/* <Stack.Screen name={routes.DATING_INTRO} component={DatingIntroScreen} /> */}
-    <Stack.Screen name={routes.DATING_CONTAINER} component={DatingContainer} />
+const DatingNavigator = () => {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
-    {/* <Stack.Screen
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  let text = "Waiting..";
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
+  console.log({ text });
+  console.log({ location });
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        animation: "slide_from_right",
+      }}
+      initialRouteName={routes.DATING_INTRO}
+    >
+      {/* <Stack.Screen name={routes.CREATE_SHOW} component={CreateShowStack} /> */}
+      {/* <Stack.Screen name={routes.DATING_INTRO} component={DatingIntroScreen} /> */}
+      <Stack.Screen
+        name={routes.DATING_CONTAINER}
+        component={DatingContainer}
+      />
+
+      {/* <Stack.Screen
       name={routes.DATING_ENCOUNTERS}
       component={DatingEncountersScreen}
     /> */}
-  </Stack.Navigator>
-);
+    </Stack.Navigator>
+  );
+};
 
 export default DatingNavigator;

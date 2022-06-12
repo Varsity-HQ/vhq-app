@@ -1,11 +1,6 @@
-import { View, StyleSheet, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
+import { StyleSheet, FlatList } from "react-native";
 import Screen from "../../components/Screen";
-import CommonHeader from "../../components/Marketplace/CommonHeader";
-import Text from "../../components/AppText";
-import { RFValue } from "react-native-responsive-fontsize";
-import colors from "../../config/colors";
-import FilterByCategory from "../../components/Marketplace/FilterByCategory";
 import CategoryPageHeader from "../../components/Marketplace/CategoryPageHeader";
 import ListCard from "../../components/Marketplace/ListCard";
 import { useRoute } from "@react-navigation/native";
@@ -52,9 +47,9 @@ function CategoryPage({ get_category, loading, data }) {
     }
   }
 
-  const renderItem = ({ item }) => {
+  function renderItem({ item }) {
     return <ListCard x={item} />;
-  };
+  }
 
   if (loading) {
     return (

@@ -7,8 +7,9 @@ import { RFValue } from "react-native-responsive-fontsize";
 import colors from "../../config/colors";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 const height = Dimensions.get("window").height;
-
+import { Ionicons } from "@expo/vector-icons";
 import SwipeContainer from "./SwipeContainer";
+import DatingVisibility from "./DatingVisibility";
 
 const mapStateToProps = (state) => {
   return {
@@ -45,21 +46,34 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex }) {
   return (
     <View style={styles.main_container}>
       <View style={styles.top_container}>
-        <View
-          style={[
-            styles.menu_container,
-            {
-              paddingLeft: 0,
-            },
-          ]}
-        >
+        <Image style={styles.profilepic} uri={profilepic} />
+        <View style={[styles.menu_container]}>
           {tabs.map((x) => (
             <TouchableOpacity
               onPress={() => setTabIndex(x.index)}
-              style={[styles.tab_button]}
+              style={[
+                styles.tab_button,
+                {
+                  backgroundColor:
+                    activeTabIndex === x.index
+                      ? colors.primary
+                      : colors.transparent,
+                  borderColor:
+                    activeTabIndex === x.index
+                      ? colors.secondary_2
+                      : colors.transparent,
+                },
+              ]}
               key={x.index}
             >
-              <Text
+              <Image
+                local
+                uri={{
+                  uri: activeTabIndex === x.index ? x.icon_a : x.icon,
+                }}
+                style={styles.icon}
+              />
+              {/* <Text
                 style={[
                   styles.titleStyle,
                   {
@@ -73,44 +87,41 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex }) {
                 ]}
               >
                 {x.title}
-              </Text>
+              </Text> */}
             </TouchableOpacity>
           ))}
         </View>
-        <Image style={styles.profilepic} uri={profilepic} />
-      </View>
-      <View style={styles.bottom_container}>
-        <View style={styles.menu_container}>
-          {subTabs.map((x) => (
-            <TouchableOpacity
-              key={x.index}
-              // onPress={() => setTabIndex(x.index)}
-              style={[styles.subtab_button]}
-            >
-              {x.icon}
-            </TouchableOpacity>
-          ))}
-        </View>
-        <View style={styles.sideItem}>
-          <FontAwesome
-            color={colors.dark_2}
-            style={{
-              marginRight: 4,
-            }}
-            size={18}
-            name="university"
-          />
-          <Text style={styles.university}>UJ</Text>
+
+        <View style={styles.right_eye}>
+          <Ionicons name="ios-eye" size={24} color={colors.white} />
+          <Text style={styles.eye_counter}>2</Text>
         </View>
       </View>
+      <DatingVisibility />
       {/* <SwipeContainer /> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  icon: {
+    height: 40,
+    width: 40,
+  },
+  eye_counter: {
+    fontSize: 16,
+    fontWeight: "700",
+    marginLeft: 5,
+  },
+  right_eye: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.dark_opacity_2,
+    borderRadius: 100,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
   main_container: {
-    backgroundColor: colors.secondary,
     marginBottom: 15,
   },
   university: {
@@ -142,16 +153,21 @@ const styles = StyleSheet.create({
     fontFamily: "SF-Pro-Rounded-Bold",
   },
   tab_button: {
-    paddingVertical: 20,
     paddingHorizontal: 10,
+
+    borderRadius: 100,
+    borderWidth: 2,
+    borderColor: colors.transparent,
   },
   menu_container: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 12,
+    backgroundColor: colors.dark_2,
+    borderRadius: 100,
+    overflow: "hidden",
   },
   top_container: {
-    // paddingHorizontal: 20,
+    paddingVertical: 20,
     paddingRight: 12,
     width: "100%",
     justifyContent: "space-between",
@@ -171,9 +187,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dark,
   },
   profilepic: {
-    height: height * 0.055,
-    width: height * 0.055,
+    height: height * 0.05,
+    width: height * 0.05,
     borderRadius: 100,
+    marginLeft: 10,
   },
 });
 

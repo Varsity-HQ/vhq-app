@@ -46,7 +46,7 @@ const home_tabs = [
     icon: <FontAwesome color={colors.white} size={16} name="calendar-o" />,
   },
   {
-    title: "Discover",
+    title: "Meet Friends",
     index: 3,
     navTo: DISCOVER_PAGE,
     icon: (
