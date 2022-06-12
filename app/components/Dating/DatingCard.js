@@ -61,13 +61,13 @@ function DatingCard(props) {
 
 const styles = StyleSheet.create({
   image: {
-    width: width / 3 - width * 0.05,
-    height: width / 3 - width * 0.05,
-    borderRadius: 1000,
+    width: width / 2 - width * 0.05,
+    height: width / 2 - width * 0.05,
+    borderRadius: 10,
     // aspectRatio: 9 / 3,
   },
   container: {
-    width: width / 3,
+    width: width / 2,
     // height: width / 3,
     flexDirection: "column",
     alignItems: "center",

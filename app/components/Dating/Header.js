@@ -60,19 +60,13 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex }) {
                       : colors.transparent,
                   borderColor:
                     activeTabIndex === x.index
-                      ? colors.secondary_2
+                      ? colors.circleColor
                       : colors.transparent,
                 },
               ]}
               key={x.index}
             >
-              <Image
-                local
-                uri={{
-                  uri: activeTabIndex === x.index ? x.icon_a : x.icon,
-                }}
-                style={styles.icon}
-              />
+              {activeTabIndex === x.index ? x.icon_a : x.icon}
               {/* <Text
                 style={[
                   styles.titleStyle,
@@ -153,8 +147,8 @@ const styles = StyleSheet.create({
     fontFamily: "SF-Pro-Rounded-Bold",
   },
   tab_button: {
-    paddingHorizontal: 10,
-
+    paddingHorizontal: 5,
+    paddingVertical: 5,
     borderRadius: 100,
     borderWidth: 2,
     borderColor: colors.transparent,
