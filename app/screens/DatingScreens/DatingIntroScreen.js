@@ -12,6 +12,7 @@ import {
   CREATE_SHOW,
   DATING_CONTAINER,
   DATING_ENCOUNTERS,
+  MY_DISCOVER_PROFILE,
 } from "../../navigation/routes";
 import { normalizeText } from "../../util/responsivePx";
 
@@ -24,6 +25,7 @@ const mapStateToProps = (state) => {
 };
 
 function DatingIntroScreen({ profilepic, navigation }) {
+  //
   if (false) {
     return (
       <Screen style={styles.container}>
@@ -76,7 +78,7 @@ function DatingIntroScreen({ profilepic, navigation }) {
       </Screen>
     );
   }
-
+  //
   return (
     <Screen style={styles.container}>
       <View style={{ width: "85%" }}>
@@ -103,7 +105,7 @@ function DatingIntroScreen({ profilepic, navigation }) {
           started by setting up your discovery profile and meet friends
         </Text>
         <Button
-          onPress={() => navigation.navigate(CREATE_SHOW)}
+          onPress={() => navigation.navigate(MY_DISCOVER_PROFILE)}
           style={[styles.center, styles.create_button]}
           title="GET STARTED"
         />
@@ -113,6 +115,7 @@ function DatingIntroScreen({ profilepic, navigation }) {
       </View>
     </Screen>
   );
+  //
 }
 
 const styles = StyleSheet.create({
@@ -147,7 +150,6 @@ const styles = StyleSheet.create({
   },
   pp_images: {
     marginBottom: 20,
-
     flexDirection: "row",
     justifyContent: "center",
     position: "relative",

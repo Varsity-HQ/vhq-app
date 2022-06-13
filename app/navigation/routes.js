@@ -24,6 +24,7 @@ export const CREATE_SHOW = "CreateShow";
 export const DATING_ENCOUNTERS = "DatingEncouters";
 export const DATING_CONTAINER = "DatingContainer";
 export const DATING_PROFILE_PAGE = "DatingProfilePage";
+export const MY_DISCOVER_PROFILE = "MyDiscoverProfile";
 
 //Marketplace Screens
 export const MARKETPLACE_HOME = "MarketplaceHome";

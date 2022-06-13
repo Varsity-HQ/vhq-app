@@ -14,6 +14,7 @@ import CSPhotos from "../screens/DatingScreens/CreateShow/CSPhotos";
 import DatingContainer from "../screens/DatingScreens/DatingContainer";
 import * as Location from "expo-location";
 import DatingProfilePage from "../screens/DatingScreens/DatingProfilePage";
+import MyDiscoverProfile from "../screens/DatingScreens/MyDiscoverProfile";
 
 const Stack = createNativeStackNavigator();
 
@@ -82,6 +83,12 @@ const DatingNavigator = () => {
         name={routes.DATING_PROFILE_PAGE}
         component={DatingProfilePage}
       />
+
+      <Stack.Screen
+        name={routes.MY_DISCOVER_PROFILE}
+        component={MyDiscoverProfile}
+      />
+
       {/* 
       <Stack.Screen
         name={routes.DATING_ENCOUNTERS}

@@ -18,6 +18,8 @@ import { RFValue } from "react-native-responsive-fontsize";
 import IconButton from "../../components/IconButton";
 import FindsMatchPercentage from "../../components/Dating/FindsMatchPercentage";
 import FindsMotive from "../../components/Dating/FindsMotive";
+import InfoTextArea from "../../components/Dating/InfoText";
+import InforBox from "../../components/Dating/InforBox";
 
 const height = Dimensions.get("window").height;
 
@@ -152,13 +154,13 @@ function DatingProfilePage(props) {
               <FindsMatchPercentage />
               <Text style={{ marginLeft: 10 }}>Great match !</Text>
             </View>
-            <TextArea
+            <InfoTextArea
               header="About"
               text="Just chatting with people and meeting new friends. I have nothing to
             offer"
             />
-            <Inforbox header="Main information" />
-            <TextArea
+            <InforBox header="Main information" />
+            <InfoTextArea
               header="University/College"
               text="University of Johannesburg"
             />
@@ -169,93 +171,7 @@ function DatingProfilePage(props) {
   );
 }
 
-const TextArea = ({ header, text }) => (
-  <View
-    style={{
-      marginBottom: 12,
-    }}
-  >
-    <Text
-      style={{
-        fontSize: RFValue(12),
-        fontWeight: "700",
-        marginBottom: 10,
-        color: colors.secondary_2,
-      }}
-    >
-      {header}
-    </Text>
-    <View style={styles.c_area}>
-      <Text style={{ color: colors.secondary }}>{text}</Text>
-    </View>
-  </View>
-);
-
-const Inforbox = ({ header, text }) => {
-  return (
-    <View
-      style={{
-        marginBottom: 12,
-      }}
-    >
-      <Text
-        style={{
-          fontSize: RFValue(12),
-          fontWeight: "700",
-          marginBottom: 10,
-          color: colors.secondary_2,
-        }}
-      >
-        {header}
-      </Text>
-      <View
-        style={[
-          styles.c_area,
-          styles.c_i_area,
-          {
-            paddingBottom: 7,
-          },
-        ]}
-      >
-        <InfoItem name="gender" text="Male" />
-        <InfoItem name="star_sign" text="Sagittarius" />
-        <InfoItem name="age" text="18" />
-        <InfoItem name="s_orientation" text="Straight" />
-        <InfoItem name="university" text="UJ" />
-      </View>
-    </View>
-  );
-};
-
-const InfoItem = ({ name, text }) => {
-  return (
-    <View style={styles.info_item}>
-      <View></View>
-      <View>
-        <Text style={{ color: colors.lighish2 }}>{text}</Text>
-      </View>
-    </View>
-  );
-};
-
 const styles = StyleSheet.create({
-  c_i_area: {
-    flexWrap: "wrap",
-    flexDirection: "row",
-  },
-  info_item: {
-    backgroundColor: colors.secondary_2,
-    paddingHorizontal: 12,
-    marginRight: 5,
-    borderRadius: 30,
-    paddingVertical: 8,
-    marginBottom: 8,
-  },
-  c_area: {
-    backgroundColor: colors.dark_opacity_2,
-    padding: 15,
-    borderRadius: 15,
-  },
   btnText: {
     color: colors.secondary,
     fontSize: 14,
