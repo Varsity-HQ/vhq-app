@@ -117,20 +117,9 @@ function MyDiscoverProfile(props) {
               borderTopWidth: 1,
               marginHorizontal: 15,
               marginTop: 20,
+              paddingTop: 20,
             }}
           >
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginVertical: 20,
-              }}
-            >
-              <FindsMotive />
-              <View style={{ paddingHorizontal: 5 }} />
-              <FindsMatchPercentage />
-              <Text style={{ marginLeft: 10 }}>Great match !</Text>
-            </View>
             <InfoTextArea
               header="About"
               text="Just chatting with people and meeting new friends. I have nothing to
