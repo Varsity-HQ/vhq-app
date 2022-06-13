@@ -8,7 +8,11 @@ import Image from "../../components/Image";
 import DatingLoader from "../../components/Loaders/HomeUploading";
 import Screen from "../../components/Screen";
 import colors from "../../config/colors";
-import { CREATE_SHOW, DATING_ENCOUNTERS } from "../../navigation/routes";
+import {
+  CREATE_SHOW,
+  DATING_CONTAINER,
+  DATING_ENCOUNTERS,
+} from "../../navigation/routes";
 import { normalizeText } from "../../util/responsivePx";
 
 const height = Dimensions.get("window").height;
@@ -50,7 +54,7 @@ function DatingIntroScreen({ profilepic, navigation }) {
               },
             ]}
           >
-            Preparing
+            Wait..
           </Text>
           <View style={styles.hContainer}>
             <Text style={[styles.center, styles.subText]}>
@@ -78,38 +82,33 @@ function DatingIntroScreen({ profilepic, navigation }) {
       <View style={{ width: "85%" }}>
         <View style={styles.pp_images}>
           <Image
+            local
             style={styles.other_pp1}
-            uri={
-              "https://image.shutterstock.com/image-photo/close-beauty-portrait-young-charming-600w-1931216711.jpg"
-            }
+            uri={{
+              uri: "https://image.shutterstock.com/image-photo/close-beauty-portrait-young-charming-600w-1931216711.jpg",
+            }}
           />
           <Image style={styles.my_pp} uri={profilepic} />
           <Image
+            local
             style={styles.other_pp2}
-            uri={
-              "https://image.shutterstock.com/image-photo/portrait-beautiful-african-american-female-600w-721419679.jpg"
-            }
+            uri={{
+              uri: "https://image.shutterstock.com/image-photo/close-portrait-beautiful-girl-black-600w-2158289069.jpg",
+            }}
           />
         </View>
-        <Text style={[styles.center, styles.heading]}>
-          Ready to meet someone ?
-        </Text>
+        <Text style={[styles.center, styles.heading]}>Set up your profile</Text>
         <Text style={styles.subText}>
-          Create a show to meet and chat to more encounters around your
-          university. We actually show you people that are looking for an
-          encounter and no dead profiles
+          Meet new friends, discover cool people and maybe go on dates 🙃. Get
+          started by setting up your discovery profile and meet friends
         </Text>
         <Button
           onPress={() => navigation.navigate(CREATE_SHOW)}
-          style={[styles.center]}
-          title="Create Show"
+          style={[styles.center, styles.create_button]}
+          title="GET STARTED"
         />
-        <TouchableOpacity
-          onPress={() => navigation.navigate(DATING_ENCOUNTERS)}
-        >
-          <Text style={[styles.center, styles.text_bottom]}>
-            See encounters
-          </Text>
+        <TouchableOpacity onPress={() => navigation.navigate(DATING_CONTAINER)}>
+          <Text style={[styles.center, styles.text_bottom]}>Take a peek</Text>
         </TouchableOpacity>
       </View>
     </Screen>
@@ -117,6 +116,9 @@ function DatingIntroScreen({ profilepic, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  create_button: {
+    borderWidth: 1,
+  },
   hContainer: {
     backgroundColor: colors.dark_opacity_2,
     flexDirection: "row",
@@ -128,16 +130,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   other_pp1: {
-    height: height * 0.15,
-    width: height * 0.15,
+    height: height * 0.13,
+    width: height * 0.13,
     borderRadius: 100,
     // zIndex: 1,
     right: -25,
     position: "relative",
   },
   other_pp2: {
-    height: height * 0.15,
-    width: height * 0.15,
+    height: height * 0.13,
+    width: height * 0.13,
     borderRadius: 100,
     zIndex: -1,
     position: "relative",
@@ -145,8 +147,7 @@ const styles = StyleSheet.create({
   },
   pp_images: {
     marginBottom: 20,
-    // borderWidth: 1,
-    // borderColor: "red",
+
     flexDirection: "row",
     justifyContent: "center",
     position: "relative",
@@ -154,19 +155,21 @@ const styles = StyleSheet.create({
     // elevation: 50,
   },
   my_pp: {
-    height: height * 0.19,
-    width: height * 0.19,
+    height: height * 0.16,
+    width: height * 0.16,
     // aspectRatio: 9 / 16,
     // height: "100%",
     borderRadius: 100,
+    borderWidth: 3,
+    borderColor: colors.secondary,
   },
   heading: {
-    fontSize: RFValue(22),
+    fontSize: RFValue(17),
     fontWeight: "700",
     marginBottom: 10,
   },
   subText: {
-    color: colors.secondary,
+    color: colors.secondary_2,
     fontSize: RFValue(13),
     textAlign: "center",
     marginBottom: 10,

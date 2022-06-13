@@ -73,7 +73,7 @@ const DatingNavigator = () => {
       initialRouteName={routes.DATING_INTRO}
     >
       {/* <Stack.Screen name={routes.CREATE_SHOW} component={CreateShowStack} /> */}
-      {/* <Stack.Screen name={routes.DATING_INTRO} component={DatingIntroScreen} /> */}
+      <Stack.Screen name={routes.DATING_INTRO} component={DatingIntroScreen} />
       <Stack.Screen
         name={routes.DATING_CONTAINER}
         component={DatingContainer}
@@ -82,11 +82,11 @@ const DatingNavigator = () => {
         name={routes.DATING_PROFILE_PAGE}
         component={DatingProfilePage}
       />
-
-      {/* <Stack.Screen
-      name={routes.DATING_ENCOUNTERS}
-      component={DatingEncountersScreen}
-    /> */}
+      {/* 
+      <Stack.Screen
+        name={routes.DATING_ENCOUNTERS}
+        component={DatingEncountersScreen}
+      /> */}
     </Stack.Navigator>
   );
 };
