@@ -3,6 +3,7 @@ const init_accdata = {
   firstname: "",
   surname: "",
   profilepic: "",
+  sub_profilepic: "",
   friends: 0,
 
   notificationToken: "",

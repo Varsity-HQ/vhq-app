@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -22,13 +22,32 @@ import InfoTextArea from "../../components/Dating/InfoText";
 import InforBox from "../../components/Dating/InforBox";
 import DatingVisibility from "../../components/Dating/DatingVisibility";
 import { Ionicons } from "@expo/vector-icons";
+import DatingProfilePicModal from "../../components/Dating/DatingProfilePicModal";
+
+import { connect } from "react-redux";
 
 const height = Dimensions.get("window").height;
 
-function MyDiscoverProfile(props) {
+const mapStateToProps = (state) => {
+  return {
+    uploading_profilepic: state.datingReducer.profile.uploading_profilepic,
+    profilepic: state.datingReducer.profile.profilepic,
+  };
+};
+
+function MyDiscoverProfile({ uploading_profilepic, profilepic }) {
   const inserts = useSafeAreaInsets();
+
+  const [isPPModalVisible, setIsPPModalVisible] = useState(false);
+  const handlePPModal = () => setIsPPModalVisible(() => !isPPModalVisible);
+
   return (
     <ScrollView scroll style={[styles.container]}>
+      <DatingProfilePicModal
+        isModalVisible={isPPModalVisible}
+        handleModal={handlePPModal}
+        setIsModalVisible={setIsPPModalVisible}
+      />
       <ImageBackground
         source={require("../../assets/background-pattern.png")}
         style={[
@@ -49,10 +68,33 @@ function MyDiscoverProfile(props) {
       <View style={styles.container}>
         <View style={styles.inner_container}>
           <View style={styles.profilepic_container}>
-            <Image
-              uri="https://varsityhq.imgix.net/vhq_img202145455255.jpeg"
-              style={styles.profilepic}
-            />
+            <View style={styles.profile_changer_container}>
+              <Image uri={profilepic} style={styles.profilepic} />
+              <Button
+                onPress={handlePPModal}
+                style={[
+                  styles.profile_image_overflow_item,
+                  {
+                    padding: 0,
+                    top: -(height * 0.012),
+                    margin: 0,
+                  },
+                ]}
+                type={3}
+                content={
+                  <View style={styles.profile_image_overflow_item}>
+                    <Ionicons
+                      name="ios-camera-reverse-outline"
+                      size={34}
+                      color={colors.white}
+                    />
+                    {uploading_profilepic && (
+                      <Text style={{ fontSize: 14 }}>Updating..</Text>
+                    )}
+                  </View>
+                }
+              />
+            </View>
           </View>
           <View style={styles.meta_container}>
             <View
@@ -138,6 +180,22 @@ function MyDiscoverProfile(props) {
 }
 
 const styles = StyleSheet.create({
+  profile_image_overflow_item: {
+    position: "absolute",
+    top: 1,
+    backgroundColor: colors.dark_opacity,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  profile_changer_container: {
+    backgroundColor: colors.dark_opacity_2,
+    zIndex: 1,
+    borderRadius: 1000,
+    position: "relative",
+    overflow: "hidden",
+  },
   row: {
     flexDirection: "row",
     alignItems: "center",
@@ -195,4 +253,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyDiscoverProfile;
+export default connect(mapStateToProps, null)(MyDiscoverProfile);

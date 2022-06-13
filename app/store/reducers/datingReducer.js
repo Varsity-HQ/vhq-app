@@ -4,6 +4,7 @@ const initialState = {
     loading: true,
     name: "",
     profilepic: "",
+    uploading_profilepic: false,
     seen_count: "",
     is_active: false,
     purpose: "dating",
@@ -23,6 +24,14 @@ const initialState = {
 
 const datingReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "SET_UPLOADING_DATING_PROFILE_PIC":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          uploading_profilepic: actions.payload,
+        },
+      };
     case "UPDATE_DATING_MAIN_INFO":
       return {
         ...state,

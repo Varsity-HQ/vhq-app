@@ -1,3 +1,8 @@
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import uuid from "uuid";
+import store from "../store";
+import axios from "axios";
+
 export const update_dating_purpose = (purpose, interested_in) => (dispatch) => {
   dispatch({
     type: "DATING_UPDATE_PURPOSE",
@@ -32,5 +37,73 @@ export const update_dating_main_info = (info) => (dispatch) => {
   dispatch({
     type: "UPDATE_DATING_MAIN_INFO",
     payload: { ...info },
+  });
+};
+
+export const import_vhq_profile_to_dating = () => async (dispatch) => {
+  dispatch({
+    type: "SET_UPLOADING_DATING_PROFILE_PIC",
+    payload: true,
+  });
+
+  let current_vhq_pp = store.getState().core.accData.profilepic;
+
+  if (current_vhq_pp) {
+    let profilepic_url = await uploadImageAsync(current_vhq_pp);
+
+    axios
+      .post("/changesubprofilepic/byurl", {
+        newUrl: profilepic_url,
+      })
+      .then(() => {
+        dispatch({
+          type: "DATING_UPDATE_PROFILE_PIC",
+          payload: profilepic_url,
+        });
+        dispatch({
+          type: "SET_UPLOADING_DATING_PROFILE_PIC",
+          payload: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: "SET_UPLOADING_DATING_PROFILE_PIC",
+          payload: false,
+        });
+      });
+  } else {
+    dispatch({
+      type: "SET_UPLOADING_DATING_PROFILE_PIC",
+      payload: false,
+    });
+  }
+};
+
+const uploadImageAsync = async (uri) => {
+  return await new Promise(async (resolve, reject) => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+
+    const fileRef = ref(getStorage(), `vhq_${uuid.v4()}.jpeg`);
+    const result = await uploadBytes(fileRef, blob);
+
+    // We're done with the blob, close and release it
+    blob.close();
+
+    let downloadUrl = await getDownloadURL(fileRef);
+
+    resolve(downloadUrl); // peviously return;
+    reject("failed to upload");
   });
 };
