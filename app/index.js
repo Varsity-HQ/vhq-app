@@ -112,6 +112,7 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
       require("./assets/signup-img-1.jpg"),
       require("./assets/signup-img-2.jpg"),
       require("./assets/vhqcat-small.png"),
+      require("./assets/background-pattern.png"),
     ]);
 
     const fontAssets = cacheFonts([

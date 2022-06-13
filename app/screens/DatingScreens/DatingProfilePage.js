@@ -25,13 +25,6 @@ const height = Dimensions.get("window").height;
 
 function DatingProfilePage(props) {
   const inserts = useSafeAreaInsets();
-  const scrollY = new Animated.Value(0);
-  const diffClamp = Animated.diffClamp(scrollY, 0, 45);
-  const translateY = diffClamp.interpolate({
-    inputRange: [0, 45],
-    outputRange: [0, -45],
-  });
-
   return (
     <ScrollView scroll style={[styles.container]}>
       <ImageBackground
