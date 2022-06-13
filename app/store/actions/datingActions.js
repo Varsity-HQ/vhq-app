@@ -40,6 +40,38 @@ export const update_dating_main_info = (info) => (dispatch) => {
   });
 };
 
+export const remove_dating_profile_picture = () => async (dispatch) => {
+  dispatch({
+    type: "SET_UPLOADING_DATING_PROFILE_PIC",
+    payload: true,
+  });
+
+  dispatch({
+    type: "DATING_UPDATE_PROFILE_PIC",
+    payload: "",
+  });
+
+  axios
+    .get("/deletesubprofilepic")
+    .then(() => {
+      dispatch({
+        type: "SET_UPLOADING_DATING_PROFILE_PIC",
+        payload: false,
+      });
+      dispatch({
+        type: "DATING_UPDATE_PROFILE_PIC",
+        payload: "",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "SET_UPLOADING_DATING_PROFILE_PIC",
+        payload: false,
+      });
+    });
+};
+
 export const import_vhq_profile_to_dating = () => async (dispatch) => {
   dispatch({
     type: "SET_UPLOADING_DATING_PROFILE_PIC",

@@ -13,7 +13,10 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
-import { import_vhq_profile_to_dating } from "../../store/actions/datingActions";
+import {
+  import_vhq_profile_to_dating,
+  remove_dating_profile_picture,
+} from "../../store/actions/datingActions";
 
 const mapStateToProps = (state) => {
   return {
@@ -26,6 +29,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     import_vhq_profile_to_dating: () =>
       dispatch(import_vhq_profile_to_dating()),
+    remove_dating_profile_picture: () =>
+      dispatch(remove_dating_profile_picture()),
   };
 };
 
@@ -36,6 +41,7 @@ function DatingProfilePicModal({
   profilepic,
   m_profilepic,
   import_vhq_profile_to_dating,
+  remove_dating_profile_picture,
 }) {
   const options = [
     {
@@ -59,7 +65,8 @@ function DatingProfilePicModal({
       onPress: !profilepic
         ? null
         : () => {
-            console.log("pressed");
+            remove_dating_profile_picture();
+            handleModal();
           },
     },
   ];

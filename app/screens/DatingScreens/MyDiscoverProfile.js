@@ -89,7 +89,7 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic }) {
                       color={colors.white}
                     />
                     {uploading_profilepic && (
-                      <Text style={{ fontSize: 14 }}>Updating..</Text>
+                      <Text style={{ fontSize: 14 }}>Working..</Text>
                     )}
                   </View>
                 }
