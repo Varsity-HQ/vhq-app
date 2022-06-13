@@ -7,9 +7,9 @@ import {
   StatusBar,
   Dimensions,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import AppText from "../AppText";
-import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import Image from "../Image";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -36,6 +36,7 @@ function header3({
   backIcon,
   style,
   noBorder,
+  noBg,
 }) {
   const navigation = useNavigation();
 
@@ -61,6 +62,10 @@ function header3({
             backgroundColor: colors.primary,
             borderBottomWidth: 0,
           },
+          noBg && {
+            backgroundColor: colors.transparent,
+            borderBottomWidth: 0,
+          },
         ]}
       >
         <View style={styles.content}>
@@ -73,6 +78,9 @@ function header3({
                 {
                   paddingVertical: backIcon ? 0 : 8,
                   backgroundColor: bgActive ? colors.primary : colors.dark,
+                },
+                noBg && {
+                  backgroundColor: colors.transparent,
                 },
               ]}
             >
@@ -133,6 +141,9 @@ function header3({
                   paddingRight: 20,
                   backgroundColor: bgActive ? colors.primary : colors.dark,
                 },
+                noBg && {
+                  backgroundColor: colors.transparent,
+                },
               ]}
             >
               <View
@@ -148,14 +159,22 @@ function header3({
                   color={colors.secondary}
                   style={{ marginRight: 10 }}
                 />
-                <AppText
-                  style={[
-                    styles.text,
-                    { color: colors.secondary, fontWeight: "700" },
-                  ]}
-                >
-                  {buttonText}
-                </AppText>
+                {buttonText === "ellipsis" ? (
+                  <Ionicons
+                    name="ellipsis-vertical"
+                    size={24}
+                    color={colors.white}
+                  />
+                ) : (
+                  <AppText
+                    style={[
+                      styles.text,
+                      { color: colors.secondary, fontWeight: "700" },
+                    ]}
+                  >
+                    {buttonText}
+                  </AppText>
+                )}
               </View>
             </TouchableOpacity>
           </View>
