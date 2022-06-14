@@ -15,6 +15,7 @@ import DatingContainer from "../screens/DatingScreens/DatingContainer";
 import * as Location from "expo-location";
 import DatingProfilePage from "../screens/DatingScreens/DatingProfilePage";
 import MyDiscoverProfile from "../screens/DatingScreens/MyDiscoverProfile";
+import useOnlinePresence from "../auth/useOnlinePresence";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +43,8 @@ const DatingNavigator = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
+  useOnlinePresence();
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -62,8 +65,8 @@ const DatingNavigator = () => {
     text = JSON.stringify(location);
   }
 
-  console.log({ text });
-  console.log({ location });
+  // console.log({ text });
+  // console.log({ location });
 
   return (
     <Stack.Navigator
