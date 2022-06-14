@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -16,7 +16,10 @@ import { TouchableOpacity } from "react-native";
 import {
   import_vhq_profile_to_dating,
   remove_dating_profile_picture,
+  upload_dating_profile_picture,
 } from "../../store/actions/datingActions";
+import * as ImagePicker from "expo-image-picker";
+import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
 
 const mapStateToProps = (state) => {
   return {
@@ -31,6 +34,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(import_vhq_profile_to_dating()),
     remove_dating_profile_picture: () =>
       dispatch(remove_dating_profile_picture()),
+    upload_profile_picture: (image) =>
+      dispatch(upload_dating_profile_picture(image)),
   };
 };
 
@@ -42,7 +47,48 @@ function DatingProfilePicModal({
   m_profilepic,
   import_vhq_profile_to_dating,
   remove_dating_profile_picture,
+  upload_profile_picture,
 }) {
+  useEffect(() => {
+    requestPermission();
+  }, []);
+
+  const requestPermission = async () => {
+    const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!granted)
+      alert(
+        "You need to enable permission to access the library in order to save your profile picture",
+      );
+  };
+
+  const process_image = async (uri) => {
+    const manipResult = await manipulateAsync(
+      uri,
+      [{ resize: { height: 300, width: 300 } }],
+      { compress: 0.4, format: SaveFormat.JPEG },
+    );
+    upload_profile_picture(manipResult.uri);
+  };
+
+  const selectImage = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 0.5,
+        aspect: [1, 1],
+        presentationStyle: 0,
+        allowsEditing: true,
+        // base64: true,
+      });
+      //
+      if (!result.cancelled) {
+        process_image(result.uri);
+      }
+    } catch (error) {
+      console.error("Error reading image");
+    }
+  };
+
   const options = [
     {
       disabled: !m_profilepic ? true : false,
@@ -57,7 +103,10 @@ function DatingProfilePicModal({
     {
       disabled: false,
       title: "Choose from Gallery",
-      onPress: () => {},
+      onPress: () => {
+        selectImage();
+        // handleModal();
+      },
     },
     {
       disabled: !profilepic ? true : false,

@@ -19,6 +19,11 @@ const initialState = {
     location: "",
     show_me: ["female", "male"],
     g_postion: "",
+    hashed_location: "",
+    online_status: "",
+    alt: "",
+    long: "",
+    parentID: "",
   },
 };
 

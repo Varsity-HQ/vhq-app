@@ -111,6 +111,43 @@ export const import_vhq_profile_to_dating = () => async (dispatch) => {
     });
   }
 };
+export const upload_dating_profile_picture = (image) => async (dispatch) => {
+  dispatch({
+    type: "SET_UPLOADING_DATING_PROFILE_PIC",
+    payload: true,
+  });
+
+  if (image) {
+    let profilepic_url = await uploadImageAsync(image);
+
+    axios
+      .post("/changesubprofilepic/byurl", {
+        newUrl: profilepic_url,
+      })
+      .then(() => {
+        dispatch({
+          type: "DATING_UPDATE_PROFILE_PIC",
+          payload: profilepic_url,
+        });
+        dispatch({
+          type: "SET_UPLOADING_DATING_PROFILE_PIC",
+          payload: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: "SET_UPLOADING_DATING_PROFILE_PIC",
+          payload: false,
+        });
+      });
+  } else {
+    dispatch({
+      type: "SET_UPLOADING_DATING_PROFILE_PIC",
+      payload: false,
+    });
+  }
+};
 
 const uploadImageAsync = async (uri) => {
   return await new Promise(async (resolve, reject) => {
