@@ -16,6 +16,7 @@ import * as Location from "expo-location";
 import DatingProfilePage from "../screens/DatingScreens/DatingProfilePage";
 import MyDiscoverProfile from "../screens/DatingScreens/MyDiscoverProfile";
 import useOnlinePresence from "../auth/useOnlinePresence";
+import CSAbout from "../screens/DatingScreens/CreateShow/CSAbout";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,10 +32,6 @@ const CreateShowStack = () => {
         name={routes.CS_CONFIRM_GENDER}
         component={CSConfirmGender}
       />
-      <Stack.Screen name={routes.CS_NAME} component={CSName} />
-      <Stack.Screen name={routes.CS_LOOKING_FOR} component={CSLookingFor} />
-      <Stack.Screen name={routes.CS_INTERESTED_IN} component={CSInterestedIn} />
-      <Stack.Screen name={routes.CS_PHOTOS} component={CSPhotos} />
     </Stack.Navigator>
   );
 };
@@ -43,7 +40,7 @@ const DatingNavigator = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  useOnlinePresence();
+  // useOnlinePresence();
 
   useEffect(() => {
     (async () => {
@@ -91,6 +88,11 @@ const DatingNavigator = () => {
         name={routes.MY_DISCOVER_PROFILE}
         component={MyDiscoverProfile}
       />
+
+      <Stack.Screen name={routes.CS_LOOKING_FOR} component={CSLookingFor} />
+      <Stack.Screen name={routes.CS_NAME} component={CSName} />
+      <Stack.Screen name={routes.CS_ABOUT} component={CSAbout} />
+      <Stack.Screen name={routes.CS_INTERESTED_IN} component={CSInterestedIn} />
 
       {/* 
       <Stack.Screen

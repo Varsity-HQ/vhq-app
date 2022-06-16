@@ -41,7 +41,7 @@ function CSLookingFor({ navigation }) {
       <View style={styles.container}>
         <View>
           <Text style={[styles.text_center, styles.header2]}>
-            Nice to meet you Harmony. Tell people why are you here.
+            Tell people why are you here.
           </Text>
 
           <Text
@@ -73,7 +73,7 @@ function CSLookingFor({ navigation }) {
               navigation.navigate(CS_INTERESTED_IN);
             }}
             style={styles.bottomBtn}
-            title={"Continue"}
+            title={"Save"}
           />
         </View>
       </View>

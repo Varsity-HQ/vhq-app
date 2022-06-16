@@ -38,10 +38,15 @@ function OptionSelector({ active, options = [], onChange, type }) {
                       flex: 1,
                     }}
                   >
-                    <Text style={styles.header}>
-                      {x.title}
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text style={styles.header}>{x.title}</Text>
                       <Text style={styles.title_sub}>{x.sub}</Text>
-                    </Text>
+                    </View>
 
                     <Text style={styles.subText}>{x.desc}</Text>
                   </View>
@@ -98,6 +103,50 @@ function OptionSelector({ active, options = [], onChange, type }) {
             }}
             textStyle={{
               fontSize: RFValue(16),
+              fontWeight: "700",
+            }}
+          />
+        ))}
+      </View>
+    );
+  }
+  if (type === 4) {
+    return (
+      <View style={styles.container}>
+        {options.map((x) => (
+          <Button
+            onPress={() => handleChange(x.value)}
+            key={x.value}
+            type={active === x.value ? 4 : 3}
+            content={
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                {x.icon}
+                <Text
+                  style={{
+                    marginLeft: 6,
+                    fontWeight: "700",
+                    color: active === x.value ? colors.white : colors.secondary,
+                    fontSize: active === x.value ? RFValue(15) : RFValue(13),
+                  }}
+                >
+                  {x.title}
+                </Text>
+              </View>
+            }
+            title={x.title}
+            style={{
+              borderColor: colors.primary,
+              borderWidth: 1,
+              borderTopLeftRadius: 20,
+              borderBottomRightRadius: 20,
+            }}
+            textStyle={{
+              fontSize: active === x.value ? RFValue(18) : RFValue(16),
               fontWeight: "700",
             }}
           />
@@ -169,7 +218,7 @@ const styles = StyleSheet.create({
   title_sub: {
     fontSize: RFValue(15),
     fontWeight: "700",
-    marginBottom: 5,
+    // marginBottom: 5,
     color: colors.dark_opacity,
   },
   subText: {

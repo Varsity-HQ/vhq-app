@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Header from "../../components/headers/header3";
 import Text from "../../components/AppText";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import colors from "../../config/colors";
 import Image from "../../components/Image";
@@ -23,8 +23,18 @@ import InforBox from "../../components/Dating/InforBox";
 import DatingVisibility from "../../components/Dating/DatingVisibility";
 import { Ionicons } from "@expo/vector-icons";
 import DatingProfilePicModal from "../../components/Dating/DatingProfilePicModal";
-
+import { FontAwesome5 } from "@expo/vector-icons";
 import { connect } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import CSName from "./CreateShow/CSName";
+import {
+  CS_ABOUT,
+  CS_INTERESTED_IN,
+  CS_LOOKING_FOR,
+  CS_NAME,
+} from "../../navigation/routes";
+import FancyButton from "../../components/FancyButton";
+import AppButton from "../../components/Button";
 
 const height = Dimensions.get("window").height;
 
@@ -37,6 +47,7 @@ const mapStateToProps = (state) => {
 
 function MyDiscoverProfile({ uploading_profilepic, profilepic }) {
   const inserts = useSafeAreaInsets();
+  const navigation = useNavigation();
 
   const [isPPModalVisible, setIsPPModalVisible] = useState(false);
   const handlePPModal = () => setIsPPModalVisible(() => !isPPModalVisible);
@@ -105,6 +116,7 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic }) {
             >
               <Button
                 type={3}
+                onPress={() => navigation.navigate(CS_NAME)}
                 style={{
                   padding: 0,
                   backgroundColor: colors.transparent,
@@ -162,15 +174,45 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic }) {
               paddingTop: 20,
             }}
           >
+            <FancyButton
+              icon={
+                <FontAwesome5
+                  name="user-friends"
+                  size={22}
+                  color={colors.secondary}
+                />
+              }
+              onPress={() => navigation.navigate(CS_LOOKING_FOR)}
+              header="Looking for (Friends)"
+              subText="Specify what you are looking for"
+            />
+            <FancyButton
+              onPress={() => navigation.navigate(CS_INTERESTED_IN)}
+              icon={
+                <FontAwesome5
+                  name="person-booth"
+                  size={22}
+                  color={colors.secondary}
+                />
+              }
+              header="Show me (Females)"
+              subText="Who are you interested in"
+            />
+            <Button type={2} title="How do i look" style={styles.hdil_button} />
             <InfoTextArea
               header="About"
               text="Just chatting with people and meeting new friends. I have nothing to
             offer"
+              actionButton={() => navigation.navigate(CS_ABOUT)}
             />
-            <InforBox header="Main information" />
+            <InforBox
+              header="Main information"
+              actionButton={() => console.log("btn pressed")}
+            />
             <InfoTextArea
               header="University/College"
               text="University of Johannesburg"
+              actionButton={() => console.log("btn pressed")}
             />
           </View>
         </View>
@@ -180,6 +222,11 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic }) {
 }
 
 const styles = StyleSheet.create({
+  hdil_button: {
+    backgroundColor: "#3c4a60",
+    marginBottom: 30,
+    borderColor: colors.darkish3,
+  },
   profile_image_overflow_item: {
     position: "absolute",
     top: 1,

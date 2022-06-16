@@ -9,24 +9,39 @@ import Screen from "../../../components/Screen";
 import colors from "../../../config/colors";
 import { CS_NAME, CS_PHOTOS } from "../../../navigation/routes";
 import styles from "./styles";
-
-const options = [
-  {
-    title: "Males",
-    value: "male",
-  },
-  {
-    title: "Females",
-    value: "female",
-  },
-  // {
-  //   title: "Both",
-  //   value: "both",
-  // },
-];
+import { FontAwesome } from "@expo/vector-icons";
 
 function CSInterestedIn({ navigation }) {
   const [active, setActive] = useState("");
+
+  const options = [
+    {
+      title: "Males",
+      value: "male",
+      icon: (
+        <FontAwesome
+          name="male"
+          size={24}
+          color={active === "male" ? colors.white : colors.secondary}
+        />
+      ),
+    },
+    {
+      title: "Females",
+      value: "female",
+      icon: (
+        <FontAwesome
+          name="female"
+          size={24}
+          color={active === "female" ? colors.white : colors.secondary}
+        />
+      ),
+    },
+    // {
+    //   title: "Both",
+    //   value: "both",
+    // },
+  ];
 
   const handleChange = (i) => {
     setActive(i);
@@ -38,10 +53,11 @@ function CSInterestedIn({ navigation }) {
       <View style={[{ marginTop: "0%" }, styles.container]}>
         <View>
           <Text style={[styles.text_center, styles.header]}>
-            Who should we show
+            Gender to show
           </Text>
           <Text style={[styles.text_center, styles.subText]}>
-            You can change this setting later
+            Which gender are you mostly interested in. You can always change
+            this setting anytime
           </Text>
         </View>
         <View style={styles.form_container}>
@@ -50,6 +66,7 @@ function CSInterestedIn({ navigation }) {
               onChange={handleChange}
               active={active}
               options={options}
+              type={4}
             />
           </View>
         </View>
@@ -60,7 +77,7 @@ function CSInterestedIn({ navigation }) {
             onPress={() => {
               navigation.navigate(CS_PHOTOS);
             }}
-            title={"Continue"}
+            title={"Save"}
           />
         </View>
       </View>

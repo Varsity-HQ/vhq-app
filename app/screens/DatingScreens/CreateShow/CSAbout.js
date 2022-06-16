@@ -1,22 +1,24 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import Screen from "../../../components/Screen";
-
-import Text from "../../../components/AppText";
 import Header from "../../../components/headers/header3";
+import Screen from "../../../components/Screen";
+import Text from "../../../components/AppText";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import styles from "./styles";
-import { CS_LOOKING_FOR } from "../../../navigation/routes";
+import RTextEditor from "../../../components/RTextEditor";
+import colors from "../../../config/colors";
 
-function CSName({ navigation }) {
+function CSAbout(props) {
+  const handleEditorChange = () => {};
+
   return (
-    <Screen>
-      <Header title="Nickname" backIcon />
+    <Screen scroll>
+      <Header title="Discover about" backIcon />
       <View style={styles.container}>
         <View>
           <Text style={[styles.text_center, styles.header2]}>
-            Discovery nickname
+            Tell others about you
           </Text>
 
           <Text
@@ -28,16 +30,21 @@ function CSName({ navigation }) {
               },
             ]}
           >
-            This name will appear on your discover profile and only in
-            Discovery. This name is NOT your VarsityHQ username or name.
+            You can write about yourself or what you're looking for or even the
+            reason why you here, BUT make it interesting.
           </Text>
         </View>
         <View style={styles.form_container}>
-          <View>
-            <Input
-              type={2}
-              style={styles.input}
-              placeholder="Type your nickname"
+          <View
+            style={{
+              borderTopWidth: 2,
+              borderTopColor: colors.secondary,
+              paddingTop: 10,
+            }}
+          >
+            <RTextEditor
+              placeholder="Insert catchy about here..."
+              handleChange={handleEditorChange}
             />
           </View>
         </View>
@@ -49,4 +56,4 @@ function CSName({ navigation }) {
   );
 }
 
-export default CSName;
+export default CSAbout;
