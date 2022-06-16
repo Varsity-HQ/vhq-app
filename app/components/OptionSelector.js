@@ -117,7 +117,7 @@ function OptionSelector({ active, options = [], onChange, type }) {
           <Button
             onPress={() => handleChange(x.value)}
             key={x.value}
-            type={active === x.value ? 4 : 3}
+            type={active === x.value ? 3 : 3}
             content={
               <View
                 style={{
@@ -140,8 +140,8 @@ function OptionSelector({ active, options = [], onChange, type }) {
             }
             title={x.title}
             style={{
-              borderColor: colors.primary,
-              borderWidth: 1,
+              borderColor: active === x.value ? colors.white : colors.primary,
+              borderWidth: active === x.value ? 3 : 1,
               borderTopLeftRadius: 20,
               borderBottomRightRadius: 20,
             }}

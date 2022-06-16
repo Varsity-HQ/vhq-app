@@ -49,7 +49,7 @@ function CSInterestedIn({ navigation }) {
 
   return (
     <Screen>
-      <Header noBorder backIcon />
+      <Header title="Filter gender" backIcon />
       <View style={[{ marginTop: "0%" }, styles.container]}>
         <View>
           <Text style={[styles.text_center, styles.header]}>

@@ -37,7 +37,7 @@ function CSLookingFor({ navigation }) {
 
   return (
     <Screen scroll>
-      <Header noBorder backIcon />
+      <Header title="Discovery interests" backIcon />
       <View style={styles.container}>
         <View>
           <Text style={[styles.text_center, styles.header2]}>
