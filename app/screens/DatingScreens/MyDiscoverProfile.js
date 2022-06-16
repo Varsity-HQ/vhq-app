@@ -42,10 +42,11 @@ const mapStateToProps = (state) => {
   return {
     uploading_profilepic: state.datingReducer.profile.uploading_profilepic,
     profilepic: state.datingReducer.profile.profilepic,
+    profile: state.datingReducer.profile,
   };
 };
 
-function MyDiscoverProfile({ uploading_profilepic, profilepic }) {
+function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
   const inserts = useSafeAreaInsets();
   const navigation = useNavigation();
 
@@ -82,7 +83,7 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic }) {
             <View style={styles.profile_changer_container}>
               <Image uri={profilepic} style={styles.profilepic} />
               <Button
-                onPress={handlePPModal}
+                onPress={uploading_profilepic ? null : handlePPModal}
                 style={[
                   styles.profile_image_overflow_item,
                   {
@@ -123,7 +124,9 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic }) {
                 }}
                 content={
                   <>
-                    <Text style={styles.name}>hector_shies</Text>
+                    <Text style={styles.name}>
+                      {profile.nickname ? profile.nickname : "- - - - - -"}
+                    </Text>
                     <View
                       style={[
                         styles.row,
@@ -160,7 +163,7 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic }) {
                   },
                 ]}
               >
-                Seen 12,432
+                Seen {profile.seen_count}
               </Text>
             </View>
           </View>
@@ -183,7 +186,7 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic }) {
                 />
               }
               onPress={() => navigation.navigate(CS_LOOKING_FOR)}
-              header="Looking for (Friends)"
+              header="Looking for Females"
               subText="Specify what you are looking for"
             />
             <FancyButton

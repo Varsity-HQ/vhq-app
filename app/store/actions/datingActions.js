@@ -230,6 +230,7 @@ const create_discover_profile = async (dispatch) => {
     university: uData.university,
     profilepic: uData.sub_profilepic,
     parentID: uData.userID,
+    nickname: uData.firstname,
   };
 
   const uCollectionRef = collection(db, "discover_profiles");
@@ -254,5 +255,33 @@ const create_discover_profile = async (dispatch) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+};
+
+export const save_dating_nickname = (nickname) => async (dispatch) => {
+  console.log("save_dating_nickname");
+  const discover_profile_id = store.getState().core.accData.discover_profile_id;
+  const uDiscProfileRef = doc(db, "discover_profiles", discover_profile_id);
+
+  dispatch({
+    type: "DATING_UPDATE_NICKNAME_LOADING",
+    payload: true,
+  });
+
+  await updateDoc(uDiscProfileRef, {
+    nickname: nickname,
+  })
+    .then(() => {
+      dispatch({
+        type: "DATING_UPDATE_NICKNAME",
+        payload: nickname,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "DATING_UPDATE_NICKNAME_LOADING",
+        payload: false,
+      });
     });
 };

@@ -24,6 +24,7 @@ const initialState = {
     alt: "",
     long: "",
     parentID: "",
+    saving_nickname: false,
   },
 };
 
@@ -75,14 +76,24 @@ const datingReducer = (state = initialState, actions) => {
           profilepic: actions.payload,
         },
       };
-    case "DATING_UPDATE_USERNAME":
+    case "DATING_UPDATE_NICKNAME":
       return {
         ...state,
         profile: {
           ...state.profile,
-          name: actions.payload,
+          nickname: actions.payload,
+          saving_nickname: false,
         },
       };
+    case "DATING_UPDATE_NICKNAME_LOADING":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          saving_nickname: actions.payload,
+        },
+      };
+
     case "DATING_PROFILE_LOADING":
       return {
         ...state,
