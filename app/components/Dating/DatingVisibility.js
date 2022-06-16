@@ -24,7 +24,7 @@ function DatingVisibility(props) {
           size={24}
           color={colors.white}
         />
-        <Text>Show my Discover profile</Text>
+        <Text>Activate my Discovery profile</Text>
       </View>
       <View>
         <Switch

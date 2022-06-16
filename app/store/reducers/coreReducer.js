@@ -53,6 +53,14 @@ const coreReducer = (state = initialData, actions) => {
         getting_account_data: actions.payload,
       };
 
+    case "SET_DATING_PROFILE_ID":
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          discover_profile_id: actions.payload,
+        },
+      };
     case "SET_PUSH_TOKEN":
       return {
         ...state,

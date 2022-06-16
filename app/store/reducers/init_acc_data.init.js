@@ -7,6 +7,7 @@ const init_accdata = {
   friends: 0,
 
   notificationToken: "",
+  discover_profile_id: "",
 
   user_following: [],
   user_followers: [],

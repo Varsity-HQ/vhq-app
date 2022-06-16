@@ -21,12 +21,13 @@ const height = Dimensions.get("window").height;
 const mapStateToProps = (state) => {
   return {
     profilepic: state.core.accData.profilepic,
+    loading: state.datingReducer.profile.loading,
   };
 };
 
-function DatingIntroScreen({ profilepic, navigation }) {
+function DatingIntroScreen({ profilepic, navigation, loading }) {
   //
-  if (false) {
+  if (loading) {
     return (
       <Screen style={styles.container}>
         <View style={{ width: "85%" }}>
@@ -56,7 +57,7 @@ function DatingIntroScreen({ profilepic, navigation }) {
               },
             ]}
           >
-            Wait..
+            Hold on..
           </Text>
           <View style={styles.hContainer}>
             <Text style={[styles.center, styles.subText]}>
@@ -99,15 +100,17 @@ function DatingIntroScreen({ profilepic, navigation }) {
             }}
           />
         </View>
-        <Text style={[styles.center, styles.heading]}>Set up your profile</Text>
+        <Text style={[styles.center, styles.heading]}>
+          Activate your profile
+        </Text>
         <Text style={styles.subText}>
-          Meet new friends, discover cool people and maybe go on dates 🙃. Get
-          started by setting up your discovery profile and meet friends
+          Meet new friends, discover cool people and maybe go on dates 🙃.
+          Activate your discovery profile and start connecting.
         </Text>
         <Button
           onPress={() => navigation.navigate(MY_DISCOVER_PROFILE)}
           style={[styles.center, styles.create_button]}
-          title="GET STARTED"
+          title="My PROFILE"
         />
         <TouchableOpacity onPress={() => navigation.navigate(DATING_CONTAINER)}>
           <Text style={[styles.center, styles.text_bottom]}>Take a peek</Text>
@@ -133,16 +136,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   other_pp1: {
-    height: height * 0.13,
-    width: height * 0.13,
+    height: height * 0.12,
+    width: height * 0.12,
     borderRadius: 100,
     // zIndex: 1,
     right: -25,
     position: "relative",
   },
   other_pp2: {
-    height: height * 0.13,
-    width: height * 0.13,
+    height: height * 0.12,
+    width: height * 0.12,
     borderRadius: 100,
     zIndex: -1,
     position: "relative",
@@ -162,8 +165,8 @@ const styles = StyleSheet.create({
     // aspectRatio: 9 / 16,
     // height: "100%",
     borderRadius: 100,
-    borderWidth: 3,
-    borderColor: colors.secondary,
+    borderWidth: 10,
+    borderColor: colors.dark,
   },
   heading: {
     fontSize: RFValue(17),

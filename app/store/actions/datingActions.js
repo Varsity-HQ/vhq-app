@@ -1,7 +1,18 @@
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  doc,
+  get,
+  addDoc,
+  collection,
+  updateDoc,
+  getDoc,
+} from "firebase/firestore";
 import uuid from "uuid";
 import store from "../store";
+import dating_profile_mask from "../dating_profile_mask";
 import axios from "axios";
+import db from "../../util/fb_admin";
+import { async } from "@firebase/util";
 
 export const update_dating_purpose = (purpose, interested_in) => (dispatch) => {
   dispatch({
@@ -175,4 +186,73 @@ const uploadImageAsync = async (uri) => {
     resolve(downloadUrl); // peviously return;
     reject("failed to upload");
   });
+};
+
+export const initialize_discover_page = () => (dispatch) => {
+  console.log("initialized");
+
+  let discover_id = store.getState().core.accData.discover_profile_id;
+
+  if (discover_id) {
+    get_discover_profile(dispatch);
+  } else {
+    create_discover_profile(dispatch);
+  }
+};
+
+const get_discover_profile = async (dispatch) => {
+  console.log("get_discover_profile");
+
+  const discover_profile_id = store.getState().core.accData.discover_profile_id;
+  const uDiscProfileRef = doc(db, "discover_profiles", discover_profile_id);
+
+  await getDoc(uDiscProfileRef)
+    .then((data) => {
+      dispatch({
+        type: "SET_DATING_DATA",
+        payload: data.data(),
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const create_discover_profile = async (dispatch) => {
+  console.log("create_discover_profile");
+
+  const uData = store.getState().core.accData;
+  const profile = {
+    ...dating_profile_mask,
+    gender: uData.gender,
+    age: uData.age,
+    sexual_orientation: uData.s_orientation,
+    university: uData.university,
+    profilepic: uData.sub_profilepic,
+    parentID: uData.userID,
+  };
+
+  const uCollectionRef = collection(db, "discover_profiles");
+
+  await addDoc(uCollectionRef, profile)
+    .then(async (data) => {
+      await updateDoc(doc(db, "discover_profiles", data.id), {
+        id: data.id,
+      });
+      await updateDoc(doc(db, "accounts", uData.userID), {
+        discover_profile_id: data.id,
+      });
+      dispatch({
+        type: "SET_DATING_PROFILE_ID",
+        payload: data.id,
+      });
+      dispatch({
+        type: "SET_DATING_DATA",
+        payload: profile,
+      });
+      console.log("doc added");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

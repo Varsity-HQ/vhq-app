@@ -42,7 +42,7 @@ function CSLookingFor({ navigation }) {
         <View>
           <Text style={[styles.text_center, styles.header2]}>
             Tell people why are you here.
-          </Text>
+          </Text> 
 
           <Text
             style={[

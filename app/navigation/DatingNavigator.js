@@ -17,6 +17,8 @@ import DatingProfilePage from "../screens/DatingScreens/DatingProfilePage";
 import MyDiscoverProfile from "../screens/DatingScreens/MyDiscoverProfile";
 import useOnlinePresence from "../auth/useOnlinePresence";
 import CSAbout from "../screens/DatingScreens/CreateShow/CSAbout";
+import { connect } from "react-redux";
+import { initialize_discover_page } from "../store/actions/datingActions";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,13 +38,28 @@ const CreateShowStack = () => {
   );
 };
 
-const DatingNavigator = () => {
+const mapStateToProps = (state) => {
+  return {
+    accData: state.core.accData.userID,
+    userID: state.core.accData.userID,
+    is_active: state.datingReducer?.profile?.is_active,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    initialize_discover_page: () => dispatch(initialize_discover_page()),
+  };
+};
+
+const DatingNavigator = ({ initialize_discover_page, is_active }) => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
   // useOnlinePresence();
 
   useEffect(() => {
+    initialize_discover_page();
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
@@ -62,9 +79,6 @@ const DatingNavigator = () => {
     text = JSON.stringify(location);
   }
 
-  // console.log({ text });
-  // console.log({ location });
-
   return (
     <Stack.Navigator
       screenOptions={{
@@ -73,8 +87,13 @@ const DatingNavigator = () => {
       }}
       initialRouteName={routes.DATING_INTRO}
     >
-      {/* <Stack.Screen name={routes.CREATE_SHOW} component={CreateShowStack} /> */}
-      <Stack.Screen name={routes.DATING_INTRO} component={DatingIntroScreen} />
+      {!is_active && (
+        <Stack.Screen
+          name={routes.DATING_INTRO}
+          component={DatingIntroScreen}
+        />
+      )}
+
       <Stack.Screen
         name={routes.DATING_CONTAINER}
         component={DatingContainer}
@@ -103,4 +122,4 @@ const DatingNavigator = () => {
   );
 };
 
-export default DatingNavigator;
+export default connect(mapStateToProps, mapDispatchToProps)(DatingNavigator);

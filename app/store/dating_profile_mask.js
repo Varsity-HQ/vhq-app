@@ -1,0 +1,26 @@
+const obj = {
+  id: "",
+  nickname: "",
+  profilepic: "",
+  seen_count: 0,
+  is_active: false,
+  purpose: "",
+  interested_in: "",
+  about: "",
+  report_count: 0,
+  gender: "Male",
+  star_sign: "",
+  age: "",
+  sexual_orientation: "",
+  university: "",
+  location: "",
+  show_me: ["Female", "Male"],
+  g_postion: "",
+  hashed_location: "",
+  online_status: "",
+  alt: "",
+  long: "",
+  parentID: "",
+};
+
+export default obj;

@@ -29,6 +29,15 @@ const initialState = {
 
 const datingReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "SET_DATING_DATA":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          ...actions.payload,
+          loading: false,
+        },
+      };
     case "SET_UPLOADING_DATING_PROFILE_PIC":
       return {
         ...state,
@@ -37,6 +46,7 @@ const datingReducer = (state = initialState, actions) => {
           uploading_profilepic: actions.payload,
         },
       };
+
     case "UPDATE_DATING_MAIN_INFO":
       return {
         ...state,
