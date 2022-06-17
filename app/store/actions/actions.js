@@ -1030,6 +1030,10 @@ export const update_university = (uni) => (dispatch) => {
     })
     .then(() => {
       dispatch({
+        type: "DATING_UPDATE_UNIVERSITY",
+        payload: uni,
+      });
+      dispatch({
         type: "SET_UNIVERSITY",
         payload: uni,
       });

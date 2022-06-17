@@ -17,7 +17,7 @@ const obj = {
   show_me: ["Female", "Male"],
   g_postion: "",
   hashed_location: "",
-  online_status: "",
+  is_online: "",
   alt: "",
   long: "",
   parentID: "",

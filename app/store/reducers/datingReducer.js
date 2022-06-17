@@ -31,6 +31,14 @@ const initialState = {
 
 const datingReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "DATING_UPDATE_UNIVERSITY":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          university: actions.payload,
+        },
+      };
     case "DATING_UPDATE_GENDER_INTEREST":
       return {
         ...state,

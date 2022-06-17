@@ -32,6 +32,7 @@ import {
   CS_INTERESTED_IN,
   CS_LOOKING_FOR,
   CS_NAME,
+  UPDATE_UNIVERSITY,
 } from "../../navigation/routes";
 import FancyButton from "../../components/FancyButton";
 import AppButton from "../../components/Button";
@@ -214,8 +215,8 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
             />
             <InfoTextArea
               header="University/College"
-              text="University of Johannesburg"
-              actionButton={() => console.log("btn pressed")}
+              text={profile.university}
+              actionButton={() => navigation.navigate(UPDATE_UNIVERSITY)}
             />
           </View>
         </View>

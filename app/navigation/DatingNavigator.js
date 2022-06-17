@@ -10,7 +10,7 @@ import CSConfirmGender from "../screens/DatingScreens/CreateShow/CSConfirmGender
 import CSName from "../screens/DatingScreens/CreateShow/CSName";
 import CSLookingFor from "../screens/DatingScreens/CreateShow/CSLookingFor";
 import CSInterestedIn from "../screens/DatingScreens/CreateShow/CSInterestedIn";
-import CSPhotos from "../screens/DatingScreens/CreateShow/CSPhotos";
+import UpdateUniversityScreen from "../screens/settings/UpdateUniversityScreen";
 import DatingContainer from "../screens/DatingScreens/DatingContainer";
 import * as Location from "expo-location";
 import DatingProfilePage from "../screens/DatingScreens/DatingProfilePage";
@@ -112,6 +112,15 @@ const DatingNavigator = ({ initialize_discover_page, is_active }) => {
       <Stack.Screen name={routes.CS_NAME} component={CSName} />
       <Stack.Screen name={routes.CS_ABOUT} component={CSAbout} />
       <Stack.Screen name={routes.CS_INTERESTED_IN} component={CSInterestedIn} />
+
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={routes.UPDATE_UNIVERSITY}
+        component={UpdateUniversityScreen}
+      />
 
       {/* 
       <Stack.Screen
