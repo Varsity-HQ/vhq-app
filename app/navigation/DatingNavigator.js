@@ -19,6 +19,7 @@ import useOnlinePresence from "../auth/useOnlinePresence";
 import CSAbout from "../screens/DatingScreens/CreateShow/CSAbout";
 import { connect } from "react-redux";
 import { initialize_discover_page } from "../store/actions/datingActions";
+import CSMainInfo from "../screens/DatingScreens/CreateShow/CSMainInfo";
 
 const Stack = createNativeStackNavigator();
 
@@ -112,6 +113,7 @@ const DatingNavigator = ({ initialize_discover_page, is_active }) => {
       <Stack.Screen name={routes.CS_NAME} component={CSName} />
       <Stack.Screen name={routes.CS_ABOUT} component={CSAbout} />
       <Stack.Screen name={routes.CS_INTERESTED_IN} component={CSInterestedIn} />
+      <Stack.Screen name={routes.CS_MAIN_INFO} component={CSMainInfo} />
 
       <Stack.Screen
         options={{

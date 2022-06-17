@@ -31,6 +31,7 @@ import {
   CS_ABOUT,
   CS_INTERESTED_IN,
   CS_LOOKING_FOR,
+  CS_MAIN_INFO,
   CS_NAME,
   UPDATE_UNIVERSITY,
 } from "../../navigation/routes";
@@ -211,7 +212,7 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
             />
             <InforBox
               header="Main information"
-              actionButton={() => console.log("btn pressed")}
+              actionButton={() => navigation.navigate(CS_MAIN_INFO)}
             />
             <InfoTextArea
               header="University/College"

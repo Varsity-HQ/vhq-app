@@ -120,8 +120,6 @@ function DatingProfilePicModal({
     },
   ];
 
-  console.log({ m_profilepic });
-
   return (
     <>
       <Modal

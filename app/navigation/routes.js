@@ -42,6 +42,7 @@ export const CS_SEXUAL_ORIENTATION = "CSSexualOrientation";
 export const CS_INTERESTED_IN = "CSInterestedIn";
 export const CS_PHOTOS = "CSPhotos";
 export const CS_ABOUT = "CSAbout";
+export const CS_MAIN_INFO = "CSMainInfo";
 // End of Dating Screens
 
 //Screens
