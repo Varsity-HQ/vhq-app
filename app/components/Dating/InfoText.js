@@ -4,8 +4,9 @@ import { RFValue } from "react-native-responsive-fontsize";
 import colors from "../../config/colors";
 import Text from "../AppText";
 import Button from "../Button";
+import Content from "../Post/content";
 
-const InfoTextArea = ({ header, text, actionButton = null }) => (
+const InfoTextArea = ({ header, text, actionButton = null, html }) => (
   <View
     style={{
       marginBottom: 12,
@@ -29,7 +30,11 @@ const InfoTextArea = ({ header, text, actionButton = null }) => (
         },
       ]}
     >
-      <Text style={{ color: colors.secondary }}>{text}</Text>
+      {html ? (
+        <Content color={colors.secondary} html={text} />
+      ) : (
+        <Text style={{ color: colors.secondary }}>{text}</Text>
+      )}
       <View
         style={{
           flexDirection: "row",

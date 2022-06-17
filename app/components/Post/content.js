@@ -70,7 +70,12 @@ const CustomTextRenderer = (props) => {
 
   return (
     <ParsedText
-      style={styles.text}
+      style={[
+        styles.text,
+        {
+          color: props.textColor ? props.textColor : colors.white,
+        },
+      ]}
       parse={[
         { type: "url", style: styles.url, onPress: handleUrlPress },
         // { type: "phone", style: styles.phone, onPress: handlePhonePress },
@@ -112,13 +117,18 @@ const { width } = Dimensions.get("window");
 class Content extends PureComponent {
   render() {
     const html = this.props.html;
+    const color = this.props.color;
     return (
       <View style={styles.container}>
         {/* <Text>{html}</Text> */}
         <RenderHtml
           renderers={{
-            p: (props) => <CustomTextRenderer {...props} />,
-            div: (props) => <CustomTextRenderer {...props} />,
+            p: (props) => (
+              <CustomTextRenderer textColor={color ? color : null} {...props} />
+            ),
+            div: (props) => (
+              <CustomTextRenderer textColor={color ? color : null} {...props} />
+            ),
           }}
           // renderers={(props) => AnimatedSpanRenderer(props)}
           // baseStyle={{}}

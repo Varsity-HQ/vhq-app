@@ -25,6 +25,7 @@ const initialState = {
     long: "",
     parentID: "",
     saving_nickname: false,
+    saving_about: false,
   },
 };
 
@@ -36,6 +37,23 @@ const datingReducer = (state = initialState, actions) => {
         profile: {
           ...state.profile,
           show_me: actions.payload,
+        },
+      };
+    case "DATING_UPDATE_ABOUT_LOADING":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          saving_about: actions.payload,
+        },
+      };
+    case "DATING_UPDATE_ABOUT":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          about: actions.payload,
+          saving_about: false,
         },
       };
     case "SET_DATING_DATA":

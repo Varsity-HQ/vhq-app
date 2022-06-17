@@ -298,6 +298,31 @@ export const update_dating_purpose = (purpose) => async (dispatch) => {
       console.log(err);
     });
 };
+export const update_dating_about = (about) => async (dispatch) => {
+  const discover_profile_id = store.getState().core.accData.discover_profile_id;
+  const uDiscProfileRef = doc(db, "discover_profiles", discover_profile_id);
+
+  dispatch({
+    type: "DATING_UPDATE_ABOUT_LOADING",
+    payload: true,
+  });
+  await updateDoc(uDiscProfileRef, {
+    about: about,
+  })
+    .then(() => {
+      dispatch({
+        type: "DATING_UPDATE_ABOUT",
+        payload: about,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: "DATING_UPDATE_ABOUT_LOADING",
+        payload: false,
+      });
+    });
+};
 
 export const update_dating_gender_interest = (interest) => async (dispatch) => {
   const discover_profile_id = store.getState().core.accData.discover_profile_id;

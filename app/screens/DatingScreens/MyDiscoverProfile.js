@@ -204,8 +204,8 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
             <Button type={2} title="How do i look" style={styles.hdil_button} />
             <InfoTextArea
               header="About"
-              text="Just chatting with people and meeting new friends. I have nothing to
-            offer"
+              text={profile.about}
+              html={true}
               actionButton={() => navigation.navigate(CS_ABOUT)}
             />
             <InforBox
