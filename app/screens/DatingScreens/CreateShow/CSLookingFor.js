@@ -9,6 +9,8 @@ import Input from "../../../components/Input";
 import styles from "./styles";
 import { CS_INTERESTED_IN, CS_NAME } from "../../../navigation/routes";
 import OptionSelector from "../../../components/OptionSelector";
+import { connect } from "react-redux";
+import { update_dating_purpose } from "../../../store/actions/datingActions";
 
 const options = [
   {
@@ -32,8 +34,26 @@ const options = [
   },
 ];
 
-function CSLookingFor({ navigation }) {
-  const [active, setActive] = useState("");
+const mapStateToProps = (state) => {
+  return {
+    purpose: state.datingReducer.profile.purpose,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    update_dating_purpose: (interest) =>
+      dispatch(update_dating_purpose(interest)),
+  };
+};
+
+function CSLookingFor({ navigation, update_dating_purpose, purpose }) {
+  const [active, setActive] = useState(purpose);
+
+  const handleOnChange = (v) => {
+    setActive(v);
+    update_dating_purpose(v);
+  };
 
   return (
     <Screen scroll>
@@ -42,7 +62,7 @@ function CSLookingFor({ navigation }) {
         <View>
           <Text style={[styles.text_center, styles.header2]}>
             Tell people why are you here.
-          </Text> 
+          </Text>
 
           <Text
             style={[
@@ -61,24 +81,15 @@ function CSLookingFor({ navigation }) {
           <View>
             <OptionSelector
               type={3}
-              onChange={setActive}
+              onChange={handleOnChange}
               active={active}
               options={options}
             />
           </View>
-        </View>
-        <View style={styles.bottomButtonContainer}>
-          <Button
-            onPress={() => {
-              navigation.navigate(CS_INTERESTED_IN);
-            }}
-            style={styles.bottomBtn}
-            title={"Save"}
-          />
         </View>
       </View>
     </Screen>
   );
 }
 
-export default CSLookingFor;
+export default connect(mapStateToProps, mapDispatchToProps)(CSLookingFor);

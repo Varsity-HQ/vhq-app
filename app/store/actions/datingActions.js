@@ -14,16 +14,6 @@ import axios from "axios";
 import db from "../../util/fb_admin";
 import { async } from "@firebase/util";
 
-export const update_dating_purpose = (purpose, interested_in) => (dispatch) => {
-  dispatch({
-    type: "DATING_UPDATE_PURPOSE",
-    payload: {
-      purpose: purpose,
-      interested_in: interested_in,
-    },
-  });
-};
-
 export const update_dating_uname = (name) => (dispatch) => {
   dispatch({
     type: "DATING_UPDATE_USERNAME",
@@ -259,7 +249,6 @@ const create_discover_profile = async (dispatch) => {
 };
 
 export const save_dating_nickname = (nickname) => async (dispatch) => {
-  console.log("save_dating_nickname");
   const discover_profile_id = store.getState().core.accData.discover_profile_id;
   const uDiscProfileRef = doc(db, "discover_profiles", discover_profile_id);
 
@@ -283,5 +272,58 @@ export const save_dating_nickname = (nickname) => async (dispatch) => {
         type: "DATING_UPDATE_NICKNAME_LOADING",
         payload: false,
       });
+    });
+};
+
+export const update_dating_purpose = (purpose) => async (dispatch) => {
+  const discover_profile_id = store.getState().core.accData.discover_profile_id;
+  const uDiscProfileRef = doc(db, "discover_profiles", discover_profile_id);
+  const prevPurpose = store.getState().datingReducer.profile.purpose;
+
+  if (prevPurpose === purpose) return;
+
+  await updateDoc(uDiscProfileRef, {
+    purpose: purpose,
+  })
+    .then(() => {
+      dispatch({
+        type: "DATING_UPDATE_PURPOSE",
+        payload: {
+          purpose: purpose,
+          interested_in: "",
+        },
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const update_dating_gender_interest = (interest) => async (dispatch) => {
+  const discover_profile_id = store.getState().core.accData.discover_profile_id;
+  const uDiscProfileRef = doc(db, "discover_profiles", discover_profile_id);
+  let interestArray = [];
+
+  if (interest === "female") {
+    interestArray = ["Female"];
+  }
+  if (interest === "male") {
+    interestArray = ["Male"];
+  }
+  if (interest === "everyone") {
+    interestArray = ["Female", "Male"];
+  }
+
+  await updateDoc(uDiscProfileRef, {
+    show_me: interestArray,
+  })
+    .then(() => {
+      dispatch({
+        type: "DATING_UPDATE_GENDER_INTEREST",
+        payload: interestArray,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };

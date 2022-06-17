@@ -186,8 +186,8 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
                 />
               }
               onPress={() => navigation.navigate(CS_LOOKING_FOR)}
-              header="Looking for Females"
-              subText="Specify what you are looking for"
+              header="What are you interested in"
+              subText="Specify what you are looking for."
             />
             <FancyButton
               onPress={() => navigation.navigate(CS_INTERESTED_IN)}
@@ -198,8 +198,8 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
                   color={colors.secondary}
                 />
               }
-              header="Show me (Females)"
-              subText="Who are you interested in"
+              header="Control who you see"
+              subText="Who are you interested in.."
             />
             <Button type={2} title="How do i look" style={styles.hdil_button} />
             <InfoTextArea

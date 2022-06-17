@@ -10,9 +10,46 @@ import colors from "../../../config/colors";
 import { CS_NAME, CS_PHOTOS } from "../../../navigation/routes";
 import styles from "./styles";
 import { FontAwesome } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import { useFocusEffect } from "@react-navigation/native";
+import { update_dating_gender_interest } from "../../../store/actions/datingActions";
 
-function CSInterestedIn({ navigation }) {
+const mapStateToProps = (state) => {
+  return {
+    show_me: state.datingReducer.profile.show_me,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    update_dating_gender_interest: (i) =>
+      dispatch(update_dating_gender_interest(i)),
+  };
+};
+
+function CSInterestedIn({
+  navigation,
+  show_me,
+  update_dating_gender_interest,
+}) {
   const [active, setActive] = useState("");
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (show_me.includes("Female") && show_me.length === 1) {
+        return setActive("female");
+      }
+      if (show_me.includes("Male") && show_me.length === 1) {
+        return setActive("male");
+      }
+      if (
+        show_me.includes("Male") &&
+        show_me.includes("Female") &&
+        show_me.length === 2
+      ) {
+        return setActive("everyone");
+      }
+    }, []),
+  );
 
   const options = [
     {
@@ -37,6 +74,10 @@ function CSInterestedIn({ navigation }) {
         />
       ),
     },
+    {
+      title: "Show me everyone",
+      value: "everyone",
+    },
     // {
     //   title: "Both",
     //   value: "both",
@@ -45,6 +86,7 @@ function CSInterestedIn({ navigation }) {
 
   const handleChange = (i) => {
     setActive(i);
+    update_dating_gender_interest(i);
   };
 
   return (
@@ -70,19 +112,9 @@ function CSInterestedIn({ navigation }) {
             />
           </View>
         </View>
-
-        <View style={styles.bottomButtonContainer}>
-          <Button
-            style={styles.bottomBtn}
-            onPress={() => {
-              navigation.navigate(CS_PHOTOS);
-            }}
-            title={"Save"}
-          />
-        </View>
       </View>
     </Screen>
   );
 }
 
-export default CSInterestedIn;
+export default connect(mapStateToProps, mapDispatchToProps)(CSInterestedIn);

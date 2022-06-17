@@ -17,7 +17,7 @@ const initialState = {
     sexual_orientation: "",
     university: "",
     location: "",
-    show_me: ["female", "male"],
+    show_me: ["Female", "Male"],
     g_postion: "",
     hashed_location: "",
     online_status: "",
@@ -30,6 +30,14 @@ const initialState = {
 
 const datingReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "DATING_UPDATE_GENDER_INTEREST":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          show_me: actions.payload,
+        },
+      };
     case "SET_DATING_DATA":
       return {
         ...state,
