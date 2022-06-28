@@ -46,10 +46,11 @@ const TabBar = (props) => {
 const mapStateToProps = (state) => {
   return {
     user_id: state.core.accData.userID,
+    is_active: state.datingReducer?.profile?.is_active,
   };
 };
 
-const AppNavigator = ({ user_id }) => {
+const AppNavigator = ({ user_id, is_active }) => {
   const userDocRef = doc(db, "accounts", user_id);
   const [user_snapshot, loading, error] = useDocumentData(userDocRef);
 
@@ -122,6 +123,17 @@ const AppNavigator = ({ user_id }) => {
         }}
         name={routes.DATING_NAVIGATOR}
         component={DatingNavigator}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            e.preventDefault();
+            {
+              is_active
+                ? navigation.navigate(routes.DATING_CONTAINER)
+                : navigation.navigate(routes.DATING_INTRO);
+            }
+          },
+        })}
+
         // component={FeedNavigator}
       />
       <Tab.Screen

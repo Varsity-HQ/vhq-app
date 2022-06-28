@@ -96,7 +96,9 @@ const DatingNavigator = ({ initialize_discover_page, is_active }) => {
         headerShown: false,
         animation: "slide_from_right",
       }}
-      initialRouteName={routes.DATING_INTRO}
+      initialRouteName={
+        is_active ? routes.DATING_CONTAINER : routes.DATING_INTRO
+      }
     >
       {!is_active && (
         <Stack.Screen

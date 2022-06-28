@@ -10,10 +10,12 @@ const height = Dimensions.get("window").height;
 import { Ionicons } from "@expo/vector-icons";
 import SwipeContainer from "./SwipeContainer";
 import DatingVisibility from "./DatingVisibility";
+import { useNavigation } from "@react-navigation/native";
+import { MY_DISCOVER_PROFILE } from "../../navigation/routes";
 
 const mapStateToProps = (state) => {
   return {
-    profilepic: state.core.accData.profilepic,
+    profilepic: state.datingReducer.profile.profilepic,
   };
 };
 
@@ -43,11 +45,16 @@ const subTabs = [
 ];
 
 function Header({ profilepic, tabs, activeTabIndex, setTabIndex }) {
+  const navigation = useNavigation();
   return (
     <View style={styles.main_container}>
       <View style={styles.top_container}>
         <View style={styles.left_container}>
-          <Image style={styles.profilepic} uri={profilepic} />
+          <TouchableOpacity
+            onPress={() => navigation.navigate(MY_DISCOVER_PROFILE)}
+          >
+            <Image style={styles.profilepic} uri={profilepic} />
+          </TouchableOpacity>
           <Text
             style={[
               styles.titleStyle,
