@@ -5,6 +5,7 @@ const initialState = {
     name: "",
     profilepic: "",
     uploading_profilepic: false,
+    show_sorientation: false,
     seen_count: "",
     is_active: false,
     purpose: "dating",
@@ -13,7 +14,7 @@ const initialState = {
     report_count: "",
     gender: "male",
     star_sign: "",
-    age: "",
+    age: 0,
     sexual_orientation: "",
     university: "",
     location: "",
@@ -26,11 +27,45 @@ const initialState = {
     parentID: "",
     saving_nickname: false,
     saving_about: false,
+    yearOfStudy: "",
   },
 };
 
 const datingReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "DATING_UPDATE_YOS":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          yearOfStudy: actions.payload,
+        },
+      };
+    case "DATING_UPDATE_SEXUAL_ORIENTATION":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          sexual_orientation: actions.payload,
+        },
+      };
+    case "DATING_UPDATE_GENDER":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          gender: actions.payload,
+        },
+      };
+    case "DATING_UPDATE_AGE":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          age: actions.payload,
+        },
+      };
+
     case "DATING_UPDATE_UNIVERSITY":
       return {
         ...state,

@@ -1,4 +1,5 @@
 import React from "react";
+import { ScrollView, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -59,7 +60,6 @@ import HashtagScreen from "../screens/HashtagScreen/index";
 import EventsScreen from "../screens/HomeTabs/EventsScreen";
 import colors from "../config/colors";
 import Screen from "../components/Screen";
-import { ScrollView, View } from "react-native";
 import VirtualizedView from "../components/VirtualizedViewBacked";
 import SearchResults from "../screens/SearchResults";
 import PostPage from "../screens/PostPage";

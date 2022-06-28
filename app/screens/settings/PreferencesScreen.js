@@ -28,12 +28,12 @@ function PreferencesScreen({ navigation, account }) {
         bgActive
         backPress={() => navigation.goBack()}
         backIcon
-        title="Preferences"
+        title="About me"
       />
       <View style={styles.container}>
         <View style={{ backgroundColor: colors.darkish }}>
           <View style={styles.sec_h_container}>
-            <Text style={styles.sec_h_text}>Basic Preferences</Text>
+            <Text style={styles.sec_h_text}>Basic info</Text>
           </View>
           <IconMenuItem
             required
@@ -60,7 +60,7 @@ function PreferencesScreen({ navigation, account }) {
         </View>
         <View style={{ backgroundColor: colors.darkish, marginTop: 10 }}>
           <View style={styles.sec_h_container}>
-            <Text style={styles.sec_h_text}>Member Preferences</Text>
+            <Text style={styles.sec_h_text}>Member info</Text>
           </View>
           <IconMenuItem
             onPress={() => navigation.navigate(UPDATE_RELATIONSHIP_STATUS)}

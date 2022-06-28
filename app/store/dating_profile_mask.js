@@ -21,6 +21,8 @@ const obj = {
   alt: "",
   long: "",
   parentID: "",
+  show_sorientation: false,
+  yearOfStudy: "1st",
 };
 
 export default obj;

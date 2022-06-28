@@ -33,10 +33,13 @@ import {
   CS_LOOKING_FOR,
   CS_MAIN_INFO,
   CS_NAME,
+  DATING_HDIL,
+  PREFERENCES,
   UPDATE_UNIVERSITY,
 } from "../../navigation/routes";
 import FancyButton from "../../components/FancyButton";
 import AppButton from "../../components/Button";
+import universityShortName from "../../util/universityShortName";
 
 const height = Dimensions.get("window").height;
 
@@ -183,7 +186,7 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
               icon={
                 <FontAwesome5
                   name="user-friends"
-                  size={22}
+                  size={18}
                   color={colors.secondary}
                 />
               }
@@ -196,14 +199,19 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
               icon={
                 <FontAwesome5
                   name="person-booth"
-                  size={22}
+                  size={18}
                   color={colors.secondary}
                 />
               }
               header="Control who you see"
               subText="Who are you interested in.."
             />
-            <Button type={2} title="How do i look" style={styles.hdil_button} />
+            <Button
+              type={2}
+              onPress={() => navigation.navigate(DATING_HDIL)}
+              title="How do i look"
+              style={styles.hdil_button}
+            />
             <InfoTextArea
               header="About"
               text={profile.about}
@@ -212,7 +220,42 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
             />
             <InforBox
               header="Main information"
-              actionButton={() => navigation.navigate(CS_MAIN_INFO)}
+              data={[
+                {
+                  title: "gender",
+                  text: profile.gender,
+                  hide: !profile.gender,
+                },
+                {
+                  title: "star_sign",
+                  text: profile.star_sign,
+                  hide: !profile.star_sign,
+                },
+                {
+                  title: "age",
+                  text: profile.age,
+                  hide: !profile.age,
+                },
+                {
+                  title: "s_orientation",
+                  text: profile.sexual_orientation,
+                  hide: !profile.sexual_orientation,
+                },
+                {
+                  title: "yearOfStudy",
+                  text:
+                    profile.yearOfStudy !== "postgraduates"
+                      ? profile.yearOfStudy + " year"
+                      : "Postgraduate",
+                  hide: !profile.yearOfStudy,
+                },
+                {
+                  title: "university",
+                  text: universityShortName(profile.university),
+                  hide: !profile.university,
+                },
+              ]}
+              actionButton={() => navigation.navigate(PREFERENCES)}
             />
             <InfoTextArea
               header="University/College"
@@ -231,6 +274,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#3c4a60",
     marginBottom: 30,
     borderColor: colors.darkish3,
+    borderWidth: 1,
   },
   profile_image_overflow_item: {
     position: "absolute",

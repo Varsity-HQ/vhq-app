@@ -5,18 +5,18 @@ import Text from "../AppText";
 import colors from "../../config/colors";
 import { RFValue } from "react-native-responsive-fontsize";
 
-function FindsMatchPercentage(props) {
+function FindsMatchPercentage({ forceValue }) {
   return (
     <View style={styles.container}>
       <AnimatedProgressWheel
         size={22}
         width={5}
-        progress={74}
+        progress={forceValue ? forceValue : 74}
         color={colors.redish_2}
         backgroundColor={colors.dark_opacity}
         fullColor={colors.green}
       />
-      <Text style={styles.text}>74%</Text>
+      <Text style={styles.text}>{forceValue ? forceValue : "70"}%</Text>
     </View>
   );
 }

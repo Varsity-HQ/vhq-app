@@ -6,7 +6,7 @@ import Text from "../AppText";
 import { RFValue } from "react-native-responsive-fontsize";
 import Button from "../Button";
 
-const InforBox = ({ header, actionButton }) => {
+const InforBox = ({ header, actionButton, data = [] }) => {
   return (
     <View
       style={{
@@ -23,20 +23,26 @@ const InforBox = ({ header, actionButton }) => {
       >
         {header}
       </Text>
-      <View style={[styles.c_area]}>
+      <View
+        style={[
+          styles.c_area,
+          {
+            paddingBottom: 10,
+          },
+        ]}
+      >
         <View
           style={[
             styles.c_i_area,
             {
-              paddingBottom: actionButton ? 0 : 7,
+              paddingBottom: actionButton ? 0 : 0,
             },
           ]}
         >
-          <InfoItem name="gender" text="Male" />
-          <InfoItem name="star_sign" text="Sagittarius" />
-          <InfoItem name="age" text="18" />
-          <InfoItem name="s_orientation" text="Straight" />
-          <InfoItem name="university" text="UJ" />
+          {data.map((x, index) => {
+            if (x.hide) return;
+            return <InfoItem key={index} name={x.title} text={x.text} />;
+          })}
         </View>
         <View style={{ flexDirection: "row" }}>
           {actionButton && (

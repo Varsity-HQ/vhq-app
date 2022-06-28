@@ -221,6 +221,8 @@ const create_discover_profile = async (dispatch) => {
     profilepic: uData.sub_profilepic,
     parentID: uData.userID,
     nickname: uData.firstname,
+    show_sorientation: uData.show_sorientation,
+    yearOfStudy: uData.yearOfStudy,
   };
 
   const uCollectionRef = collection(db, "discover_profiles");

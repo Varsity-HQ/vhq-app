@@ -478,6 +478,11 @@ export const update_sexual_orientation = (orientation, show) => (dispatch) => {
         payload: false,
       });
       dispatch({
+        type: "DATING_UPDATE_SEXUAL_ORIENTATION",
+        payload: orientation,
+      });
+
+      dispatch({
         type: "UPDATE_SEXUAL_ORIENTATION",
         payload: {
           s_orientation: orientation,
@@ -544,6 +549,10 @@ export const update_gender = (gender) => (dispatch) => {
         payload: gender,
       });
       dispatch({
+        type: "DATING_UPDATE_GENDER",
+        payload: gender,
+      });
+      dispatch({
         type: "UPDATE_S_TARGET_2",
         payload: s_target,
       });
@@ -575,6 +584,11 @@ export const update_dob = (date, age) => (dispatch) => {
         type: "UPDATE_DOB",
         payload: { dob: date, age },
       });
+      dispatch({
+        type: "DATING_UPDATE_AGE",
+        payload: age,
+      });
+
       dispatch({
         type: "UPDATE_SAVING_DOB_SETTINGS",
         payload: false,
@@ -638,6 +652,10 @@ export const update_yearofstudy = (yos) => (dispatch) => {
       dispatch({
         type: "UPDATE_SAVING_YOS_SETTINGS",
         payload: false,
+      });
+      dispatch({
+        type: "DATING_UPDATE_YOS",
+        payload: yearOfStudy,
       });
       dispatch({
         type: "UPDATE_YOS",

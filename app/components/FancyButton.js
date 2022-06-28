@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     color: colors.secondary,
   },
   header: {
-    fontSize: RFValue(15),
+    fontSize: RFValue(13),
     fontWeight: "700",
     marginBottom: 2,
     marginLeft: 6,

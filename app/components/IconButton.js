@@ -4,7 +4,7 @@ import colors from "../config/colors";
 import Text from "./AppText";
 import Button from "./Button";
 
-function IconButton({ icon, text, textStyle, style }) {
+function IconButton({ icon, text, textStyle, style, disabled }) {
   return (
     <View
       style={[
@@ -12,6 +12,7 @@ function IconButton({ icon, text, textStyle, style }) {
         {
           flexDirection: "column",
           alignItems: "center",
+          opacity: disabled ? 0.3 : 1,
         },
       ]}
     >
@@ -22,6 +23,7 @@ function IconButton({ icon, text, textStyle, style }) {
         }}
       >
         <Button
+          disabled={disabled}
           type={3}
           content={icon}
           style={{

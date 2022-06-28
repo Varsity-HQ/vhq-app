@@ -26,6 +26,12 @@ const options = [
     value: "to_find_friends",
   },
   {
+    icon: require("../../../assets/chatting.png"),
+    title: "Just chatting",
+    desc: "Not looking for anything, i'm just chatting with people",
+    value: "to_chat",
+  },
+  {
     icon: require("../../../assets/winking-face.png"),
     title: "For vibes",
     sub: " & the streets",
