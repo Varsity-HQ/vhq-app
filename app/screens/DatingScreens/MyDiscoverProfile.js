@@ -34,6 +34,7 @@ import {
 } from "../../navigation/routes";
 import FancyButton from "../../components/FancyButton";
 import universityShortName from "../../util/universityShortName";
+import MyDatingDatingMenuModal from "../../components/Dating/MyDatingDatingMenuModal";
 
 const height = Dimensions.get("window").height;
 
@@ -49,8 +50,13 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
   const inserts = useSafeAreaInsets();
   const navigation = useNavigation();
 
+  //profile pic modal
   const [isPPModalVisible, setIsPPModalVisible] = useState(false);
   const handlePPModal = () => setIsPPModalVisible(() => !isPPModalVisible);
+
+  //menu modal
+  const [isMModalVisible, setIsMModalVisible] = useState(false);
+  const handleMModal = () => setIsMModalVisible(() => !isMModalVisible);
 
   return (
     <ScrollView scroll style={[styles.container]}>
@@ -58,6 +64,11 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
         isModalVisible={isPPModalVisible}
         handleModal={handlePPModal}
         setIsModalVisible={setIsPPModalVisible}
+      />
+      <MyDatingDatingMenuModal
+        isModalVisible={isMModalVisible}
+        handleModal={handleMModal}
+        setIsModalVisible={setIsMModalVisible}
       />
       <ImageBackground
         source={require("../../assets/background-pattern.png")}
@@ -73,7 +84,7 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
           backIcon
           noBg
           buttonText="ellipsis"
-          rightPress={() => console.log("pressed")}
+          rightPress={handleMModal}
         />
       </ImageBackground>
       <View style={styles.container}>

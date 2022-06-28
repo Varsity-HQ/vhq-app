@@ -68,6 +68,8 @@ const DatingNavigator = ({ initialize_discover_page, is_active }) => {
   // useOnlinePresence();
 
   useEffect(() => {
+    console.log("here");
+
     initialize_discover_page();
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();

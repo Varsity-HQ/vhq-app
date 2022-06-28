@@ -34,6 +34,9 @@ const initialState = {
 
 const datingReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "DATING_RESET":
+      return (state = initialState);
+
     case "DATING_UPDATE_UPDATING_IS_ACTIVE":
       return {
         ...state,

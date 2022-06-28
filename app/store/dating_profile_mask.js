@@ -6,7 +6,7 @@ const obj = {
   is_active: false,
   purpose: "",
   interested_in: "",
-  about: "",
+  about: "<div>Tell people about you..</div>",
   report_count: 0,
   gender: "Male",
   star_sign: "",
@@ -23,6 +23,7 @@ const obj = {
   parentID: "",
   show_sorientation: false,
   yearOfStudy: "1st",
+  blocked: [],
 };
 
 export default obj;

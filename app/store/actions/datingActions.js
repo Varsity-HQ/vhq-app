@@ -6,6 +6,7 @@ import {
   collection,
   updateDoc,
   getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import uuid from "uuid";
 import store from "../store";
@@ -15,6 +16,7 @@ import db from "../../util/fb_admin";
 import Toast from "react-native-toast-message";
 import { Alert } from "react-native";
 import isDatingProfileReady from "../../util/isDatingProfileReady";
+import { async } from "@firebase/util";
 
 export const update_dating_uname = (name) => (dispatch) => {
   dispatch({
@@ -243,7 +245,7 @@ const create_discover_profile = async (dispatch) => {
       });
       dispatch({
         type: "SET_DATING_DATA",
-        payload: profile,
+        payload: { ...profile, id: data.id },
       });
       console.log("doc added");
     })
@@ -444,4 +446,40 @@ export const toggle_dating_active = (to_active) => async (dispatch) => {
         });
       });
   }
+};
+
+export const delete_dating_profile = () => async (dispatch) => {
+  let discover_profile_id = store.getState().datingReducer.profile.id;
+  let userID = store.getState().core.accData.userID;
+
+  const uDiscProfileRef = doc(db, "discover_profiles", discover_profile_id);
+  const uMyProfileRef = doc(db, "accounts", userID);
+
+  await deleteDoc(uDiscProfileRef)
+    .then(async () => {
+      dispatch({
+        type: "DATING_RESET",
+      });
+      dispatch({
+        type: "SET_DATING_PROFILE_ID",
+        payload: "",
+      });
+      await updateDoc(uMyProfileRef, {
+        discover_profile_id: "",
+      });
+    })
+    .then(async () => {
+      await create_discover_profile(dispatch);
+    })
+    .then(() => {
+      Toast.show({
+        type: "general",
+        autoHide: true,
+        text1: ".",
+        text2: "Dating profile reset successfully",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

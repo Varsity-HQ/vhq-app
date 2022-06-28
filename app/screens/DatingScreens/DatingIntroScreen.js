@@ -1,3 +1,4 @@
+import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -14,6 +15,7 @@ import {
   DATING_ENCOUNTERS,
   MY_DISCOVER_PROFILE,
 } from "../../navigation/routes";
+import { initialize_discover_page } from "../../store/actions/datingActions";
 import { normalizeText } from "../../util/responsivePx";
 
 const height = Dimensions.get("window").height;
@@ -21,11 +23,34 @@ const height = Dimensions.get("window").height;
 const mapStateToProps = (state) => {
   return {
     profilepic: state.core.accData.profilepic,
+    discover_profile_id: state.core.accData.discover_profile_id,
     loading: state.datingReducer.profile.loading,
+    profile: state.datingReducer.profile,
   };
 };
 
-function DatingIntroScreen({ profilepic, navigation, loading }) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    initialize_discover_page: () => dispatch(initialize_discover_page()),
+  };
+};
+
+function DatingIntroScreen({
+  profilepic,
+  navigation,
+  loading,
+  initialize_discover_page,
+  discover_profile_id,
+  profile,
+}) {
+  // if (!discover_profile_id) {
+  //   useFocusEffect(
+  //     React.useCallback(() => {
+  //       initialize_discover_page();
+  //     }, []),
+  //   );
+  // }
+
   //
   if (loading) {
     return (
@@ -79,6 +104,8 @@ function DatingIntroScreen({ profilepic, navigation, loading }) {
       </Screen>
     );
   }
+  //
+  console.log({ profile });
   //
   return (
     <Screen style={styles.container}>
@@ -194,4 +221,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, null)(DatingIntroScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(DatingIntroScreen);
