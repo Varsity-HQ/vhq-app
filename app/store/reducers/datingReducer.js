@@ -27,12 +27,21 @@ const initialState = {
     parentID: "",
     saving_nickname: false,
     saving_about: false,
+    updating_is_active: false,
     yearOfStudy: "",
   },
 };
 
 const datingReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "DATING_UPDATE_UPDATING_IS_ACTIVE":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          updating_is_active: actions.payload,
+        },
+      };
     case "DATING_UPDATE_YOS":
       return {
         ...state,

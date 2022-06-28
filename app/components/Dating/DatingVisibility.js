@@ -3,12 +3,29 @@ import { View, StyleSheet, Switch } from "react-native";
 import colors from "../../config/colors";
 import { FontAwesome } from "@expo/vector-icons";
 import Text from "../../components/AppText";
+import { connect } from "react-redux";
+import { toggle_dating_active } from "../../store/actions/datingActions";
 
-function DatingVisibility(props) {
-  const [isEnabled, setIsEnabled] = useState(false);
+const mapStateToProps = (state) => {
+  return {
+    is_active: state.datingReducer.profile.is_active,
+    updating_is_active: state.datingReducer.profile.updating_is_active,
+  };
+};
 
-  const toggleSwitch = () => {
-    setIsEnabled(!isEnabled);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggle_dating_active: (s) => dispatch(toggle_dating_active(s)),
+  };
+};
+
+function DatingVisibility({
+  is_active,
+  toggle_dating_active,
+  updating_is_active,
+}) {
+  const toggleSwitch = (active) => {
+    toggle_dating_active(active);
   };
   return (
     <View style={styles.container}>
@@ -24,15 +41,22 @@ function DatingVisibility(props) {
           size={24}
           color={colors.white}
         />
-        <Text>Activate my Discovery profile</Text>
+        {updating_is_active ? (
+          <Text>
+            {is_active ? "Activating" : "Deactivating"} profile, wait...
+          </Text>
+        ) : (
+          <Text>{is_active ? "Deactivate" : "Activate"} profile</Text>
+        )}
       </View>
       <View>
         <Switch
+          disabled={updating_is_active}
           style={styles.switcher}
           trackColor={{ false: colors.secondary, true: colors.primary }}
           ios_backgroundColor={colors.dark_opacity_2}
           onValueChange={toggleSwitch}
-          value={isEnabled}
+          value={is_active}
         />
       </View>
     </View>
@@ -51,4 +75,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DatingVisibility;
+export default connect(mapStateToProps, mapDispatchToProps)(DatingVisibility);

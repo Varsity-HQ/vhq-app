@@ -12,7 +12,9 @@ import store from "../store";
 import dating_profile_mask from "../dating_profile_mask";
 import axios from "axios";
 import db from "../../util/fb_admin";
-import { async } from "@firebase/util";
+import Toast from "react-native-toast-message";
+import { Alert } from "react-native";
+import isDatingProfileReady from "../../util/isDatingProfileReady";
 
 export const update_dating_uname = (name) => (dispatch) => {
   dispatch({
@@ -353,4 +355,93 @@ export const update_dating_gender_interest = (interest) => async (dispatch) => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+export const toggle_dating_active = (to_active) => async (dispatch) => {
+  let discover_profile_id = store.getState().datingReducer.profile.id;
+  const uDiscProfileRef = doc(db, "discover_profiles", discover_profile_id);
+
+  if (to_active) {
+    if (isDatingProfileReady()) {
+      dispatch({
+        type: "UPDATE_DATING_PROFILE_IS_ACTIVE",
+        payload: to_active,
+      });
+
+      dispatch({
+        type: "DATING_UPDATE_UPDATING_IS_ACTIVE",
+        payload: true,
+      });
+
+      await updateDoc(uDiscProfileRef, {
+        is_active: to_active,
+      })
+        .then(() => {
+          Toast.show({
+            type: "general",
+            autoHide: true,
+            text1: "Profile actived",
+            text2: "Profile now visible in discover",
+          });
+          dispatch({
+            type: "DATING_UPDATE_UPDATING_IS_ACTIVE",
+            payload: false,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          dispatch({
+            type: "DATING_UPDATE_UPDATING_IS_ACTIVE",
+            payload: false,
+          });
+        });
+    } else {
+      Alert.alert(
+        "Warning",
+        "You need to complete setting up your discover account to activate profile",
+        [
+          {
+            text: "Alright",
+          },
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+        ],
+      );
+    }
+  } else {
+    dispatch({
+      type: "UPDATE_DATING_PROFILE_IS_ACTIVE",
+      payload: to_active,
+    });
+
+    dispatch({
+      type: "DATING_UPDATE_UPDATING_IS_ACTIVE",
+      payload: true,
+    });
+
+    await updateDoc(uDiscProfileRef, {
+      is_active: to_active,
+    })
+      .then(() => {
+        Toast.show({
+          type: "general",
+          autoHide: true,
+          text1: "Profile deactivated",
+          text2: "Profile no longer visible in discover",
+        });
+        dispatch({
+          type: "DATING_UPDATE_UPDATING_IS_ACTIVE",
+          payload: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: "DATING_UPDATE_UPDATING_IS_ACTIVE",
+          payload: false,
+        });
+      });
+  }
 };

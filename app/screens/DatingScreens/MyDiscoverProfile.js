@@ -15,9 +15,6 @@ import colors from "../../config/colors";
 import Image from "../../components/Image";
 import Button from "../../components/Button";
 import { RFValue } from "react-native-responsive-fontsize";
-import IconButton from "../../components/IconButton";
-import FindsMatchPercentage from "../../components/Dating/FindsMatchPercentage";
-import FindsMotive from "../../components/Dating/FindsMotive";
 import InfoTextArea from "../../components/Dating/InfoText";
 import InforBox from "../../components/Dating/InforBox";
 import DatingVisibility from "../../components/Dating/DatingVisibility";
@@ -26,19 +23,16 @@ import DatingProfilePicModal from "../../components/Dating/DatingProfilePicModal
 import { FontAwesome5 } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import CSName from "./CreateShow/CSName";
 import {
   CS_ABOUT,
   CS_INTERESTED_IN,
   CS_LOOKING_FOR,
-  CS_MAIN_INFO,
   CS_NAME,
   DATING_HDIL,
   PREFERENCES,
   UPDATE_UNIVERSITY,
 } from "../../navigation/routes";
 import FancyButton from "../../components/FancyButton";
-import AppButton from "../../components/Button";
 import universityShortName from "../../util/universityShortName";
 
 const height = Dimensions.get("window").height;
