@@ -9,10 +9,19 @@ import * as geofire from "geofire-common";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import FloatingButton from "../../components/FloatingButton";
+import { connect } from "react-redux";
+import DatingIntroScreen from "./DatingIntroScreen";
 
 const icon_size = 35;
 const color_active = colors.white;
 const color_inactive = colors.secondary_2;
+
+const mapStateToProps = (state) => {
+  return {
+    loading: state.datingReducer.profile.loading,
+    is_active: state.datingReducer.profile.is_active,
+  };
+};
 
 const tabs = [
   {
@@ -64,7 +73,7 @@ class DatingContainer extends React.Component {
     activeTabIndex: 1,
     mockState: {
       loading_posts: false,
-      posts: [1, 3, 2, 4, 6, 7, 8, 10, 11, 12, 13, 21, 22, 23],
+      posts: [1, 3, 2],
       loading_more_posts: false,
       loading_events: false,
       events: [3],
@@ -75,6 +84,9 @@ class DatingContainer extends React.Component {
   componentDidMount = () => {
     const lat = 1.5074;
     const lng = 4.1178;
+
+    console.log("mounted");
+
     const hash = geofire.geohashForLocation([lat, lng]);
     console.log({ hash });
   };
@@ -100,6 +112,13 @@ class DatingContainer extends React.Component {
   loadMoreHandler = () => {};
 
   render() {
+    if (this.props.loading) {
+      return <DatingIntroScreen loading={true} />;
+    }
+    if (!this.props.loading && !this.props.is_active) {
+      return <DatingIntroScreen loading={false} />;
+    }
+
     return (
       <Screen>
         <TabbedScreenComponent
@@ -161,4 +180,4 @@ const styles = StyleSheet.create({
   container: {},
 });
 
-export default DatingContainer;
+export default connect(mapStateToProps, null)(DatingContainer);

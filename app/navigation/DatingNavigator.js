@@ -90,22 +90,19 @@ const DatingNavigator = ({ initialize_discover_page, is_active }) => {
     text = JSON.stringify(location);
   }
 
+  console.log({ location });
+
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
         animation: "slide_from_right",
       }}
-      initialRouteName={
-        is_active ? routes.DATING_CONTAINER : routes.DATING_INTRO
-      }
+      initialRouteName={routes.DATING_CONTAINER}
     >
-      {!is_active && (
-        <Stack.Screen
-          name={routes.DATING_INTRO}
-          component={DatingIntroScreen}
-        />
-      )}
+      {/* {!is_active && ( */}
+      {/* <Stack.Screen name={routes.DATING_INTRO} component={DatingIntroScreen} /> */}
+      {/* )} */}
       <Stack.Screen
         name={routes.DATING_CONTAINER}
         component={DatingContainer}

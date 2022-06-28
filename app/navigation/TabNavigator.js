@@ -118,21 +118,20 @@ const AppNavigator = ({ user_id, is_active }) => {
             <FontAwesome5 name="user-astronaut" color={color} size={size} />
             // <AntDesign name="find" color={color} size={size + 3} />
           ),
-
           tabBarShowLabel: true,
         }}
         name={routes.DATING_NAVIGATOR}
         component={DatingNavigator}
-        listeners={({ navigation }) => ({
-          tabPress: (e) => {
-            e.preventDefault();
-            {
-              is_active
-                ? navigation.navigate(routes.DATING_CONTAINER)
-                : navigation.navigate(routes.DATING_INTRO);
-            }
-          },
-        })}
+        // listeners={({ navigation }) => ({
+        //   tabPress: (e) => {
+        //     e.preventDefault();
+        //     {
+        //       is_active
+        //         ? navigation.navigate(routes.DATING_CONTAINER)
+        //         : navigation.navigate(routes.DATING_INTRO);
+        //     }
+        //   },
+        // })}
 
         // component={FeedNavigator}
       />

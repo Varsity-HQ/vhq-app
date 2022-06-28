@@ -1,4 +1,4 @@
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -24,8 +24,6 @@ const mapStateToProps = (state) => {
   return {
     profilepic: state.core.accData.profilepic,
     discover_profile_id: state.core.accData.discover_profile_id,
-    loading: state.datingReducer.profile.loading,
-    profile: state.datingReducer.profile,
   };
 };
 
@@ -35,14 +33,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-function DatingIntroScreen({
-  profilepic,
-  navigation,
-  loading,
-  initialize_discover_page,
-  discover_profile_id,
-  profile,
-}) {
+function DatingIntroScreen({ profilepic, loading }) {
+  const navigation = useNavigation();
+
   // if (!discover_profile_id) {
   //   useFocusEffect(
   //     React.useCallback(() => {
@@ -50,7 +43,7 @@ function DatingIntroScreen({
   //     }, []),
   //   );
   // }
-
+  //
   //
   if (loading) {
     return (
@@ -105,7 +98,11 @@ function DatingIntroScreen({
     );
   }
   //
-  console.log({ profile });
+
+  // if (!loading && profile.is_active) {
+  //   navigation.navigate(DATING_CONTAINER);
+  // }
+
   //
   return (
     <Screen style={styles.container}>

@@ -24,6 +24,7 @@ const obj = {
   show_sorientation: false,
   yearOfStudy: "1st",
   blocked: [],
+  poked: false,
 };
 
 export default obj;

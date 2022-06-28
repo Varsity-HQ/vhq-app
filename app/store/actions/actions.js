@@ -1228,6 +1228,7 @@ export const logOutUser = () => (dispatch) => {
   log_out_function();
   dispatch({ type: "SET_UNAUTHENTICATED" });
   dispatch({ type: "RESET_DATA" });
+  dispatch({ type: "DATING_RESET" });
 };
 
 const log_out_function = async () => {
