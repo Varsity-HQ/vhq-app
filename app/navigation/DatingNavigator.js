@@ -15,7 +15,6 @@ import DatingContainer from "../screens/DatingScreens/DatingContainer";
 import * as Location from "expo-location";
 import DatingProfilePage from "../screens/DatingScreens/DatingProfilePage";
 import MyDiscoverProfile from "../screens/DatingScreens/MyDiscoverProfile";
-import useOnlinePresence from "../auth/useOnlinePresence";
 import CSAbout from "../screens/DatingScreens/CreateShow/CSAbout";
 import { connect } from "react-redux";
 import {
@@ -69,11 +68,6 @@ const DatingNavigator = ({
   initialize_discover_page,
   update_user_location,
 }) => {
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-
-  // useOnlinePresence();
-
   useEffect(() => {
     initialize_discover_page();
     (async () => {

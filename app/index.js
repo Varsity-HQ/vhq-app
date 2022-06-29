@@ -30,10 +30,6 @@ import {
   Feather,
   SimpleLineIcons,
 } from "@expo/vector-icons";
-
-import { setNotificationHandler } from "expo-notifications";
-import { COPY_POST_URL } from "./util/toast_messages";
-
 import { navigationRef } from "./navigation/rootNavigation";
 import { setPromoNots } from "./notifications";
 import store from "./store/store";

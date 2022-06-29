@@ -105,7 +105,7 @@ const DatingContainer = ({
     loading_more_events: false,
   });
   const [center, setCenter] = React.useState([0, 0]);
-  const radiusInM = 50 * 1000;
+  const radiusInM = 1000 * 1000;
 
   let hooks = [];
 
@@ -166,8 +166,9 @@ const DatingContainer = ({
   }
 
   const bounds = geofire.geohashQueryBounds(center, radiusInM);
-
   const promises = [];
+
+  hooks = [];
 
   for (const b of bounds) {
     const collectionRef = collection(db, "discover_profiles");
@@ -179,7 +180,7 @@ const DatingContainer = ({
       endAt(b[1]),
     );
     // promises.push(getDocs(queryRef));
-    hooks.push(useCollectionData(queryRef));
+    // hooks.push(useCollectionData(queryRef));
   }
 
   let profiles = [];
@@ -187,14 +188,17 @@ const DatingContainer = ({
   let errors = [];
 
   for (const h of hooks) {
-    Array.isArray(h[0]) &&
-      h[0].forEach((x) => {
-        profiles.push(x);
-      });
-    overal_loading.push(h[1]);
-    if (h[2]) {
-      errors.push(h[2]);
-    }
+    //
+    // Array.isArray(h[0]) &&
+    //   h[0].forEach((x) => {
+    //     profiles.push(x);
+    //   });
+    // //
+    // overal_loading.push(h[1]);
+    // if (h[2]) {
+    //   errors.push(h[2]);
+    // }
+    //
   }
 
   console.log({ overal_loading });

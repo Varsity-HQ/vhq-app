@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import NetInfo from "@react-native-community/netinfo";
 import {
   getDatabase,
@@ -11,38 +11,62 @@ import {
   get,
   child,
 } from "firebase/database";
+import { AppState } from "react-native";
 import { rdb as db } from "../util/fb_admin";
+import store from "../store/store";
 
 const useOnlinePresence = () => {
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  let userID = store.getState().core.accData.userID;
+  const myConnectionsRef = ref(db, `accounts/${userID}/online`);
+  const lastOnlineRef = ref(db, `accounts/${userID}/lastOnline`);
+
+  const _handleAppStateChange = (nextAppState) => {
+    if (
+      appState.current.match(/inactive|background/) &&
+      nextAppState === "active"
+    ) {
+      // console.log("App has come to the foreground!");
+    }
+
+    appState.current = nextAppState;
+    setAppStateVisible(appState.current);
+    console.log("AppState", appState.current);
+
+    if (appState.current !== "active") {
+      set(myConnectionsRef, false);
+      set(lastOnlineRef, serverTimestamp());
+    }
+    if (appState.current === "active") {
+      set(myConnectionsRef, true);
+      set(lastOnlineRef, serverTimestamp());
+    }
+  };
+
   const saveOnlineStatus = async () => {
-    const myConnectionsRef = ref(db, "users/joe/online");
-
-    // stores the timestamp of my last disconnect (the last time I was seen online)
-    const lastOnlineRef = ref(db, "users/joe/lastOnline");
-
     set(myConnectionsRef, true);
+    set(lastOnlineRef, serverTimestamp());
     onDisconnect(myConnectionsRef).set(false);
     onDisconnect(lastOnlineRef).set(serverTimestamp());
-
-    const childTest = child("users/joe");
-
-    get(myConnectionsRef)
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
   useEffect(() => {
+    const app_state_subscription = AppState.addEventListener(
+      "change",
+      _handleAppStateChange,
+    );
+
     const unsubscribe = NetInfo.addEventListener((state) => {
       if (state.isConnected) {
         saveOnlineStatus();
       }
     });
 
-    return unsubscribe;
+    return () => {
+      app_state_subscription;
+      unsubscribe;
+    };
   }, []);
 };
 

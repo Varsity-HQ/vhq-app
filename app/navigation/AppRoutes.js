@@ -28,6 +28,7 @@ import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen
 import TabNavigator from "./TabNavigator";
 import ChatPage from "../screens/Chat/ChatPage";
 import navigation from "./rootNavigation";
+import useOnlinePresence from "../auth/useOnlinePresence";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -148,6 +149,7 @@ function NavigationStack({ core }) {
 }
 
 const AppRoutes = ({ core, setExpoPushToken }) => {
+  useOnlinePresence();
   useEffect(() => {
     registerForPushNotificationsAsync().then(
       (token) => token && setExpoPushToken(token),
