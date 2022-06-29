@@ -20,9 +20,9 @@ const initialState = {
     location: "",
     show_me: ["Female", "Male"],
     g_postion: "",
-    hashed_location: "",
     online_status: "",
-    alt: "",
+    hashed_location: "",
+    lat: "",
     long: "",
     parentID: "",
     saving_nickname: false,
@@ -34,6 +34,17 @@ const initialState = {
 
 const datingReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "DATING_UPDATE_LOCATION":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          lat: actions.payload.lat,
+          long: actions.payload.long,
+          hashed_location: actions.payload.hashed_location,
+        },
+      };
+
     case "DATING_RESET":
       return (state = initialState);
 

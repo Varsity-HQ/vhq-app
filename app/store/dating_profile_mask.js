@@ -18,7 +18,7 @@ const obj = {
   g_postion: "",
   hashed_location: "",
   is_online: false,
-  alt: "",
+  lat: "",
   long: "",
   parentID: "",
   show_sorientation: false,

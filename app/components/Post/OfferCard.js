@@ -65,6 +65,7 @@ function OfferCard({ navigation, data, useWindowWidth }) {
             </View>
           </View>
         </View>
+        
         <Button
           type={3}
           content={

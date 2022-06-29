@@ -18,7 +18,10 @@ import MyDiscoverProfile from "../screens/DatingScreens/MyDiscoverProfile";
 import useOnlinePresence from "../auth/useOnlinePresence";
 import CSAbout from "../screens/DatingScreens/CreateShow/CSAbout";
 import { connect } from "react-redux";
-import { initialize_discover_page } from "../store/actions/datingActions";
+import {
+  initialize_discover_page,
+  update_user_location,
+} from "../store/actions/datingActions";
 import CSMainInfo from "../screens/DatingScreens/CreateShow/CSMainInfo";
 import PreferencesScreen from "../screens/settings/PreferencesScreen";
 //
@@ -58,18 +61,20 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     initialize_discover_page: () => dispatch(initialize_discover_page()),
+    update_user_location: (data) => dispatch(update_user_location(data)),
   };
 };
 
-const DatingNavigator = ({ initialize_discover_page, is_active }) => {
+const DatingNavigator = ({
+  initialize_discover_page,
+  update_user_location,
+}) => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
   // useOnlinePresence();
 
   useEffect(() => {
-    console.log("here");
-
     initialize_discover_page();
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -78,19 +83,13 @@ const DatingNavigator = ({ initialize_discover_page, is_active }) => {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+      if (status === "granted") {
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation(location);
+        update_user_location(location);
+      }
     })();
   }, []);
-
-  let text = "Waiting..";
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
-
-  console.log({ location });
 
   return (
     <Stack.Navigator

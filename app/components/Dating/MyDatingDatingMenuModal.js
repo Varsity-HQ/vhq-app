@@ -17,7 +17,7 @@ import {
   delete_dating_profile,
   toggle_dating_active,
 } from "../../store/actions/datingActions";
-import { DATING_INTRO, HOME } from "../../navigation/routes";
+import { DATING_CONTAINER, HOME } from "../../navigation/routes";
 
 const mapStateToProps = (state) => {
   return {
@@ -45,7 +45,7 @@ function MyDatingProfileModal({
     delete_dating_profile();
     toggle_dating_active(false);
     setTimeout(() => {
-      navigation.navigate(DATING_INTRO);
+      navigation.navigate(DATING_CONTAINER);
     }, 100);
     handleModal();
   };

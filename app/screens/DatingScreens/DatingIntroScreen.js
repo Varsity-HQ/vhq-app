@@ -136,9 +136,9 @@ function DatingIntroScreen({ profilepic, loading }) {
           style={[styles.center, styles.create_button]}
           title="My PROFILE"
         />
-        <TouchableOpacity onPress={() => navigation.navigate(DATING_CONTAINER)}>
-          <Text style={[styles.center, styles.text_bottom]}>Take a peek</Text>
-        </TouchableOpacity>
+        <Text style={[styles.center, styles.text_bottom]}>version 1.0.0</Text>
+        {/* <TouchableOpacity onPress={() => navigation.navigate(DATING_CONTAINER)}>
+        </TouchableOpacity> */}
       </View>
     </Screen>
   );

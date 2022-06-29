@@ -9,6 +9,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import uuid from "uuid";
+import * as geofire from "geofire-common";
 import store from "../store";
 import dating_profile_mask from "../dating_profile_mask";
 import axios from "axios";
@@ -16,7 +17,6 @@ import db from "../../util/fb_admin";
 import Toast from "react-native-toast-message";
 import { Alert } from "react-native";
 import isDatingProfileReady from "../../util/isDatingProfileReady";
-import { async } from "@firebase/util";
 
 export const update_dating_uname = (name) => (dispatch) => {
   dispatch({
@@ -482,4 +482,33 @@ export const delete_dating_profile = () => async (dispatch) => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+export const update_user_location = (data) => async (dispatch) => {
+  let discover_profile_id = store.getState().datingReducer.profile.id;
+  const uDiscProfileRef = doc(db, "discover_profiles", discover_profile_id);
+  const latitude = data.coords?.latitude;
+  const longitude = data.coords?.longitude;
+
+  if (data?.coords && discover_profile_id) {
+    let g_hash = geofire.geohashForLocation([latitude, longitude]);
+    await updateDoc(uDiscProfileRef, {
+      lat: latitude ? latitude : "",
+      long: longitude ? longitude : "",
+      hashed_location: g_hash,
+    })
+      .then(() => {
+        dispatch({
+          type: "DATING_UPDATE_LOCATION",
+          payload: {
+            lat: latitude,
+            long: longitude,
+            hashed_location: g_hash,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 };
