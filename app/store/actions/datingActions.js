@@ -485,7 +485,7 @@ export const delete_dating_profile = () => async (dispatch) => {
 };
 
 export const update_user_location = (data) => async (dispatch) => {
-  let discover_profile_id = store.getState().datingReducer.profile.id;
+  let discover_profile_id = store.getState().core.accData.discover_profile_id;
   const uDiscProfileRef = doc(db, "discover_profiles", discover_profile_id);
   const latitude = data.coords?.latitude;
   const longitude = data.coords?.longitude;

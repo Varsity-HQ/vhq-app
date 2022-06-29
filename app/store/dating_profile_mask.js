@@ -18,6 +18,7 @@ const obj = {
   g_postion: "",
   hashed_location: "",
   is_online: false,
+  last_online: "",
   lat: "",
   long: "",
   parentID: "",

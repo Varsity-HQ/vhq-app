@@ -52,10 +52,10 @@ const useOnlinePresence = () => {
   };
 
   useEffect(() => {
-    const app_state_subscription = AppState.addEventListener(
-      "change",
-      _handleAppStateChange,
-    );
+    // const app_state_subscription = AppState.addEventListener(
+    //   "change",
+    //   _handleAppStateChange,
+    // );
 
     const unsubscribe = NetInfo.addEventListener((state) => {
       if (state.isConnected) {
@@ -64,7 +64,7 @@ const useOnlinePresence = () => {
     });
 
     return () => {
-      app_state_subscription;
+      // app_state_subscription;
       unsubscribe;
     };
   }, []);

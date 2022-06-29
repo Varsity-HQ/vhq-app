@@ -16,6 +16,7 @@ import FindsMatchPercentage from "./FindsMatchPercentage";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { DATING_PROFILE_PAGE } from "../../navigation/routes";
+import OnlineIndicator from "./OnlineIndicator";
 
 const width = Dimensions.get("window").width;
 
@@ -47,7 +48,7 @@ function DatingCard(props) {
             }}
           >
             <View style={{ flexDirection: "row" }}>
-              <FindsMotive />
+              <FindsMotive motive="to_have_fun" />
             </View>
           </View>
           <View>
@@ -64,7 +65,16 @@ function DatingCard(props) {
                 <FindsMatchPercentage />
               </View>
               <Text style={styles.name}>Peter</Text>
-              <Text style={styles.about}>2nd Year, UJ</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text style={styles.about}>2nd Year, UJ</Text>
+                <OnlineIndicator />
+              </View>
             </View>
             <LinearGradient
               style={styles.gradient}

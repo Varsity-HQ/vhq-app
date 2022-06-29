@@ -24,7 +24,10 @@ import {
   orderBy,
   where,
 } from "firebase/firestore";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import {
+  CollectionHook,
+  useCollectionData,
+} from "react-firebase-hooks/firestore";
 
 const icon_size = 35;
 const color_active = colors.white;
@@ -105,9 +108,49 @@ const DatingContainer = ({
     loading_more_events: false,
   });
   const [center, setCenter] = React.useState([0, 0]);
-  const radiusInM = 1000 * 1000;
-
   let hooks = [];
+  const radiusInM = 301 * 1000;
+
+  const bounds = geofire.geohashQueryBounds(center, radiusInM);
+  const promises = [];
+
+  for (const b of bounds) {
+    const collectionRef = collection(db, "discover_profiles");
+    const queryRef = query(
+      collectionRef,
+      orderBy("hashed_location"),
+      where("is_active", "==", true),
+      startAt(b[0]),
+      endAt(b[1]),
+    );
+    promises.push(getDocs(queryRef));
+    hooks.push(useCollectionData(queryRef));
+  }
+
+  console.log({ hooks });
+
+  // Promise.all(promises)
+  //   .then((snapshots) => {
+  //     const matchingDocs = [];
+  //     for (const snap of snapshots) {
+  //       for (const doc of snap.docs) {
+  //         const lat = doc.get("lat");
+  //         const lng = doc.get("long");
+  //         const distanceInKm = geofire.distanceBetween([lat, lng], center);
+  //         const distanceInM = distanceInKm * 1000;
+  //         if (distanceInM <= radiusInM) {
+  //           matchingDocs.push(doc.data());
+  //         }
+  //       }
+  //     }
+  //     return matchingDocs;
+  //   })
+  //   .then((matchingDocs) => {
+  //     console.log({ matchingDocs });
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 
   useFocusEffect(
     React.useCallback(() => {
@@ -136,7 +179,7 @@ const DatingContainer = ({
       if (status === "granted") {
         let location = await Location.getCurrentPositionAsync({});
         update_user_location(location);
-        setCenter([data.coords?.latitude, data.coords?.longitude]);
+        setCenter([location.coords?.latitude, location.coords?.longitude]);
       }
     })();
   };
@@ -164,46 +207,6 @@ const DatingContainer = ({
   if (!loading && !is_active) {
     return <DatingIntroScreen loading={false} />;
   }
-
-  const bounds = geofire.geohashQueryBounds(center, radiusInM);
-  const promises = [];
-
-  hooks = [];
-
-  for (const b of bounds) {
-    const collectionRef = collection(db, "discover_profiles");
-    const queryRef = query(
-      collectionRef,
-      orderBy("hashed_location"),
-      where("is_active", "==", true),
-      startAt(b[0]),
-      endAt(b[1]),
-    );
-    // promises.push(getDocs(queryRef));
-    // hooks.push(useCollectionData(queryRef));
-  }
-
-  let profiles = [];
-  let overal_loading = [];
-  let errors = [];
-
-  for (const h of hooks) {
-    //
-    // Array.isArray(h[0]) &&
-    //   h[0].forEach((x) => {
-    //     profiles.push(x);
-    //   });
-    // //
-    // overal_loading.push(h[1]);
-    // if (h[2]) {
-    //   errors.push(h[2]);
-    // }
-    //
-  }
-
-  console.log({ overal_loading });
-  console.log({ profiles });
-  console.log({ errors });
 
   return (
     <Screen>

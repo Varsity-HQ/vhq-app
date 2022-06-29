@@ -79,7 +79,6 @@ const DatingNavigator = ({
 
       if (status === "granted") {
         let location = await Location.getCurrentPositionAsync({});
-        setLocation(location);
         update_user_location(location);
       }
     })();
