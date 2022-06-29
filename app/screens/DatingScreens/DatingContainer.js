@@ -190,10 +190,10 @@ const DatingContainer = ({
 
   const listRenderingHandler = ({ item }) => {
     if (activeTabIndex === 1) {
-      return <DatingCard />;
+      return <DatingCard data={item} />;
     }
     if (activeTabIndex === 2) {
-      return <DatingCard />;
+      return <DatingCard data={item} />;
     }
     return null;
   };
@@ -207,6 +207,20 @@ const DatingContainer = ({
   if (!loading && !is_active) {
     return <DatingIntroScreen loading={false} />;
   }
+
+  let accounts = [];
+  let loaders = [];
+
+  for (const hook of hooks) {
+    loaders.push(hook[1]);
+    if (!hook[1]) {
+      hook[0].forEach((x) => {
+        accounts.push(x);
+      });
+    }
+  }
+
+  console.log({ accounts });
 
   return (
     <Screen>
@@ -246,9 +260,9 @@ const DatingContainer = ({
         ]}
         tabStates={[
           {
-            loading: mockState.loading_posts,
+            loading: loaders.includes(true),
             loading_more: mockState.loading_more_posts,
-            data: mockState.posts,
+            data: accounts,
             refreshing: false,
           },
           {

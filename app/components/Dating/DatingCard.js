@@ -17,11 +17,15 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { DATING_PROFILE_PAGE } from "../../navigation/routes";
 import OnlineIndicator from "./OnlineIndicator";
+import universityShortName from "../../util/universityShortName";
 
 const width = Dimensions.get("window").width;
 
-function DatingCard(props) {
+function DatingCard({ data }) {
   const navigation = useNavigation();
+
+  console.log(data);
+
   return (
     <TouchableWithoutFeedback
       onPress={() => navigation.navigate(DATING_PROFILE_PAGE)}
@@ -37,7 +41,7 @@ function DatingCard(props) {
       >
         <ImageBackground
           source={{
-            uri: "https://varsityhq.imgix.net/vhq_img202145455255.jpeg",
+            uri: data.profilepic,
           }}
           style={styles.container}
         >
@@ -48,7 +52,7 @@ function DatingCard(props) {
             }}
           >
             <View style={{ flexDirection: "row" }}>
-              <FindsMotive motive="to_have_fun" />
+              <FindsMotive motive={data.purpose} />
             </View>
           </View>
           <View>
@@ -62,9 +66,9 @@ function DatingCard(props) {
                   flexDirection: "row",
                 }}
               >
-                <FindsMatchPercentage />
+                <FindsMatchPercentage data={data} />
               </View>
-              <Text style={styles.name}>Peter</Text>
+              <Text style={styles.name}>{data.nickname}</Text>
               <View
                 style={{
                   flexDirection: "row",
@@ -72,8 +76,13 @@ function DatingCard(props) {
                   justifyContent: "space-between",
                 }}
               >
-                <Text style={styles.about}>2nd Year, UJ</Text>
-                <OnlineIndicator />
+                <Text style={styles.about}>
+                  {data.yearOfStudy === "postgraduate"
+                    ? "Postgrad"
+                    : data.yearOfStudy + " Year"}{" "}
+                  , {universityShortName(data.university)}
+                </Text>
+                <OnlineIndicator online={data.is_online} />
               </View>
             </View>
             <LinearGradient
@@ -121,3 +130,70 @@ const styles = StyleSheet.create({
 });
 
 export default DatingCard;
+
+// return (
+//   <TouchableWithoutFeedback
+//     onPress={() => navigation.navigate(DATING_PROFILE_PAGE)}
+//   >
+//     <View
+//       style={{
+//         padding: 5,
+//         flexDirection: "row",
+//         justifyContent: "center",
+//         alignItems: "center",
+//         overflow: "hidden",
+//       }}
+//     >
+//       <ImageBackground
+//         source={{
+//           uri: "https://varsityhq.imgix.net/vhq_img202145455255.jpeg",
+//         }}
+//         style={styles.container}
+//       >
+//         <View
+//           style={{
+//             flex: 1,
+//             padding: 10,
+//           }}
+//         >
+//           <View style={{ flexDirection: "row" }}>
+//             <FindsMotive motive="to_have_fun" />
+//           </View>
+//         </View>
+//         <View>
+//           <View
+//             style={{
+//               padding: 10,
+//             }}
+//           >
+//             <View
+//               style={{
+//                 flexDirection: "row",
+//               }}
+//             >
+//               <FindsMatchPercentage />
+//             </View>
+//             <Text style={styles.name}>Peter</Text>
+//             <View
+//               style={{
+//                 flexDirection: "row",
+//                 alignItems: "center",
+//                 justifyContent: "space-between",
+//               }}
+//             >
+//               <Text style={styles.about}>2nd Year, UJ</Text>
+//               <OnlineIndicator />
+//             </View>
+//           </View>
+//           <LinearGradient
+//             style={styles.gradient}
+//             colors={[colors.dark, colors.transparent]}
+//             // colors={["red", "white"]}
+//             start={[0, 1]}
+//             end={[0, 0]}
+//           />
+//         </View>
+//       </ImageBackground>
+//     </View>
+//   </TouchableWithoutFeedback>
+// );

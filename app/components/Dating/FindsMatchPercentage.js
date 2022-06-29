@@ -1,22 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import AnimatedProgressWheel from "react-native-progress-wheel";
 import Text from "../AppText";
 import colors from "../../config/colors";
 import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
 
-function FindsMatchPercentage({ forceValue }) {
+const mapStateToProps = (state) => {
+  return {
+    profile: state.datingReducer.profile,
+  };
+};
+
+function FindsMatchPercentage({ forceValue, data, profile }) {
+  const [percetage, setPercantage] = useState(0);
+
+  useEffect(() => {
+    setPercantage(0);
+
+    if (data.university === profile.university) {
+      setPercantage(70);
+    }
+  }, []);
+
   return (
     <View style={styles.container}>
       <AnimatedProgressWheel
         size={22}
         width={5}
-        progress={forceValue ? forceValue : 74}
+        progress={forceValue ? forceValue : percetage}
         color={colors.redish_2}
         backgroundColor={colors.dark_opacity}
         fullColor={colors.green}
       />
-      <Text style={styles.text}>{forceValue ? forceValue : "70"}%</Text>
+      <Text style={styles.text}>{forceValue ? forceValue : percetage}%</Text>
     </View>
   );
 }
@@ -37,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FindsMatchPercentage;
+export default connect(mapStateToProps, null)(FindsMatchPercentage);
