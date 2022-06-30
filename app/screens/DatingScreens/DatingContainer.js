@@ -240,7 +240,7 @@ const DatingContainer = ({
         listRenderingHandler={listRenderingHandler}
         tabsConfig={[
           {
-            keyExtractor: (item) => item,
+            keyExtractor: (item) => item.id,
             customLoader: <Text>loading</Text>,
             useCustomLoader: false,
             noDataComponent: (
@@ -252,7 +252,7 @@ const DatingContainer = ({
             refreshHandler: refreshHandler,
           },
           {
-            keyExtractor: (item) => item,
+            keyExtractor: (item) => item.id,
             noDataComponent: null,
             allowLoadMore: false,
             loadMoreHandler: loadMoreHandler,

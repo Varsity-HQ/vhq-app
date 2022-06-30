@@ -40,8 +40,11 @@ function DatingCard({ data }) {
         }}
       >
         <ImageBackground
+          defaultSource={require("../../assets/avatar.png")}
           source={{
-            uri: data.profilepic,
+            uri: data.profilepic
+              ? data.profilepic
+              : require("../../assets/avatar.png"),
           }}
           style={styles.container}
         >
@@ -126,6 +129,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     padding: 0,
     borderRadius: 8,
+    backgroundColor: colors.darkish,
   },
 });
 

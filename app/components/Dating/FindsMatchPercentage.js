@@ -16,12 +16,50 @@ function FindsMatchPercentage({ forceValue, data, profile }) {
   const [percetage, setPercantage] = useState(0);
 
   useEffect(() => {
-    setPercantage(0);
+    compute_match();
+  }, [data]);
+
+  const compute_match = () => {
+    if (
+      data.university === profile.university &&
+      data.purpose === profile.purpose &&
+      data.sexual_orientation === profile.sexual_orientation
+    ) {
+      setPercantage(100);
+      return;
+    }
+    if (
+      data.university !== profile.university &&
+      data.purpose === profile.purpose &&
+      data.sexual_orientation === profile.sexual_orientation
+    ) {
+      setPercantage(70);
+      return;
+    }
+    if (
+      data.university !== profile.university &&
+      data.purpose === profile.purpose &&
+      data.sexual_orientation !== profile.sexual_orientation
+    ) {
+      setPercantage(40);
+      return;
+    }
+    if (
+      data.university !== profile.university &&
+      data.purpose !== profile.purpose &&
+      data.sexual_orientation !== profile.sexual_orientation
+    ) {
+      setPercantage(30);
+      return;
+    }
 
     if (data.university === profile.university) {
-      setPercantage(70);
+      setPercantage(30);
+      return;
     }
-  }, []);
+
+    setPercantage(0);
+  };
 
   return (
     <View style={styles.container}>
