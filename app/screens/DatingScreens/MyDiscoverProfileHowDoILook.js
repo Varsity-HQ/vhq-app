@@ -175,7 +175,7 @@ function DatingProfilePage({ profile }) {
             >
               <FindsMotive motive={profile.purpose} />
               <View style={{ paddingHorizontal: 5 }} />
-              <FindsMatchPercentage forceValue={100} />
+              <FindsMatchPercentage forceValue={100} data={profile} />
               <Text style={{ marginLeft: 10 }}>Great match !</Text>
             </View>
             <InfoTextArea html={true} header="About" text={profile.about} />

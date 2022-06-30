@@ -20,10 +20,20 @@ import FindsMatchPercentage from "../../components/Dating/FindsMatchPercentage";
 import FindsMotive from "../../components/Dating/FindsMotive";
 import InfoTextArea from "../../components/Dating/InfoText";
 import InforBox from "../../components/Dating/InforBox";
+import { connect } from "react-redux";
+import universityShortName from "../../util/universityShortName";
+import OnlineIndicator from "../../components/Dating/OnlineIndicator";
+import DistanceIndicator from "../../components/Dating/DistanceIndicator";
 
 const height = Dimensions.get("window").height;
 
-function DatingProfilePage(props) {
+const mapStateToProps = (state) => {
+  return {
+    profile: state.datingReducer.saved_profile,
+  };
+};
+
+function DatingProfilePage({ profile }) {
   const inserts = useSafeAreaInsets();
   return (
     <ScrollView scroll style={[styles.container]}>
@@ -47,23 +57,23 @@ function DatingProfilePage(props) {
       <View style={styles.container}>
         <View style={styles.inner_container}>
           <View style={styles.profilepic_container}>
-            <Image
-              uri="https://varsityhq.imgix.net/vhq_img202145455255.jpeg"
-              style={styles.profilepic}
-            />
+            <Image uri={profile.profilepic} style={styles.profilepic} />
           </View>
           <View style={styles.meta_container}>
-            <Text style={styles.name}>hector</Text>
-            <Text
-              style={[
-                styles.text,
-                {
-                  fontSize: RFValue(12),
-                },
-              ]}
-            >
-              Seen 12,432
-            </Text>
+            <Text style={styles.name}>{profile.nickname}</Text>
+
+            <View>
+              <Text
+                style={[
+                  styles.text,
+                  {
+                    fontSize: RFValue(12),
+                  },
+                ]}
+              >
+                Seen {profile.seen_count}
+              </Text>
+            </View>
             <Text
               style={[
                 styles.text,
@@ -142,20 +152,58 @@ function DatingProfilePage(props) {
                 marginVertical: 20,
               }}
             >
-              <FindsMotive />
+              <FindsMotive motive={profile.purpose} />
+              <DistanceIndicator data={profile} />
               <View style={{ paddingHorizontal: 5 }} />
-              <FindsMatchPercentage />
-              <Text style={{ marginLeft: 10 }}>Great match !</Text>
+              <FindsMatchPercentage data={profile} />
+              <OnlineIndicator
+                online={profile.is_online}
+                style={{ marginLeft: 10 }}
+              />
+              {/* <Text style={{ marginLeft: 10 }}>Great match !</Text> */}
             </View>
-            <InfoTextArea
-              header="About"
-              text="Just chatting with people and meeting new friends. I have nothing to
-            offer"
+            <InfoTextArea html={true} header="About" text={profile.about} />
+            <InforBox
+              data={[
+                {
+                  title: "gender",
+                  text: profile.gender,
+                  hide: !profile.gender,
+                },
+                {
+                  title: "star_sign",
+                  text: profile.star_sign,
+                  hide: !profile.star_sign,
+                },
+                {
+                  title: "age",
+                  text: profile.age,
+                  hide: !profile.age,
+                },
+                {
+                  title: "s_orientation",
+                  text: profile.sexual_orientation,
+                  hide: !profile.sexual_orientation,
+                },
+                {
+                  title: "yearOfStudy",
+                  text:
+                    profile.yearOfStudy !== "postgraduates"
+                      ? profile.yearOfStudy + " year"
+                      : "Postgraduate",
+                  hide: !profile.yearOfStudy,
+                },
+                {
+                  title: "university",
+                  text: universityShortName(profile.university),
+                  hide: !profile.university,
+                },
+              ]}
+              header="Main information"
             />
-            <InforBox header="Main information" />
             <InfoTextArea
               header="University/College"
-              text="University of Johannesburg"
+              text={profile.university}
             />
           </View>
         </View>
@@ -212,4 +260,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DatingProfilePage;
+export default connect(mapStateToProps, null)(DatingProfilePage);

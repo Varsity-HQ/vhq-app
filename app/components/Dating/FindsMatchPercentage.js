@@ -16,7 +16,9 @@ function FindsMatchPercentage({ forceValue, data, profile }) {
   const [percetage, setPercantage] = useState(0);
 
   useEffect(() => {
-    compute_match();
+    if (!forceValue) {
+      compute_match();
+    }
   }, [data]);
 
   const compute_match = () => {

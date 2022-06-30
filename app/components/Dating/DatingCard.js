@@ -18,18 +18,29 @@ import { useNavigation } from "@react-navigation/native";
 import { DATING_PROFILE_PAGE } from "../../navigation/routes";
 import OnlineIndicator from "./OnlineIndicator";
 import universityShortName from "../../util/universityShortName";
-
+import { save_dating_profile } from "../../store/actions/datingActions";
+import { connect } from "react-redux";
 const width = Dimensions.get("window").width;
 
-function DatingCard({ data }) {
-  const navigation = useNavigation();
+const mapDispatchToProps = (dispatch) => {
+  return {
+    save_dating_profile: (p) => dispatch(save_dating_profile(p)),
+  };
+};
 
+function DatingCard({ data, save_dating_profile }) {
+  const navigation = useNavigation();
   console.log(data);
 
+  const handle_press = () => {
+    save_dating_profile(data);
+    navigation.navigate(DATING_PROFILE_PAGE, {
+      id: data.id,
+    });
+  };
+
   return (
-    <TouchableWithoutFeedback
-      onPress={() => navigation.navigate(DATING_PROFILE_PAGE)}
-    >
+    <TouchableWithoutFeedback onPress={() => handle_press()}>
       <View
         style={{
           padding: 5,
@@ -133,7 +144,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DatingCard;
+export default connect(null, mapDispatchToProps)(DatingCard);
 
 // return (
 //   <TouchableWithoutFeedback

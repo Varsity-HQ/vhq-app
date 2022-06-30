@@ -32,12 +32,10 @@ const useOnlinePresence = () => {
 
     appState.current = nextAppState;
     setAppStateVisible(appState.current);
-    console.log("AppState", appState.current);
-
-    if (appState.current !== "active") {
-      set(myConnectionsRef, false);
-      set(lastOnlineRef, serverTimestamp());
-    }
+    // if (appState.current !== "active") {
+    //   set(myConnectionsRef, false);
+    //   set(lastOnlineRef, serverTimestamp());
+    // }
     if (appState.current === "active") {
       set(myConnectionsRef, true);
       set(lastOnlineRef, serverTimestamp());
@@ -52,10 +50,10 @@ const useOnlinePresence = () => {
   };
 
   useEffect(() => {
-    // const app_state_subscription = AppState.addEventListener(
-    //   "change",
-    //   _handleAppStateChange,
-    // );
+    const app_state_subscription = AppState.addEventListener(
+      "change",
+      _handleAppStateChange,
+    );
 
     const unsubscribe = NetInfo.addEventListener((state) => {
       if (state.isConnected) {
@@ -64,7 +62,7 @@ const useOnlinePresence = () => {
     });
 
     return () => {
-      // app_state_subscription;
+      app_state_subscription;
       unsubscribe;
     };
   }, []);

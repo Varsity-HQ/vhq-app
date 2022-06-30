@@ -512,3 +512,10 @@ export const update_user_location = (data) => async (dispatch) => {
       });
   }
 };
+
+export const save_dating_profile = (p) => (dispatch) => {
+  dispatch({
+    type: "DATING_SAVE_PROFILE",
+    payload: p,
+  });
+};

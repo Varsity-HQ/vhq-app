@@ -30,10 +30,32 @@ const initialState = {
     updating_is_active: false,
     yearOfStudy: "",
   },
+  saved_profile: {
+    loading: true,
+  },
 };
 
 const datingReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "DATING_SAVE_PROFILE":
+      return {
+        ...state,
+        saved_profile: {
+          ...state.saved_profile,
+          ...actions.payload,
+          loading: false,
+        },
+      };
+
+    case "DATING_CLEAR_SAVED_PROFILE": {
+      return {
+        ...state,
+        saved_profile: {
+          loading: true,
+        },
+      };
+    }
+
     case "DATING_UPDATE_LOCATION":
       return {
         ...state,
