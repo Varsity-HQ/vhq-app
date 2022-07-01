@@ -99,9 +99,14 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex, data }) {
           <TouchableOpacity
             style={{
               flexDirection: "row",
+              paddingHorizontal: 10,
             }}
           >
-            <Ionicons name="settings" size={24} color={colors.white} />
+            <MaterialCommunityIcons
+              name="tune"
+              size={30}
+              color={colors.white}
+            />
           </TouchableOpacity>
         </View>
       </View>

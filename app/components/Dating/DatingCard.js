@@ -134,12 +134,13 @@ const styles = StyleSheet.create({
     // aspectRatio: 9 / 3,
   },
   container: {
-    width: width / 2 - width * 0.03,
-    height: width / 2 - width * 0.03,
+    width: width / 2 - width * 0.04,
+    height: width / 2 - width * 0.04,
     overflow: "hidden",
     padding: 0,
     borderRadius: 8,
     backgroundColor: colors.darkish,
+    // alignSelf: "center",
   },
 });
 

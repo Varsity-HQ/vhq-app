@@ -40,6 +40,7 @@ const mapStateToProps = (state) => {
     loading: state.datingReducer.profile.loading,
     is_active: state.datingReducer.profile.is_active,
     profile: state.datingReducer.profile,
+    discover_profile_id: state.core.accData.discover_profile_id,
   };
 };
 
@@ -99,6 +100,7 @@ const DatingContainer = ({
   is_active,
   profile,
   update_user_location,
+  discover_profile_id,
 }) => {
   const [activeTabIndex, setActiveTabIndex] = React.useState(1);
   const [mockState, setMockState] = React.useState({
@@ -111,10 +113,12 @@ const DatingContainer = ({
   });
   const [center, setCenter] = React.useState([0, 0]);
 
-  const userRef = doc(db, "discover_profiles", profile.id);
-  const userData = useDocumentData(userRef);
+  // const userRef = doc(db, "discover_profiles", discover_profile_id);
+  // const userData = useDocumentData(userRef);
 
-  let own_profile = userData[1] ? profile : userData[0];
+  // let own_profile = userData[1] ? profile : userData[0];
+
+  let own_profile = profile;
 
   let hooks = [];
   const radiusInM = 301 * 1000;
@@ -128,6 +132,7 @@ const DatingContainer = ({
       collectionRef,
       orderBy("hashed_location"),
       where("is_active", "==", true),
+      where("gender", "in", profile.show_me),
       startAt(b[0]),
       endAt(b[1]),
     );
@@ -177,6 +182,7 @@ const DatingContainer = ({
   };
 
   const handle_without_location = () => {
+    console.log("without location");
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
@@ -279,7 +285,7 @@ const DatingContainer = ({
           {
             loading: mockState.loading_events,
             loading_more: mockState.loading_more_events,
-            data: [accounts[1]],
+            data: [accounts[0]],
             refreshing: false,
           },
         ]}

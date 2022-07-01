@@ -185,7 +185,7 @@ const uploadImageAsync = async (uri) => {
 export const initialize_discover_page = () => (dispatch) => {
   console.log("initialized");
 
-  let discover_id = store.getState().core.accData.discover_profile_id;
+  let discover_id = store.getState().core.accData?.discover_profile_id;
 
   if (discover_id) {
     get_discover_profile(dispatch);
