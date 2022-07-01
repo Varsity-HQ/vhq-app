@@ -30,7 +30,6 @@ const mapDispatchToProps = (dispatch) => {
 
 function DatingCard({ data, save_dating_profile }) {
   const navigation = useNavigation();
-  console.log(data);
 
   const handle_press = () => {
     save_dating_profile(data);

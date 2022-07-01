@@ -23,10 +23,12 @@ import {
   query,
   orderBy,
   where,
+  doc,
 } from "firebase/firestore";
 import {
   CollectionHook,
   useCollectionData,
+  useDocumentData,
 } from "react-firebase-hooks/firestore";
 
 const icon_size = 35;
@@ -108,6 +110,12 @@ const DatingContainer = ({
     loading_more_events: false,
   });
   const [center, setCenter] = React.useState([0, 0]);
+
+  const userRef = doc(db, "discover_profiles", profile.id);
+  const userData = useDocumentData(userRef);
+
+  let own_profile = userData[1] ? profile : userData[0];
+
   let hooks = [];
   const radiusInM = 301 * 1000;
 
@@ -127,7 +135,7 @@ const DatingContainer = ({
     hooks.push(useCollectionData(queryRef));
   }
 
-  console.log({ hooks });
+  // console.log({ hooks });
 
   // Promise.all(promises)
   //   .then((snapshots) => {
@@ -220,7 +228,9 @@ const DatingContainer = ({
     }
   }
 
-  console.log({ accounts });
+  console.log({ hooks_count: hooks.length });
+
+  // console.log({ accounts });
 
   return (
     <Screen>
@@ -232,6 +242,7 @@ const DatingContainer = ({
         removeTabBorder={true}
         TopHeader={
           <Header
+            data={own_profile}
             setTabIndex={setTabIndex}
             activeTabIndex={activeTabIndex}
             tabs={tabs}
@@ -268,7 +279,7 @@ const DatingContainer = ({
           {
             loading: mockState.loading_events,
             loading_more: mockState.loading_more_events,
-            data: mockState.events,
+            data: [accounts[1]],
             refreshing: false,
           },
         ]}

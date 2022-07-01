@@ -26,6 +26,7 @@ const obj = {
   yearOfStudy: "1st",
   blocked: [],
   poked: false,
+  poked_users: [],
 };
 
 export default obj;

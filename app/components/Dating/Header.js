@@ -12,6 +12,7 @@ import SwipeContainer from "./SwipeContainer";
 import DatingVisibility from "./DatingVisibility";
 import { useNavigation } from "@react-navigation/native";
 import { MY_DISCOVER_PROFILE } from "../../navigation/routes";
+import DatingMenu from "./DatingMenu";
 
 const mapStateToProps = (state) => {
   return {
@@ -44,8 +45,15 @@ const subTabs = [
   },
 ];
 
-function Header({ profilepic, tabs, activeTabIndex, setTabIndex }) {
+function Header({ profilepic, tabs, activeTabIndex, setTabIndex, data }) {
+  const [index, setIndex] = React.useState(activeTabIndex);
   const navigation = useNavigation();
+
+  const handle_change_index = (i) => {
+    setIndex(i);
+    setTabIndex(i);
+  };
+
   return (
     <View style={styles.main_container}>
       <View style={styles.top_container}>
@@ -55,50 +63,50 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex }) {
           >
             <Image style={styles.profilepic} uri={profilepic} />
           </TouchableOpacity>
-          <Text
-            style={[
-              styles.titleStyle,
-              {
-                color: colors.light,
-                fontSize: RFValue(15),
-                marginLeft: 10,
-              },
-            ]}
-          >
-            {tabs[activeTabIndex - 1].title}
-          </Text>
+          <Text style={styles.titleStyle}>Discover</Text>
         </View>
         <View style={[styles.menu_container]}>
           {tabs.map((x) => (
             <TouchableOpacity
-              onPress={() => setTabIndex(x.index)}
+              onPress={() => handle_change_index(x.index)}
               style={[
                 styles.tab_button,
                 {
                   backgroundColor:
-                    activeTabIndex === x.index
-                      ? colors.primary
-                      : colors.transparent,
+                    index === x.index ? colors.primary : colors.transparent,
                   borderColor:
-                    activeTabIndex === x.index
-                      ? colors.circleColor
-                      : colors.transparent,
-                  paddingHorizontal: activeTabIndex === x.index ? 10 : 5,
+                    index === x.index ? colors.circleColor : colors.transparent,
+                  paddingHorizontal: index === x.index ? 10 : 5,
                 },
               ]}
               key={x.index}
             >
-              {activeTabIndex === x.index ? x.icon_a : x.icon}
+              {index === x.index ? x.icon_a : x.icon}
             </TouchableOpacity>
           ))}
         </View>
 
-        <View style={styles.right_eye}>
-          <Ionicons name="ios-eye" size={24} color={colors.white} />
-          <Text style={styles.eye_counter}>2</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <View style={styles.right_eye}>
+            <Ionicons name="ios-eye" size={24} color={colors.white} />
+            <Text style={styles.eye_counter}>{data.seen_count}</Text>
+          </View>
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+            }}
+          >
+            <Ionicons name="settings" size={24} color={colors.white} />
+          </TouchableOpacity>
         </View>
       </View>
-      <DatingVisibility />
+      {/* <DatingVisibility /> */}
+      <DatingMenu />
       {/* <SwipeContainer /> */}
     </View>
   );
@@ -153,13 +161,14 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   titleStyle: {
-    fontSize: RFValue(18),
-    // fontWeight: "700",
-    fontFamily: "SF-Pro-Rounded-Bold",
+    fontSize: RFValue(28),
+    fontFamily: "Lobster-Regular",
+    marginLeft: 10,
+    color: colors.lighish2,
   },
   tab_button: {
-    paddingHorizontal: 5,
-    paddingVertical: 5,
+    paddingHorizontal: 2,
+    paddingVertical: 2,
     borderRadius: 100,
     borderWidth: 2,
     borderColor: colors.transparent,
@@ -170,6 +179,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dark_2,
     borderRadius: 100,
     overflow: "hidden",
+    display: "none",
   },
   top_container: {
     paddingVertical: 20,
@@ -192,8 +202,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dark,
   },
   profilepic: {
-    height: height * 0.045,
-    width: height * 0.045,
+    height: height * 0.05,
+    width: height * 0.05,
     borderRadius: 100,
     marginLeft: 10,
   },
