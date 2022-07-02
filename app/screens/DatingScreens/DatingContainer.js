@@ -6,7 +6,7 @@ import Text from "../../components/AppText";
 import Header from "../../components/Dating/Header";
 import DatingCard from "../../components/Dating/DatingCard";
 import * as geofire from "geofire-common";
-import { MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { MaterialIcons, Ionicons, FontAwesome } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import FloatingButton from "../../components/FloatingButton";
 import { connect } from "react-redux";
@@ -31,7 +31,7 @@ import {
   useDocumentData,
 } from "react-firebase-hooks/firestore";
 
-const icon_size = 35;
+const icon_size = 20;
 const color_active = colors.white;
 const color_inactive = colors.secondary_2;
 
@@ -52,45 +52,25 @@ const mapDispatchToProps = (dispatch) => {
 
 const tabs = [
   {
-    title: "Browse",
+    title: "Near me",
     index: 1,
     icon: (
-      <MaterialIcons name="explore" size={icon_size} color={color_inactive} />
-    ),
-    icon_a: (
-      <MaterialIcons name="explore" size={icon_size} color={color_active} />
+      <FontAwesome
+        name="location-arrow"
+        size={icon_size}
+        color={colors.secondary}
+      />
     ),
   },
   {
-    title: "Likes",
+    title: "Pokes",
     index: 2,
     icon: (
       <MaterialIcons
         name="offline-bolt"
         size={icon_size}
-        color={color_inactive}
+        color={colors.secondary}
       />
-    ),
-    icon_a: (
-      <MaterialIcons
-        name="offline-bolt"
-        size={icon_size}
-        color={color_active}
-      />
-    ),
-  },
-  {
-    title: "Chats",
-    index: 3,
-    icon: (
-      <Ionicons
-        name="navigate-circle"
-        size={icon_size}
-        color={color_inactive}
-      />
-    ),
-    icon_a: (
-      <Ionicons name="navigate-circle" size={icon_size} color={color_active} />
     ),
   },
 ];
@@ -113,12 +93,15 @@ const DatingContainer = ({
   });
   const [center, setCenter] = React.useState([0, 0]);
 
-  // const userRef = doc(db, "discover_profiles", discover_profile_id);
-  // const userData = useDocumentData(userRef);
-
-  // let own_profile = userData[1] ? profile : userData[0];
-
+  let userRef = null;
+  let userData = null;
   let own_profile = profile;
+
+  if (discover_profile_id) {
+    userRef = doc(db, "discover_profiles", discover_profile_id);
+    userData = useDocumentData(userRef);
+    own_profile = userData[1] ? profile : userData[0];
+  }
 
   let hooks = [];
   const radiusInM = 301 * 1000;
@@ -229,23 +212,34 @@ const DatingContainer = ({
     loaders.push(hook[1]);
     if (!hook[1]) {
       hook[0].forEach((x) => {
-        accounts.push(x);
+        if (discover_profile_id && x.id !== discover_profile_id) {
+          const lat = x.lat;
+          const lng = x.long;
+          const distanceInKm = geofire.distanceBetween([lat, lng], center);
+          const distanceInM = distanceInKm * 1000;
+          if (distanceInM <= radiusInM) {
+            accounts.push(x);
+          }
+        }
       });
     }
   }
 
-  console.log({ hooks_count: hooks.length });
+  // console.log({ hooks_count: hooks.length });
 
   // console.log({ accounts });
+
+  console.log({ loaders });
 
   return (
     <Screen>
       <TabbedScreenComponent
         activeTabIndex={activeTabIndex}
-        // setTabIndex={this.setTabIndex}
-        //   tabOptions={tabs}
+        setTabIndex={setTabIndex}
+        tabOptions={tabs}
         numColumns={2}
-        removeTabBorder={true}
+        tabStyle={2}
+        // removeTabBorder={true}
         TopHeader={
           <Header
             data={own_profile}

@@ -83,9 +83,9 @@ function DatingMenu(props) {
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 10,
+    borderRadius: 0,
     paddingHorizontal: 10,
-    marginHorizontal: 10,
+    marginHorizontal: 0,
     backgroundColor: colors.dark_opacity_2,
     flexDirection: "row",
     alignItems: "center",

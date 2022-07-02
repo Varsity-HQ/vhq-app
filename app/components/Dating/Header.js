@@ -111,7 +111,8 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex, data }) {
         </View>
       </View>
       {/* <DatingVisibility /> */}
-      <DatingMenu />
+      {/* <DatingMenu /> */}
+
       {/* <SwipeContainer /> */}
     </View>
   );
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   main_container: {
-    marginBottom: 15,
+    // marginBottom: 10,
   },
   university: {
     fontSize: RFValue(15),

@@ -48,9 +48,11 @@ class TabbedScreenComponent extends React.PureComponent {
       specifyPageHeader,
       removeTabBorder,
       numColumns = 1,
+      style,
     } = this.props;
     return (
       <FlatList
+        style={style ? style : null}
         initialNumToRender={initialNumToRender ? initialNumToRender : 10}
         keyExtractor={tabsConfig[activeTabIndex - 1].keyExtractor}
         ListHeaderComponent={

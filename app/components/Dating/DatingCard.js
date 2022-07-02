@@ -42,14 +42,14 @@ function DatingCard({ data, save_dating_profile }) {
     <TouchableWithoutFeedback onPress={() => handle_press()}>
       <View
         style={{
-          padding: 5,
+          padding: 0,
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
           overflow: "hidden",
         }}
       >
-        <ImageBackground
+        <View
           defaultSource={require("../../assets/avatar.png")}
           source={{
             uri: data.profilepic
@@ -58,6 +58,7 @@ function DatingCard({ data, save_dating_profile }) {
           }}
           style={styles.container}
         >
+          <Image />
           <View
             style={{
               flex: 1,
@@ -106,7 +107,7 @@ function DatingCard({ data, save_dating_profile }) {
               end={[0, 0]}
             />
           </View>
-        </ImageBackground>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     height: "100%",
     width: "100%",
-    borderRadius: 10,
+    // borderRadius: 10,
     zIndex: -1,
   },
   name: {
@@ -134,13 +135,17 @@ const styles = StyleSheet.create({
     // aspectRatio: 9 / 3,
   },
   container: {
-    width: width / 2 - width * 0.04,
+    // width: width / 2 - width * 0.04,
+    width: width / 2,
     height: width / 2 - width * 0.04,
     overflow: "hidden",
     padding: 0,
-    borderRadius: 8,
+    // borderRadius: 8,
     backgroundColor: colors.darkish,
     // alignSelf: "center",
+
+    borderWidth: 0,
+    borderColor: colors.primary,
   },
 });
 
