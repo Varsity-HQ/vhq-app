@@ -104,11 +104,12 @@ const DatingContainer = ({
   }
 
   let hooks = [];
-  const radiusInM = 301 * 1000;
+  const radiusInM = 200 * 1000;
 
   console.log({ center });
   const bounds = geofire.geohashQueryBounds(center, radiusInM);
   const promises = [];
+  let used_distance = 0;
 
   for (const b of bounds) {
     const collectionRef = collection(db, "discover_profiles");
@@ -219,7 +220,8 @@ const DatingContainer = ({
           const lng = x.long;
           const distanceInKm = geofire.distanceBetween([lat, lng], center);
           const distanceInM = distanceInKm * 1000;
-          if (distanceInM <= radiusInM) {
+          // if (distanceInM <= radiusInM) {
+          if (distanceInM <= profile.filters.distance * 1000) {
             accounts.push(x);
           }
         }

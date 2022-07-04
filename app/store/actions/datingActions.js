@@ -526,6 +526,10 @@ export const update_distance_filter = (distance) => async (dispatch) => {
 
   let current_filter = store.getState().datingReducer.profile.filters;
   if (distance === current_filter.distance) return;
+  dispatch({
+    type: "DATING_SET_DISTANCE",
+    payload: distance,
+  });
 
   await updateDoc(uDiscProfileRef, {
     filters: {
@@ -533,12 +537,7 @@ export const update_distance_filter = (distance) => async (dispatch) => {
       distance: distance,
     },
   })
-    .then(() => {
-      dispatch({
-        type: "DATING_SET_DISTANCE",
-        payload: distance,
-      });
-    })
+    .then(() => {})
     .catch((err) => {
       console.log(err);
     });
