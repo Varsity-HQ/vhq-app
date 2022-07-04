@@ -106,6 +106,7 @@ const DatingContainer = ({
   let hooks = [];
   const radiusInM = 301 * 1000;
 
+  console.log({ center });
   const bounds = geofire.geohashQueryBounds(center, radiusInM);
   const promises = [];
 
@@ -210,6 +211,7 @@ const DatingContainer = ({
 
   for (const hook of hooks) {
     loaders.push(hook[1]);
+    console.log({ is_array: Array.isArray(hook[0]) });
     if (!hook[1]) {
       hook[0].forEach((x) => {
         if (discover_profile_id && x.id !== discover_profile_id) {
@@ -226,7 +228,6 @@ const DatingContainer = ({
   }
 
   // console.log({ hooks_count: hooks.length });
-
   // console.log({ accounts });
 
   console.log({ loaders });

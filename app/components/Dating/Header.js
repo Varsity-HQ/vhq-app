@@ -112,12 +112,10 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex, data }) {
       </View>
       {/* <DatingVisibility /> */}
       {/* <DatingMenu /> */}
-
       {/* <SwipeContainer /> */}
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   left_container: {
     flexDirection: "row",
@@ -214,5 +212,4 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
-
 export default connect(mapStateToProps, null)(Header);

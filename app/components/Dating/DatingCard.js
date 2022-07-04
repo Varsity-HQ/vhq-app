@@ -49,6 +49,21 @@ function DatingCard({ data, save_dating_profile }) {
           overflow: "hidden",
         }}
       >
+        <Image
+          uri={data.profilepic}
+          style={[
+            {
+              width: "100%",
+              height: "100%",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              position: "absolute",
+              zIndex: -1,
+            },
+          ]}
+        />
         <View
           defaultSource={require("../../assets/avatar.png")}
           source={{
@@ -58,7 +73,6 @@ function DatingCard({ data, save_dating_profile }) {
           }}
           style={styles.container}
         >
-          <Image />
           <View
             style={{
               flex: 1,
@@ -141,7 +155,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     padding: 0,
     // borderRadius: 8,
-    backgroundColor: colors.darkish,
+    // backgroundColor: colors.darkish,
     // alignSelf: "center",
 
     borderWidth: 0,
