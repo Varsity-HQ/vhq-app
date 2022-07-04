@@ -30,7 +30,6 @@ function FloatingButton({ uploading, dating, onPress }) {
 
   const handlePress = () => {
     if (dating) return onPress();
-
     navigation.navigate(ADD_POST);
   };
 

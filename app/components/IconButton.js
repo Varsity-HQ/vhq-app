@@ -4,7 +4,15 @@ import colors from "../config/colors";
 import Text from "./AppText";
 import Button from "./Button";
 
-function IconButton({ icon, text, textStyle, style, disabled }) {
+function IconButton({
+  icon,
+  text,
+  textStyle,
+  style,
+  disabled,
+  buttonStyle,
+  onPress,
+}) {
   return (
     <View
       style={[
@@ -23,12 +31,16 @@ function IconButton({ icon, text, textStyle, style, disabled }) {
         }}
       >
         <Button
+          onPress={onPress}
           disabled={disabled}
           type={3}
           content={icon}
-          style={{
-            borderRadius: 100,
-          }}
+          style={[
+            buttonStyle,
+            {
+              borderRadius: 100,
+            },
+          ]}
         />
       </View>
       <View>

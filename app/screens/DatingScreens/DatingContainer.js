@@ -107,8 +107,6 @@ const DatingContainer = ({
 
   let hooks = [];
   const radiusInM = 200 * 1000;
-
-  console.log({ center });
   const bounds = geofire.geohashQueryBounds(center, radiusInM);
   const promises = [];
   let used_distance = 0;
@@ -159,17 +157,14 @@ const DatingContainer = ({
       } else {
         handle_with_location();
       }
-      console.log("ndasvika");
     }, []),
   );
 
   const handle_with_location = () => {
-    console.log("with location");
     setCenter([profile.lat, profile.long]);
   };
 
   const handle_without_location = () => {
-    console.log("without location");
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
@@ -214,7 +209,7 @@ const DatingContainer = ({
 
   for (const hook of hooks) {
     loaders.push(hook[1]);
-    console.log({ is_array: Array.isArray(hook[0]) });
+    // console.log({ is_array: Array.isArray(hook[0]) });
     if (!hook[1]) {
       hook[0].forEach((x) => {
         if (discover_profile_id && x.id !== discover_profile_id) {
@@ -230,11 +225,6 @@ const DatingContainer = ({
       });
     }
   }
-
-  // console.log({ hooks_count: hooks.length });
-  // console.log({ accounts });
-
-  console.log({ loaders });
 
   return (
     <Screen>

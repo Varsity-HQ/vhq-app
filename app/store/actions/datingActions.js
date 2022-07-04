@@ -542,3 +542,10 @@ export const update_distance_filter = (distance) => async (dispatch) => {
       console.log(err);
     });
 };
+
+export const poke_profile = (id) => async (dispatch) => {
+  console.log({ id });
+};
+export const register_visit = (id) => async (dispatch) => {
+  console.log({ rid: id });
+};

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -6,6 +6,7 @@ import {
   Animated,
   ImageBackground,
   Dimensions,
+  Alert,
 } from "react-native";
 import Header from "../../components/headers/header3";
 import Text from "../../components/AppText";
@@ -24,17 +25,130 @@ import { connect } from "react-redux";
 import universityShortName from "../../util/universityShortName";
 import OnlineIndicator from "../../components/Dating/OnlineIndicator";
 import DistanceIndicator from "../../components/Dating/DistanceIndicator";
+import Loading from "../../components/Loaders/HomeUploading";
+import { useRoute } from "@react-navigation/native";
+import {
+  collection,
+  startAt,
+  endAt,
+  getDocs,
+  query,
+  orderBy,
+  where,
+  doc,
+  getDoc,
+} from "firebase/firestore";
+import {
+  CollectionHook,
+  useCollectionData,
+  useDocumentData,
+} from "react-firebase-hooks/firestore";
+import db from "../../util/fb_admin";
+import { async } from "@firebase/util";
+import {
+  poke_profile,
+  register_visit,
+} from "../../store/actions/datingActions";
 
 const height = Dimensions.get("window").height;
 
 const mapStateToProps = (state) => {
   return {
-    profile: state.datingReducer.saved_profile,
+    saved_profile: state.datingReducer.saved_profile,
   };
 };
 
-function DatingProfilePage({ profile }) {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    poke_profile: (i) => dispatch(poke_profile(i)),
+    register_visit: (i) => dispatch(register_visit(i)),
+  };
+};
+
+function DatingProfilePage({ saved_profile, poke_profile, register_visit }) {
+  const profileID = useRoute().params.id;
   const inserts = useSafeAreaInsets();
+  const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState(saved_profile);
+  const [poked, setPoke] = useState(false);
+
+  const getProfile = async () => {
+    const profileDocRef = doc(db, "discover_profiles", profileID);
+    await getDoc(profileDocRef)
+      .then((data) => {
+        setProfile(data.data());
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handlePokePress = () => {
+    setPoke(true);
+    if (poked) {
+      Alert.alert(
+        "Seeking more attention ? 👀",
+        "You can only poke someone once in a day. Try again tomorrow.",
+        [{ text: "Okay, cool" }],
+      );
+    } else {
+      poke_profile(profileID);
+    }
+  };
+
+  const handle_register_visit = () => {
+    register_visit(profileID);
+  };
+
+  useEffect(() => {
+    if (saved_profile?.nickname) {
+      setLoading(false);
+    }
+
+    if (!saved_profile?.nickname) {
+      getProfile();
+    }
+
+    handle_register_visit();
+  }, []);
+
+  if (loading) {
+    return (
+      <ScrollView scroll style={[styles.container]}>
+        <ImageBackground
+          source={require("../../assets/background-pattern.png")}
+          style={[
+            styles.top_section,
+            {
+              paddingTop: inserts.top,
+            },
+          ]}
+        >
+          <Header
+            noBorder
+            backIcon
+            noBg
+            // buttonText="ellipsis"
+            rightPress={() => console.log("pressed")}
+          />
+        </ImageBackground>
+        <View style={styles.container}>
+          <View style={styles.inner_container}>
+            <View style={styles.profilepic_container}>
+              <View style={styles.loader_container}>
+                <Loading />
+              </View>
+            </View>
+            <View style={styles.meta_container}>
+              <Text style={styles.name}>Loading..</Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    );
+  }
+
   return (
     <ScrollView scroll style={[styles.container]}>
       <ImageBackground
@@ -50,7 +164,7 @@ function DatingProfilePage({ profile }) {
           noBorder
           backIcon
           noBg
-          buttonText="ellipsis"
+          // buttonText="ellipsis"
           rightPress={() => console.log("pressed")}
         />
       </ImageBackground>
@@ -100,15 +214,24 @@ function DatingProfilePage({ profile }) {
               }}
             >
               <IconButton
+                onPress={handlePokePress}
                 icon={
                   <MaterialCommunityIcons
                     name="laser-pointer"
                     size={30}
-                    color={colors.secondary}
+                    color={poked ? colors.dark : colors.secondary}
                   />
                 }
-                text="Poke"
-                textStyle={styles.btnText}
+                buttonStyle={
+                  poked
+                    ? {
+                        backgroundColor: colors.primary,
+                        borderWidth: 2,
+                      }
+                    : null
+                }
+                text={poked ? "Poked" : "Poke"}
+                textStyle={[styles.btnText]}
               />
               <IconButton
                 icon={
@@ -213,6 +336,14 @@ function DatingProfilePage({ profile }) {
 }
 
 const styles = StyleSheet.create({
+  loader_container: {
+    borderRadius: 1000,
+    height: height * 0.17,
+    // width: height * 0.17,
+    borderWidth: 3,
+    borderColor: colors.secondary,
+    backgroundColor: colors.dark,
+  },
   btnText: {
     color: colors.secondary,
     fontSize: 14,
@@ -260,4 +391,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, null)(DatingProfilePage);
+export default connect(mapStateToProps, mapDispatchToProps)(DatingProfilePage);
