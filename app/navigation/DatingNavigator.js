@@ -30,6 +30,7 @@ import UpdateRelationshipStatusScreen from "../screens/settings/UpdateRelationsh
 import UpdateSexualOrientaionScreen from "../screens/settings/UpdateSexualOrientaionScreen";
 import UpdateSexTargetScreen from "../screens/settings/UpdateSexTargetScreen";
 import MyDiscoverProfileHowDoILook from "../screens/DatingScreens/MyDiscoverProfileHowDoILook";
+import DatingFilters from "../screens/DatingScreens/DatingFilters";
 
 const Stack = createNativeStackNavigator();
 
@@ -172,6 +173,14 @@ const DatingNavigator = ({
         }}
         name={routes.UPDATE_S_TARGET}
         component={UpdateSexTargetScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={routes.DATING_FILTERS}
+        component={DatingFilters}
       />
 
       {/* 

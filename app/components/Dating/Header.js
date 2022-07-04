@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import SwipeContainer from "./SwipeContainer";
 import DatingVisibility from "./DatingVisibility";
 import { useNavigation } from "@react-navigation/native";
-import { MY_DISCOVER_PROFILE } from "../../navigation/routes";
+import { DATING_FILTERS, MY_DISCOVER_PROFILE } from "../../navigation/routes";
 import DatingMenu from "./DatingMenu";
 
 const mapStateToProps = (state) => {
@@ -97,6 +97,7 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex, data }) {
             <Text style={styles.eye_counter}>{data.seen_count}</Text>
           </View>
           <TouchableOpacity
+            onPress={() => navigation.navigate(DATING_FILTERS)}
             style={{
               flexDirection: "row",
               paddingHorizontal: 10,

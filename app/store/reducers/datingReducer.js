@@ -29,6 +29,12 @@ const initialState = {
     saving_about: false,
     updating_is_active: false,
     yearOfStudy: "",
+    filters: {
+      by_online: false,
+      by_university: "",
+      by_purpose: "",
+      distance: 200,
+    },
   },
   saved_profile: {
     loading: true,
@@ -37,6 +43,18 @@ const initialState = {
 
 const datingReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "DATING_SET_DISTANCE":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          filters: {
+            ...state.profile.filters,
+            distance: actions.payload,
+          },
+        },
+      };
+
     case "DATING_SAVE_PROFILE":
       return {
         ...state,

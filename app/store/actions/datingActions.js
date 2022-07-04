@@ -519,3 +519,27 @@ export const save_dating_profile = (p) => (dispatch) => {
     payload: p,
   });
 };
+
+export const update_distance_filter = (distance) => async (dispatch) => {
+  let discover_profile_id = store.getState().core.accData.discover_profile_id;
+  const uDiscProfileRef = doc(db, "discover_profiles", discover_profile_id);
+
+  let current_filter = store.getState().datingReducer.profile.filters;
+  if (distance === current_filter.distance) return;
+
+  await updateDoc(uDiscProfileRef, {
+    filters: {
+      ...current_filter,
+      distance: distance,
+    },
+  })
+    .then(() => {
+      dispatch({
+        type: "DATING_SET_DISTANCE",
+        payload: distance,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

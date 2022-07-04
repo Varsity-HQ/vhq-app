@@ -27,6 +27,12 @@ const obj = {
   blocked: [],
   poked: false,
   poked_users: [],
+  filters: {
+    by_online: false,
+    by_university: "",
+    by_purpose: "",
+    distance: 200,
+  },
 };
 
 export default obj;

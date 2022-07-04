@@ -20,6 +20,7 @@ import OnlineIndicator from "./OnlineIndicator";
 import universityShortName from "../../util/universityShortName";
 import { save_dating_profile } from "../../store/actions/datingActions";
 import { connect } from "react-redux";
+import DistanceIndicator from "./DistanceIndicator";
 const width = Dimensions.get("window").width;
 
 const mapDispatchToProps = (dispatch) => {
@@ -94,6 +95,7 @@ function DatingCard({ data, save_dating_profile }) {
                   flexDirection: "row",
                 }}
               >
+                {/* <DistanceIndicator data={data} /> */}
                 <FindsMatchPercentage data={data} />
               </View>
               <Text style={styles.name}>{data.nickname}</Text>
