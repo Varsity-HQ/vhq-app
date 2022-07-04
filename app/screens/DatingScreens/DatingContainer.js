@@ -30,6 +30,7 @@ import {
   useCollectionData,
   useDocumentData,
 } from "react-firebase-hooks/firestore";
+import { MY_DISCOVER_PROFILE } from "../../navigation/routes";
 
 const icon_size = 20;
 const color_active = colors.white;
@@ -81,6 +82,7 @@ const DatingContainer = ({
   profile,
   update_user_location,
   discover_profile_id,
+  navigation,
 }) => {
   const [activeTabIndex, setActiveTabIndex] = React.useState(1);
   const [mockState, setMockState] = React.useState({
@@ -287,7 +289,10 @@ const DatingContainer = ({
           },
         ]}
       />
-      <FloatingButton dating />
+      <FloatingButton
+        onPress={() => navigation.navigate(MY_DISCOVER_PROFILE)}
+        dating={profile}
+      />
     </Screen>
   );
 };

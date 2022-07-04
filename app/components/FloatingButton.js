@@ -15,6 +15,7 @@ import { ADD_POST } from "../navigation/routes";
 import { connect } from "react-redux";
 import HomeUploading from "../components/Loaders/HomeUploading.js";
 import { useRoute } from "@react-navigation/native";
+import Image from "./Image";
 const height = Dimensions.get("window").height;
 
 const mapStateToProps = (state) => {
@@ -45,13 +46,20 @@ function FloatingButton({ uploading, dating, onPress }) {
           end={[1, 0]}
         />
         <View style={styles.inner_container}>
-          {uploading ? (
+          {dating ? (
+            <Image
+              style={{
+                width: "100%",
+                height: "100%",
+                borderRadius: 1000,
+              }}
+              uri={dating.profilepic}
+            />
+          ) : uploading ? (
             <HomeUploading />
           ) : (
             <Text style={{ color: colors.white, zIndex: 2 }}>
-              {dating ? (
-                <Ricons size={40} color={colors.white} name="menu-4-line" />
-              ) : (
+              {!dating && (
                 <Ricons size={40} color={colors.white} name="quill-pen-fill" />
               )}
             </Text>
