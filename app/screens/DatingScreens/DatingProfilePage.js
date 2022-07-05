@@ -10,7 +10,11 @@ import {
 } from "react-native";
 import Header from "../../components/headers/header3";
 import Text from "../../components/AppText";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  MaterialCommunityIcons,
+  FontAwesome,
+  Ionicons,
+} from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import colors from "../../config/colors";
 import Image from "../../components/Image";
@@ -49,6 +53,7 @@ import {
   poke_profile,
   register_visit,
 } from "../../store/actions/datingActions";
+import DatingProfileMenu from "../../components/Dating/DatingProfileMenu";
 
 const height = Dimensions.get("window").height;
 
@@ -77,6 +82,8 @@ function DatingProfilePage({
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState(saved_profile);
   const [poked, setPoke] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleModal = () => setIsModalVisible(() => !isModalVisible);
 
   const getProfile = async () => {
     const profileDocRef = doc(db, "discover_profiles", profileID);
@@ -159,6 +166,10 @@ function DatingProfilePage({
 
   return (
     <ScrollView scroll style={[styles.container]}>
+      <DatingProfileMenu
+        isModalVisible={isModalVisible}
+        handleModal={handleModal}
+      />
       <ImageBackground
         source={require("../../assets/background-pattern.png")}
         style={[
@@ -172,8 +183,8 @@ function DatingProfilePage({
           noBorder
           backIcon
           noBg
-          // buttonText="ellipsis"
-          rightPress={() => console.log("pressed")}
+          buttonText="ellipsis"
+          rightPress={handleModal}
         />
       </ImageBackground>
       <View style={styles.container}>
@@ -257,13 +268,14 @@ function DatingProfilePage({
               />
               <IconButton
                 icon={
-                  <MaterialCommunityIcons
-                    name="flag"
+                  <Ionicons
+                    name="ellipsis-vertical"
                     size={30}
                     color={colors.secondary}
                   />
                 }
-                text="Report"
+                onPress={handleModal}
+                text="Handle"
                 textStyle={styles.btnText}
               />
             </View>
