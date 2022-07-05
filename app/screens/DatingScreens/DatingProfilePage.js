@@ -55,6 +55,7 @@ const height = Dimensions.get("window").height;
 const mapStateToProps = (state) => {
   return {
     saved_profile: state.datingReducer.saved_profile,
+    poked_users: state.datingReducer.profile.poked_users,
   };
 };
 
@@ -65,7 +66,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-function DatingProfilePage({ saved_profile, poke_profile, register_visit }) {
+function DatingProfilePage({
+  saved_profile,
+  poke_profile,
+  register_visit,
+  poked_users,
+}) {
   const profileID = useRoute().params.id;
   const inserts = useSafeAreaInsets();
   const [loading, setLoading] = useState(true);
@@ -102,6 +108,8 @@ function DatingProfilePage({ saved_profile, poke_profile, register_visit }) {
   };
 
   useEffect(() => {
+    setPoke(poked_users.includes(profileID));
+
     if (saved_profile?.nickname) {
       setLoading(false);
     }

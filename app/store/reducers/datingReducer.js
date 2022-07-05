@@ -29,6 +29,9 @@ const initialState = {
     saving_about: false,
     updating_is_active: false,
     yearOfStudy: "",
+    blocked: [],
+    poked: false,
+    poked_users: [],
     filters: {
       by_online: false,
       by_university: "",
@@ -43,6 +46,14 @@ const initialState = {
 
 const datingReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "DATING_POKE_ACCOUNT":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          poked_users: state.profile.poked_users.concat([actions.payload]),
+        },
+      };
     case "DATING_SET_DISTANCE":
       return {
         ...state,

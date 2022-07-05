@@ -17,6 +17,7 @@ import db from "../../util/fb_admin";
 import Toast from "react-native-toast-message";
 import { Alert } from "react-native";
 import isDatingProfileReady from "../../util/isDatingProfileReady";
+import { async } from "@firebase/util";
 
 export const update_dating_uname = (name) => (dispatch) => {
   dispatch({
@@ -544,8 +545,42 @@ export const update_distance_filter = (distance) => async (dispatch) => {
 };
 
 export const poke_profile = (id) => async (dispatch) => {
-  console.log({ id });
+  let discover_profile_id = store.getState().core.accData.discover_profile_id;
+  const myDiscProfileRef = doc(db, "discover_profiles", discover_profile_id);
+  const uDiscProfileRef = doc(db, "discover_profiles", id);
+  const pokedCollection = collection(db, "poked_users");
+  dispatch({
+    type: "DATING_POKE_ACCOUNT",
+    payload: id,
+  });
+  await updateDoc(uDiscProfileRef, {
+    poked: true,
+  })
+    .then(async () => {
+      return getDoc(myDiscProfileRef);
+    })
+    .then(async (data) => {
+      let currPoked = data.data().poked_users;
+      let newPoked = currPoked ? currPoked.concat([id]) : [id];
+      return updateDoc(myDiscProfileRef, {
+        poked_users: newPoked,
+      });
+    })
+    .then(async () => {
+      await addDoc(pokedCollection, {
+        datePoked: new Date().toISOString(),
+        poked_user: id,
+        poked_by: discover_profile_id,
+      });
+    });
 };
-export const register_visit = (id) => async (dispatch) => {
-  console.log({ rid: id });
+export const register_visit = (id) => async () => {
+  if (!id) return;
+  const uDiscProfileRef = doc(db, "discover_profiles", id);
+  await getDoc(uDiscProfileRef).then(async (data) => {
+    await updateDoc(uDiscProfileRef, {
+      ...data.data(),
+      seen_count: parseInt(data.data().seen_count) + 1,
+    });
+  });
 };
