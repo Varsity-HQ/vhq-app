@@ -62,6 +62,7 @@ function TabNavigator({
                   >
                     {x.title}
                   </Text>
+                  {x.attention && <View style={styles.attention} />}
                 </View>
                 <View
                   style={[
@@ -98,6 +99,7 @@ function TabNavigator({
               <View style={styles.tab_Container}>
                 {x.icon && x.icon}
                 <Text style={styles.text}>{x.title}</Text>
+                {x.attention && <View style={styles.attention} />}
               </View>
               <View
                 style={[
@@ -117,6 +119,13 @@ function TabNavigator({
 }
 
 const styles = StyleSheet.create({
+  attention: {
+    height: 8,
+    width: 8,
+    backgroundColor: colors.v_st_bg_2,
+    marginLeft: 5,
+    borderRadius: 100,
+  },
   container_2: {
     paddingVertical: 0,
     borderBottomColor: colors.primary,

@@ -52,31 +52,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const tabs = [
-  {
-    title: "Near me",
-    index: 1,
-    icon: (
-      <FontAwesome
-        name="location-arrow"
-        size={icon_size}
-        color={colors.secondary}
-      />
-    ),
-  },
-  {
-    title: "Pokes",
-    index: 2,
-    icon: (
-      <MaterialIcons
-        name="offline-bolt"
-        size={icon_size}
-        color={colors.secondary}
-      />
-    ),
-  },
-];
-
 const DatingContainer = ({
   loading,
   is_active,
@@ -106,6 +81,33 @@ const DatingContainer = ({
     userData = useDocumentData(userRef);
     own_profile = userData[1] ? profile : userData[0];
   }
+
+  console.log({ poked: own_profile.poked });
+  const tabs = [
+    {
+      title: "Near me",
+      index: 1,
+      icon: (
+        <FontAwesome
+          name="location-arrow"
+          size={icon_size}
+          color={colors.secondary}
+        />
+      ),
+    },
+    {
+      title: "Pokes",
+      index: 2,
+      attention: own_profile.poked,
+      icon: (
+        <MaterialIcons
+          name="offline-bolt"
+          size={icon_size}
+          color={colors.secondary}
+        />
+      ),
+    },
+  ];
 
   let hooks = [];
   const radiusInM = 200 * 1000;
@@ -184,7 +186,12 @@ const DatingContainer = ({
 
   const setTabIndex = (index) => {
     setActiveTabIndex(index);
+    if (index === 2) {
+      handle_pokes_load();
+    }
   };
+
+  const handle_pokes_load = () => {};
 
   const listRenderingHandler = ({ item }) => {
     if (activeTabIndex === 1) {
