@@ -46,6 +46,14 @@ const initialState = {
 
 const datingReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "DATING_ADD_TO_BLOCKED":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          blocked: state.profile.blocked.concat([actions.payload]),
+        },
+      };
     case "DATING_POKE_ACCOUNT":
       return {
         ...state,

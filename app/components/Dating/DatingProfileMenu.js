@@ -16,8 +16,10 @@ import { TouchableOpacity } from "react-native";
 import {
   delete_dating_profile,
   toggle_dating_active,
+  handle_dating_blocked_account,
 } from "../../store/actions/datingActions";
 import { DATING_CONTAINER, HOME } from "../../navigation/routes";
+import ReportMenu from "../ReportMenus/ReportMenu";
 
 const mapStateToProps = (state) => {
   return {
@@ -30,6 +32,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     delete_dating_profile: () => dispatch(delete_dating_profile()),
     toggle_dating_active: (s) => dispatch(toggle_dating_active(s)),
+    handle_dating_blocked_account: (s) =>
+      dispatch(handle_dating_blocked_account(s)),
   };
 };
 
@@ -38,22 +42,26 @@ function DatingProfileMenu({
   handleModal,
   delete_dating_profile,
   toggle_dating_active,
+  data,
+  handle_dating_blocked_account,
 }) {
   const navigation = useNavigation();
+  const [isReportModalVisible, setIsReportModalVisible] = React.useState(false);
+  const handleReportModal = () =>
+    setIsReportModalVisible(() => !isReportModalVisible);
 
-  const handleDelete = () => {
-    delete_dating_profile();
-    toggle_dating_active(false);
-    setTimeout(() => {
-      navigation.navigate(DATING_CONTAINER);
-    }, 100);
-    handleModal();
+  const onReportSubmitted = () => {
+    handle_dating_blocked_account(data.id);
+    navigation.navigate(DATING_CONTAINER);
   };
 
   const options = [
     {
       title: "Report profile",
-      onPress: () => {},
+      onPress: () => {
+        handleModal();
+        setTimeout(() => setIsReportModalVisible(true), 400);
+      },
     },
     {
       title: "Block profile",
@@ -63,8 +71,8 @@ function DatingProfileMenu({
           "This action will block this account and you will no longer see this account as they will no longer see you aswell",
           [
             {
-              text: "Okay, Block",
-              onPress: handleDelete,
+              text: "Okay, block",
+              onPress: onReportSubmitted,
             },
             {
               text: "Cancel",
@@ -78,6 +86,15 @@ function DatingProfileMenu({
 
   return (
     <>
+      <ReportMenu
+        key={"report-modal"}
+        type="dating-profile"
+        node_id={data.id}
+        isReportModalVisible={isReportModalVisible}
+        handleReportModal={handleReportModal}
+        onReportSubmitted={onReportSubmitted}
+      />
+
       <Modal
         key={"post-menu-modal"}
         // animationIn={"fadeIn"}

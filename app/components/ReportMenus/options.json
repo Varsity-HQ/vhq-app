@@ -41,6 +41,28 @@
       "sub_options": null
     }
   ],
+  "dating_profile_options": [
+    {
+      "title": "Pretending to be someone else",
+      "sub_options": null
+    },
+    {
+      "title": "Fake account",
+      "sub_options": null
+    },
+    {
+      "title": "Fake name",
+      "sub_options": null
+    },
+    {
+      "title": "Harrassment or bullying",
+      "sub_options": null
+    },
+    {
+      "title": "Inproper name",
+      "sub_options": null
+    }
+  ],
   "post_options": [
     {
       "title": "I'm just not interested in this post",

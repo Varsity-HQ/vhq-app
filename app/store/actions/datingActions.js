@@ -584,3 +584,33 @@ export const register_visit = (id) => async () => {
     });
   });
 };
+
+export const handle_dating_blocked_account = (id) => async (dispatch) => {
+  dispatch({
+    type: "DATING_ADD_TO_BLOCKED",
+    payload: id,
+  });
+
+  let discover_profile_id = store.getState().core.accData.discover_profile_id;
+  const myDiscProfileRef = doc(db, "discover_profiles", discover_profile_id);
+  const uDiscProfileRef = doc(db, "discover_profiles", id);
+
+  await getDoc(uDiscProfileRef)
+    .then((data) => {
+      let blocked = data.data().blocked;
+      return updateDoc(uDiscProfileRef, {
+        blocked: blocked
+          ? blocked.concat([discover_profile_id])
+          : [discover_profile_id],
+      });
+    })
+    .then(() => {
+      return getDoc(myDiscProfileRef);
+    })
+    .then((data) => {
+      let blocked = data.data().blocked;
+      return updateDoc(myDiscProfileRef, {
+        blocked: blocked ? blocked.concat([id]) : [id],
+      });
+    });
+};

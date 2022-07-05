@@ -42,6 +42,7 @@ const mapStateToProps = (state) => {
     is_active: state.datingReducer.profile.is_active,
     profile: state.datingReducer.profile,
     discover_profile_id: state.core.accData.discover_profile_id,
+    reported_ids: state.filterReducer.reported_ids,
   };
 };
 
@@ -83,6 +84,7 @@ const DatingContainer = ({
   update_user_location,
   discover_profile_id,
   navigation,
+  reported_ids,
 }) => {
   const [activeTabIndex, setActiveTabIndex] = React.useState(1);
   const [mockState, setMockState] = React.useState({
@@ -207,12 +209,19 @@ const DatingContainer = ({
   let accounts = [];
   let loaders = [];
 
+  console.log({ reported_ids });
+
   for (const hook of hooks) {
     loaders.push(hook[1]);
     // console.log({ is_array: Array.isArray(hook[0]) });
     if (!hook[1]) {
       hook[0].forEach((x) => {
-        if (discover_profile_id && x.id !== discover_profile_id) {
+        if (
+          discover_profile_id &&
+          x.id !== discover_profile_id &&
+          !own_profile.blocked.includes(x.id) &&
+          !x.blocked.includes(discover_profile_id)
+        ) {
           const lat = x.lat;
           const lng = x.long;
           const distanceInKm = geofire.distanceBetween([lat, lng], center);

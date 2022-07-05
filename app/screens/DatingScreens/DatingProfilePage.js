@@ -169,6 +169,7 @@ function DatingProfilePage({
       <DatingProfileMenu
         isModalVisible={isModalVisible}
         handleModal={handleModal}
+        data={profile}
       />
       <ImageBackground
         source={require("../../assets/background-pattern.png")}

@@ -37,6 +37,7 @@ function ReportMenu({
   submit_report,
   onReportSubmitted,
   node_id,
+  preventDefault,
 }) {
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
@@ -76,6 +77,10 @@ function ReportMenu({
     if (type === "profile-block") {
       setReportingFor("profile");
       return setOptions(report_options.block_profile_options);
+    }
+    if (type === "dating-profile") {
+      setReportingFor("profile");
+      return setOptions(report_options.dating_profile_options);
     }
 
     setReportingFor("");
