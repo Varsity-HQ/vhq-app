@@ -24,6 +24,8 @@ import {
   orderBy,
   where,
   doc,
+  limit,
+  getDoc,
 } from "firebase/firestore";
 import {
   CollectionHook,
@@ -71,6 +73,8 @@ const DatingContainer = ({
     loading_more_events: false,
   });
   const [center, setCenter] = React.useState([0, 0]);
+  const [pokes_loading, setPokesLoading] = React.useState(true);
+  const [pokesProfiles, setPokesProfiles] = React.useState([]);
 
   let userRef = null;
   let userData = null;
@@ -191,7 +195,37 @@ const DatingContainer = ({
     }
   };
 
-  const handle_pokes_load = () => {};
+  const handle_pokes_load = async () => {
+    setPokesLoading(true);
+    let collectionRef = collection(db, "poked_users");
+    let collectionQuery = query(
+      collectionRef,
+      where("poked_user", "==", discover_profile_id),
+      orderBy("datePoked", "desc"),
+      limit(15),
+    );
+    await getDocs(collectionQuery)
+      .then((data) => {
+        let promises = [];
+        data.forEach((x) => {
+          let docRef = doc(db, "discover_profiles", x.data().poked_by);
+          promises.push(getDoc(docRef));
+        });
+        return Promise.all(promises);
+      })
+      .then((data) => {
+        let results = [];
+        data.forEach((x) => {
+          results.push(x.data());
+        });
+        setPokesProfiles(results);
+        setPokesLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setPokesLoading(true);
+      });
+  };
 
   const listRenderingHandler = ({ item }) => {
     if (activeTabIndex === 1) {
@@ -225,7 +259,7 @@ const DatingContainer = ({
       hook[0].forEach((x) => {
         if (
           discover_profile_id &&
-          // x.id !== discover_profile_id &&
+          x.id !== discover_profile_id &&
           !own_profile.blocked.includes(x.id) &&
           !x.blocked.includes(discover_profile_id)
         ) {
@@ -283,14 +317,14 @@ const DatingContainer = ({
         tabStates={[
           {
             loading: loaders.includes(true),
-            loading_more: mockState.loading_more_posts,
+            loading_more: false,
             data: accounts,
             refreshing: false,
           },
           {
-            loading: mockState.loading_events,
-            loading_more: mockState.loading_more_events,
-            data: [accounts[0]],
+            loading: pokes_loading,
+            loading_more: false,
+            data: pokesProfiles,
             refreshing: false,
           },
         ]}

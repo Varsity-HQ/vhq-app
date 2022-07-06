@@ -5,6 +5,23 @@ import Text from "../AppText";
 import { FontAwesome, FontAwesome5, Entypo } from "@expo/vector-icons";
 
 function FindsMotive({ motive }) {
+  if (motive === "to_link_rn") {
+    return (
+      <View style={styles.to_link_rn_container}>
+        <FontAwesome5 name="street-view" size={15} color={colors.dark} />
+        <Text
+          style={[
+            styles.text,
+            {
+              color: colors.dark,
+            },
+          ]}
+        >
+          Right now
+        </Text>
+      </View>
+    );
+  }
   if (motive === "to_have_fun") {
     return (
       <View style={styles.to_have_fun_container}>
@@ -70,6 +87,14 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 14,
     marginLeft: 4,
+  },
+  to_link_rn_container: {
+    backgroundColor: colors.v_st_bg_5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 100,
+    flexDirection: "row",
+    alignItems: "center",
   },
   to_have_fun_container: {
     backgroundColor: colors.v_st_bg_5,
