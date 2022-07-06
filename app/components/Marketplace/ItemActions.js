@@ -12,7 +12,7 @@ const height = Dimensions.get("window").height;
 function ItemActions(props) {
   return (
     <View style={styles.container}>
-      <View style={styles.row}>
+      {/* <View style={styles.row}>
         <AppTextInput
           width="75%"
           style={{
@@ -28,7 +28,7 @@ function ItemActions(props) {
           type={4}
           title="Send"
         />
-      </View>
+      </View> */}
       <View style={styles.bottom_icons}>
         <IconButton icon="heart" title="Like" />
         <IconButton icon="bookmark" title="Bookmark" />
@@ -56,6 +56,7 @@ const IconButton = ({ title, icon }) => {
         style={{
           fontWeight: "bold",
           fontSize: RFValue(12),
+          color: colors.secondary_2,
         }}
       >
         {title}
@@ -79,24 +80,18 @@ const styles = StyleSheet.create({
   },
   bottom_icons: {
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
   },
   container: {
     margin: 10,
-    borderRadius: 10,
-    backgroundColor: colors.darkish,
-    borderWidth: 0,
-    borderColor: colors.skblue,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+
+    // backgroundColor: colors.darkish,
+
+    borderColor: colors.dark_opacity_2,
     padding: 10,
-    paddingVertical: 20,
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.17,
-    shadowRadius: 3.05,
-    elevation: 4,
+    paddingBottom: 20,
   },
 });
 
