@@ -13,7 +13,9 @@ function ItemCard({ x }) {
   return (
     <TouchableWithoutFeedback
       onPress={() => {
-        navigation.navigate(MARKETPLACE_ITEM_PAGE);
+        navigation.navigate(MARKETPLACE_ITEM_PAGE, {
+          id: x.id,
+        });
       }}
     >
       <View style={styles.container}>

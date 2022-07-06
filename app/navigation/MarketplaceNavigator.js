@@ -6,12 +6,14 @@ import {
   MARKETPLACE_ITEM_PAGE,
   SEARCH_RESULTS,
   REFER_A_FRIEND,
+  PROFILE,
 } from "./routes";
 import Home from "../screens/Marketplace/Home";
 import CategoryPage from "../screens/Marketplace/CategoryPage";
 import ItemPage from "../screens/Marketplace/ItemPage";
 import SearchResults from "../screens/SearchResults";
 import ReferAFriend from "../screens/ReferAFriend";
+import Profile from "../screens/Profile";
 const Stack = createNativeStackNavigator();
 
 const MarketplaceNavigator = () => (
@@ -43,6 +45,13 @@ const MarketplaceNavigator = () => (
         }}
         name={MARKETPLACE_ITEM_PAGE}
         component={ItemPage}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={PROFILE}
+        component={Profile}
       />
       <Stack.Screen
         options={{

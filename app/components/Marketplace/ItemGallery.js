@@ -4,13 +4,10 @@ import Image from "../Image";
 
 const width = Dimensions.get("window").width;
 
-function ItemGallery(props) {
+function ItemGallery({ images }) {
   return (
     <View>
-      <Image
-        uri="https://firebasestorage.googleapis.com/v0/b/varsityhq-bd225.appspot.com/o/vhq_img202125144722.jpeg?alt=media"
-        style={styles.image}
-      />
+      <Image uri={images[0]} style={styles.image} />
     </View>
   );
 }

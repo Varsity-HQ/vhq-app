@@ -1,29 +1,39 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
+import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import Modal from "react-native-modal";
 import colors from "../../config/colors";
 import Button from "../Button";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
 import { POST_PAGE, PROFILE } from "../../navigation/routes";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
+import Text from "../AppText";
+import Image from "../Image";
+import { color } from "react-native-reanimated";
+import dayjs from "dayjs";
 
 const iconSize = 32;
 
-function UserMenu(props) {
+function UserMenu({ data }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
+  const navigation = useNavigation();
 
   const options = [
     {
-      title: "Report",
-      onPress: () => {},
+      title: "Visit profile",
+      onPress: () => {
+        handleModal();
+        navigation.navigate(PROFILE, {
+          username: data.username,
+        });
+      },
       icon: (
-        <Ionicons
+        <MaterialCommunityIcons
           color={colors.secondary}
-          name="flag-outline"
+          name="account-arrow-right"
           size={iconSize}
         />
       ),
@@ -51,6 +61,28 @@ function UserMenu(props) {
         <View style={styles.content}>
           <View style={styles.notch} />
           <View style={styles.inner_content}>
+            <View style={styles.center}>
+              <Image uri={data.profilepic} style={styles.profilepic} />
+              <Text style={{ color: colors.secondary, marginBottom: 5 }}>
+                @{data.username}
+              </Text>
+              <Text
+                style={{
+                  fontWeight: "700",
+                  fontSize: 19,
+                }}
+              >
+                {data.firstname} {data.surname}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  marginTop: 5,
+                }}
+              >
+                Since {dayjs(data.createdAt).format("ll")}
+              </Text>
+            </View>
             {options.map((x, index) => {
               if (!x.hide) {
                 return (
@@ -75,6 +107,20 @@ function UserMenu(props) {
 }
 
 const styles = StyleSheet.create({
+  profilepic: {
+    height: 130,
+    width: 130,
+    borderRadius: 1000,
+    borderWidth: 3,
+    borderColor: colors.secondary_2,
+    borderStyle: "dashed",
+    marginBottom: 20,
+  },
+  center: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   touchableInner: {
     flexDirection: "row",
     alignItems: "center",
@@ -86,7 +132,11 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     fontWeight: "400",
   },
-  menuButton: {},
+  menuButton: {
+    borderTopColor: colors.secondary_2,
+    borderTopWidth: 1,
+    marginTop: 15,
+  },
   inner_content: {
     marginVertical: 20,
   },

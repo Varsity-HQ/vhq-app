@@ -6,37 +6,43 @@ import Text from "../AppText";
 import Image from "../Image";
 import UserMenu from "./UserMenu";
 import { FontAwesome } from "@expo/vector-icons";
+import dayjs from "dayjs";
 
 const height = Dimensions.get("window").height;
 
-function ItemHeader(props) {
+function ItemHeader({ data }) {
   return (
     <View>
       <View style={styles.f_container}>
         <View style={styles.row_between}>
           <View style={styles.row}>
-            <Image style={styles.user_profilepic} />
+            <Image
+              uri={data.user_data.profilepic}
+              style={styles.user_profilepic}
+            />
             <View>
-              <Text style={styles.name}>chikx_12</Text>
+              <Text style={styles.name}>@{data.user_data.username}</Text>
               <Text
                 style={{
                   fontSize: RFValue(12),
                 }}
               >
-                member since June 12, 2021
+                member since {dayjs(data.user_data.createdAt).format("ll")}
               </Text>
             </View>
           </View>
           <View>
-            <UserMenu />
+            <UserMenu data={data.user_data} />
           </View>
         </View>
       </View>
       <View style={styles.lower_section}>
-        <Text style={styles.title}>
-          Looking for someone to do my laundry and wash my shoes
-        </Text>
-        <Text style={styles.price}>R 130</Text>
+        <Text style={styles.title}>{data.title}</Text>
+        <View style={styles.borderTopPricing}>
+          <Text style={styles.price}>
+            {data.pricing ? "R " + data.pricing : "Free"}
+          </Text>
+        </View>
 
         <Text style={styles.list_info}>
           <FontAwesome
@@ -80,6 +86,11 @@ function ItemHeader(props) {
 }
 
 const styles = StyleSheet.create({
+  borderTopPricing: {
+    borderTopColor: colors.primary,
+    borderTopWidth: 1,
+    //was working here
+  },
   list_info: {
     marginTop: 10,
     color: colors.secondary,
