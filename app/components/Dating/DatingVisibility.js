@@ -4,7 +4,11 @@ import colors from "../../config/colors";
 import { FontAwesome } from "@expo/vector-icons";
 import Text from "../../components/AppText";
 import { connect } from "react-redux";
-import { toggle_dating_active } from "../../store/actions/datingActions";
+import {
+  toggle_dating_active,
+  update_user_location,
+} from "../../store/actions/datingActions";
+import * as Location from "expo-location";
 
 const mapStateToProps = (state) => {
   return {
@@ -16,6 +20,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     toggle_dating_active: (s) => dispatch(toggle_dating_active(s)),
+    update_user_location: (data) => dispatch(update_user_location(data)),
   };
 };
 
@@ -23,8 +28,27 @@ function DatingVisibility({
   is_active,
   toggle_dating_active,
   updating_is_active,
+  update_user_location,
 }) {
+  const update_location = () => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        return;
+      }
+
+      if (status === "granted") {
+        let location = await Location.getCurrentPositionAsync({});
+        update_user_location(location);
+        console.log({ location });
+      }
+    })();
+  };
+
   const toggleSwitch = (active) => {
+    if (active) {
+      update_location();
+    }
     toggle_dating_active(active);
   };
   return (

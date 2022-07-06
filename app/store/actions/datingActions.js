@@ -493,6 +493,14 @@ export const update_user_location = (data) => async (dispatch) => {
 
   if (data?.coords && discover_profile_id) {
     let g_hash = geofire.geohashForLocation([latitude, longitude]);
+    dispatch({
+      type: "DATING_UPDATE_LOCATION",
+      payload: {
+        lat: latitude,
+        long: longitude,
+        hashed_location: g_hash,
+      },
+    });
     await updateDoc(uDiscProfileRef, {
       lat: latitude ? latitude : "",
       long: longitude ? longitude : "",

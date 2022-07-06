@@ -64,15 +64,14 @@ const DatingContainer = ({
   navigation,
   reported_ids,
 }) => {
+  if (loading) {
+    return <DatingIntroScreen loading={true} />;
+  }
+  if (!loading && !is_active) {
+    return <DatingIntroScreen loading={false} />;
+  }
+
   const [activeTabIndex, setActiveTabIndex] = React.useState(1);
-  const [mockState, setMockState] = React.useState({
-    loading_posts: false,
-    posts: [1, 3, 2],
-    loading_more_posts: false,
-    loading_events: false,
-    events: [3],
-    loading_more_events: false,
-  });
   const [center, setCenter] = React.useState([0, 0]);
   const [pokes_loading, setPokesLoading] = React.useState(true);
   const [pokesProfiles, setPokesProfiles] = React.useState([]);
@@ -81,13 +80,16 @@ const DatingContainer = ({
   let userData = null;
   let own_profile = profile;
 
-  if (discover_profile_id) {
+  if (discover_profile_id && is_active) {
     userRef = doc(db, "discover_profiles", discover_profile_id);
     userData = useDocumentData(userRef);
     own_profile = userData[1] ? profile : userData[0];
+  } else {
+    userRef = null;
+    userData = null;
+    own_profile = profile;
   }
 
-  console.log({ poked: own_profile.poked });
   const tabs = [
     {
       title: "Near me",
@@ -117,54 +119,35 @@ const DatingContainer = ({
   let hooks = [];
   const radiusInM = 200 * 1000;
   const bounds = geofire.geohashQueryBounds(center, radiusInM);
-  const promises = [];
-  let used_distance = 0;
+  let promises = [];
 
   for (const b of bounds) {
-    const collectionRef = collection(db, "discover_profiles");
-    const queryRef = query(
-      collectionRef,
-      orderBy("hashed_location"),
-      where("is_active", "==", true),
-      where("gender", "in", profile.show_me),
-      startAt(b[0]),
-      endAt(b[1]),
-    );
-    promises.push(getDocs(queryRef));
-    hooks.push(useCollectionData(queryRef));
+    if (is_active) {
+      const collectionRef = collection(db, "discover_profiles");
+      const queryRef = query(
+        collectionRef,
+        orderBy("hashed_location"),
+        where("is_active", "==", true),
+        where("gender", "in", profile.show_me),
+        startAt(b[0]),
+        endAt(b[1]),
+      );
+      promises.push(getDocs(queryRef));
+      hooks.push(useCollectionData(queryRef));
+    } else {
+      hooks = [];
+      promises = [];
+    }
   }
-
-  // console.log({ hooks });
-
-  // Promise.all(promises)
-  //   .then((snapshots) => {
-  //     const matchingDocs = [];
-  //     for (const snap of snapshots) {
-  //       for (const doc of snap.docs) {
-  //         const lat = doc.get("lat");
-  //         const lng = doc.get("long");
-  //         const distanceInKm = geofire.distanceBetween([lat, lng], center);
-  //         const distanceInM = distanceInKm * 1000;
-  //         if (distanceInM <= radiusInM) {
-  //           matchingDocs.push(doc.data());
-  //         }
-  //       }
-  //     }
-  //     return matchingDocs;
-  //   })
-  //   .then((matchingDocs) => {
-  //     console.log({ matchingDocs });
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
 
   useFocusEffect(
     React.useCallback(() => {
-      if (!profile.hashed_location) {
-        handle_without_location();
-      } else {
-        handle_with_location();
+      if (is_active) {
+        if (!profile.hashed_location) {
+          handle_without_location();
+        } else {
+          handle_with_location();
+        }
       }
     }, []),
   );
@@ -245,39 +228,32 @@ const DatingContainer = ({
   const refreshHandler = () => {};
   const loadMoreHandler = () => {};
 
-  if (loading) {
-    return <DatingIntroScreen loading={true} />;
-  }
-  if (!loading && !is_active) {
-    return <DatingIntroScreen loading={false} />;
-  }
-
   let accounts = [];
   let loaders = [];
 
-  console.log({ reported_ids });
-
-  for (const hook of hooks) {
-    loaders.push(hook[1]);
-    // console.log({ is_array: Array.isArray(hook[0]) });
-    if (!hook[1]) {
-      hook[0].forEach((x) => {
-        if (
-          discover_profile_id &&
-          x.id !== discover_profile_id &&
-          !own_profile.blocked.includes(x.id) &&
-          !x.blocked.includes(discover_profile_id)
-        ) {
-          const lat = x.lat;
-          const lng = x.long;
-          const distanceInKm = geofire.distanceBetween([lat, lng], center);
-          const distanceInM = distanceInKm * 1000;
-          // if (distanceInM <= radiusInM) {
-          if (distanceInM <= profile.filters.distance * 1000) {
-            accounts.push(x);
+  if (is_active) {
+    for (const hook of hooks) {
+      loaders.push(hook[1]);
+      // console.log({ is_array: Array.isArray(hook[0]) });
+      if (!hook[1]) {
+        hook[0].forEach((x) => {
+          if (
+            discover_profile_id &&
+            x.id !== discover_profile_id &&
+            !own_profile.blocked.includes(x.id) &&
+            !x.blocked.includes(discover_profile_id)
+          ) {
+            const lat = x.lat;
+            const lng = x.long;
+            const distanceInKm = geofire.distanceBetween([lat, lng], center);
+            const distanceInM = distanceInKm * 1000;
+            // if (distanceInM <= radiusInM) {
+            if (distanceInM <= profile.filters.distance * 1000) {
+              accounts.push(x);
+            }
           }
-        }
-      });
+        });
+      }
     }
   }
 
