@@ -38,6 +38,12 @@ const options = [
     desc: "I'm open to anything other than a relationship",
     value: "to_have_fun",
   },
+  {
+    icon: require("../../../assets/rightnow.png"),
+    title: "Right now",
+    desc: "No long chats, let's just meet and have fun",
+    value: "to_link_rn",
+  },
 ];
 
 const mapStateToProps = (state) => {

@@ -225,7 +225,7 @@ const DatingContainer = ({
       hook[0].forEach((x) => {
         if (
           discover_profile_id &&
-          x.id !== discover_profile_id &&
+          // x.id !== discover_profile_id &&
           !own_profile.blocked.includes(x.id) &&
           !x.blocked.includes(discover_profile_id)
         ) {

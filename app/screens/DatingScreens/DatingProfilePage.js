@@ -81,6 +81,43 @@ function DatingProfilePage({
   const inserts = useSafeAreaInsets();
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState(saved_profile);
+
+  if (loading) {
+    return (
+      <ScrollView scroll style={[styles.container]}>
+        <ImageBackground
+          source={require("../../assets/background-pattern.png")}
+          style={[
+            styles.top_section,
+            {
+              paddingTop: inserts.top,
+            },
+          ]}
+        >
+          <Header
+            noBorder
+            backIcon
+            noBg
+            // buttonText="ellipsis"
+            rightPress={() => console.log("pressed")}
+          />
+        </ImageBackground>
+        <View style={styles.container}>
+          <View style={styles.inner_container}>
+            <View style={styles.profilepic_container}>
+              <View style={styles.loader_container}>
+                <Loading />
+              </View>
+            </View>
+            <View style={styles.meta_container}>
+              <Text style={styles.name}>Loading..</Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    );
+  }
+
   const [poked, setPoke] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
@@ -127,42 +164,6 @@ function DatingProfilePage({
 
     handle_register_visit();
   }, []);
-
-  if (loading) {
-    return (
-      <ScrollView scroll style={[styles.container]}>
-        <ImageBackground
-          source={require("../../assets/background-pattern.png")}
-          style={[
-            styles.top_section,
-            {
-              paddingTop: inserts.top,
-            },
-          ]}
-        >
-          <Header
-            noBorder
-            backIcon
-            noBg
-            // buttonText="ellipsis"
-            rightPress={() => console.log("pressed")}
-          />
-        </ImageBackground>
-        <View style={styles.container}>
-          <View style={styles.inner_container}>
-            <View style={styles.profilepic_container}>
-              <View style={styles.loader_container}>
-                <Loading />
-              </View>
-            </View>
-            <View style={styles.meta_container}>
-              <Text style={styles.name}>Loading..</Text>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
-    );
-  }
 
   return (
     <ScrollView scroll style={[styles.container]}>
