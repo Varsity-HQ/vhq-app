@@ -13,7 +13,7 @@ function ItemCard({ x }) {
   return (
     <TouchableWithoutFeedback
       onPress={() => {
-        navigation.navigate(MARKETPLACE_ITEM_PAGE, {
+        navigation.push(MARKETPLACE_ITEM_PAGE, {
           id: x.id,
         });
       }}
@@ -31,7 +31,7 @@ function ItemCard({ x }) {
             style={[
               styles.boldCapital,
               {
-                fontSize: 14,
+                fontSize: 13,
                 marginBottom: 5,
                 fontWeight: "700",
               },
@@ -39,14 +39,19 @@ function ItemCard({ x }) {
           >
             {x.category}
           </Text>
-          <Text numberOfLines={2}>{x.title}</Text>
+          <Text style={{ color: colors.white }} numberOfLines={2}>
+            {x.title}
+          </Text>
         </View>
         <View style={styles.footer_section}>
           <View style={[styles.row]}>
             <View
-              style={[styles.row, { paddingHorizontal: 5, paddingVertical: 2 }]}
+              style={[
+                styles.row,
+                { paddingHorizontal: 10, paddingVertical: 3 },
+              ]}
             >
-              <FontAwesome name="eye" size={20} color={colors.primary} />
+              <FontAwesome name="eye" size={18} color={colors.primary} />
               <Text> {x.seen_by}</Text>
             </View>
             <LinearGradient
@@ -87,8 +92,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 10,
     paddingVertical: 5,
+    paddingHorizontal: 5,
+    paddingRight: 10,
     borderTopColor: colors.dark_opacity_2,
     borderTopWidth: 2,
   },
@@ -97,21 +103,22 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     zIndex: -1,
+    borderRadius: 12,
   },
   boldCapital: {
     textTransform: "uppercase",
     color: colors.secondary,
   },
   image: {
-    height: 160,
-    width: 160,
+    width: 190,
+    height: 110,
   },
   container: {
     borderWidth: 2,
     borderColor: colors.dark_opacity_2,
-    borderRadius: 5,
+    borderRadius: 15,
     // height: 200,
-    width: 160,
+    width: 190,
     marginRight: 10,
     overflow: "hidden",
   },
