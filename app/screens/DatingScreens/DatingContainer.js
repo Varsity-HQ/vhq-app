@@ -26,6 +26,7 @@ import {
   doc,
   limit,
   getDoc,
+  updateDoc,
 } from "firebase/firestore";
 import {
   CollectionHook,
@@ -190,7 +191,7 @@ const DatingContainer = ({
 
   const setTabIndex = (index) => {
     setActiveTabIndex(index);
-    if (index === 2) {
+    if (index === 2 && activeTabIndex !== 2) {
       handle_pokes_load();
     }
   };
@@ -220,6 +221,10 @@ const DatingContainer = ({
         });
         setPokesProfiles(results);
         setPokesLoading(false);
+        let userRef = doc(db, "discover_profiles", discover_profile_id);
+        return updateDoc(userRef, {
+          poked: false,
+        });
       })
       .catch((err) => {
         console.log(err);
