@@ -282,7 +282,7 @@ const DatingContainer = ({
             useCustomLoader: false,
             noDataComponent: (
               <View>
-                <Text>no data</Text>
+                <Text></Text>
               </View>
             ),
             allowRefresh: true,
