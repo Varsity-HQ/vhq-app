@@ -43,9 +43,11 @@ function IconButton({
           ]}
         />
       </View>
-      <View>
-        <Text style={textStyle}>{text}</Text>
-      </View>
+      {text && (
+        <View>
+          <Text style={textStyle}>{text}</Text>
+        </View>
+      )}
     </View>
   );
 }

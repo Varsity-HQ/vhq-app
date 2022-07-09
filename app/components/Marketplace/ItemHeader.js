@@ -8,34 +8,22 @@ import UserMenu from "./UserMenu";
 import { FontAwesome } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import { color } from "react-native-reanimated";
+import ItemPageHeader from "./ItemPageHeader";
 
 const height = Dimensions.get("window").height;
 
+{
+  /* <UserMenu data={data.user_data} /> */
+}
+
 function ItemHeader({ data }) {
   return (
-    <View>
+    <View style={styles.main_container}>
       <View style={styles.f_container}>
-        <View style={styles.row_between}>
-          <View style={styles.row}>
-            <Image
-              uri={data.user_data.profilepic}
-              style={styles.user_profilepic}
-            />
-            <View>
-              <Text style={styles.name}>@{data.user_data.username}</Text>
-              <Text
-                style={{
-                  fontSize: RFValue(12),
-                }}
-              >
-                member since {dayjs(data.user_data.createdAt).format("ll")}
-              </Text>
-            </View>
-          </View>
-          <View>
-            <UserMenu data={data.user_data} />
-          </View>
-        </View>
+        <View style={styles.row_between}></View>
+      </View>
+      <View>
+        <ItemPageHeader topPart={false} />
       </View>
       <View style={styles.lower_section}>
         <Text style={styles.title}>{data.title}</Text>
@@ -57,10 +45,10 @@ function ItemHeader({ data }) {
               {
                 backgroundColor: colors.dark,
                 paddingHorizontal: 15,
-                borderBottomColor: colors.secondary_2,
+                borderBottomColor: colors.dark_opacity_2,
                 borderBottomWidth: 1,
                 borderRightWidth: 1,
-                borderRightColor: colors.secondary_2,
+                borderRightColor: colors.dark_opacity_2,
                 borderBottomLeftRadius: 0,
                 borderBottomRightRadius: 10,
               },
@@ -95,7 +83,7 @@ function ItemHeader({ data }) {
               // paddingRight: "50%",
             }}
             size={15}
-            color={colors.secondary}
+            color={colors.dark_opacity_2}
           />
           <Text style={styles.list_info}>
             Listed {dayjs(data.created_at).fromNow()}
@@ -115,7 +103,7 @@ function ItemHeader({ data }) {
               marginRight: 10,
             }}
             size={15}
-            color={colors.secondary}
+            color={colors.dark_opacity_2}
           />
           <Text style={styles.list_info}>{data.fromUniversity}</Text>
         </View>
@@ -125,10 +113,20 @@ function ItemHeader({ data }) {
 }
 
 const styles = StyleSheet.create({
+  main_container: {
+    position: "relative",
+    top: -(height * 0.005),
+  },
+  category_text: {
+    marginBottom: 10,
+    fontWeight: "600",
+    fontSize: RFValue(13),
+    color: colors.secondary_2,
+  },
   priceContainer: {
-    backgroundColor: colors.secondary_2,
+    backgroundColor: colors.dark_opacity_2,
     borderBottomLeftRadius: 10,
-    borderBottomColor: colors.secondary_2,
+    borderBottomColor: colors.dark_opacity_2,
     borderBottomWidth: 1,
     // borderBottomRightRadius: 10,
     // borderBottomRightRadius: 10,
@@ -139,7 +137,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   borderTopPricing: {
-    borderTopColor: colors.secondary_2,
+    borderTopColor: colors.dark_opacity_2,
     borderTopWidth: 1,
     //was working here
     marginTop: 20,
@@ -183,10 +181,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   f_container: {
-    padding: 10,
-    backgroundColor: colors.darkish2,
-    borderTopColor: colors.secondary_2,
-    // borderTopWidth: 2,
+    // padding: 10,
+    // backgroundColor: colors.v_st_bg_5,
+    // display: "none",
   },
   second_sec: {
     borderTopColor: colors.dark_opacity_2,

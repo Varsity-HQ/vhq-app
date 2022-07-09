@@ -13,6 +13,7 @@ import { color } from "react-native-reanimated";
 import colors from "../../config/colors";
 import Text from "../../components/AppText";
 import axios from "axios";
+import ItemPageHeader from "../../components/Marketplace/ItemPageHeader";
 
 function ItemPage(props) {
   const [data, setData] = useState(null);
@@ -60,7 +61,7 @@ function ItemPage(props) {
               color: colors.secondary_2,
             }}
           >
-            Just a sec..
+            Just a sec...
           </Text>
         </View>
       </ScrollView>
@@ -69,7 +70,7 @@ function ItemPage(props) {
 
   return (
     <ScrollView scroll style={styles.container}>
-      {/* <CommonHeader /> */}
+      {/* <ItemPageHeader /> */}
       <ItemGallery images={data.attachments} />
       <ItemHeader data={data} />
       <ItemActions />
