@@ -9,6 +9,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import { color } from "react-native-reanimated";
 import ItemPageHeader from "./ItemPageHeader";
+import RoundedWrappedText from "../RoundedWrappedText";
 
 const height = Dimensions.get("window").height;
 
@@ -75,37 +76,45 @@ function ItemHeader({ data }) {
           </View>
         </View>
 
-        <View style={styles.list_info}>
-          <FontAwesome
-            name="calendar-o"
-            style={{
-              marginRight: 10,
-              // paddingRight: "50%",
-            }}
-            size={15}
-            color={colors.dark_opacity_2}
-          />
-          <Text style={styles.list_info}>
-            Listed {dayjs(data.created_at).fromNow()}
-          </Text>
-        </View>
+        <Text style={styles.heading}>About</Text>
         <View
-          style={[
-            styles.list_info,
-            {
-              marginTop: 5,
-            },
-          ]}
+          style={{
+            flexWrap: "wrap",
+            flexDirection: "row",
+            marginTop: 2,
+            borderBottomWidth: 1,
+            borderBottomColor: colors.dark_opacity_2,
+            paddingBottom: 13,
+          }}
         >
-          <FontAwesome
-            name="university"
-            style={{
-              marginRight: 10,
-            }}
-            size={15}
-            color={colors.dark_opacity_2}
+          <RoundedWrappedText text={"Jobs"} />
+          <RoundedWrappedText
+            icon={
+              <FontAwesome
+                name="calendar-o"
+                style={{
+                  marginRight: 5,
+                  // paddingRight: "50%",
+                }}
+                size={15}
+                color={colors.secondary}
+              />
+            }
+            text={dayjs(data.created_at).fromNow()}
           />
-          <Text style={styles.list_info}>{data.fromUniversity}</Text>
+          <RoundedWrappedText
+            icon={
+              <FontAwesome
+                name="university"
+                style={{
+                  marginRight: 5,
+                }}
+                size={15}
+                color={colors.secondary}
+              />
+            }
+            text={data.fromUniversity}
+          />
         </View>
       </View>
     </View>
@@ -113,6 +122,13 @@ function ItemHeader({ data }) {
 }
 
 const styles = StyleSheet.create({
+  heading: {
+    fontWeight: "600",
+    fontSize: RFValue(13),
+    marginBottom: 10,
+    marginTop: 10,
+    color: colors.secondary,
+  },
   main_container: {
     position: "relative",
     top: -(height * 0.005),

@@ -6,35 +6,55 @@ import { FontAwesome } from "@expo/vector-icons";
 import Text from "../AppText";
 import { RFValue } from "react-native-responsive-fontsize";
 import AppTextInput from "../Input";
+import { TyphoonLine } from "react-native-remix-icon/src/icons";
 
 const height = Dimensions.get("window").height;
 
 function ItemActions(props) {
   return (
     <View style={styles.container}>
-      {/* <View style={styles.row}>
+      <View style={styles.row}>
         <AppTextInput
           width="75%"
           style={{
             flex: 1,
+            borderWidth: 2,
+            borderRightWidth: 2,
+            borderLeftWidth: 2,
+            borderRightColor: colors.secondary_2,
+            borderLeftColor: colors.secondary_2,
           }}
-          placeholder="Tell me about this service"
+          type={2}
+          placeholder="I'm interested.."
         />
         <Button
           style={{
             width: "20%",
             marginLeft: 10,
           }}
-          type={4}
+          type={3}
           title="Send"
         />
-      </View> */}
-      <View style={styles.bottom_icons}>
+      </View>
+      <View
+        style={{
+          paddingBottom: 10,
+        }}
+      >
+        <Text
+          numberOfLines={1}
+          ellipsizeMode={"tail"}
+          style={{ color: colors.secondary_2, alignSelf: "center" }}
+        >
+          Send a message to @chikx_12
+        </Text>
+      </View>
+      {/* <View style={styles.bottom_icons}>
         <IconButton icon="heart" title="Like" />
         <IconButton icon="bookmark" title="Bookmark" />
         <IconButton icon="envelope" title="Message" />
         <IconButton icon="flag" title="Report" />
-      </View>
+      </View> */}
     </View>
   );
 }
@@ -84,14 +104,27 @@ const styles = StyleSheet.create({
   },
   container: {
     margin: 10,
+
     borderTopWidth: 1,
     borderBottomWidth: 1,
 
-    // backgroundColor: colors.darkish,
+    backgroundColor: colors.dark_opacity_2,
+    borderRadius: 10,
 
     borderColor: colors.dark_opacity_2,
-    padding: 10,
-    paddingBottom: 20,
+    padding: 15,
+    paddingBottom: 5,
+    paddingTop: 5,
+
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+
+    elevation: 8,
   },
 });
 
