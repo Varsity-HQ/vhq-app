@@ -65,6 +65,11 @@ function ChatPage({ account }) {
   const [chat_id, set_chat_id] = useState("id");
   const [user_id, set_uid] = useState(null);
   const route = useRoute();
+  const isDatingChat = route.params.dating;
+  const isMarketplaceChat = false;
+  const chat_acc_id = isDatingChat
+    ? account.discover_profile_id
+    : account.userID;
 
   /** get chats */
   const msgColRef = collection(db, "chatMessages");
@@ -76,7 +81,9 @@ function ChatPage({ account }) {
   );
   const [messages_list, msg_loading, meerror] = useCollectionData(queryRef);
   /** get user */
-  const accDocRef = doc(db, "accounts", route.params.uid);
+  const accDocRef = isDatingChat
+    ? doc(db, "discover_profiles", route.params.uid)
+    : doc(db, "accounts", route.params.uid);
   const [userData, user_loading, error] = useDocumentData(accDocRef);
   let messages_processed = [];
 
@@ -132,7 +139,7 @@ function ChatPage({ account }) {
     const chatsRef = collection(db, "chats");
     const queryChats = query(
       chatsRef,
-      where("members", "array-contains", account.userID),
+      where("members", "array-contains", chat_acc_id),
     );
 
     await getDocs(queryChats)
@@ -164,9 +171,11 @@ function ChatPage({ account }) {
       await addDoc(chatsRef, {
         lastMessageSent: "Say hi",
         last_update: new Date().toISOString(),
-        members: [account.userID, other_u_uid],
-        sent_by: account.userID,
+        members: [chat_acc_id, other_u_uid],
+        sent_by: chat_acc_id,
         opened: true,
+        is_dating_chat: isDatingChat,
+        is_marketplace_chat: isMarketplaceChat,
       })
         .then((cdata) => {
           __chat_id = cdata.id;
@@ -186,7 +195,7 @@ function ChatPage({ account }) {
     await addDoc(chatmessagesRef, {
       message: messages[0].text,
       sent_date: new Date().toISOString(),
-      sent_by: account.userID,
+      sent_by: chat_acc_id,
       read: "false",
       id: v4(),
       chat_id: chat_id,
@@ -202,28 +211,20 @@ function ChatPage({ account }) {
         return updateDoc(chatRef, {
           lastMessageSent: messages[0].text,
           last_update: new Date().toISOString(),
-          sent_by: account.userID,
+          sent_by: chat_acc_id,
           opened: false,
         });
       })
       .then(() => {
         return axios.post("/chat/handle/sentmsg", {
-          send_to: userData.userID,
-          // send_to: "KreteASYDgVwQebpuINpng6KvZp2",
-          sent_by: account.userID,
+          send_to: isDatingChat ? userData.id : userData.userID,
+          sent_by: chat_acc_id,
           message: messages[0].text,
           sent_by_user: account.firstname + " " + account.surname,
         });
       })
       .catch((err) => {});
   };
-
-  //   const onSend = useCallback(async (messages = []) => {
-
-  //     // setMessages((previousMessages) =>
-  //     //   GiftedChat.append(previousMessages, messages),
-  //     // );
-  //   }, []);
 
   const renderItem = ({ item }) => {
     return <ChatBubble data={item} />;
@@ -311,7 +312,7 @@ function ChatPage({ account }) {
 
   return (
     <Screen style={styles.container}>
-      <Header account={userData} />
+      <Header dating={isDatingChat} account={userData} />
       <GiftedChat
         listViewProps={{
           style: {

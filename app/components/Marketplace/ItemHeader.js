@@ -10,6 +10,8 @@ import dayjs from "dayjs";
 import { color } from "react-native-reanimated";
 import ItemPageHeader from "./ItemPageHeader";
 import RoundedWrappedText from "../RoundedWrappedText";
+import universityShortName from "../../util/universityShortName";
+import ItemActions from "./ItemActions";
 
 const height = Dimensions.get("window").height;
 
@@ -24,10 +26,12 @@ function ItemHeader({ data }) {
         <View style={styles.row_between}></View>
       </View>
       <View>
-        <ItemPageHeader topPart={false} />
+        <ItemPageHeader data={data} topPart={false} />
       </View>
+
       <View style={styles.lower_section}>
         <Text style={styles.title}>{data.title}</Text>
+
         <View style={styles.borderTopPricing}></View>
         <View
           style={{
@@ -76,7 +80,7 @@ function ItemHeader({ data }) {
           </View>
         </View>
 
-        <Text style={styles.heading}>About</Text>
+        {/* <Text style={styles.heading}>About</Text> */}
         <View
           style={{
             flexWrap: "wrap",
@@ -113,7 +117,7 @@ function ItemHeader({ data }) {
                 color={colors.secondary}
               />
             }
-            text={data.fromUniversity}
+            text={universityShortName(data.fromUniversity)}
           />
         </View>
       </View>

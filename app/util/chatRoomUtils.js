@@ -1,9 +1,14 @@
 import store from "../store/store";
 
-const __get_chatAcc_id = (x) => {
+const __get_chatAcc_id = (x, target) => {
   let uid = null;
+  let relative_id =
+    target === "d"
+      ? store.getState().core.accData.discover_profile_id
+      : store.getState().core.accData.userID;
+
   x.members.forEach((_m) => {
-    if (_m !== store.getState().core.accData.userID) {
+    if (_m !== relative_id) {
       uid = _m;
     }
   });

@@ -68,11 +68,18 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
   const chat_ref = collection(db, "chats");
   const query_ = query(
     chat_ref,
-    where("members", "array-contains", acc_data.userID),
+    where("members", "array-contains-any", [
+      acc_data.userID,
+      acc_data.discover_profile_id,
+    ]),
     orderBy("last_update", "desc"),
   );
-  const [chats, chats_loading] = useCollectionData(query_);
+  const [chats, chats_loading, error] = useCollectionData(query_);
   const [chat_global_loader, set_chat_global_loader] = useState(false);
+  //
+  const [c_all_loaded, set_c_all_loaded] = useState(false);
+
+  console.log({ error });
 
   let accounts_in_chat = [];
   let filtered_chats_allowed = [];
@@ -83,6 +90,16 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
       get_accounts();
     }
   }, []);
+
+  if (error) {
+    return (
+      <Screen>
+        <Text>Unexpected error :(</Text>
+      </Screen>
+    );
+  }
+
+  console.log({ chats });
 
   if (!chats_loading) {
     chats.forEach((x) => {
@@ -130,13 +147,19 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
       if (index > -1) {
         filtered_chats_allowed.push(x);
       } else {
-        filtered_chats_requests.push(x);
+        if (x.is_dating_chat || x.is_marketplace_chat) {
+          filtered_chats_allowed.push(x);
+        } else {
+          filtered_chats_requests.push(x);
+        }
       }
     });
   }
 
   const refreshHandler = () => {};
   const loadMoreHandler = () => {};
+
+  const handle_chat_finished_load = (uid) => {};
 
   const listRenderingHandler = ({ item }) => {
     if (!item) return null;
@@ -149,7 +172,14 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
       );
     }
 
-    return <ChatSelector data={item} />;
+    return (
+      <ChatSelector
+        display={c_all_loaded}
+        handle_loading_done={handle_chat_finished_load}
+        is_dating={item.is_dating_chat}
+        data={item}
+      />
+    );
   };
 
   const handleSetTabIndex = (index) => {

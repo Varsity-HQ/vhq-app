@@ -13,6 +13,8 @@ const mapStateToProps = (state) => {
 };
 
 function DistanceIndicator({ data, profile }) {
+  if (!profile.lat && !profile.long) return null;
+
   const distanceInKm = geofire.distanceBetween(
     [data.lat, data.long],
     [profile.lat, profile.long],

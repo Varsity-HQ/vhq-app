@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Dimensions,
+  Share,
 } from "react-native";
 import { connect } from "react-redux";
 import Image from "../Image";
@@ -29,8 +30,27 @@ const mapStateToProps = (state) => {
 
 const height = Dimensions.get("window").height;
 
-function ItemPageHeader({ profilepic, university, topPart = true }) {
+function ItemPageHeader({ data, profilepic, university, topPart = true }) {
   const navigation = useNavigation();
+
+  const handleShareItem = async () => {
+    try {
+      const result = await Share.share({
+        message: "",
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
     <>
       {topPart && (
@@ -104,6 +124,7 @@ function ItemPageHeader({ profilepic, university, topPart = true }) {
         </View>
         <View style={styles.row}>
           <IconButton
+            onPress={null}
             buttonStyle={{
               backgroundColor: colors.dark_opacity_2,
             }}
@@ -112,6 +133,7 @@ function ItemPageHeader({ profilepic, university, topPart = true }) {
             }
           />
           <IconButton
+            onPress={handleShareItem}
             buttonStyle={{
               marginLeft: 10,
               backgroundColor: colors.dark_opacity_2,

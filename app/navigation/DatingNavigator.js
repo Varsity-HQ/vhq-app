@@ -31,6 +31,7 @@ import UpdateSexualOrientaionScreen from "../screens/settings/UpdateSexualOrient
 import UpdateSexTargetScreen from "../screens/settings/UpdateSexTargetScreen";
 import MyDiscoverProfileHowDoILook from "../screens/DatingScreens/MyDiscoverProfileHowDoILook";
 import DatingFilters from "../screens/DatingScreens/DatingFilters";
+import ChatPage from "../screens/Chat/ChatPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -108,6 +109,8 @@ const DatingNavigator = ({
         name={routes.MY_DISCOVER_PROFILE}
         component={MyDiscoverProfile}
       />
+      {/* <Stack.Screen name={routes.CHAT_PAGE} component={ChatPage} /> */}
+
       <Stack.Screen
         name={routes.DATING_HDIL}
         component={MyDiscoverProfileHowDoILook}

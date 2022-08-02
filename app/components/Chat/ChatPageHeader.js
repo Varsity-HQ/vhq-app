@@ -6,8 +6,11 @@ import Image from "../Image";
 import Text from "../AppText";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useNavigation } from "@react-navigation/native";
+import OnlineIndicator from "../Dating/OnlineIndicator";
+import * as geofire from "geofire-common";
+import DistanceIndicator from "../Dating/DistanceIndicator";
 
-function ChatPageHeader({ loading, username, account }) {
+function ChatPageHeader({ loading, username, account, dating = false }) {
   const navigation = useNavigation();
 
   if (loading) {
@@ -38,6 +41,46 @@ function ChatPageHeader({ loading, username, account }) {
     );
   }
 
+  if (dating) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.inner_container}>
+          <View style={styles.inner_container}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons
+                name="arrow-back-sharp"
+                size={34}
+                color={colors.white}
+              />
+            </TouchableOpacity>
+            <View style={styles.inner_container}>
+              <Image uri={account.profilepic} style={styles.profilepic} />
+              <View style={{ marginLeft: 10 }}>
+                <Text style={styles.name}>{account.nickname}</Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                  }}
+                >
+                  <OnlineIndicator online={account.is_online} />
+                  <View style={{ flexDirection: "row" }}>
+                    <DistanceIndicator data={account} />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View>
+            <Ionicons
+              name="ellipsis-horizontal-outline"
+              size={34}
+              color={colors.white}
+            />
+          </View>
+        </View>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <View style={styles.inner_container}>

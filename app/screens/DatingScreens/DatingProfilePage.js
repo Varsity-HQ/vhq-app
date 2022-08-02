@@ -30,7 +30,7 @@ import universityShortName from "../../util/universityShortName";
 import OnlineIndicator from "../../components/Dating/OnlineIndicator";
 import DistanceIndicator from "../../components/Dating/DistanceIndicator";
 import Loading from "../../components/Loaders/HomeUploading";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   collection,
   startAt,
@@ -54,6 +54,7 @@ import {
   register_visit,
 } from "../../store/actions/datingActions";
 import DatingProfileMenu from "../../components/Dating/DatingProfileMenu";
+import { CHAT_PAGE } from "../../navigation/routes";
 
 const height = Dimensions.get("window").height;
 
@@ -79,9 +80,9 @@ function DatingProfilePage({
 }) {
   const profileID = useRoute().params.id;
   const inserts = useSafeAreaInsets();
+  const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState(saved_profile);
-
   const [poked, setPoke] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
@@ -129,6 +130,14 @@ function DatingProfilePage({
     handle_register_visit();
   }, []);
 
+  const handleInitChat = () => {
+    navigation.navigate(CHAT_PAGE, {
+      uid: profile.id,
+      username: profile.nickname,
+      dating: true,
+    });
+  };
+
   if (loading) {
     return (
       <ScrollView scroll style={[styles.container]}>
@@ -164,6 +173,7 @@ function DatingProfilePage({
       </ScrollView>
     );
   }
+  console.log({ profile });
 
   return (
     <ScrollView scroll style={[styles.container]}>
@@ -217,13 +227,16 @@ function DatingProfilePage({
                 },
               ]}
             >
-              2nd Year Student,{" "}
+              {profile.yearOfStudy === "postgraduate"
+                ? "Postgraduate"
+                : profile.yearOfStudy + " year"}{" "}
+              Student,{" "}
               <Text
                 style={{
                   fontWeight: "700",
                 }}
               >
-                UJ
+                {universityShortName(profile.university)}
               </Text>
             </Text>
             <View
@@ -255,6 +268,7 @@ function DatingProfilePage({
                 textStyle={[styles.btnText]}
               />
               <IconButton
+                onPress={handleInitChat}
                 icon={
                   <MaterialCommunityIcons
                     name="chat"

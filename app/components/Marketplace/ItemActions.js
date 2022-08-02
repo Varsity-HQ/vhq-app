@@ -10,7 +10,7 @@ import { TyphoonLine } from "react-native-remix-icon/src/icons";
 
 const height = Dimensions.get("window").height;
 
-function ItemActions(props) {
+function ItemActions({ props }) {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
@@ -24,9 +24,18 @@ function ItemActions(props) {
             borderRightColor: colors.secondary_2,
             borderLeftColor: colors.secondary_2,
           }}
-          type={2}
+          type={2 ? 2 : 2}
           placeholder="I'm interested.."
         />
+        {/* 
+        
+        this.state= {
+          nus : {
+            moda : null;
+          },
+        };
+        
+        */}
         <Button
           style={{
             width: "20%",

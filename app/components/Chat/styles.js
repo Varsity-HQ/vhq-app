@@ -188,17 +188,33 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   c_s_time_stamp: {
-    backgroundColor: colors.darkish3,
+    backgroundColor: colors.darkish2,
     paddingHorizontal: 5,
     paddingVertical: 1,
     marginLeft: 7,
+    borderRadius: 5,
   },
   c_s_time_text: {
-    fontSize: RFValue(12),
+    fontSize: RFValue(11),
   },
   c_s_dot_sptor: {
     fontSize: RFValue(15),
     color: colors.secondary,
+  },
+  profile_side_icon_container: {
+    position: "absolute",
+    top: 0,
+    left: -5,
+    backgroundColor: colors.dark_opacity_2,
+    // padding: 7,
+    width: height * 0.03,
+    height: height * 0.03,
+    borderRadius: 100,
+    borderColor: colors.secondary_2,
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
   },
 });
 

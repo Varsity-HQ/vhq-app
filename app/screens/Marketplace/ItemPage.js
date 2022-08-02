@@ -13,9 +13,9 @@ import { color } from "react-native-reanimated";
 import colors from "../../config/colors";
 import Text from "../../components/AppText";
 import axios from "axios";
-import ItemPageHeader from "../../components/Marketplace/ItemPageHeader";
-
-function ItemPage(props) {
+import ItemPageHeader from "../../components/Marketplace/ItemPageHeader.js";
+//
+function ItemPage() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const itemID = useRoute().params.id;
@@ -84,12 +84,9 @@ function ItemPage(props) {
       </View>
     </ScrollView>
   );
-}
-
+} //
 const styles = StyleSheet.create({
-  container: {
-    // marginBottom: 50,
-  },
+  container: {},
 });
 
 export default ItemPage;
