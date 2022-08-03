@@ -99,8 +99,6 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
     );
   }
 
-  console.log({ chats });
-
   if (!chats_loading) {
     chats.forEach((x) => {
       x.members.forEach((m) => {
@@ -123,20 +121,6 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
     const set_array_to_state = (n) => {
       // set_parsed_acc({ n });
     };
-
-    // getAcc()
-    //   .then((x) => {
-    //     let accounts_parsed_local = [];
-    //     x.forEach((p) => {
-    //       accounts_parsed_local.push(p.data());
-    //     });
-
-    //     set_array_to_state(accounts_parsed_local);
-
-    //     set_accounts_loading(false);
-    //   })
-    //   .catch((err) => {
-    //   });
 
     let user_following = acc_data.user_following;
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { v4 } from "uuid";
 import store from "../store";
 
 export const save_local_post = (post) => (dispatch) => {
@@ -130,6 +131,7 @@ const send_comment_comment = (txt, dispatch) => {
 
 export const send_post_comment = (txt) => (dispatch) => {
   const auth_user_data = store.getState().core.accData;
+  const auth_user_anonymous = auth_user_data.anonymous_profile;
   const post_id = store.getState().postPage.post.post.id;
   const isReplyingToComment =
     store.getState().postPage.replyTo?.parentCommentId;
@@ -140,28 +142,58 @@ export const send_post_comment = (txt) => (dispatch) => {
   });
 
   if (isReplyingToComment) {
+    //needs to send anon comments
     return send_comment_comment(txt, dispatch);
   }
+
+  const temp_id = v4();
+
+  const comment = {
+    post_id: post_id,
+    commenter_username: auth_user_anonymous
+      ? auth_user_data.anonymous_name
+      : auth_user_data.username,
+    commenter_profilepic: auth_user_anonymous
+      ? auth_user_data.anonymous_emoji_index
+      : auth_user_data.profilepic,
+    commenter_firstname: auth_user_anonymous
+      ? "hidden"
+      : auth_user_data.firstname,
+    commenter_surname: auth_user_anonymous ? "hidden" : auth_user_data.surname,
+
+    comment_by: auth_user_data.userID,
+    date_created: new Date().toISOString(),
+    comment_text: txt,
+    comment_likes: "0",
+    comment_comments: "0",
+    comment_id: temp_id,
+    anonymous_comment: auth_user_anonymous,
+  };
+
+  dispatch({
+    type: "ADD_POST_COMMENT",
+    payload: {
+      ...comment,
+      is_sending: true,
+    },
+  });
+  dispatch({
+    type: "SET_COMMENTING",
+    payload: false,
+  });
 
   axios
     .post(`/post/comment/${post_id}`, {
       comment: txt,
+      anonymous_comment: auth_user_anonymous,
     })
     .then((data) => {
       dispatch({
-        type: "ADD_POST_COMMENT",
+        type: "SET_POST_COMMENT_SENT",
         payload: {
-          post_id: post_id,
-          commenter_username: auth_user_data.username,
-          commenter_profilepic: auth_user_data.profilepic,
-          commenter_firstname: auth_user_data.firstname,
-          commenter_surname: auth_user_data.surname,
-          comment_by: auth_user_data.userID,
-          date_created: new Date().toISOString(),
-          comment_text: txt,
-          comment_likes: "0",
-          comment_comments: "0",
-          comment_id: data.data.comment_id,
+          ...comment,
+          temp_id: temp_id,
+          new_id: data.data.comment_id,
         },
       });
       dispatch({

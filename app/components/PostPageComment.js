@@ -29,6 +29,7 @@ import { check_comment_liked, check_post_reported } from "../util/postUtil";
 import ReportMenu from "./ReportMenus/ReportMenu";
 import SkeletonComponent from "./Skeletons/SkeletonComponent";
 import ReportedTemplate from "./ReportedTemplate";
+import emojis from "../util/emojis";
 dayjs.extend(relativeTime);
 
 const mapDispatchToProps = (dispatch) => {
@@ -43,7 +44,6 @@ const mapDispatchToProps = (dispatch) => {
 
 function PostPageComment({
   data,
-  returnProfilePicture,
   skeleton = false,
   replyToComment,
   handleOpenResponses,
@@ -130,6 +130,7 @@ function PostPageComment({
       />
 
       <TouchableWithoutFeedback
+        disabled={data.is_sending}
         onLongPress={() => {
           handleeCommentLongPress(data);
         }}
@@ -153,7 +154,15 @@ function PostPageComment({
               // paddingBottom: 5,
             }}
           >
-            <Image style={styles.p_avatar} uri={data.commenter_profilepic} />
+            <Image
+              style={styles.p_avatar}
+              local={data.anonymous_comment}
+              uri={
+                data.anonymous_comment
+                  ? { uri: emojis[data.commenter_profilepic] }
+                  : data.commenter_profilepic
+              }
+            />
             {/* {returnProfilePicture(data.commenter_profilepic, styles.p_avatar)} */}
             {/* <View style={styles.comment_line} /> */}
             <View
@@ -176,7 +185,10 @@ function PostPageComment({
                     <AppText style={styles.u_name}>
                       {data.commenter_username}
                       <AppText style={styles.date_posted}>
-                        &nbsp;•&nbsp;{dayjs(data.date_created).fromNow()}
+                        &nbsp;•&nbsp;
+                        {data.is_sending
+                          ? "posting..."
+                          : dayjs(data.date_created).fromNow()}
                       </AppText>
                     </AppText>
                     <View
@@ -199,9 +211,11 @@ function PostPageComment({
                       paddingVertical: 5,
                       flexDirection: "row",
                       alignItems: "center",
+                      opacity: data.is_sending ? 0.3 : 1,
                     }}
                   >
                     <TouchableOpacity
+                      disabled={data.is_sending}
                       style={{
                         flexDirection: "row",
                         alignItems: "center",
@@ -226,7 +240,10 @@ function PostPageComment({
                           : ""}
                       </AppText>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={handleReplyToComment}>
+                    <TouchableOpacity
+                      disabled={data.is_sending}
+                      onPress={handleReplyToComment}
+                    >
                       <AppText
                         style={{
                           marginHorizontal: 15,
@@ -240,7 +257,10 @@ function PostPageComment({
                           : ""}
                       </AppText>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={handleReportModal}>
+                    <TouchableOpacity
+                      disabled={data.is_sending}
+                      onPress={handleReportModal}
+                    >
                       <AppText
                         style={{
                           // margin: 15,

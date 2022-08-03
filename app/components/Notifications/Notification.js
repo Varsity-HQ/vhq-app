@@ -17,6 +17,7 @@ import { POST_PAGE, PROFILE } from "../../navigation/routes";
 import { connect } from "react-redux";
 import { flag_notification_opened } from "../../store/actions/notifications";
 import { RFValue } from "react-native-responsive-fontsize";
+import emojis from "../../util/emojis";
 dayjs.extend(localizedFormat);
 
 const mapDispatchToProps = (dispatch) => {
@@ -71,7 +72,13 @@ function Notification({ data, flag_notification_opened }) {
         }
         style={{ position: "relative" }}
       >
-        <Image uri={data.profilepic} style={styles.profile_pic} />
+        <Image
+          local={data.anonymous}
+          uri={
+            data.anonymous ? { uri: emojis[data.profilepic] } : data.profilepic
+          }
+          style={styles.profile_pic}
+        />
         {!data.n_seen ? <View style={styles.new_indicator} /> : null}
       </TouchableOpacity>
       <TouchableWithoutFeedback onPress={handleNotificationPress}>

@@ -190,6 +190,26 @@ const postPageReducer = (state = initialState, actions) => {
         replyTo: actions.payload,
       };
 
+    case "SET_POST_COMMENT_SENT":
+      let updated1_comments_array = state.comments;
+
+      if (state.comments) {
+        updated1_comments_array.forEach((x, index) => {
+          if (x.comment_id === actions.payload.temp_id) {
+            updated1_comments_array[index] = {
+              ...x,
+              comment_id: actions.payload.new_id,
+              is_sending: false,
+            };
+          }
+        });
+      }
+
+      return {
+        ...state,
+        comments: updated1_comments_array,
+      };
+
     case "ADD_POST_COMMENT":
       let new_comments_array = state.comments;
 

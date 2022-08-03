@@ -104,7 +104,7 @@ function CommentTextInput({
             <Image
               style={styles.profilepic}
               local
-              uri={emojis[account.anonymous_emoji_index]}
+              uri={{ uri: emojis[account.anonymous_emoji_index] }}
             />
           ) : (
             <Image style={styles.profilepic} uri={profilepic} />
@@ -123,12 +123,12 @@ function CommentTextInput({
             account.anonymous_profile ? "anonymously" : ""
           }`}
         />
-
-        {post_page.commenting ? (
+        {/* Turned off after comments show their being posted */}
+        {/* {post_page.commenting ? (
           <View style={styles.loading_overlay}>
             <Text style={{ color: colors.lighish2 }}>Commenting..</Text>
           </View>
-        ) : null}
+        ) : null} */}
 
         <TouchableOpacity onPress={handleSendBtn} style={styles.send_btn}>
           <Text
