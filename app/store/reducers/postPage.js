@@ -117,6 +117,41 @@ const postPageReducer = (state = initialState, actions) => {
         comments: comment_to_set_replies,
       };
 
+    case "SET_POST_COMMENT_REPLY_SENT":
+      let comment_to_set_reply_sent = state.comments;
+
+      if (comment_to_set_reply_sent) {
+        comment_to_set_reply_sent.forEach((x, index) => {
+          if (x.comment_id === actions.payload.parent_comment_id) {
+            let comment_replies = x.comments_replies;
+            if (comment_replies) {
+              comment_replies.forEach((comment, cindex) => {
+                if (comment.comment_id === actions.payload.temp_id) {
+                  comment_replies[cindex] = {
+                    ...comment,
+                    comment_id: actions.payload.new_id,
+                    is_sending: false,
+                  };
+                }
+              });
+            }
+
+            comment_to_set_reply_sent[index] = {
+              ...x,
+              comments_loading: false,
+              replies_isOpen: true,
+              comments_replies: comment_replies,
+              replyTo: null,
+            };
+          }
+        });
+      }
+      return {
+        ...state,
+
+        comments: comment_to_set_reply_sent,
+        replyTo: null,
+      };
     case "ADD_POST_COMMENT_REPLY":
       let comment_to_add_reply = state.comments;
 

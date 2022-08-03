@@ -26,6 +26,7 @@ const mapStateToProps = (state) => {
     username: state.core.accData.username,
     post_page: state.postPage,
     post: state.postPage?.post.post,
+    replyTo: state.postPage.replyTo,
   };
 };
 
@@ -45,6 +46,7 @@ function CommentTextInput({
   account,
   sendPostComment,
   cancelReplyComment,
+  replyTo,
 }) {
   const navigation = useNavigation();
   const [commentText, setCommentText] = useState("");
@@ -119,9 +121,9 @@ function CommentTextInput({
           selectionColor={colors.primary}
           placeholderTextColor={colors.secondary_2}
           style={styles.comment_input}
-          placeholder={`Respond to ${returnPostOwner()} ${
-            account.anonymous_profile ? "anonymously" : ""
-          }`}
+          placeholder={`Respond to ${
+            replyTo ? replyTo.username : returnPostOwner()
+          } ${account.anonymous_profile ? "anonymously" : ""}`}
         />
         {/* Turned off after comments show their being posted */}
         {/* {post_page.commenting ? (

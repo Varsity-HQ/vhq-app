@@ -92,27 +92,58 @@ const send_comment_comment = (txt, dispatch) => {
   const auth_user_data = store.getState().core.accData;
   const post_id = store.getState().postPage.post.post.id;
   const commentToReplyId = store.getState().postPage.replyTo?.parentCommentId;
+  const childCommentId = store.getState().postPage.replyTo?.childCommentId;
   const username = store.getState().postPage.replyTo?.username;
+  const auth_user_anonymous = auth_user_data.anonymous_profile;
+  const temp_id = v4();
+
+  const comment = {
+    comment_by: auth_user_data.userID,
+    date_created: new Date().toISOString(),
+    commenter_surname: auth_user_anonymous ? "hidden" : auth_user_data.surname,
+    comment_text: txt,
+    comment_id: temp_id,
+    commenter_username: auth_user_anonymous
+      ? auth_user_data.anonymous_name
+      : auth_user_data.username,
+    commenter_firstname: auth_user_anonymous
+      ? "hidden"
+      : auth_user_data.firstname,
+    commenter_profilepic: auth_user_anonymous
+      ? auth_user_data.anonymous_emoji_index
+      : auth_user_data.profilepic,
+    parent_comment_id: commentToReplyId,
+    replyingTo: childCommentId ? username : "",
+    replyingToChildCommentId: childCommentId ? childCommentId : "",
+    anonymous_comment: auth_user_anonymous,
+  };
+
+  dispatch({
+    type: "ADD_POST_COMMENT_REPLY",
+    payload: {
+      ...comment,
+      is_sending: true,
+    },
+  });
+  dispatch({
+    type: "SET_COMMENTING",
+    payload: false,
+  });
 
   axios
     .post(`/post/comment/${commentToReplyId}/reply`, {
       comment_text: txt,
-      replyingTo: "",
+      anonymous_comment: auth_user_anonymous,
+      replyingTo: childCommentId ? username : "",
+      replyingToChildCommentId: childCommentId ? childCommentId : "",
     })
     .then((data) => {
       dispatch({
-        type: "ADD_POST_COMMENT_REPLY",
+        type: "SET_POST_COMMENT_REPLY_SENT",
         payload: {
-          comment_by: auth_user_data.userID,
-          date_created: new Date().toISOString(),
-          commenter_surname: auth_user_data.surname,
-          comment_text: txt,
-          comment_id: data.data.comment_id,
-          commenter_username: auth_user_data.username,
-          commenter_firstname: auth_user_data.firstname,
-          commenter_profilepic: auth_user_data.profilepic,
           parent_comment_id: commentToReplyId,
-          replyingTo: "",
+          temp_id: temp_id,
+          new_id: data.data.comment_id,
         },
       });
       dispatch({
@@ -218,6 +249,23 @@ export const replyToComment = (data) => (dispatch) => {
     type: "SET_COMMENT_REPLY_TO",
     payload: {
       parentCommentId: id,
+      username: username,
+      commentText: ctext,
+      // reply: reply,
+    },
+  });
+};
+export const replyToCommentComment = (data) => (dispatch) => {
+  const id = data.parent_comment_id;
+  const c_id = data.comment_id;
+  const ctext = data.comment_text;
+  const username = data.commenter_username;
+
+  dispatch({
+    type: "SET_COMMENT_REPLY_TO",
+    payload: {
+      parentCommentId: id,
+      childCommentId: c_id,
       username: username,
       commentText: ctext,
       // reply: reply,
