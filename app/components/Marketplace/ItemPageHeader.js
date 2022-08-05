@@ -1,11 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
   Dimensions,
   Share,
+  TouchableOpacity,
 } from "react-native";
 import { connect } from "react-redux";
 import Image from "../Image";
@@ -18,20 +19,40 @@ import { RFValue } from "react-native-responsive-fontsize";
 import Input from "../Input";
 import Button from "../Button";
 import AppButton from "../Button";
-import { SEARCH_RESULTS } from "../../navigation/routes";
+import { MARKETPLACE_CAT_PAGE, SEARCH_RESULTS } from "../../navigation/routes";
 import IconButton from "../IconButton";
 
 const mapStateToProps = (state) => {
   return {
     profilepic: state.core.accData.profilepic,
     university: state.core.accData.university,
+    m_saves: state.core.accData.m_saves,
   };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
 };
 
 const height = Dimensions.get("window").height;
 
-function ItemPageHeader({ data, profilepic, university, topPart = true }) {
+function ItemPageHeader({
+  data,
+  m_saves,
+  profilepic,
+  university,
+  topPart = true,
+}) {
+  const [saved, setSaved] = useState(false);
   const navigation = useNavigation();
+
+  const handleSaveItem = () => {
+    if (saved) {
+      setSaved(false);
+    } else {
+      setSaved(true);
+    }
+  };
 
   const handleShareItem = async () => {
     try {
@@ -94,21 +115,27 @@ function ItemPageHeader({ data, profilepic, university, topPart = true }) {
       )}
       <View style={styles.bottom_container}>
         <View style={styles.f_container}>
-          <View>
+          <TouchableOpacity>
             <FontAwesome
+              onPress={() => navigation.goBack()}
               name="chevron-left"
               size={24}
               color={colors.secondary_2}
             />
-          </View>
-          <View
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate(MARKETPLACE_CAT_PAGE, {
+                category: data.department,
+              })
+            }
             style={{
               marginLeft: 20,
             }}
           >
             <Text style={styles.headertxt}>Take me back</Text>
             <View style={styles.row}>
-              <Text style={styles.header_text}>Service</Text>
+              <Text style={styles.header_text}>{data.department}</Text>
               <FontAwesome
                 name="chevron-right"
                 size={10}
@@ -118,18 +145,22 @@ function ItemPageHeader({ data, profilepic, university, topPart = true }) {
                 }}
                 color={colors.lighish2}
               />
-              <Text style={styles.header_text}>Jobs</Text>
+              <Text style={styles.header_text}>{data.category}</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.row}>
           <IconButton
-            onPress={null}
+            onPress={handleSaveItem}
             buttonStyle={{
               backgroundColor: colors.dark_opacity_2,
             }}
             icon={
-              <FontAwesome name="heart-o" size={20} color={colors.lighish2} />
+              <FontAwesome
+                name={saved ? "heart" : "heart-o"}
+                size={20}
+                color={saved ? colors.redish_2 : colors.lighish2}
+              />
             }
           />
           <IconButton
@@ -172,6 +203,7 @@ const styles = StyleSheet.create({
     color: colors.secondary,
     fontWeight: "700",
     fontSize: RFValue(12),
+    textTransform: "capitalize",
   },
   f_container: {
     // backgroundColor: colors.lighish2,
@@ -212,4 +244,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, null)(ItemPageHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(ItemPageHeader);

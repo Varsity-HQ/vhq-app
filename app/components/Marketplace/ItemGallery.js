@@ -30,6 +30,7 @@ function ItemGallery({ images }) {
         }}
       >
         <Button
+          onPress={() => navigation.goBack()}
           style={styles.button}
           type={3}
           content={<FontAwesome name="close" size={20} color={colors.white} />}
