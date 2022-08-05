@@ -14,6 +14,9 @@ import colors from "../../config/colors";
 import Text from "../../components/AppText";
 import axios from "axios";
 import ItemPageHeader from "../../components/Marketplace/ItemPageHeader.js";
+import ItemSellerInfo from "../../components/Marketplace/ItemSellerInfo";
+import ItemAddListing from "../../components/Marketplace/ItemAddListing";
+import CommunityProtection from "../../components/Marketplace/CommunityProtection";
 //
 function ItemPage() {
   const [data, setData] = useState(null);
@@ -68,13 +71,18 @@ function ItemPage() {
     );
   }
 
+  console.log({ data });
+
   return (
     <ScrollView scroll style={styles.container}>
       {/* <ItemPageHeader /> */}
       <ItemGallery images={data.attachments} />
       <ItemHeader data={data} />
-      <ItemActions />
+      <ItemActions data={data.user_data} />
+      <ItemSellerInfo data={data.user_data} />
       <ItemAbout />
+      <CommunityProtection />
+      <ItemAddListing />
       <View
         style={{
           marginBottom: 20,

@@ -12,6 +12,7 @@ import ItemPageHeader from "./ItemPageHeader";
 import RoundedWrappedText from "../RoundedWrappedText";
 import universityShortName from "../../util/universityShortName";
 import ItemActions from "./ItemActions";
+import RoundedIconWithLabel from "../RoundedIconWithLabel";
 
 const height = Dimensions.get("window").height;
 
@@ -30,57 +31,45 @@ function ItemHeader({ data }) {
       </View>
 
       <View style={styles.lower_section}>
+        <Text style={styles.price}>
+          {data.pricing ? "R " + data.pricing : "Free"}
+        </Text>
         <Text style={styles.title}>{data.title}</Text>
-
-        <View style={styles.borderTopPricing}></View>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <View style={styles.priceContainer}>
-            <Text style={styles.price}>
-              {data.pricing ? "R " + data.pricing : "Free"}
-            </Text>
-          </View>
-          <View
-            style={[
-              styles.priceContainer,
-              {
-                backgroundColor: colors.dark,
-                paddingHorizontal: 15,
-                borderBottomColor: colors.dark_opacity_2,
-                borderBottomWidth: 1,
-                borderRightWidth: 1,
-                borderRightColor: colors.dark_opacity_2,
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: 10,
-              },
-            ]}
-          >
-            <FontAwesome
-              name="eye"
-              style={{
-                marginRight: 7,
-              }}
-              size={15}
-              color={colors.secondary}
-            />
-            <Text
-              style={[
-                styles.price,
-                {
-                  color: colors.secondary,
-                },
-              ]}
-            >
-              {data.seen_by}
-            </Text>
-          </View>
+        <View style={styles.row}>
+          <RoundedIconWithLabel
+            icon={
+              <FontAwesome name="clock-o" size={15} color={colors.secondary} />
+            }
+            text={"Listed " + dayjs(data.created_at).fromNow()}
+          />
+          <RoundedIconWithLabel
+            icon={<FontAwesome name="eye" size={15} color={colors.secondary} />}
+            text={data.seen_by + " Views"}
+          />
+        </View>
+        <View style={styles.row}>
+          <RoundedIconWithLabel
+            icon={
+              <FontAwesome
+                name="calendar-o"
+                size={15}
+                color={colors.secondary}
+              />
+            }
+            text={dayjs(data.created_at).fromNow()}
+          />
+          <RoundedIconWithLabel
+            icon={
+              <FontAwesome
+                name="university"
+                size={15}
+                color={colors.secondary}
+              />
+            }
+            text={data.fromUniversity}
+          />
         </View>
 
-        {/* <Text style={styles.heading}>About</Text> */}
         <View
           style={{
             flexWrap: "wrap",
@@ -90,36 +79,7 @@ function ItemHeader({ data }) {
             borderBottomColor: colors.dark_opacity_2,
             paddingBottom: 13,
           }}
-        >
-          <RoundedWrappedText text={"Jobs"} />
-          <RoundedWrappedText
-            icon={
-              <FontAwesome
-                name="calendar-o"
-                style={{
-                  marginRight: 5,
-                  // paddingRight: "50%",
-                }}
-                size={15}
-                color={colors.secondary}
-              />
-            }
-            text={dayjs(data.created_at).fromNow()}
-          />
-          <RoundedWrappedText
-            icon={
-              <FontAwesome
-                name="university"
-                style={{
-                  marginRight: 5,
-                }}
-                size={15}
-                color={colors.secondary}
-              />
-            }
-            text={universityShortName(data.fromUniversity)}
-          />
-        </View>
+        ></View>
       </View>
     </View>
   );
@@ -156,12 +116,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 5,
   },
-  borderTopPricing: {
-    borderTopColor: colors.dark_opacity_2,
-    borderTopWidth: 1,
-    //was working here
-    marginTop: 20,
-  },
   list_info: {
     color: colors.secondary,
     flexDirection: "row",
@@ -169,12 +123,15 @@ const styles = StyleSheet.create({
     fontSize: RFValue(12),
   },
   price: {
-    fontSize: RFValue(16),
-    fontWeight: "600",
+    fontSize: RFValue(22),
+    fontWeight: "700",
+    marginBottom: 5,
+    color: colors.primary,
   },
   title: {
-    fontWeight: "700",
-    fontSize: RFValue(16),
+    fontWeight: "500",
+    fontSize: RFValue(18),
+    marginBottom: 15,
   },
   lower_section: {
     padding: 10,

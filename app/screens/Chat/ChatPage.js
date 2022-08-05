@@ -41,6 +41,7 @@ import {
   updateDoc,
   onSnapshot,
 } from "firebase/firestore";
+
 import {
   useCollectionData,
   useDocumentData,
@@ -311,8 +312,10 @@ function ChatPage({ account }) {
   }
 
   return (
-    <Screen style={styles.container}>
-      <Header dating={isDatingChat} account={userData} />
+    <>
+      {/* // <Screen style={styles.container}> */}
+      {/* <Header dating={isDatingChat} account={userData} /> */}
+
       <GiftedChat
         listViewProps={{
           style: {
@@ -321,17 +324,20 @@ function ChatPage({ account }) {
         }}
         renderAvatar={renderAvatar}
         text={textMessage}
+        // isKeyboardInternallyHandled={false}
+        // wrapInSafeArea={true}
+        infiniteScroll
         onInputTextChanged={(text) => onInputTextChanged(text)}
         renderUsernameOnMessage
-        inverted={false}
-        // isTyping
+        // inverted={false}
+        lightboxProps={{ useNativeDriver: true }}
         bottomOffset={insets.bottom}
         messages={messages_processed}
         onSend={(messages) => onSend(messages)}
         user={{
-          _id: account.userID,
+          _id: chat_acc_id,
         }}
-        alwaysShowSend={true}
+        alwaysShowSend
         // messages={this.state.messages}
         // renderBubble={this.renderBubble}
         renderInputToolbar={renderInputToolbar}
@@ -348,8 +354,10 @@ function ChatPage({ account }) {
         //   avatar: this.state.userPhoto,
         // }}
       />
-      {Platform.OS === "android" && <KeyboardAvoidingView behavior="padding" />}
-    </Screen>
+
+      {/* {Platform.OS === "android" && <KeyboardAvoidingView behavior="padding" />} */}
+      {/* </Screen> */}
+    </>
   );
 }
 

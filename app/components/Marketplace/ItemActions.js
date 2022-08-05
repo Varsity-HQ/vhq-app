@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import colors from "../../config/colors";
 import Button from "../Button";
-import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import Text from "../AppText";
 import { RFValue } from "react-native-responsive-fontsize";
 import AppTextInput from "../Input";
@@ -10,19 +10,45 @@ import { TyphoonLine } from "react-native-remix-icon/src/icons";
 
 const height = Dimensions.get("window").height;
 
-function ItemActions({ props }) {
+function ItemActions({ data }) {
   return (
     <View style={styles.container}>
+      <View
+        style={{
+          paddingBottom: 5,
+          paddingTop: 10,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Ionicons
+            name="chatbox"
+            color={colors.secondary_2}
+            size={14}
+            style={{ marginRight: 4 }}
+          />
+          <Text
+            numberOfLines={1}
+            ellipsizeMode={"tail"}
+            style={{ color: colors.secondary_2 }}
+          >
+            Send a message to ~{data.username}
+          </Text>
+        </View>
+      </View>
       <View style={styles.row}>
         <AppTextInput
           width="75%"
           style={{
             flex: 1,
-            borderWidth: 2,
-            borderRightWidth: 2,
-            borderLeftWidth: 2,
-            borderRightColor: colors.secondary_2,
-            borderLeftColor: colors.secondary_2,
+            borderWidth: 0,
+            borderRightWidth: 0,
+            borderLeftWidth: 0,
+            backgroundColor: colors.dark_opacity_2,
           }}
           type={2 ? 2 : 2}
           placeholder="I'm interested.."
@@ -45,19 +71,7 @@ function ItemActions({ props }) {
           title="Send"
         />
       </View>
-      <View
-        style={{
-          paddingBottom: 10,
-        }}
-      >
-        <Text
-          numberOfLines={1}
-          ellipsizeMode={"tail"}
-          style={{ color: colors.secondary_2, alignSelf: "center" }}
-        >
-          Send a message to @chikx_12
-        </Text>
-      </View>
+
       {/* <View style={styles.bottom_icons}>
         <IconButton icon="heart" title="Like" />
         <IconButton icon="bookmark" title="Bookmark" />

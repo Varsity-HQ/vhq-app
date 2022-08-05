@@ -77,7 +77,7 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
   const [chats, chats_loading, error] = useCollectionData(query_);
   const [chat_global_loader, set_chat_global_loader] = useState(false);
   //
-  const [c_all_loaded, set_c_all_loaded] = useState(false);
+  const [c_all_loaded, set_c_all_loaded] = useState(true);
 
   console.log({ error });
 
