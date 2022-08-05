@@ -35,7 +35,7 @@ function ItemSellerInfo({ data }) {
           },
         ]}
       >
-        <Text style={styles.small_text}>Active for </Text>
+        <Text style={styles.small_text}>Active over </Text>
         <Text
           style={[
             styles.small_text,

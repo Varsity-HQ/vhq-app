@@ -75,7 +75,6 @@ function ItemPage() {
 
   return (
     <ScrollView scroll style={styles.container}>
-      {/* <ItemPageHeader /> */}
       <ItemGallery images={data.attachments} />
       <ItemHeader data={data} />
       <ItemActions data={data.user_data} />
