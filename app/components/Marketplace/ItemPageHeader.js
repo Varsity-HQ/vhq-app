@@ -21,6 +21,7 @@ import Button from "../Button";
 import AppButton from "../Button";
 import { MARKETPLACE_CAT_PAGE, SEARCH_RESULTS } from "../../navigation/routes";
 import IconButton from "../IconButton";
+import { save_marketplace_item } from "../../store/actions/marketplaceActions";
 
 const mapStateToProps = (state) => {
   return {
@@ -31,7 +32,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    save_marketplace_item: (id) => dispatch(save_marketplace_item(id)),
+  };
 };
 
 const height = Dimensions.get("window").height;
@@ -42,6 +45,7 @@ function ItemPageHeader({
   profilepic,
   university,
   topPart = true,
+  save_marketplace_item,
 }) {
   const [saved, setSaved] = useState(false);
   const navigation = useNavigation();
@@ -51,6 +55,7 @@ function ItemPageHeader({
       setSaved(false);
     } else {
       setSaved(true);
+      save_marketplace_item(data.id);
     }
   };
 

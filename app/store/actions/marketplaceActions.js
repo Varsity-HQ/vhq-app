@@ -37,7 +37,7 @@ export const get_category = (category) => (dispatch) => {
 };
 
 export const save_marketplace_item = (itemID) => (dispatch) => {
-  axios.get(`/marketplace/${item}/save`);
+  axios.get(`/marketplace/${itemID}/save`);
 };
 
 // /marketplace/cat/${category}/getall
