@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import colors from "../../config/colors";
 import Text from "../AppText";
@@ -7,19 +7,29 @@ import { FontAwesome } from "@expo/vector-icons";
 import Image from "../Image";
 import dayjs from "dayjs";
 import relative from "dayjs/plugin/relativeTime";
+import { useNavigation } from "@react-navigation/native";
+import { PROFILE } from "../../navigation/routes";
 dayjs.extend(relative);
 
 const width = Dimensions.get("window").width;
 
 function ItemSellerInfo({ data }) {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.header_container}>
         <Text style={styles.header}>Meet the seller</Text>
-        <View style={styles.row}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate(PROFILE, {
+              username: data.username,
+            })
+          }
+          style={styles.row}
+        >
           <Text style={styles.header_right}>See profile</Text>
           <FontAwesome name="chevron-right" size={14} color={colors.primary} />
-        </View>
+        </TouchableOpacity>
       </View>
       <View style={styles.row}>
         <Image uri={data.profilepic} style={styles.profilepic} />
@@ -35,7 +45,7 @@ function ItemSellerInfo({ data }) {
           },
         ]}
       >
-        <Text style={styles.small_text}>Active over </Text>
+        <Text style={styles.small_text}>Active since </Text>
         <Text
           style={[
             styles.small_text,

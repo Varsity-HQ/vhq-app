@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import colors from "../../config/colors";
 import Image from "../Image";
@@ -7,9 +7,15 @@ import { FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { MARKETPLACE_ITEM_PAGE } from "../../navigation/routes";
+import { check_post_reported } from "../../util/postUtil";
 
 function ItemCard({ x }) {
   const navigation = useNavigation();
+  const [reported, setReported] = useState(false);
+  useEffect(() => {
+    setReported(check_post_reported(x.id));
+  }, []);
+  if (reported) return null;
   return (
     <TouchableWithoutFeedback
       onPress={() => {

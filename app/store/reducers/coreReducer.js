@@ -41,6 +41,37 @@ const initialData = {
 
 const coreReducer = (state = initialData, actions) => {
   switch (actions.type) {
+    case "UNSAVE_MARKETPLACE_ITEM":
+      let new_u_saved_marketplace_items = state.accData.m_saves
+        ? state.accData.m_saves
+        : [];
+      let m_saves_after_unsave = [];
+      new_u_saved_marketplace_items.forEach((x) => {
+        if (actions.payload !== x) {
+          m_saves_after_unsave.push(x);
+        }
+      });
+
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          m_saves: m_saves_after_unsave,
+        },
+      };
+    case "SAVE_MARKETPLACE_ITEM":
+      let new_saved_marketplace_items = state.accData.m_saves
+        ? state.accData.m_saves
+        : [];
+      new_saved_marketplace_items.push(actions.payload);
+
+      return {
+        ...state,
+        accData: {
+          ...state.accData,
+          m_saves: new_saved_marketplace_items,
+        },
+      };
     case "SET_FINALIZING_ACC_STTNGS":
       return {
         ...state,

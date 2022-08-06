@@ -35,6 +35,7 @@ export const MARKETPLACE_ITEM_PAGE = "MarketplaceItemPage";
 export const JOBS_CATEGORY = "JobsCategory";
 export const SERVICES_CATEGORY = "ServicesCategory";
 export const LISTINGS_CATEGORY = "ListingsCategory";
+export const MARKETPLACE_CREATE = "MarketplaceCreate";
 
 //
 export const CS_CONFIRM_GENDER = "CSConfirmGender";

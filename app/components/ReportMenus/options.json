@@ -103,6 +103,24 @@
       "sub_options": null
     }
   ],
+  "marketplace_ad_options": [
+    {
+      "title": "I'm just not interested in this listing",
+      "sub_options": null
+    },
+    {
+      "title": "It's a suspicious or fraudulent Ad",
+      "sub_options": null
+    },
+    {
+      "title": "It's harmful",
+      "sub_options": null
+    },
+    {
+      "title": "Something else",
+      "sub_options": null
+    }
+  ],
   "comment_options": [
     {
       "title": "I just don't like this comment",

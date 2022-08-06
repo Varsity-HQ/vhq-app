@@ -1,4 +1,9 @@
 import axios from "axios";
+import Toast from "react-native-toast-message";
+import {
+  SAVED_MARKETPLACE_ITEM,
+  UNSAVED_MARKETPLACE_ITEM,
+} from "../../util/toast_messages";
 
 export const get_home = () => (dispatch) => {
   dispatch({
@@ -37,7 +42,28 @@ export const get_category = (category) => (dispatch) => {
 };
 
 export const save_marketplace_item = (itemID) => (dispatch) => {
+  dispatch({
+    type: "SAVE_MARKETPLACE_ITEM",
+    payload: itemID,
+  });
+  Toast.show({
+    type: "general",
+    autoHide: false,
+    ...SAVED_MARKETPLACE_ITEM,
+  });
   axios.get(`/marketplace/${itemID}/save`);
+};
+export const unsave_marketplace_item = (itemID) => (dispatch) => {
+  dispatch({
+    type: "UNSAVE_MARKETPLACE_ITEM",
+    payload: itemID,
+  });
+  Toast.show({
+    type: "general",
+    autoHide: false,
+    ...UNSAVED_MARKETPLACE_ITEM,
+  });
+  axios.get(`/marketplace/${itemID}/unsave`);
 };
 
 // /marketplace/cat/${category}/getall

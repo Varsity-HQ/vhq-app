@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -21,7 +21,11 @@ import Button from "../Button";
 import AppButton from "../Button";
 import { MARKETPLACE_CAT_PAGE, SEARCH_RESULTS } from "../../navigation/routes";
 import IconButton from "../IconButton";
-import { save_marketplace_item } from "../../store/actions/marketplaceActions";
+import {
+  save_marketplace_item,
+  unsave_marketplace_item,
+} from "../../store/actions/marketplaceActions";
+import check_if_marketplace_saved from "../../util/check_if_marketplace_saved";
 
 const mapStateToProps = (state) => {
   return {
@@ -34,6 +38,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     save_marketplace_item: (id) => dispatch(save_marketplace_item(id)),
+    unsave_marketplace_item: (id) => dispatch(unsave_marketplace_item(id)),
   };
 };
 
@@ -43,16 +48,21 @@ function ItemPageHeader({
   data,
   m_saves,
   profilepic,
-  university,
   topPart = true,
   save_marketplace_item,
+  unsave_marketplace_item,
 }) {
   const [saved, setSaved] = useState(false);
   const navigation = useNavigation();
 
+  useEffect(() => {
+    setSaved(check_if_marketplace_saved(data.id));
+  }, []);
+
   const handleSaveItem = () => {
     if (saved) {
       setSaved(false);
+      unsave_marketplace_item(data.id);
     } else {
       setSaved(true);
       save_marketplace_item(data.id);
@@ -62,7 +72,9 @@ function ItemPageHeader({
   const handleShareItem = async () => {
     try {
       const result = await Share.share({
-        message: "",
+        message: data.title,
+        url: `https://varsityhq.co.za/marketplace/${data.id}`,
+        title: data.title,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -162,9 +174,9 @@ function ItemPageHeader({
             }}
             icon={
               <FontAwesome
-                name={saved ? "heart" : "heart-o"}
+                name={saved ? "bookmark" : "bookmark-o"}
                 size={20}
-                color={saved ? colors.redish_2 : colors.lighish2}
+                color={saved ? colors.primary : colors.lighish2}
               />
             }
           />

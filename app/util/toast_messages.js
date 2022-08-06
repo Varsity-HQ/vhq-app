@@ -43,3 +43,11 @@ export const FAILED_TO_INITIALIZE = {
   text2:
     "Failed : We encountered an error, please check your internet or restart app before you attempt to sign in again",
 };
+export const SAVED_MARKETPLACE_ITEM = {
+  text1: undefined,
+  text2: "Success | Listing saved",
+};
+export const UNSAVED_MARKETPLACE_ITEM = {
+  text1: undefined,
+  text2: "Success | Listing removed from saved",
+};

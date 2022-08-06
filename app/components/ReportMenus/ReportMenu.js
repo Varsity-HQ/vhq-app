@@ -82,6 +82,10 @@ function ReportMenu({
       setReportingFor("profile");
       return setOptions(report_options.dating_profile_options);
     }
+    if (type === "marketplace_ad") {
+      setReportingFor("ad");
+      return setOptions(report_options.marketplace_ad_options);
+    }
 
     setReportingFor("");
     return setOptions([]);

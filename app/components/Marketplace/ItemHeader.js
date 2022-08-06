@@ -50,13 +50,9 @@ function ItemHeader({ data }) {
         <View style={styles.row}>
           <RoundedIconWithLabel
             icon={
-              <FontAwesome
-                name="calendar-o"
-                size={15}
-                color={colors.secondary}
-              />
+              <FontAwesome name="bookmark" size={15} color={colors.secondary} />
             }
-            text={dayjs(data.created_at).fromNow()}
+            text={data.saved_count ? data.saved_count : "No" + " Saves"}
           />
           <RoundedIconWithLabel
             icon={

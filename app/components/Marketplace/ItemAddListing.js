@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, StyleSheet, PanResponder } from "react-native";
 import colors from "../../config/colors";
+import { MARKETPLACE_CREATE } from "../../navigation/routes";
 import Text from "../AppText";
 import Button from "../Button";
 
@@ -15,7 +16,7 @@ function ItemAddListing(props) {
           <Text style={styles.title}>Add listing</Text>
         </View>
         <Button
-          onPress={() => navigation.navigate()}
+          onPress={() => navigation.navigate(MARKETPLACE_CREATE)}
           type={3}
           title={"List Now"}
         />

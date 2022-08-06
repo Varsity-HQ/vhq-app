@@ -80,7 +80,7 @@ function ItemPage() {
       <ItemActions data={data.user_data} />
       <ItemSellerInfo data={data.user_data} />
       <ItemAbout />
-      <CommunityProtection />
+      <CommunityProtection data={data} />
       <ItemAddListing />
       <View
         style={{

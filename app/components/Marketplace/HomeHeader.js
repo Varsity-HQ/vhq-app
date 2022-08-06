@@ -8,7 +8,7 @@ import colors from "../../config/colors";
 import Button from "../Button";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import { SEARCH_RESULTS } from "../../navigation/routes";
+import { MARKETPLACE_CREATE, SEARCH_RESULTS } from "../../navigation/routes";
 import AppButton from "../Button";
 
 function HomeHeader(props) {
@@ -48,6 +48,7 @@ function HomeHeader(props) {
           <Text style={styles.header}>Marketplace</Text>
           <View>
             <Button
+              onPress={() => navigation.navigate(MARKETPLACE_CREATE)}
               style={{
                 borderRadius: 100,
                 paddingVertical: 10,
