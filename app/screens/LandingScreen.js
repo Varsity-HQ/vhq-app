@@ -20,7 +20,7 @@ function LandingScreen({ navigation }) {
       <View style={styles.buttonsContainer}>
         <Image
           style={styles.logo}
-          source={require("../assets/logo-small.png")}
+          source={require("../assets/vhqcat-small.png")}
         />
         <Text style={styles.heading}>Stay connected</Text>
         <Text style={styles.heading}>and make new friends</Text>
