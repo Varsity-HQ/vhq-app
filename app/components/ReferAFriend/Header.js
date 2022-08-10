@@ -37,7 +37,7 @@ function Header({ account }) {
 
   const handleCopyLink = () => {
     Clipboard.setString(
-      `https://varsityhq.co.za?referralCode=${refData.referral_code}`,
+      `https://web.varsityhq.co.za?referralCode=${refData.referral_code}`,
     );
     setLinkCopied(true);
   };

@@ -195,7 +195,7 @@ function ProfileMenu({
 
   const copyToClipboard = () => {
     handleModal();
-    Clipboard.setString(`https://varsityhq.co.za/${username}`);
+    Clipboard.setString(`https://web.varsityhq.co.za/${username}`);
     Toast.show({
       type: "general",
       autoHide: true,

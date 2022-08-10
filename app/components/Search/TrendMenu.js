@@ -62,7 +62,7 @@ function TrendMenu({
     handleModal();
     setTimeout(() => {
       Clipboard.setString(
-        `https://varsityhq.co.za/explore/topics/${data.hashtag_name.replace(
+        `https://web.varsityhq.co.za/explore/topics/${data.hashtag_name.replace(
           /#/g,
           "",
         )}`,

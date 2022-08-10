@@ -73,7 +73,7 @@ function ItemPageHeader({
     try {
       const result = await Share.share({
         message: data.title,
-        url: `https://varsityhq.co.za/marketplace/${data.id}`,
+        url: `https://web.varsityhq.co.za/marketplace/${data.id}`,
         title: data.title,
       });
       if (result.action === Share.sharedAction) {

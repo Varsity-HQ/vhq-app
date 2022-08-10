@@ -66,7 +66,7 @@ function PostMenu({
   const handleCopyLink = () => {
     handleModal();
     setTimeout(() => {
-      Clipboard.setString(`https://varsityhq.co.za/p/${data.id}`);
+      Clipboard.setString(`https://web.varsityhq.co.za/p/${data.id}`);
       Toast.show({
         type: "general",
         autoHide: true,

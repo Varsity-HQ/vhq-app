@@ -67,7 +67,7 @@ class PostCardButtons extends PureComponent {
   };
 
   handleCopyPost = () => {
-    Clipboard.setString(`https://varsityhq.co.za/p/${this.props.data.id}`);
+    Clipboard.setString(`https://web.varsityhq.co.za/p/${this.props.data.id}`);
     Toast.show({
       type: "general",
       autoHide: true,
