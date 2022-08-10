@@ -1,5 +1,13 @@
 import axios from "axios";
 
+export const not_interested_in_content = (id) => (dispatch) => {
+  dispatch({
+    type: "ADD_ID_TO_REPORTED",
+    payload: id,
+  });
+  axios.get(`/notinterested/${id}`);
+};
+
 export const report_content_id = (id) => (dispatch) => {
   dispatch({
     type: "ADD_ID_TO_REPORTED",

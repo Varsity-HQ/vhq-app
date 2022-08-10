@@ -324,7 +324,7 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
                       },
                     ]}
                   >
-                    you agree to our terms and conditions
+                    you agree to our Terms and Conditions
                   </Text>
                 </TouchableOpacity>
               </View>

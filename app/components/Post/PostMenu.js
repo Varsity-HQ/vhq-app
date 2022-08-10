@@ -51,6 +51,7 @@ function PostMenu({
   height,
   event,
   onReportSubmitted,
+  setPostNotInterested,
 }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
@@ -110,6 +111,17 @@ function PostMenu({
   };
 
   const options = [
+    {
+      borderBottom: true,
+      title: "Not Interested",
+      onPress: () => {
+        setPostNotInterested && setPostNotInterested();
+        setIsModalVisible(false);
+      },
+      icon: (
+        <Ionicons color={colors.secondary} name="sad-outline" size={iconSize} />
+      ),
+    },
     {
       onPress: () => handleDeletePost(),
       hide: data.posted_by !== auth_acc_id,
@@ -239,16 +251,18 @@ function PostMenu({
             {options.map((x, index) => {
               if (!x.hide) {
                 return (
-                  <TouchableOpacity
-                    style={styles.menuButton}
-                    key={index}
-                    onPress={x.onPress ? x.onPress : null}
-                  >
-                    <View style={styles.touchableInner}>
-                      {x.icon}
-                      <Text style={styles.text}>{x.title}</Text>
-                    </View>
-                  </TouchableOpacity>
+                  <View key={index}>
+                    <TouchableOpacity
+                      style={styles.menuButton}
+                      onPress={x.onPress ? x.onPress : null}
+                    >
+                      <View style={styles.touchableInner}>
+                        {x.icon}
+                        <Text style={styles.text}>{x.title}</Text>
+                      </View>
+                    </TouchableOpacity>
+                    {x.borderBottom && <View style={styles.borderBottom} />}
+                  </View>
                 );
               }
             })}
@@ -269,6 +283,12 @@ function PostMenu({
 }
 
 const styles = StyleSheet.create({
+  borderBottom: {
+    borderBottomWidth: 1,
+    borderBottomColor: colors.secondary_2,
+    marginBottom: 10,
+    paddingBottom: 5,
+  },
   touchableInner: {
     flexDirection: "row",
     alignItems: "center",

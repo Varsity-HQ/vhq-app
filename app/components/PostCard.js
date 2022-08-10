@@ -34,6 +34,8 @@ import { RFValue } from "react-native-responsive-fontsize";
 import ReportedTemplate from "./ReportedTemplate";
 import { check_post_reported } from "../util/postUtil";
 import check_user_blocked from "../util/check_user_blocked";
+import PostNotInterested from "./Skeletons/PostNotInterested";
+import { not_interested_in_content } from "../store/actions/filterActions";
 
 dayjs.extend(Localize);
 
@@ -43,6 +45,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     save_local_post: (post) => dispatch(save_local_post(post)),
     save_post_user: (post) => dispatch(save_post_user(post)),
+    not_interested_in_content: (id) => dispatch(not_interested_in_content(id)),
   };
 };
 
@@ -58,6 +61,7 @@ class PostCard extends PureComponent {
     total_votes: 0,
     reported: false,
     blockedAcc: false,
+    notInterested: false,
   };
 
   update_total_votes = (t_votes) => {
@@ -69,6 +73,13 @@ class PostCard extends PureComponent {
   reportedToggle = () => {
     this.setState({
       reported: true,
+    });
+  };
+
+  setPostNotInterested = () => {
+    this.props.not_interested_in_content(this.props.data.id);
+    this.setState({
+      notInterested: true,
     });
   };
 
@@ -128,9 +139,18 @@ class PostCard extends PureComponent {
     const hideFollowBtn = this.props.hideFollowBtn;
     if (!data) return <SkeletonPost />;
 
+    if (this.state.notInterested) {
+      return (
+        <PostNotInterested
+          type={data.postType === "event_post" ? "Event" : "Post"}
+        />
+      );
+    }
+
     if (data.postType === "event_post") {
       return (
         <EventPost
+          setPostNotInterested={() => this.setPostNotInterested()}
           handleOpenPost={this.handleOpenPost}
           handleOpenProfile={this.handleOpenProfile}
           profilepic={this.profilepic}
@@ -243,7 +263,11 @@ class PostCard extends PureComponent {
               </View>
             </TouchableWithoutFeedback>
             <View style={{ marginRight: 10 }}>
-              <PostMenu onReportSubmitted={this.reportedToggle} data={data} />
+              <PostMenu
+                setPostNotInterested={this.setPostNotInterested}
+                onReportSubmitted={this.reportedToggle}
+                data={data}
+              />
             </View>
           </View>
 
@@ -360,7 +384,13 @@ class PostCard extends PureComponent {
   }
 }
 
-const EventPost = ({ data, profilepic, handleOpenPost, handleOpenProfile }) => {
+const EventPost = ({
+  data,
+  profilepic,
+  handleOpenPost,
+  handleOpenProfile,
+  setPostNotInterested,
+}) => {
   return (
     <>
       <View style={styles.container}>
@@ -433,7 +463,10 @@ const EventPost = ({ data, profilepic, handleOpenPost, handleOpenProfile }) => {
             </View>
           </TouchableWithoutFeedback>
           <View style={{ marginRight: 10 }}>
-            <PostMenu data={data} />
+            <PostMenu
+              setPostNotInterested={() => setPostNotInterested()}
+              data={data}
+            />
           </View>
         </View>
 
