@@ -82,6 +82,8 @@ export const UPDATE_SO_STATUS = "UpdateSexualOrientationStatus";
 export const UPDATE_S_TARGET = "UpdateSTarget";
 export const UPDATE_PROFILE_PAGE = "UpdateProfile";
 
+export const ABOUT_PAGE = "AboutPage";
+
 //Profile update routes
 export const UPDATE_USERNAME = "UpdateUsername";
 export const UPDATE_FIRSTNAME = "UpdateFirst";

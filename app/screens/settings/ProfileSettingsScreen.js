@@ -5,11 +5,12 @@ import Screen from "../../components/Screen";
 import IconMenuItem from "../../components/Settings/IconMenuItem";
 import Button from "../../components/Button";
 import {
+  ABOUT_PAGE,
   PREFERENCES,
   UPDATE_DEGREE,
   YEAR_OF_STUDY,
 } from "../../navigation/routes";
-
+import * as WebBrowser from "expo-web-browser";
 import Text from "../../components/AppText";
 import colors from "../../config/colors";
 import { logOutUser, deleteUserAccount } from "../../store/actions/actions";
@@ -57,6 +58,15 @@ function ProfileSettingsScreen({ navigation, logOutUser, deleteUserAccount }) {
     );
   };
 
+  const handleOpenWebPage = async (link) => {
+    try {
+      let result = await WebBrowser.openBrowserAsync(link);
+      setResult(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Screen scroll style={styles.container}>
       <Header
@@ -81,6 +91,47 @@ function ProfileSettingsScreen({ navigation, logOutUser, deleteUserAccount }) {
           onPress={() => navigation.navigate(YEAR_OF_STUDY)}
           title="Year of study"
           desc="Change or update your year of study"
+        />
+      </View>
+      <View style={{ backgroundColor: colors.darkish, marginTop: 20 }}>
+        <IconMenuItem
+          onPress={() => navigation.navigate(ABOUT_PAGE)}
+          title="About"
+          desc=""
+          icon={false}
+          titleStyle={styles.titleStyle}
+          style={styles.button_style}
+        />
+        <View style={styles.border} />
+        <IconMenuItem
+          onPress={() => handleOpenWebPage("https://varsityhq.co.za/contact")}
+          title="Support"
+          desc=""
+          icon={false}
+          titleStyle={styles.titleStyle}
+          style={styles.button_style}
+        />
+        <View style={styles.border} />
+        <IconMenuItem
+          onPress={() =>
+            handleOpenWebPage("https://varsityhq.co.za/terms-of-service")
+          }
+          title="Terms of Service"
+          desc=""
+          icon={false}
+          titleStyle={styles.titleStyle}
+          style={styles.button_style}
+        />
+        <View style={styles.border} />
+        <IconMenuItem
+          onPress={() =>
+            handleOpenWebPage("https://varsityhq.co.za/privacy-policy")
+          }
+          title="Privacy Policy"
+          desc=""
+          icon={false}
+          titleStyle={styles.titleStyle}
+          style={styles.button_style}
         />
       </View>
       <Button
@@ -111,10 +162,23 @@ function ProfileSettingsScreen({ navigation, logOutUser, deleteUserAccount }) {
 }
 
 const styles = StyleSheet.create({
+  button_style: {
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+  },
+  border: {
+    height: 2,
+    backgroundColor: colors.dark_opacity_2,
+  },
   vhq_text2: {
     alignSelf: "center",
     color: colors.secondary,
     fontSize: 14,
+  },
+  titleStyle: {
+    fontSize: 16,
+    fontWeight: "600",
+    // color: colors.secondary,
   },
   vhq_text: {
     alignSelf: "center",
@@ -125,6 +189,7 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     borderLeftWidth: 0,
     borderRightWidth: 0,
+    marginTop: 20,
   },
   container: {},
 });

@@ -15,6 +15,8 @@ function IconMenuItem({
   descColor = colors.white,
   onPress,
   descCapitalize,
+  style,
+  titleStyle,
 }) {
   return (
     <TouchableHighlight
@@ -27,6 +29,7 @@ function IconMenuItem({
         style={[
           styles.container,
           required && !desc && { backgroundColor: colors.redish },
+          style,
         ]}
       >
         <View
@@ -34,7 +37,7 @@ function IconMenuItem({
             flex: 1,
           }}
         >
-          <Text style={styles.heading}>{title}</Text>
+          <Text style={[styles.heading, titleStyle]}>{title}</Text>
 
           {required && !desc && (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -72,7 +75,7 @@ function IconMenuItem({
 
 const styles = StyleSheet.create({
   heading: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: "700",
   },
 

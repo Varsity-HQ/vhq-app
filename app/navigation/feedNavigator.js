@@ -35,6 +35,7 @@ import {
   QCOINS_OFFERS,
   DISCOVER_PAGE,
   ADMIN_HOME,
+  ABOUT_PAGE,
 } from "./routes";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
@@ -67,6 +68,7 @@ import ReferAFriend from "../screens/ReferAFriend";
 import QcoinsOffersPage from "../screens/QcoinsOffersPage";
 import DiscoverPage from "../screens/DiscoverPage";
 import AdminHome from "../screens/AdminScreens/AdminHome";
+import About from "../screens/About";
 
 const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
@@ -183,6 +185,14 @@ const FeedNavigator = () => (
         }}
         name={PROFILE_SETTINGS}
         component={ProfileSettingsScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={ABOUT_PAGE}
+        component={About}
       />
       <Stack.Screen
         options={{
