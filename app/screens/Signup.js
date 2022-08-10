@@ -91,7 +91,7 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
       .post("/signup", newUserData)
       .then((res) => {
         set_token(res.data.token);
-        console.log(res.data);
+        // console.log(res.data);
 
         store.dispatch(get_user(true));
         // set_processing(false);
@@ -100,7 +100,7 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
         set_processing(false);
 
         if (err.response) {
-          console.log(err.response.data);
+          // console.log(err.response.data);
           let errors = err.response.data;
           set_errors({ ...errors });
 
@@ -115,7 +115,7 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
 
   const handleOpenPP = async () => {
     let result = await WebBrowser.openBrowserAsync(
-      "https://www.privacypolicies.com/live/4b3b5e94-17f9-4d31-9f0b-b71cff0b6512",
+      "https://varsityhq.co.za/terms-of-service",
     );
     setResult(result);
   };
@@ -150,7 +150,6 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
           <Field
             autoCapitalize="none"
             autoCorrect={false}
-            icon="email"
             textContentType="password"
             name="password"
             cstyles={{
@@ -164,7 +163,6 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
           <Field
             autoCapitalize="none"
             autoCorrect={false}
-            icon="email"
             textContentType="password"
             name="confirm_pass"
             cstyles={{
@@ -198,7 +196,7 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
     axios
       .get(`/checkusername/${username}`)
       .then((data) => {
-        console.log(data.data);
+        // console.log(data.data);
         set_processing(false);
         set_username(username);
         setPage(1);

@@ -4,7 +4,7 @@ export const get_notification = () => (dispatch) => {
   axios
     .get("/get/notifications")
     .then((data) => {
-      console.log(data.data);
+      // console.log(data.data);
       dispatch({
         type: "SET_RECEIVED_NOTIFICATIONS",
         payload: data.data,

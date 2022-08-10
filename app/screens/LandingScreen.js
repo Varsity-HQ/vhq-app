@@ -18,10 +18,7 @@ function LandingScreen({ navigation }) {
       />
       <View style={styles.logoContainer}></View>
       <View style={styles.buttonsContainer}>
-        <Image
-          style={styles.logo}
-          source={require("../assets/vhqcat-small.png")}
-        />
+        <Image style={styles.logo} source={require("../assets/icon3.png")} />
         <Text style={styles.heading}>Stay connected</Text>
         <Text style={styles.heading}>and make new friends</Text>
         <Text style={styles.tagline}>
@@ -68,6 +65,7 @@ const styles = StyleSheet.create({
     width: 120,
     overflow: "visible",
     height: 120,
+    marginBottom: 10,
   },
   logoContainer: {
     position: "absolute",

@@ -40,7 +40,7 @@ function DatingVisibility({
       if (status === "granted") {
         let location = await Location.getCurrentPositionAsync({});
         update_user_location(location);
-        console.log({ location });
+        // console.log({ location });
       }
     })();
   };

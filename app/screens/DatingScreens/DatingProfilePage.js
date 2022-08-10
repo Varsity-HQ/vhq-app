@@ -173,7 +173,7 @@ function DatingProfilePage({
       </ScrollView>
     );
   }
-  console.log({ profile });
+  // console.log({ profile });
 
   return (
     <ScrollView scroll style={[styles.container]}>

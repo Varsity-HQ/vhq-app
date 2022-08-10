@@ -71,7 +71,7 @@ function ItemPage() {
     );
   }
 
-  console.log({ data });
+  // console.log({ data });
 
   return (
     <ScrollView scroll style={styles.container}>
