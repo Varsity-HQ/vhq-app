@@ -80,9 +80,10 @@ function CreateMPPhotos({
       </ScrollView>
       <View>
         <Button
+          disabled={data.attachments.length + create.local_images.length < 1}
           type={4}
           onPress={() => {
-            set_tab_index(1);
+            set_tab_index(3);
           }}
           title="Next"
         />

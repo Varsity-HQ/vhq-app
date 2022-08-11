@@ -3,6 +3,11 @@ import colors from "../../../config/colors";
 import { normalizeText } from "../../../util/responsivePx";
 
 const styles = StyleSheet.create({
+  underline: {
+    height: 1,
+    backgroundColor: colors.secondary_2,
+    marginTop: 30,
+  },
   input_sub: {
     color: colors.secondary,
     fontSize: normalizeText(13),
