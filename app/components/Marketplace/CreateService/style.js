@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
   },
   input_title: {
     fontWeight: "700",
+    textTransform: "capitalize",
   },
   tab_container: {
     marginTop: 20,

@@ -9,14 +9,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-function AdCreateSection({ tabIndex }) {
+function AdCreateSection({ tabIndex, categories }) {
   switch (tabIndex) {
     case 1:
       return <CreateDescription />;
     case 0:
-      return <CreateName />;
+      return <CreateName categories={categories} />;
     default:
-      return <CreateName />;
+      return <CreateName categories={categories} />;
   }
 }
 export default connect(mapStateToProps, null)(AdCreateSection);

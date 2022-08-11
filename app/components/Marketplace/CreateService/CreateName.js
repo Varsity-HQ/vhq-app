@@ -32,16 +32,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 function CreateName({
-  categories = [
-    {
-      value: "any",
-      label: "Any",
-    },
-    {
-      value: "other",
-      label: "Other",
-    },
-  ],
+  categories = [],
   update_name,
   update_category,
   update_pricing,
@@ -52,13 +43,15 @@ function CreateName({
     update_category(v);
   };
 
+  console.log({ data });
+
   return (
     <View>
       <UserDetBar style={styles.u_det_container} />
       <View style={styles.tab_container}>
         <View style={styles.input_container}>
           <View style={styles.row_between}>
-            <Text style={styles.input_title}>Event Name</Text>
+            <Text style={styles.input_title}>{data.department} Name</Text>
             <Text
               style={[
                 styles.smallText,
@@ -80,11 +73,12 @@ function CreateName({
             onChangeText={(text) => update_name(text)}
           />
           <Text style={styles.input_sub}>
-            You can write a mini description of this service. Min 3 letters.
+            You can write a mini description of this {data.department}. Min 3
+            letters.
           </Text>
         </View>
         <View style={styles.input_container}>
-          <Text style={styles.input_title}>Service Category</Text>
+          <Text style={styles.input_title}>{data.department} Category</Text>
           <DropDown
             searchable
             type={2}
@@ -92,12 +86,18 @@ function CreateName({
             style={styles.dropdown}
             value={data.category}
             setValue={(e) => handleSelect(e)}
-            items={categories}
+            items={[
+              ...categories,
+              {
+                value: "other",
+                label: "Other",
+              },
+            ]}
             placeholder="Select category"
           />
         </View>
         <View style={styles.input_container}>
-          <Text style={styles.input_title}>Service Price (R)</Text>
+          <Text style={styles.input_title}>{data.department} Price (R)</Text>
           <Input
             type={2}
             keyboardType="numeric"

@@ -26,7 +26,10 @@ const marketplaceReducer = (state = initialState, actions) => {
         ...state,
         create: {
           ...state.create,
-          department: actions.payload,
+          data: {
+            ...state.create.data,
+            department: actions.payload,
+          },
         },
       };
     case "MPC_UPDATE_TAB_INDEX":

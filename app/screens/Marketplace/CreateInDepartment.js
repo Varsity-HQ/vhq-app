@@ -14,6 +14,9 @@ import {
   tab_back,
   update_department,
 } from "../../store/actions/marketplaceActions";
+import axios from "axios";
+import Loading from "../../components/Loaders/HomeUploading";
+import colors from "../../config/colors";
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -39,13 +42,36 @@ function CreateInDepartment({
   const route = useRoute();
   const [step, setStep] = useState(0);
   const [department, setDepartment] = useState("service");
+  const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    let department = route.params.department;
-    update_department(department.replace(/-/g, " "));
-    setDepartment(department.replace(/-/g, " "));
+    let dep = route.params.department.replace(/-/g, " ");
+    update_department(dep);
+    setDepartment(dep);
     set_tab_index(0);
+    handle_get_categories(route.params.department);
   }, []);
+
+  const handle_get_categories = (dep) => {
+    axios
+      .get(`/marketplace/mystore/cats/${dep}`)
+      .then((data) => {
+        let cats = [];
+        data.data.forEach((x) => {
+          cats.push({
+            value: x.categorySlug,
+            label: x.categoryTitle,
+          });
+        });
+
+        setCategories(cats);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleBackPress = () => {
     if (tabIndex == 0) {
@@ -62,19 +88,37 @@ function CreateInDepartment({
         backIcon={true}
         backPress={handleBackPress}
         title=""
-        buttonText={step === 2 ? "Save & Continue" : "Cancel"}
+        buttonText={tabIndex === 3 ? "Save & Continue" : "Cancel"}
         rightPress={() => {
-          if (step === 2) return setStep(3);
-          if (step !== 2) navigation.navigate(MARKETPLACE_CREATE);
+          navigation.navigate(MARKETPLACE_CREATE);
         }}
       />
       <View style={styles.container}>
-        <CE_header department={department} tabIndex={step} />
-        <BarStepperIndicator
-          step={tabIndex + 1}
-          style={{ marginTop: 20, marginBottom: 7 }}
-        />
-        <AdCreateSection step={step} />
+        {loading ? (
+          <View>
+            <Text style={[styles.heading, { color: colors.secondary_2 }]}>
+              Preparing..
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                paddingVertical: 50,
+              }}
+            >
+              <Loading />
+            </View>
+          </View>
+        ) : (
+          <>
+            <CE_header department={department} tabIndex={tabIndex} />
+            <BarStepperIndicator
+              step={tabIndex + 1}
+              style={{ marginTop: 20, marginBottom: 7 }}
+            />
+            <AdCreateSection categories={categories} />
+          </>
+        )}
       </View>
     </Screen>
   );

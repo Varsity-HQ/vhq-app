@@ -112,11 +112,9 @@ export const tab_back = () => (dispatch) => {
   }
 };
 
-export const update_department =
-  (department = "service") =>
-  (dispatch) => {
-    dispatch({
-      type: "MPC_UPDATE_DEPARTMENT",
-      payload: department.toLowerCase(),
-    });
-  };
+export const update_department = (department) => (dispatch) => {
+  dispatch({
+    type: "MPC_UPDATE_DEPARTMENT",
+    payload: department.toLowerCase(),
+  });
+};
