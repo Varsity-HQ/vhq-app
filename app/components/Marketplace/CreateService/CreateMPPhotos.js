@@ -1,10 +1,11 @@
 import React from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import styles from "./style";
 import Text from "../../AppText";
 import Button from "../../Button";
 import { connect } from "react-redux";
 import { set_tab_index } from "../../../store/actions/marketplaceActions";
+import MCPhoto from "./MCPhoto";
 
 const mapStateToProps = (state) => {
   return {
@@ -21,7 +22,7 @@ const mapDispatchToProps = (dispatch) => {
 
 function CreateMPPhotos({ set_tab_index, data }) {
   return (
-    <View style={styles.container}>
+    <View>
       <View style={styles.tab_container}>
         <Text style={styles.input_title}>Added 1/4 Photos</Text>
         <Text
@@ -32,14 +33,20 @@ function CreateMPPhotos({ set_tab_index, data }) {
             },
           ]}
         >
-          Please add a cover photo for this service to attract more people to
-          see this listing.
+          Add photos for this service to attract more people to see this
+          listing.
         </Text>
-        <View
-          style={{
-            paddingVertical: 20,
-          }}
-        ></View>
+      </View>
+      <ScrollView
+        horizontal
+        style={{
+          paddingVertical: 20,
+        }}
+      >
+        <MCPhoto />
+        <MCPhoto add />
+      </ScrollView>
+      <View>
         <Button
           type={4}
           onPress={() => {
