@@ -141,3 +141,17 @@ export const update_description = (html, text) => (dispatch) => {
     },
   });
 };
+
+export const add_mc_image = (image) => (dispatch) => {
+  dispatch({
+    type: "MPC_ADD_LOCAL_IMAGE",
+    payload: image,
+  });
+};
+
+export const remove_local_image = (index) => (dispatch) => {
+  dispatch({
+    type: "MPC_REMOVE_LOCAL_IMAGE",
+    payload: index,
+  });
+};

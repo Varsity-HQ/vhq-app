@@ -13,6 +13,7 @@ const initialState = {
   },
   create: {
     data: initial_marketplace_ad_data,
+    local_images: [],
     tabIndex: 0,
     uploading: false,
     loading_categories: true,
@@ -21,6 +22,32 @@ const initialState = {
 
 const marketplaceReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "MPC_REMOVE_LOCAL_IMAGE":
+      let lr_attachments = [];
+
+      state.create.local_images.forEach((x, index) => {
+        if (index !== actions.payload) {
+          lr_attachments.push(x);
+        }
+      });
+
+      return {
+        ...state,
+        create: {
+          ...state.create,
+          local_images: lr_attachments,
+        },
+      };
+    case "MPC_ADD_LOCAL_IMAGE":
+      let l_attachments = state.create.local_images;
+      l_attachments.push(actions.payload);
+      return {
+        ...state,
+        create: {
+          ...state.create,
+          local_images: l_attachments,
+        },
+      };
     case "MPC_UPDATE_DURATION":
       return {
         ...state,
