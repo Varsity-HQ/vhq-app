@@ -1,3 +1,5 @@
+import initial_marketplace_ad_data from "./initial_marketplace_ad_data";
+
 const initialState = {
   home: {
     loading: true,
@@ -8,6 +10,11 @@ const initialState = {
     loading: true,
     error: null,
     data: null,
+  },
+  create: {
+    data: initial_marketplace_ad_data,
+    uploading: false,
+    loading_categories: true,
   },
 };
 

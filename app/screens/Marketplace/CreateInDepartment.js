@@ -16,7 +16,7 @@ function CreateInDepartment({ navigation }) {
   const handleBackPress = () => {};
 
   return (
-    <Screen>
+    <Screen scroll>
       <Header
         style={{ borderBottomWidth: 0 }}
         backIcon={true}
