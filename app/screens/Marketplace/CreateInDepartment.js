@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { View, StyleSheet } from "react-native";
 import Header from "../../components/headers/header3";
@@ -8,12 +8,52 @@ import Text from "../../components/AppText";
 import BarStepperIndicator from "../../components/BarStepperIndicator";
 import { CreativeCommonsSaFill } from "react-native-remix-icon/src/icons";
 import AdCreateSection from "../../components/Marketplace/AdCreateSection";
+import { connect } from "react-redux";
+import {
+  set_tab_index,
+  tab_back,
+  update_department,
+} from "../../store/actions/marketplaceActions";
 
-function CreateInDepartment({ navigation }) {
-  const [step, setStep] = useState(0);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    tab_back: () => dispatch(tab_back()),
+    set_tab_index: (i) => dispatch(set_tab_index(i)),
+    update_department: (dep) => dispatch(update_department(dep)),
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    tabIndex: state.marketplaceReducer.create.tabIndex,
+  };
+};
+
+function CreateInDepartment({
+  navigation,
+  tabIndex,
+  tab_back,
+  set_tab_index,
+  update_department,
+}) {
   const route = useRoute();
+  const [step, setStep] = useState(0);
+  const [department, setDepartment] = useState("service");
 
-  const handleBackPress = () => {};
+  useEffect(() => {
+    let department = route.params.department;
+    update_department(department.replace(/-/g, " "));
+    setDepartment(department.replace(/-/g, " "));
+    set_tab_index(0);
+  }, []);
+
+  const handleBackPress = () => {
+    if (tabIndex == 0) {
+      navigation.goBack();
+    } else {
+      tab_back();
+    }
+  };
 
   return (
     <Screen scroll>
@@ -29,9 +69,9 @@ function CreateInDepartment({ navigation }) {
         }}
       />
       <View style={styles.container}>
-        <CE_header tabIndex={step} />
+        <CE_header department={department} tabIndex={step} />
         <BarStepperIndicator
-          step={step + 1}
+          step={tabIndex + 1}
           style={{ marginTop: 20, marginBottom: 7 }}
         />
         <AdCreateSection step={step} />
@@ -40,11 +80,14 @@ function CreateInDepartment({ navigation }) {
   );
 }
 
-const CE_header = ({ tabIndex }) => {
-  if (tabIndex === 3) return <Text style={styles.heading}>Cover Photo</Text>;
-  if (tabIndex === 2) return <Text style={styles.heading}>Description</Text>;
-  if (tabIndex === 1) return <Text style={styles.heading}>Event Target</Text>;
-  if (tabIndex <= 0) return <Text style={styles.heading}>Create Service</Text>;
+const CE_header = ({ tabIndex, department }) => {
+  if (tabIndex === 3)
+    return <Text style={styles.heading}>{department} Target</Text>;
+  if (tabIndex === 2)
+    return <Text style={styles.heading}>{department} Photos</Text>;
+  if (tabIndex === 1) return <Text style={styles.heading}>Description</Text>;
+  if (tabIndex <= 0)
+    return <Text style={styles.heading}>Create {department}</Text>;
   return null;
 };
 
@@ -61,7 +104,8 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 30,
     fontWeight: "700",
+    textTransform: "capitalize",
   },
 });
 
-export default CreateInDepartment;
+export default connect(mapStateToProps, mapDispatchToProps)(CreateInDepartment);

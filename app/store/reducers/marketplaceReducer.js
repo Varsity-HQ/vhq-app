@@ -21,6 +21,14 @@ const initialState = {
 
 const marketplaceReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "MPC_UPDATE_DEPARTMENT":
+      return {
+        ...state,
+        create: {
+          ...state.create,
+          department: actions.payload,
+        },
+      };
     case "MPC_UPDATE_TAB_INDEX":
       return {
         ...state,

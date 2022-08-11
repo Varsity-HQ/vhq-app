@@ -81,12 +81,12 @@ function CreateDescription({ data, update_duration }) {
           <DropDown
             searchable
             type={2}
-            headerText="Select category"
+            headerText="Job type"
             style={styles.dropdown}
             // value={data.category}
             // setValue={(e) => handleSelect(e)}
             items={types}
-            placeholder="Select category"
+            placeholder="Choose type"
           />
         </View>
         <Button type={4} title="Next" />

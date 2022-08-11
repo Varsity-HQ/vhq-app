@@ -1,9 +1,11 @@
 import axios from "axios";
 import Toast from "react-native-toast-message";
+import store from "../store";
 import {
   SAVED_MARKETPLACE_ITEM,
   UNSAVED_MARKETPLACE_ITEM,
 } from "../../util/toast_messages";
+import { TShirt2Fill } from "react-native-remix-icon/src/icons";
 
 export const get_home = () => (dispatch) => {
   dispatch({
@@ -99,3 +101,22 @@ export const update_duration = (index) => (dispatch) => {
     payload: index,
   });
 };
+
+export const tab_back = () => (dispatch) => {
+  let currentIndex = store.getState().marketplaceReducer.create.tabIndex;
+  if (currentIndex > 0) {
+    dispatch({
+      type: "MPC_UPDATE_TAB_INDEX",
+      payload: currentIndex - 1,
+    });
+  }
+};
+
+export const update_department =
+  (department = "service") =>
+  (dispatch) => {
+    dispatch({
+      type: "MPC_UPDATE_DEPARTMENT",
+      payload: department.toLowerCase(),
+    });
+  };
