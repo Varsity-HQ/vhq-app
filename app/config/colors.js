@@ -1,12 +1,13 @@
 /**
  * VarsityHQ theme colors
- * @author Harmony
+ * @author Harmony Chikari
  * @version 1.0.1
  * @ownedby VarsityHQ
  */
 export default {
   transparent: "#ffffff00",
   primary: "#1acfff",
+  primary_opacity: "#1acfff36",
   secondary: "#b1d5e7",
   secondary_2: "#5c809c",
   skblue: "#4682ac",

@@ -6,10 +6,12 @@ import CreateDescription from "./CreateService/CreateDescription";
 const mapStateToProps = (state) => {
   return {
     tabIndex: state.marketplaceReducer.create.tabIndex,
+    data: state.marketplaceReducer.create.data,
   };
 };
 
-function AdCreateSection({ tabIndex, categories }) {
+function AdCreateSection({ tabIndex, categories, data }) {
+  console.log({ data });
   switch (tabIndex) {
     case 1:
       return <CreateDescription />;

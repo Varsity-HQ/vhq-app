@@ -43,8 +43,6 @@ function CreateName({
     update_category(v);
   };
 
-  console.log({ data });
-
   return (
     <View>
       <UserDetBar style={styles.u_det_container} />

@@ -72,10 +72,12 @@ export const unsave_marketplace_item = (itemID) => (dispatch) => {
 
 // Create AD
 export const update_name = (name) => (dispatch) => {
-  dispatch({
-    type: "MPC_UPDATE_NAME",
-    payload: name,
-  });
+  let title = store.getState().marketplaceReducer.create.data.title;
+  if (title.length < 100)
+    dispatch({
+      type: "MPC_UPDATE_NAME",
+      payload: name,
+    });
 };
 export const update_category = (category) => (dispatch) => {
   dispatch({
@@ -95,10 +97,10 @@ export const set_tab_index = (index) => (dispatch) => {
     payload: index,
   });
 };
-export const update_duration = (index) => (dispatch) => {
+export const update_duration = (duration) => (dispatch) => {
   dispatch({
-    type: "MPC_UPDATE_TAB_INDEX",
-    payload: index,
+    type: "MPC_UPDATE_DURATION",
+    payload: duration,
   });
 };
 
@@ -116,5 +118,26 @@ export const update_department = (department) => (dispatch) => {
   dispatch({
     type: "MPC_UPDATE_DEPARTMENT",
     payload: department.toLowerCase(),
+  });
+};
+export const update_company = (company) => (dispatch) => {
+  dispatch({
+    type: "MPC_UPDATE_COMPANY",
+    payload: company,
+  });
+};
+export const update_job_type = (type) => (dispatch) => {
+  dispatch({
+    type: "MPC_UPDATE_JOB_TYPE",
+    payload: type,
+  });
+};
+export const update_description = (html, text) => (dispatch) => {
+  dispatch({
+    type: "MPC_UPDATE_DESCRIPTION",
+    payload: {
+      html,
+      text,
+    },
   });
 };

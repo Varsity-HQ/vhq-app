@@ -8,7 +8,9 @@ const init_accdata = {
   },
   id: "",
 
-  postText: "",
+  description: "",
+  descriptionText: "",
+
   fromUniversity: "",
   attachments: [],
 
@@ -17,7 +19,7 @@ const init_accdata = {
   department: "service",
 
   company: "",
-  type: "",
+  job_type: "",
 
   category: "",
   title: "",

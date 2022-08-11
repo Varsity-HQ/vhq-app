@@ -33,7 +33,7 @@ class RTextEditor extends Component {
   };
 
   render() {
-    const { initialInput } = this.props;
+    const { initialInput, hideKeyboardAccessoryView } = this.props;
     return (
       <>
         <View
@@ -60,7 +60,10 @@ class RTextEditor extends Component {
                   <Text>loading</Text>
                 </View>
               }
-              // hideKeyboardAccessoryView={false}
+              // hideKeyboardAccessoryView={hideKeyboardAccessoryView}
+              // hideKeyboardAccessoryView={
+              //   hideKeyboardAccessoryView ? hideKeyboardAccessoryView : true
+              // }
               // initialFocus={true}
 
               //  editorStyle={contentStyle} // default light style

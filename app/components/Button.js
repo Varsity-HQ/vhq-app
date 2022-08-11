@@ -88,13 +88,29 @@ function AppButton({
     return (
       <TouchableOpacity
         {...props}
-        style={[styles.button_t4, style]}
+        style={[
+          styles.button_t4,
+          style,
+          disabled && {
+            backgroundColor: colors.primary_opacity,
+          },
+        ]}
         onPress={handleOnPress}
       >
         {content ? (
           content
         ) : (
-          <Text style={[styles.text_t3, textStyle]}>{title}</Text>
+          <Text
+            style={[
+              styles.text_t3,
+              textStyle,
+              disabled && {
+                color: colors.secondary_2,
+              },
+            ]}
+          >
+            {title}
+          </Text>
         )}
       </TouchableOpacity>
     );

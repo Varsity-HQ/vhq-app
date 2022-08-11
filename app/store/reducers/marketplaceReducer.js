@@ -21,6 +21,51 @@ const initialState = {
 
 const marketplaceReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "MPC_UPDATE_DURATION":
+      return {
+        ...state,
+        create: {
+          ...state.create,
+          data: {
+            ...state.create.data,
+            duration: actions.payload,
+          },
+        },
+      };
+    case "MPC_UPDATE_DESCRIPTION":
+      return {
+        ...state,
+        create: {
+          ...state.create,
+          data: {
+            ...state.create.data,
+            description: actions.payload.html,
+            descriptionText: actions.payload.text,
+          },
+        },
+      };
+    case "MPC_UPDATE_JOB_TYPE":
+      return {
+        ...state,
+        create: {
+          ...state.create,
+          data: {
+            ...state.create.data,
+            job_type: actions.payload,
+          },
+        },
+      };
+    case "MPC_UPDATE_COMPANY":
+      return {
+        ...state,
+        create: {
+          ...state.create,
+          data: {
+            ...state.create.data,
+            company: actions.payload,
+          },
+        },
+      };
     case "MPC_UPDATE_DEPARTMENT":
       return {
         ...state,
@@ -32,6 +77,7 @@ const marketplaceReducer = (state = initialState, actions) => {
           },
         },
       };
+
     case "MPC_UPDATE_TAB_INDEX":
       return {
         ...state,
