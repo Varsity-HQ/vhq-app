@@ -2,6 +2,7 @@ import React from "react";
 import CreateName from "./CreateService/CreateName";
 import { connect } from "react-redux";
 import CreateDescription from "./CreateService/CreateDescription";
+import CreateMPPhotos from "./CreateService/CreateMPPhotos";
 
 const mapStateToProps = (state) => {
   return {
@@ -13,6 +14,8 @@ const mapStateToProps = (state) => {
 function AdCreateSection({ tabIndex, categories, data }) {
   console.log({ data });
   switch (tabIndex) {
+    case 2:
+      return <CreateMPPhotos />;
     case 1:
       return <CreateDescription />;
     case 0:
