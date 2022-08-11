@@ -67,3 +67,35 @@ export const unsave_marketplace_item = (itemID) => (dispatch) => {
 };
 
 // /marketplace/cat/${category}/getall
+
+// Create AD
+export const update_name = (name) => (dispatch) => {
+  dispatch({
+    type: "MPC_UPDATE_NAME",
+    payload: name,
+  });
+};
+export const update_category = (category) => (dispatch) => {
+  dispatch({
+    type: "MPC_UPDATE_CATEGORY",
+    payload: category,
+  });
+};
+export const update_pricing = (pricing) => (dispatch) => {
+  dispatch({
+    type: "MPC_UPDATE_PRICING",
+    payload: pricing,
+  });
+};
+export const set_tab_index = (index) => (dispatch) => {
+  dispatch({
+    type: "MPC_UPDATE_TAB_INDEX",
+    payload: index,
+  });
+};
+export const update_duration = (index) => (dispatch) => {
+  dispatch({
+    type: "MPC_UPDATE_TAB_INDEX",
+    payload: index,
+  });
+};

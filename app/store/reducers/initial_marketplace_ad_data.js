@@ -8,7 +8,6 @@ const init_accdata = {
   },
   id: "",
 
-  caption: null,
   postText: "",
   fromUniversity: "",
   attachments: [],

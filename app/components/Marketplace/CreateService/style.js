@@ -3,6 +3,11 @@ import colors from "../../../config/colors";
 import { normalizeText } from "../../../util/responsivePx";
 
 const styles = StyleSheet.create({
+  input_sub: {
+    color: colors.secondary,
+    fontSize: normalizeText(13),
+    marginTop: 5,
+  },
   dropdown: {
     marginTop: 10,
   },
@@ -19,6 +24,11 @@ const styles = StyleSheet.create({
   },
   det_section: {
     marginBottom: 10,
+  },
+  row_between: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   row: {
     alignItems: "center",

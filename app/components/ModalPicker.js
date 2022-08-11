@@ -42,7 +42,13 @@ function ModalPicker({
     <>
       <TouchableOpacity onPress={() => setModalVisible(true)}>
         <View style={[input_style, styles.fake_modal_textinput]}>
-          <Text>{value ? value : placeholder}</Text>
+          <Text
+            style={{
+              color: colors.secondary,
+            }}
+          >
+            {value ? value : placeholder}
+          </Text>
         </View>
       </TouchableOpacity>
       <Modal visible={modalVisible} animationType="slide">
