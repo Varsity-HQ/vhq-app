@@ -6,7 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import colors from "../../config/colors";
 const height = Dimensions.get("window").height;
 
-function ItemAbout(props) {
+function ItemAbout({ data }) {
   const [readMore, setReadMore] = React.useState(false);
   const handleRead = () => setReadMore(!readMore);
 

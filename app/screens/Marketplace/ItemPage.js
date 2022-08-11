@@ -79,7 +79,7 @@ function ItemPage() {
       <ItemHeader data={data} />
       <ItemActions data={data.user_data} />
       <ItemSellerInfo data={data.user_data} />
-      <ItemAbout />
+      <ItemAbout data={data} />
       <CommunityProtection data={data} />
       <ItemAddListing />
       <View

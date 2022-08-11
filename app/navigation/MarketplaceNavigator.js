@@ -8,6 +8,7 @@ import {
   REFER_A_FRIEND,
   PROFILE,
   MARKETPLACE_CREATE,
+  CREATE_IN_DEP,
 } from "./routes";
 import Home from "../screens/Marketplace/Home";
 import CategoryPage from "../screens/Marketplace/CategoryPage";
@@ -16,6 +17,7 @@ import SearchResults from "../screens/SearchResults";
 import ReferAFriend from "../screens/ReferAFriend";
 import Profile from "../screens/Profile";
 import Create from "../screens/Marketplace/Create";
+import CreateInDepartment from "../screens/Marketplace/CreateInDepartment";
 const Stack = createNativeStackNavigator();
 
 const MarketplaceNavigator = () => (
@@ -40,6 +42,13 @@ const MarketplaceNavigator = () => (
         }}
         name={MARKETPLACE_CREATE}
         component={Create}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={CREATE_IN_DEP}
+        component={CreateInDepartment}
       />
       <Stack.Screen
         options={{

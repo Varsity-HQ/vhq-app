@@ -23,12 +23,14 @@ function header1({ backPress, title, buttonText, buttonRightPress }) {
           <AppText style={[styles.text, { marginLeft: 10 }]}>{title}</AppText>
         </View>
         <View>
-          <TouchableOpacity
-            onPress={buttonRightPress}
-            style={styles.button_right}
-          >
-            <AppText style={[styles.text]}>{buttonText}</AppText>
-          </TouchableOpacity>
+          {buttonRightPress !== false && (
+            <TouchableOpacity
+              onPress={buttonRightPress}
+              style={styles.button_right}
+            >
+              <AppText style={[styles.text]}>{buttonText}</AppText>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>
