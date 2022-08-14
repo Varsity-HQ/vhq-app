@@ -10,6 +10,7 @@ import Loading from "../../components/Loaders/HomeUploading";
 import { connect } from "react-redux";
 import { get_home } from "../../store/actions/marketplaceActions";
 import ListingSection from "../../components/Marketplace/ListingSection";
+import { useFocusEffect } from "@react-navigation/native";
 
 const mapStateToProps = (state) => {
   return {
@@ -26,9 +27,11 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 function Home({ loading, get_home, data, university }) {
-  useEffect(() => {
-    get_home();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      get_home();
+    }, []),
+  );
 
   if (loading) {
     return (

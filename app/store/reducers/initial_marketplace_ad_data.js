@@ -14,8 +14,6 @@ const init_accdata = {
   fromUniversity: "",
   attachments: [],
 
-  image_dimensions: null,
-
   department: "service",
 
   company: "",

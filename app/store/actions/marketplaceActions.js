@@ -5,7 +5,9 @@ import {
   SAVED_MARKETPLACE_ITEM,
   UNSAVED_MARKETPLACE_ITEM,
 } from "../../util/toast_messages";
-import { TShirt2Fill } from "react-native-remix-icon/src/icons";
+
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import uuid from "uuid";
 
 export const get_home = () => (dispatch) => {
   dispatch({
@@ -183,4 +185,70 @@ export const handle_target_check = (isChecked, field) => (dispatch) => {
   });
 };
 
-export const handle_create_ad = () => (dispatch) => {};
+export const handle_create_ad = () => async (dispatch) => {
+  const ad_data = store.getState().marketplaceReducer.create.data;
+  const ad_local_marketplace =
+    store.getState().marketplaceReducer.create.local_images;
+
+  let attachment_urls =
+    ad_local_marketplace.length > 0
+      ? await uploadMultipleImagesAsync(ad_local_marketplace)
+      : [];
+
+  const ready_ad_data = {
+    ...ad_data,
+    attachments: attachment_urls,
+    feed_targeting: ad_data.target,
+  };
+
+  dispatch({
+    type: "RESET_MPC",
+  });
+
+  axios
+    .post("/market/addnew", ready_ad_data)
+    .then(() => {})
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const uploadMultipleImagesAsync = async (images) => {
+  let promises = [];
+  await images.forEach((x) => {
+    promises.push(uploadImageAsync(x));
+  });
+  return Promise.all(promises)
+    .then((upload_res) => {
+      return upload_res;
+    })
+    .catch((err) => console.error(err.code));
+};
+
+const uploadImageAsync = async (uri) => {
+  return await new Promise(async (resolve, reject) => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+
+    const fileRef = ref(getStorage(), `vhq_${uuid.v4()}.jpeg`);
+    const result = await uploadBytes(fileRef, blob);
+
+    // We're done with the blob, close and release it
+    blob.close();
+
+    let downloadUrl = await getDownloadURL(fileRef);
+
+    resolve(downloadUrl); // peviously return;
+    reject("failed to upload");
+  });
+};

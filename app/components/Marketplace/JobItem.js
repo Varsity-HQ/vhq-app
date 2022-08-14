@@ -18,8 +18,21 @@ function JobItem({ x }) {
           marginTop: 10,
         }}
       >
-        {x.company && <Text style={styles.content_text}>{x.company}</Text>}
-        {x.type && <Text style={styles.content_text}>Job Type : {x.type}</Text>}
+        {x.company && (
+          <Text
+            style={[
+              styles.content_text,
+              {
+                fontWeight: "700",
+              },
+            ]}
+          >
+            {x.company}
+          </Text>
+        )}
+        {x.job_type && (
+          <Text style={styles.content_text}>Job Type : {x.job_type}</Text>
+        )}
         <Text style={styles.content_text}>
           Posted : {dayjs(x.created_at).fromNow()}
         </Text>

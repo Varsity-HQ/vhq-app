@@ -22,6 +22,11 @@ const initialState = {
 
 const marketplaceReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "RESET_MPC":
+      return {
+        ...state,
+        create: initialState.create,
+      };
     case "MPC_UPDATE_NEW_TARGETS_ALL":
       return {
         ...state,
