@@ -49,7 +49,7 @@ function Home({ loading, get_home, data, university }) {
       <HomeHeader />
       <CategoryMenu />
       <ListingSection
-        t1="Top services"
+        t1="Recent services"
         t2={`Browse services offered by students or people at the ${university}`}
         name="Services"
         data={data.market_items}

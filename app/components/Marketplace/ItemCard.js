@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Dimensions,
+} from "react-native";
 import colors from "../../config/colors";
 import Image from "../Image";
 import Text from "../AppText";
@@ -8,6 +13,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { MARKETPLACE_ITEM_PAGE } from "../../navigation/routes";
 import { check_post_reported } from "../../util/postUtil";
+
+const height = Dimensions.get("window").height;
 
 function ItemCard({ x }) {
   const navigation = useNavigation();
@@ -31,6 +38,7 @@ function ItemCard({ x }) {
         <View
           style={{
             padding: 10,
+            height: height * 0.083,
           }}
         >
           <Text
