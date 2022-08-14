@@ -199,6 +199,7 @@ export const handle_create_ad = () => async (dispatch) => {
     ...ad_data,
     attachments: attachment_urls,
     feed_targeting: ad_data.target,
+    fromUniversity: store.getState().core.accData.university,
   };
 
   dispatch({
