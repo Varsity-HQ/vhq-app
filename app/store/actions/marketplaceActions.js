@@ -182,3 +182,5 @@ export const handle_target_check = (isChecked, field) => (dispatch) => {
     payload: new_targets,
   });
 };
+
+export const handle_create_ad = () => (dispatch) => {};

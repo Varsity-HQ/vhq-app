@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import Text from "../../AppText";
 import Button from "../../Button";
@@ -10,7 +10,10 @@ import colors from "../../../config/colors";
 import {
   select_everyone,
   handle_target_check,
+  handle_create_ad,
 } from "../../../store/actions/marketplaceActions";
+import { useNavigation } from "@react-navigation/native";
+import { MY_MARKETPLACE_ADS } from "../../../navigation/routes";
 
 const mapStateToProps = (state) => {
   return {
@@ -23,12 +26,21 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     selectEveryone: (selected) => dispatch(select_everyone(selected)),
+    handle_create_ad: () => dispatch(handle_create_ad()),
     handleTargetCheck: (isChecked, target) =>
       dispatch(handle_target_check(isChecked, target)),
   };
 };
 
-function CreateTarget({ target, selectEveryone, handleTargetCheck }) {
+function CreateTarget({
+  target,
+  selectEveryone,
+  handleTargetCheck,
+  handle_create_ad,
+  create,
+}) {
+  const navigate = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.tab_container}>
@@ -116,7 +128,8 @@ function CreateTarget({ target, selectEveryone, handleTargetCheck }) {
         <Button
           type={4}
           onPress={() => {
-            set_tab_index(3);
+            handle_create_ad();
+            navigate.navigate(MY_MARKETPLACE_ADS);
           }}
           title="Create Ad"
         />

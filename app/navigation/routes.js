@@ -37,6 +37,7 @@ export const SERVICES_CATEGORY = "ServicesCategory";
 export const LISTINGS_CATEGORY = "ListingsCategory";
 export const MARKETPLACE_CREATE = "MarketplaceCreate";
 export const CREATE_IN_DEP = "CreateInDep";
+export const MY_MARKETPLACE_ADS = "MyMarketplaceAds";
 
 //
 export const CS_CONFIRM_GENDER = "CSConfirmGender";
