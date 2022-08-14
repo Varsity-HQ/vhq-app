@@ -1,5 +1,11 @@
 import React from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import colors from "../../config/colors";
 import Image from "../Image";
 import Text from "../AppText";
@@ -13,29 +19,38 @@ const mapStateToProps = (state) => {
 
 function MsgInputContainer({ account }) {
   return (
-    <View style={styles.c_container}>
-      <View style={styles.container}>
-        <View
-        //   style={[styles.row, { justifyContent: "space-between", flex: 1 }]}
-        >
-          <View style={styles.row}>
-            <Image uri={account.profilepic} style={styles.profilepic} />
-            <TextInput
-              multiline
-              placeholder="Type your messsage"
-              placeholderTextColor={colors.secondary_2}
-              selectionColor={colors.primary}
-              style={styles.textinput}
-            />
+    <KeyboardAvoidingView
+      style={[styles.root]}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={100}
+    >
+      <View style={styles.c_container}>
+        <View style={styles.container}>
+          <View
+          //   style={[styles.row, { justifyContent: "space-between", flex: 1 }]}
+          >
+            <View style={styles.row}>
+              <Image uri={account.profilepic} style={styles.profilepic} />
+              <TextInput
+                multiline
+                placeholder="Type your messsage"
+                placeholderTextColor={colors.secondary_2}
+                selectionColor={colors.primary}
+                style={styles.textinput}
+              />
+            </View>
+            <View>{/* <Text>es</Text> */}</View>
           </View>
-          <View>{/* <Text>es</Text> */}</View>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  root: {
+    padding: 10,
+  },
   row: {
     flexDirection: "row",
     alignItems: "baseline",

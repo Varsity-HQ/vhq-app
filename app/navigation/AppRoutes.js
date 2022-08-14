@@ -29,6 +29,7 @@ import TabNavigator from "./TabNavigator";
 import ChatPage from "../screens/Chat/ChatPage";
 import navigation from "./rootNavigation";
 import useOnlinePresence from "../auth/useOnlinePresence";
+import ChatPage2 from "../screens/Chat/ChatPage2";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({

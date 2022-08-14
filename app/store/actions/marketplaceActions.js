@@ -155,3 +155,30 @@ export const remove_local_image = (index) => (dispatch) => {
     payload: index,
   });
 };
+export const select_everyone = (isChecked) => (dispatch) => {
+  const new_targets = {
+    first: isChecked,
+    second: isChecked,
+    third: isChecked,
+    forth: isChecked,
+    postgraduates: isChecked,
+  };
+
+  dispatch({
+    type: "MPC_UPDATE_NEW_TARGETS_ALL",
+    payload: new_targets,
+  });
+};
+export const handle_target_check = (isChecked, field) => (dispatch) => {
+  const current_targets =
+    store.getState().marketplaceReducer.create.data.target;
+  const new_targets = {
+    ...current_targets,
+    [field]: isChecked,
+  };
+
+  dispatch({
+    type: "MPC_UPDATE_NEW_TARGETS_ALL",
+    payload: new_targets,
+  });
+};

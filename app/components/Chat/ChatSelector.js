@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, TouchableHighlight } from "react-native";
 import Image from "../Image";
 import Text from "../AppText";
@@ -23,7 +23,7 @@ import { CHAT_PAGE } from "../../navigation/routes";
 import OnlineIndicator from "../Dating/OnlineIndicator";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-function ChatSelector({ data, is_dating, display }) {
+function ChatSelector({ data, is_dating, display, handle_done_loading }) {
   if (!data) return null;
 
   const navigation = useNavigation();
@@ -36,6 +36,15 @@ function ChatSelector({ data, is_dating, display }) {
     : collection(db, "accounts");
   const userDocRef = doc(accCol, uid);
   const [account, account_loading, err] = useDocumentData(userDocRef);
+
+  useEffect(() => {
+    // console.log({ uid, isDone: !account_loading, data: account });
+    if (!account_loading || account_loading) set_done_loading();
+  });
+
+  const set_done_loading = () => {
+    handle_done_loading(uid);
+  };
 
   if (account_loading || !display) {
     return (

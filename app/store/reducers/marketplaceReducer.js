@@ -22,6 +22,17 @@ const initialState = {
 
 const marketplaceReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "MPC_UPDATE_NEW_TARGETS_ALL":
+      return {
+        ...state,
+        create: {
+          ...state.create,
+          data: {
+            ...state.create.data,
+            target: actions.payload,
+          },
+        },
+      };
     case "MPC_REMOVE_LOCAL_IMAGE":
       let lr_attachments = [];
 

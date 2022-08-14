@@ -7,6 +7,10 @@ import styles from "./style";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { connect } from "react-redux";
 import colors from "../../../config/colors";
+import {
+  select_everyone,
+  handle_target_check,
+} from "../../../store/actions/marketplaceActions";
 
 const mapStateToProps = (state) => {
   return {
@@ -17,10 +21,14 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    selectEveryone: (selected) => dispatch(select_everyone(selected)),
+    handleTargetCheck: (isChecked, target) =>
+      dispatch(handle_target_check(isChecked, target)),
+  };
 };
 
-function CreateTarget({ target }) {
+function CreateTarget({ target, selectEveryone, handleTargetCheck }) {
   return (
     <View style={styles.container}>
       <View style={styles.tab_container}>
@@ -110,7 +118,7 @@ function CreateTarget({ target }) {
           onPress={() => {
             set_tab_index(3);
           }}
-          title="Next"
+          title="Create Ad"
         />
       </View>
     </View>

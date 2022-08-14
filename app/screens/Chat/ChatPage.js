@@ -260,6 +260,7 @@ function ChatPage({ account }) {
   };
 
   const renderInputToolbar = (props) => {
+    return <MsgInputContainer />;
     return (
       <>
         <InputToolbar
@@ -313,7 +314,7 @@ function ChatPage({ account }) {
 
   return (
     <>
-      {/* // <Screen style={styles.container}> */}
+      {/* <Screen style={styles.container}> */}
       {/* <Header dating={isDatingChat} account={userData} /> */}
 
       <GiftedChat
@@ -324,12 +325,12 @@ function ChatPage({ account }) {
         }}
         renderAvatar={renderAvatar}
         text={textMessage}
-        // isKeyboardInternallyHandled={false}
-        // wrapInSafeArea={true}
+        isKeyboardInternallyHandled={true}
+        // wrapInSafeArea={false}
         infiniteScroll
         onInputTextChanged={(text) => onInputTextChanged(text)}
-        renderUsernameOnMessage
-        // inverted={false}
+        // renderUsernameOnMessage
+        inverted={true}
         lightboxProps={{ useNativeDriver: true }}
         bottomOffset={insets.bottom}
         messages={messages_processed}
@@ -354,6 +355,7 @@ function ChatPage({ account }) {
         //   avatar: this.state.userPhoto,
         // }}
       />
+      {/* <MsgInputContainer /> */}
 
       {/* {Platform.OS === "android" && <KeyboardAvoidingView behavior="padding" />} */}
       {/* </Screen> */}

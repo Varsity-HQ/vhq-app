@@ -77,9 +77,9 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
   const [chats, chats_loading, error] = useCollectionData(query_);
   const [chat_global_loader, set_chat_global_loader] = useState(false);
   //
-  const [c_all_loaded, set_c_all_loaded] = useState(true);
+  const [c_all_loaded, set_c_all_loaded] = useState(false);
 
-  console.log({ error });
+  // console.log({ error });
 
   let accounts_in_chat = [];
   let filtered_chats_allowed = [];
@@ -98,6 +98,8 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
       </Screen>
     );
   }
+
+  let fchats_states = [];
 
   if (!chats_loading) {
     chats.forEach((x) => {
@@ -130,9 +132,17 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
       );
       if (index > -1) {
         filtered_chats_allowed.push(x);
+        fchats_states.push({
+          id: __get_chatAcc_id(x, "d"),
+          isLoaded: false,
+        });
       } else {
         if (x.is_dating_chat || x.is_marketplace_chat) {
           filtered_chats_allowed.push(x);
+          fchats_states.push({
+            id: __get_chatAcc_id(x, "d"),
+            isLoaded: false,
+          });
         } else {
           filtered_chats_requests.push(x);
         }
@@ -143,7 +153,22 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
   const refreshHandler = () => {};
   const loadMoreHandler = () => {};
 
-  const handle_chat_finished_load = (uid) => {};
+  const handle_chat_finished_load = (uid) => {
+    // console.log({ uid });
+    let updated = [];
+    let ready_states = [];
+    fchats_states.forEach((x) => {
+      if (x.id === uid) {
+        updated.push({ ...x, isLoaded: true });
+        ready_states.push(true);
+      } else {
+        updated.push(x);
+        ready_states.push(x.isLoaded);
+      }
+    });
+    fchats_states = updated;
+    set_c_all_loaded(!ready_states.includes(false));
+  };
 
   const listRenderingHandler = ({ item }) => {
     if (!item) return null;
@@ -159,7 +184,7 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
     return (
       <ChatSelector
         display={c_all_loaded}
-        handle_loading_done={handle_chat_finished_load}
+        handle_done_loading={handle_chat_finished_load}
         is_dating={item.is_dating_chat}
         data={item}
       />
@@ -168,6 +193,10 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
 
   const handleSetTabIndex = (index) => {
     setPageIndex(index);
+
+    if (index !== 1) {
+      set_c_all_loaded(false);
+    }
 
     if (index === 3) {
       get_accounts();
