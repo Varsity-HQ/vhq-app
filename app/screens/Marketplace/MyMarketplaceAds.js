@@ -6,17 +6,39 @@ import Text from "../../components/AppText";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import AppButton from "../../components/Button";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import { MARKETPLACE_CREATE, MARKETPLACE_HOME } from "../../navigation/routes";
 import MyMarketplaceAd from "../../components/Marketplace/MyMarketplaceAd";
 import CreatingEditingAdState from "../../components/Marketplace/CreateService/CreatingEditingAdState";
-
 import { useNavigation } from "@react-navigation/native";
+import db from "../../util/fb_admin";
+import Loading from "../../components/Loaders/HomeUploading";
+import { collection, orderBy, query, where } from "firebase/firestore";
+import { connect } from "react-redux";
 
-function MyMarketplaceAds() {
+const mapStateToProps = (state) => {
+  return {
+    userID: state.core.accData.userID,
+  };
+};
+
+function MyMarketplaceAds({ userID }) {
   const [ads, setAds] = useState(["1"]);
   const navigation = useNavigation();
+
+  const collectionRef = collection(db, "market_items");
+  const ad_query = query(
+    collectionRef,
+    where("posted_by", "==", userID),
+    orderBy("created_at", "desc"),
+  );
+
+  const [data, loading, error] = useCollectionData(ad_query);
+
+  console.log({ data });
+
   return (
-    <Screen>
+    <Screen scroll>
       <Header
         backPress={() => navigation.navigate(MARKETPLACE_HOME)}
         backIcon
@@ -32,9 +54,26 @@ function MyMarketplaceAds() {
           }}
         >
           <CreatingEditingAdState />
-          <MyMarketplaceAd />
-          <MyMarketplaceAd />
-          <MyMarketplaceAd />
+          {loading ? (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <View style={{ alignItems: "center" }}>
+                <Loading />
+                <Text style={{ color: colors.secondary }}>Loading..</Text>
+              </View>
+            </View>
+          ) : (
+            <View>
+              {data.map((x) => (
+                <MyMarketplaceAd data={x} key={x.id} />
+              ))}
+            </View>
+          )}
         </View>
         {ads.length === 0 && <NoAds navigation={navigation} />}
       </View>
@@ -105,4 +144,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyMarketplaceAds;
+export default connect(mapStateToProps, null)(MyMarketplaceAds);

@@ -8,6 +8,9 @@ import { RFValue } from "react-native-responsive-fontsize";
 import AppTextInput from "../Input";
 import { TyphoonLine } from "react-native-remix-icon/src/icons";
 import { connect } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { MARKETPLACE_HOME, MY_MARKETPLACE_ADS } from "../../navigation/routes";
+import axios from "axios";
 
 const height = Dimensions.get("window").height;
 
@@ -21,11 +24,23 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-function ItemActions({ data, posted_by, userID }) {
-  const [isDeleting, setDeleting] = useState(true);
+function ItemActions({ data, posted_by, userID, item_id }) {
+  const [isDeleting, setDeleting] = useState(false);
+  const [isDeleted, setDeleted] = useState(false);
+  const navigation = useNavigation();
   //
   const delete_ad = () => {
     setDeleting(true);
+    setDeleted(true);
+    axios
+      .get(`/marketplace/${item_id}/delete`)
+      .then(() => {
+        setDeleting(false);
+        navigation.navigate(MY_MARKETPLACE_ADS);
+      })
+      .catch((err) => {
+        setDeleting(false);
+      });
   };
 
   if (userID === posted_by) {
@@ -44,6 +59,7 @@ function ItemActions({ data, posted_by, userID }) {
               justifyContent: "center",
             }}
           >
+            {/* ||_ */}
             <Text
               numberOfLines={1}
               ellipsizeMode={"tail"}
@@ -51,6 +67,7 @@ function ItemActions({ data, posted_by, userID }) {
             >
               Easily manage or delete your ad from here
             </Text>
+            {/* ||_ */}
           </View>
         </View>
         <View style={[styles.row]}>
@@ -68,14 +85,14 @@ function ItemActions({ data, posted_by, userID }) {
                 "Are you sure you wan't to delete this ad. This will remove it from the marketplace",
                 [
                   {
-                    text: "Yebo, delete",
+                    ["text"]: "Yebo, delete",
+                    style: "destructive",
                     onPress: () => {
                       delete_ad();
                     },
                   },
                   {
-                    text: "Cancel",
-                    style: "cancel",
+                    ["text"]: "Cancel",
                   },
                 ],
               );

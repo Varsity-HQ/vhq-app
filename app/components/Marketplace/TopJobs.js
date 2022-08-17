@@ -30,6 +30,7 @@ function TopJobs({ data }) {
 const styles = StyleSheet.create({
   heading_section: {
     padding: 10,
+    paddingVertical: 20,
     borderBottomColor: colors.dark_2,
     borderBottomWidth: 2,
     flexDirection: "row",

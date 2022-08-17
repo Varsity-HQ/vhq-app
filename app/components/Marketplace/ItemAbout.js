@@ -21,7 +21,11 @@ function ItemAbout({ data }) {
   return (
     <View style={styles.container}>
       {data.company || data.duration || data.job_type ? (
-        <View>
+        <View
+          style={{
+            marginBottom: 10,
+          }}
+        >
           <View
             style={{
               marginBottom: 14,
@@ -76,7 +80,7 @@ function ItemAbout({ data }) {
         </View>
       ) : null}
 
-      {data.text_length > 0 || data.descriptionText ? (
+      {data.description || data.descriptionText ? (
         <View>
           <Text style={styles.heading}>Description</Text>
 

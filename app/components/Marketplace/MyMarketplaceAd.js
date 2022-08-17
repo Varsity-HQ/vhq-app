@@ -4,18 +4,24 @@ import colors from "../../config/colors";
 import Image from "../Image";
 import Button from "../Button";
 import Text from "../AppText";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { MARKETPLACE_ITEM_PAGE } from "../../navigation/routes";
+import { useNavigation } from "@react-navigation/native";
+dayjs.extend(relativeTime);
 
 const width = Dimensions.get("window").width;
 
-function MyMarketplaceAd(props) {
+function MyMarketplaceAd({ data }) {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View>
-        <Image style={styles.image} />
+        <Image uri={data.attachments[0]} style={styles.image} />
       </View>
       <View style={styles.center_section}>
         <Text numberOfLines={1} ellipsizeMode={"tail"} style={styles.title}>
-          This is the title u8h88h8h87h8h7h87 8h887
+          {data.title}
         </Text>
         <Text
           style={{
@@ -32,13 +38,13 @@ function MyMarketplaceAd(props) {
               marginRight: 4,
             }}
           >
-            Service{" "}
+            {data.department}{" "}
           </Text>
-          | 2 Views
+          | {data.seen_by} Views
         </Text>
 
         <Text style={{ marginTop: 5, color: colors.secondary, fontSize: 13 }}>
-          Created 2 hours ago
+          Created {dayjs(data.created_at).fromNow()}
         </Text>
         <View style={styles.row}>
           <Button
@@ -48,6 +54,11 @@ function MyMarketplaceAd(props) {
           />
           {/* <Button type={3} title="Delete" /> */}
           <Button
+            onPress={() =>
+              navigation.push(MARKETPLACE_ITEM_PAGE, {
+                id: data.id,
+              })
+            }
             type={5}
             style={{ marginRight: 0, flex: 1 }}
             title="Open ad"
