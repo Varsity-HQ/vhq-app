@@ -117,6 +117,15 @@ export const tab_back = () => (dispatch) => {
 };
 
 export const update_department = (department) => (dispatch) => {
+  let current_department =
+    store.getState().marketplaceReducer.create.data.department;
+
+  if (current_department !== department) {
+    dispatch({
+      type: "RESET_MPC",
+    });
+  }
+
   dispatch({
     type: "MPC_UPDATE_DEPARTMENT",
     payload: department.toLowerCase(),
@@ -186,6 +195,10 @@ export const handle_target_check = (isChecked, field) => (dispatch) => {
 };
 
 export const handle_create_ad = () => async (dispatch) => {
+  dispatch({
+    type: "MPC_UPLOADING",
+    payload: true,
+  });
   const ad_data = store.getState().marketplaceReducer.create.data;
   const ad_local_marketplace =
     store.getState().marketplaceReducer.create.local_images;
@@ -201,11 +214,6 @@ export const handle_create_ad = () => async (dispatch) => {
     feed_targeting: ad_data.target,
     fromUniversity: store.getState().core.accData.university,
   };
-
-  dispatch({
-    type: "MPC_UPLOADING",
-    payload: true,
-  });
 
   axios
     .post("/market/addnew", ready_ad_data)

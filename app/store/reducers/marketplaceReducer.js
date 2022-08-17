@@ -33,7 +33,13 @@ const marketplaceReducer = (state = initialState, actions) => {
     case "RESET_MPC":
       return {
         ...state,
-        create: initialState.create,
+        create: {
+          ...initialState.create,
+          local_images: [],
+          tabIndex: 0,
+          uploading: false,
+          loading_categories: true,
+        },
       };
     case "MPC_UPDATE_NEW_TARGETS_ALL":
       return {
