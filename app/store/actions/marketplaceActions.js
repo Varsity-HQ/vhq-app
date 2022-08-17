@@ -2,8 +2,10 @@ import axios from "axios";
 import Toast from "react-native-toast-message";
 import store from "../store";
 import {
+  FAILED_TO_UPLOAD_MARKETPLACE_ITEM,
   SAVED_MARKETPLACE_ITEM,
   UNSAVED_MARKETPLACE_ITEM,
+  UPLOADED_MARKETPLACE_ITEM,
 } from "../../util/toast_messages";
 
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -225,9 +227,19 @@ export const handle_create_ad = () => async (dispatch) => {
         type: "MPC_UPLOADING",
         payload: false,
       });
+      Toast.show({
+        type: "general",
+        autoHide: false,
+        ...UPLOADED_MARKETPLACE_ITEM,
+      });
     })
     .catch((err) => {
       console.log(err);
+      Toast.show({
+        type: "general",
+        autoHide: false,
+        ...FAILED_TO_UPLOAD_MARKETPLACE_ITEM,
+      });
       dispatch({
         type: "MPC_UPLOADING",
         payload: false,
