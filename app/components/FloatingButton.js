@@ -25,11 +25,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-function FloatingButton({ uploading, dating, onPress }) {
+function FloatingButton({ uploading, dating, marketplace, onPress }) {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    if (dating) return onPress();
+    if (dating || marketplace) return onPress();
     navigation.navigate(ADD_POST);
   };
 

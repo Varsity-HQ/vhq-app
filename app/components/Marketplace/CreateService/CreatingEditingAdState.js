@@ -3,17 +3,25 @@ import { View, StyleSheet, Dimensions } from "react-native";
 import colors from "../../../config/colors";
 import Text from "../../AppText";
 import Image from "../../Image";
+import { connect } from "react-redux";
 
 const width = Dimensions.get("window").width;
 
-function CreatingEditingAdState(props) {
+const mapStateToProps = (state) => {
+  return {
+    create: state.marketplaceReducer.create,
+  };
+};
+
+function CreatingEditingAdState({ create }) {
+  if (!create.uploading) return null;
   return (
     <View style={styles.container}>
-      <Image style={styles.image} />
+      <Image local uri={{ uri: create.local_images[0] }} style={styles.image} />
       <View>
         <Text style={{ fontWeight: "700" }}>Job in progress</Text>
         <Text style={{ fontWeight: "500", color: colors.secondary }}>
-          Creating your service..
+          Creating your service...
         </Text>
       </View>
     </View>
@@ -39,4 +47,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreatingEditingAdState;
+export default connect(mapStateToProps, null)(CreatingEditingAdState);

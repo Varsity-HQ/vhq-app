@@ -22,6 +22,14 @@ const initialState = {
 
 const marketplaceReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "MPC_UPLOADING":
+      return {
+        ...state,
+        create: {
+          ...state.create,
+          uploading: actions.payload,
+        },
+      };
     case "RESET_MPC":
       return {
         ...state,

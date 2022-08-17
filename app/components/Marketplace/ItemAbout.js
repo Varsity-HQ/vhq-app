@@ -20,53 +20,61 @@ function ItemAbout({ data }) {
 
   return (
     <View style={styles.container}>
-      <View>
-        <View
-          style={{
-            marginBottom: 14,
-            borderBottomColor: colors.dark_opacity_2,
-            borderBottomWidth: 1,
-          }}
-        >
-          <Text style={[styles.heading]}>General Details</Text>
+      {data.company || data.duration || data.job_type ? (
+        <View>
+          <View
+            style={{
+              marginBottom: 14,
+              borderBottomColor: colors.dark_opacity_2,
+              borderBottomWidth: 1,
+            }}
+          >
+            <Text style={[styles.heading]}>General Details</Text>
+          </View>
+          {data.department === "job listing" && data.company ? (
+            <View style={[styles.row, styles.gd_row]}>
+              <View style={{ width: "33%" }}>
+                <Text style={styles.gdtext}>Offered by</Text>
+              </View>
+              <View style={{ width: "66%" }}>
+                <Text
+                  style={{ fontWeight: "700", textTransform: "capitalize" }}
+                >
+                  {data.company}
+                </Text>
+              </View>
+            </View>
+          ) : null}
+          {data.department === "service" && data.duration ? (
+            <View style={[styles.row, styles.gd_row]}>
+              <View style={{ width: "33%" }}>
+                <Text style={styles.gdtext}>Duration</Text>
+              </View>
+              <View style={{ width: "66%" }}>
+                <Text
+                  style={{ fontWeight: "700", textTransform: "capitalize" }}
+                >
+                  {data.duration}
+                </Text>
+              </View>
+            </View>
+          ) : null}
+          {data.department === "job listing" && data.job_type ? (
+            <View style={[styles.row, styles.gd_row]}>
+              <View style={{ width: "33%" }}>
+                <Text style={styles.gdtext}>Job Type</Text>
+              </View>
+              <View style={{ width: "66%" }}>
+                <Text
+                  style={{ fontWeight: "700", textTransform: "capitalize" }}
+                >
+                  {data.job_type}
+                </Text>
+              </View>
+            </View>
+          ) : null}
         </View>
-        {data.department === "job listing" && data.company && (
-          <View style={[styles.row, styles.gd_row]}>
-            <View style={{ width: "33%" }}>
-              <Text style={styles.gdtext}>Offered by</Text>
-            </View>
-            <View style={{ width: "66%" }}>
-              <Text style={{ fontWeight: "700", textTransform: "capitalize" }}>
-                {data.company}
-              </Text>
-            </View>
-          </View>
-        )}
-        {data.department === "service" && data.duration && (
-          <View style={[styles.row, styles.gd_row]}>
-            <View style={{ width: "33%" }}>
-              <Text style={styles.gdtext}>Duration</Text>
-            </View>
-            <View style={{ width: "66%" }}>
-              <Text style={{ fontWeight: "700", textTransform: "capitalize" }}>
-                {data.duration}
-              </Text>
-            </View>
-          </View>
-        )}
-        {data.department === "job listing" && data.job_type && (
-          <View style={[styles.row, styles.gd_row]}>
-            <View style={{ width: "33%" }}>
-              <Text style={styles.gdtext}>Job Type</Text>
-            </View>
-            <View style={{ width: "66%" }}>
-              <Text style={{ fontWeight: "700", textTransform: "capitalize" }}>
-                {data.job_type}
-              </Text>
-            </View>
-          </View>
-        )}
-      </View>
+      ) : null}
 
       {data.text_length > 0 || data.descriptionText ? (
         <View>

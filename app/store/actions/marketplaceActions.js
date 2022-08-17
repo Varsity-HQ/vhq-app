@@ -202,15 +202,28 @@ export const handle_create_ad = () => async (dispatch) => {
     fromUniversity: store.getState().core.accData.university,
   };
 
+  dispatch({
+    type: "MPC_UPLOADING",
+    payload: true,
+  });
+
   axios
     .post("/market/addnew", ready_ad_data)
     .then(() => {
       dispatch({
         type: "RESET_MPC",
       });
+      dispatch({
+        type: "MPC_UPLOADING",
+        payload: false,
+      });
     })
     .catch((err) => {
       console.log(err);
+      dispatch({
+        type: "MPC_UPLOADING",
+        payload: false,
+      });
     });
 };
 
