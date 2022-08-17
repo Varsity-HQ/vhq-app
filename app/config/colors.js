@@ -20,6 +20,7 @@ export default {
   darkish3: "#105d83e7",
   redish: "#c93a3a7a",
   redish_2: "#f0a4a4",
+  redish_opacity: "#c93a3a54",
   white: "#fff",
   light: "#f9f9f9",
   lighish: "#7d868c",

@@ -1,5 +1,5 @@
-import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Dimensions, Alert } from "react-native";
 import colors from "../../config/colors";
 import Button from "../Button";
 import { Ionicons } from "@expo/vector-icons";
@@ -22,6 +22,12 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 function ItemActions({ data, posted_by, userID }) {
+  const [isDeleting, setDeleting] = useState(true);
+  //
+  const delete_ad = () => {
+    setDeleting(true);
+  };
+
   if (userID === posted_by) {
     return (
       <View style={styles.container}>
@@ -49,7 +55,6 @@ function ItemActions({ data, posted_by, userID }) {
         </View>
         <View style={[styles.row]}>
           <Button
-            disabled
             style={{
               flex: 1,
             }}
@@ -57,14 +62,37 @@ function ItemActions({ data, posted_by, userID }) {
             title="Edit Ad"
           />
           <Button
-            disabled
+            onPress={() => {
+              Alert.alert(
+                "Warning",
+                "Are you sure you wan't to delete this ad. This will remove it from the marketplace",
+                [
+                  {
+                    text: "Yebo, delete",
+                    onPress: () => {
+                      delete_ad();
+                    },
+                  },
+                  {
+                    text: "Cancel",
+                    style: "cancel",
+                  },
+                ],
+              );
+            }}
             style={{
               flex: 1,
               marginLeft: 10,
-              backgroundColor: colors.redish,
+              backgroundColor: isDeleting
+                ? colors.redish_opacity
+                : colors.redish,
+            }}
+            textStyle={{
+              color: isDeleting ? colors.secondary_2 : colors.white,
             }}
             type={3}
-            title="Delete Ad"
+            disabled={isDeleting}
+            title={isDeleting ? "Deleting.." : "Delete Ad"}
           />
         </View>
       </View>
