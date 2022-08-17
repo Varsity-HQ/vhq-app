@@ -9,10 +9,18 @@ import colors from "../../config/colors";
 import Image from "../../components/Image";
 import { useNavigation } from "@react-navigation/native";
 import { CREATE_IN_DEP } from "../../navigation/routes";
+import CreatingEditingAdState from "../../components/Marketplace/CreateService/CreatingEditingAdState";
+import { connect } from "react-redux";
 
 const width = Dimensions.get("window").width;
 
-function Create(props) {
+const mapStateToProps = (state) => {
+  return {
+    uploading: state.marketplaceReducer.create.uploading,
+  };
+};
+
+function Create({ uploading }) {
   return (
     <Screen>
       <Header noBorder backBtnText="Cancel" />
@@ -23,6 +31,7 @@ function Create(props) {
           Select a department that relates to your ad
         </Text>
       </View>
+
       <View
         style={{
           height: 1,
@@ -32,18 +41,28 @@ function Create(props) {
           marginBottom: 10,
         }}
       />
+      <View
+        style={{
+          paddingHorizontal: 10,
+        }}
+      >
+        <CreatingEditingAdState />
+      </View>
       <View style={styles.categories_container}>
         <Category
+          disabled={uploading}
           dep="service"
           uri={require("../../assets/service.png")}
           title="Service"
         />
         <Category
+          disabled={uploading}
           dep="listing"
           uri={require("../../assets/deal.png")}
           title="Listing"
         />
         <Category
+          disabled={uploading}
           dep="job-listing"
           uri={require("../../assets/jobs.png")}
           title="Job"
@@ -53,16 +72,17 @@ function Create(props) {
   );
 }
 
-const Category = ({ title, uri, dep }) => {
+const Category = ({ title, uri, dep, disabled }) => {
   const navigation = useNavigation();
   return (
     <View style={styles.category}>
       <TouchableOpacity
-        onPress={() =>
-          navigation.navigate(CREATE_IN_DEP, {
-            department: dep,
-          })
-        }
+        onPress={() => {
+          if (!disabled)
+            navigation.navigate(CREATE_IN_DEP, {
+              department: dep,
+            });
+        }}
         style={styles.category_inner}
       >
         <Image style={styles.category_icon} local uri={uri} />
@@ -124,4 +144,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Create;
+export default connect(mapStateToProps, null)(Create);

@@ -131,7 +131,7 @@ function CreateTarget({
             handle_create_ad();
             navigate.navigate(MY_MARKETPLACE_ADS);
           }}
-          title="Create Ad"
+          title={create.uploading ? "Creating ad.." : "Create Ad"}
         />
       </View>
     </View>

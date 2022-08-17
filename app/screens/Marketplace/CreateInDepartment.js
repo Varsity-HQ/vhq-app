@@ -3,7 +3,10 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { View, StyleSheet } from "react-native";
 import Header from "../../components/headers/header3";
 import Screen from "../../components/Screen";
-import { MARKETPLACE_CREATE } from "../../navigation/routes";
+import {
+  MARKETPLACE_CREATE,
+  MY_MARKETPLACE_ADS,
+} from "../../navigation/routes";
 import Text from "../../components/AppText";
 import BarStepperIndicator from "../../components/BarStepperIndicator";
 import { CreativeCommonsSaFill } from "react-native-remix-icon/src/icons";
@@ -29,6 +32,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     tabIndex: state.marketplaceReducer.create.tabIndex,
+    uploading: state.marketplaceReducer.create.uploading,
   };
 };
 
@@ -38,6 +42,7 @@ function CreateInDepartment({
   tab_back,
   set_tab_index,
   update_department,
+  uploading,
 }) {
   const route = useRoute();
   const [step, setStep] = useState(0);
@@ -46,6 +51,10 @@ function CreateInDepartment({
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    if (uploading) {
+      return () => navigation.navigate(MY_MARKETPLACE_ADS);
+    }
+
     let dep = route.params.department.replace(/-/g, " ");
     update_department(dep);
     setDepartment(dep);
@@ -80,6 +89,10 @@ function CreateInDepartment({
       tab_back();
     }
   };
+
+  if (uploading) {
+    return () => navigation.navigate(MY_MARKETPLACE_ADS);
+  }
 
   return (
     <Screen scroll>
