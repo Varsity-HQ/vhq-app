@@ -1,5 +1,12 @@
 import React from "react";
 import {
+  Alert,
+  Dimensions,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import {
   DrawerContentComponentProps,
   DrawerContentOptions,
   DrawerContentScrollView,
@@ -9,14 +16,8 @@ import {
   MaterialCommunityIcons,
   Ionicons,
   FontAwesome,
+  Entypo,
 } from "@expo/vector-icons";
-import {
-  Alert,
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
 import { Drawer } from "react-native-paper";
 import colors from "../config/colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
@@ -31,6 +32,7 @@ import {
   PROFILE_SETTINGS,
   QCOINS_OFFERS,
   DISCOVER_PAGE,
+  MY_MARKETPLACE_ADS,
 } from "./routes";
 import { logOutUser } from "../store/actions/actions";
 import { save_post_user } from "../store/actions/profile";
@@ -164,6 +166,21 @@ function DrawerContent({ props, product, account, save_post_user }) {
           >
             <Ionicons name="earth" size={25} color={colors.secondary} />
             <Text style={{ marginLeft: 20 }}>Discover Friends</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.dispatch(DrawerActions.closeDrawer());
+              navigation.navigate(MY_MARKETPLACE_ADS);
+            }}
+            style={{
+              paddingHorizontal: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 30,
+            }}
+          >
+            <Entypo name="shop" size={25} color={colors.secondary} />
+            <Text style={{ marginLeft: 20 }}>My Ads</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {

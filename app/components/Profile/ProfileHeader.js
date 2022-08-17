@@ -296,17 +296,16 @@ function ProfileHeader({
         ) : null}
       </View>
       <View style={{ paddingHorizontal: 10 }}>
-        {user.number_of_markitems > 0 ||
-          (auth_profile && (
-            <View style={{ marginTop: 0 }}>
-              <Button
-                onPress={() => navigation.navigate(MY_MARKETPLACE_ADS)}
-                type={3}
-                style={{ borderRadius: 100 }}
-                title="My Shop & Services"
-              />
-            </View>
-          ))}
+        {auth_profile && (
+          <View style={{ marginTop: 0 }}>
+            <Button
+              onPress={() => navigation.navigate(MY_MARKETPLACE_ADS)}
+              type={3}
+              style={{ borderRadius: 100 }}
+              title="My Shop & Services"
+            />
+          </View>
+        )}
       </View>
       <View>
         <TabNavigator
