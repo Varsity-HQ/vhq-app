@@ -221,12 +221,13 @@ export const handle_create_ad = () => async (dispatch) => {
     .post("/market/addnew", ready_ad_data)
     .then(() => {
       dispatch({
-        type: "RESET_MPC",
-      });
-      dispatch({
         type: "MPC_UPLOADING",
         payload: false,
       });
+      dispatch({
+        type: "RESET_MPC",
+      });
+
       Toast.show({
         type: "general",
         autoHide: false,
