@@ -1,15 +1,25 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import colors from "../../config/colors";
 import Text from "../AppText";
-import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useNavigation } from "@react-navigation/native";
+import { MARKETPLACE_ITEM_PAGE } from "../../navigation/routes";
 dayjs.extend(relativeTime);
 
 function JobItem({ x }) {
+  const navigation = useNavigation();
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.push(MARKETPLACE_ITEM_PAGE, {
+          id: x.id,
+        });
+      }}
+      style={styles.container}
+    >
       <View>
         <Text style={styles.header}>{x.title}</Text>
       </View>
@@ -18,44 +28,55 @@ function JobItem({ x }) {
           marginTop: 10,
         }}
       >
-        {x.company && (
+        {x.company ? (
           <Text
             style={[
               styles.content_text,
               {
                 fontWeight: "700",
+                color: colors.secondary,
               },
             ]}
           >
             {x.company}
           </Text>
-        )}
-        {x.job_type && (
-          <Text style={styles.content_text}>Job Type : {x.job_type}</Text>
-        )}
-        <Text style={styles.content_text}>
+        ) : null}
+        {x.job_type ? (
+          <Text style={styles.content_text}>
+            Job Type :{" "}
+            <Text
+              style={{
+                textTransform: "capitalize",
+              }}
+            >
+              {x.job_type}
+            </Text>
+          </Text>
+        ) : null}
+        <Text style={[styles.content_text, { color: colors.lighish2 }]}>
           Posted : {dayjs(x.created_at).fromNow()}
         </Text>
       </View>
-      <View style={styles.row_between}>
-        <View />
-        <View style={styles.row}>
-          {/* <FontAwesome size={20} color={colors.white} name="envelope-o" /> */}
-          <FontAwesome
-            size={20}
-            style={{
-              marginLeft: 10,
-            }}
-            color={colors.white}
-            name="share-alt"
-          />
-        </View>
+      <View style={styles.arrow}>
+        <Ionicons
+          size={30}
+          style={{
+            marginLeft: 10,
+          }}
+          color={colors.primary_opacity}
+          name="ios-arrow-forward-sharp"
+        />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
+  arrow: {
+    position: "absolute",
+    top: "50%",
+    right: 15,
+  },
   content_text: {
     fontSize: 14,
     marginBottom: 2,

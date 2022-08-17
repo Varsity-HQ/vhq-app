@@ -18,50 +18,105 @@ function ItemAbout({ data }) {
     setRMViewSize(height);
   };
 
-  if (data.text_length === 0 || !data.descriptionText) return null;
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.heading}>Description</Text>
-
         <View
-          onLayout={(event) => {
-            find_dimesions(event.nativeEvent.layout);
-          }}
           style={{
-            height: readMore ? null : readMoreCapHeight,
-            overflow: "hidden",
+            marginBottom: 14,
+            borderBottomColor: colors.dark_opacity_2,
+            borderBottomWidth: 1,
           }}
         >
-          <Content html={data.description} />
+          <Text style={[styles.heading]}>General Details</Text>
         </View>
-
-        {true && (
-          <TouchableOpacity onPress={handleRead} style={styles.read_more}>
-            <LinearGradient
-              style={styles.gradient}
-              colors={[colors.darkish, colors.transparent]}
-              // colors={["red", "white"]}
-              start={[0, 0]}
-              end={[0, 10]}
-            />
-            <View style={styles.read_more_inner}>
-              <Text
-                style={{
-                  color: colors.secondary,
-                }}
-              >
-                {readMore ? "Hide description" : "Continue reading"}
+        {data.department === "job listing" && data.company && (
+          <View style={[styles.row, styles.gd_row]}>
+            <View style={{ width: "33%" }}>
+              <Text style={styles.gdtext}>Offered by</Text>
+            </View>
+            <View style={{ width: "66%" }}>
+              <Text style={{ fontWeight: "700", textTransform: "capitalize" }}>
+                {data.company}
               </Text>
             </View>
-          </TouchableOpacity>
+          </View>
+        )}
+        {data.department === "service" && data.duration && (
+          <View style={[styles.row, styles.gd_row]}>
+            <View style={{ width: "33%" }}>
+              <Text style={styles.gdtext}>Duration</Text>
+            </View>
+            <View style={{ width: "66%" }}>
+              <Text style={{ fontWeight: "700", textTransform: "capitalize" }}>
+                {data.duration}
+              </Text>
+            </View>
+          </View>
+        )}
+        {data.department === "job listing" && data.job_type && (
+          <View style={[styles.row, styles.gd_row]}>
+            <View style={{ width: "33%" }}>
+              <Text style={styles.gdtext}>Job Type</Text>
+            </View>
+            <View style={{ width: "66%" }}>
+              <Text style={{ fontWeight: "700", textTransform: "capitalize" }}>
+                {data.job_type}
+              </Text>
+            </View>
+          </View>
         )}
       </View>
+
+      {data.text_length > 0 || data.descriptionText ? (
+        <View>
+          <Text style={styles.heading}>Description</Text>
+
+          <View
+            onLayout={(event) => {
+              find_dimesions(event.nativeEvent.layout);
+            }}
+            style={{
+              height: readMore ? null : readMoreCapHeight,
+              overflow: "hidden",
+            }}
+          >
+            <Content html={data.description} />
+          </View>
+
+          {true && (
+            <TouchableOpacity onPress={handleRead} style={styles.read_more}>
+              <LinearGradient
+                style={styles.gradient}
+                colors={[colors.darkish, colors.transparent]}
+                // colors={["red", "white"]}
+                start={[0, 0]}
+                end={[0, 10]}
+              />
+              <View style={styles.read_more_inner}>
+                <Text
+                  style={{
+                    color: colors.secondary,
+                  }}
+                >
+                  {readMore ? "Hide description" : "Continue reading"}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        </View>
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  gd_row: {
+    marginBottom: 7,
+  },
+  gdtext: {
+    color: colors.lighish2,
+  },
   read_more_inner: {
     padding: 20,
     flexDirection: "row",
@@ -85,6 +140,10 @@ const styles = StyleSheet.create({
   },
   read_more: {
     marginTop: 10,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
 

@@ -202,13 +202,13 @@ export const handle_create_ad = () => async (dispatch) => {
     fromUniversity: store.getState().core.accData.university,
   };
 
-  dispatch({
-    type: "RESET_MPC",
-  });
-
   axios
     .post("/market/addnew", ready_ad_data)
-    .then(() => {})
+    .then(() => {
+      dispatch({
+        type: "RESET_MPC",
+      });
+    })
     .catch((err) => {
       console.log(err);
     });

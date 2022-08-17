@@ -1,0 +1,42 @@
+import React from "react";
+import { View, StyleSheet, Dimensions } from "react-native";
+import colors from "../../../config/colors";
+import Text from "../../AppText";
+import Image from "../../Image";
+
+const width = Dimensions.get("window").width;
+
+function CreatingEditingAdState(props) {
+  return (
+    <View style={styles.container}>
+      <Image style={styles.image} />
+      <View>
+        <Text style={{ fontWeight: "700" }}>Job in progress</Text>
+        <Text style={{ fontWeight: "500", color: colors.secondary }}>
+          Creating your service..
+        </Text>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  image: {
+    width: width * 0.1,
+    height: width * 0.1,
+    marginRight: 10,
+  },
+  container: {
+    borderWidth: 1,
+    borderColor: colors.primary_opacity,
+    borderRadius: 10,
+    padding: 14,
+    paddingVertical: 10,
+    backgroundColor: colors.dark_opacity_2,
+    marginBottom: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+});
+
+export default CreatingEditingAdState;

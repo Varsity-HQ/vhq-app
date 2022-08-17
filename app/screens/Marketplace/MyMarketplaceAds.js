@@ -8,6 +8,8 @@ import colors from "../../config/colors";
 import AppButton from "../../components/Button";
 import { MARKETPLACE_CREATE, MARKETPLACE_HOME } from "../../navigation/routes";
 import MyMarketplaceAd from "../../components/Marketplace/MyMarketplaceAd";
+import CreatingEditingAdState from "../../components/Marketplace/CreateService/CreatingEditingAdState";
+
 import { useNavigation } from "@react-navigation/native";
 
 function MyMarketplaceAds() {
@@ -29,6 +31,7 @@ function MyMarketplaceAds() {
             marginTop: 20,
           }}
         >
+          <CreatingEditingAdState />
           <MyMarketplaceAd />
           <MyMarketplaceAd />
           <MyMarketplaceAd />
