@@ -85,7 +85,8 @@ function ItemPage({ navigation }) {
         />
       </View>
       <ItemHeader data={data} />
-      <ItemActions data={data.user_data} />
+
+      <ItemActions posted_by={data.posted_by} data={data.user_data} />
       <ItemSellerInfo data={data.user_data} />
       <ItemAbout data={data} />
       <CommunityProtection data={data} />

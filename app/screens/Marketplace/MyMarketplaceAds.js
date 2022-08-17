@@ -19,6 +19,7 @@ function MyMarketplaceAds() {
         backPress={() => navigation.navigate(MARKETPLACE_HOME)}
         backIcon
         noBorder
+        rightPress={() => navigation.navigate(MARKETPLACE_CREATE)}
         buttonText="Create"
       />
       <View style={styles.container}>

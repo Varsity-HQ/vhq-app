@@ -16,10 +16,6 @@ import RoundedIconWithLabel from "../RoundedIconWithLabel";
 
 const height = Dimensions.get("window").height;
 
-{
-  /* <UserMenu data={data.user_data} /> */
-}
-
 function ItemHeader({ data }) {
   console.log({ data });
   return (

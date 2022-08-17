@@ -36,6 +36,7 @@ import {
   DISCOVER_PAGE,
   ADMIN_HOME,
   ABOUT_PAGE,
+  MY_MARKETPLACE_ADS,
 } from "./routes";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
@@ -69,6 +70,7 @@ import QcoinsOffersPage from "../screens/QcoinsOffersPage";
 import DiscoverPage from "../screens/DiscoverPage";
 import AdminHome from "../screens/AdminScreens/AdminHome";
 import About from "../screens/About";
+import MyMarketplaceAds from "../screens/Marketplace/MyMarketplaceAds";
 
 const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
@@ -132,6 +134,13 @@ const FeedNavigator = () => (
         }}
         name={DISCOVER_PAGE}
         component={DiscoverPage}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={MY_MARKETPLACE_ADS}
+        component={MyMarketplaceAds}
       />
       <Stack.Screen
         options={{

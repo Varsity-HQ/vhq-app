@@ -7,12 +7,78 @@ import Text from "../AppText";
 import { RFValue } from "react-native-responsive-fontsize";
 import AppTextInput from "../Input";
 import { TyphoonLine } from "react-native-remix-icon/src/icons";
+import { connect } from "react-redux";
 
 const height = Dimensions.get("window").height;
 
-function ItemActions({ data }) {
+const mapStateToProps = (state) => {
+  return {
+    userID: state.core.accData.userID,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+function ItemActions({ data, posted_by, userID }) {
+  if (userID === posted_by) {
+    return (
+      <View style={styles.container}>
+        <View
+          style={{
+            paddingBottom: 5,
+            paddingTop: 10,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text
+              numberOfLines={1}
+              ellipsizeMode={"tail"}
+              style={{ color: colors.secondary_2 }}
+            >
+              Easily manage or delete your ad from here
+            </Text>
+          </View>
+        </View>
+        <View style={[styles.row]}>
+          <Button
+            disabled
+            style={{
+              flex: 1,
+            }}
+            type={3}
+            title="Edit Ad"
+          />
+          <Button
+            disabled
+            style={{
+              flex: 1,
+              marginLeft: 10,
+              backgroundColor: colors.redish,
+            }}
+            type={3}
+            title="Delete Ad"
+          />
+        </View>
+      </View>
+    );
+  }
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          opacity: 0.3,
+        },
+      ]}
+    >
       <View
         style={{
           paddingBottom: 5,
@@ -135,6 +201,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   container: {
+    // opacity: 0.3,
+
     margin: 10,
 
     borderTopWidth: 1,
@@ -160,4 +228,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ItemActions;
+export default connect(mapStateToProps, mapDispatchToProps)(ItemActions);

@@ -13,6 +13,11 @@ function IconButton({
   buttonStyle,
   onPress,
 }) {
+  const handle_pressed = () => {
+    if (disabled) return;
+    onPress();
+  };
+
   return (
     <View
       style={[
@@ -31,7 +36,7 @@ function IconButton({
         }}
       >
         <Button
-          onPress={onPress}
+          onPress={handle_pressed}
           disabled={disabled}
           type={3}
           content={icon}

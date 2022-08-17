@@ -32,6 +32,7 @@ const mapStateToProps = (state) => {
     profilepic: state.core.accData.profilepic,
     university: state.core.accData.university,
     m_saves: state.core.accData.m_saves,
+    userID: state.core.accData.userID,
   };
 };
 
@@ -51,6 +52,7 @@ function ItemPageHeader({
   topPart = true,
   save_marketplace_item,
   unsave_marketplace_item,
+  userID,
 }) {
   const [saved, setSaved] = useState(false);
   const navigation = useNavigation();
@@ -168,6 +170,7 @@ function ItemPageHeader({
         </View>
         <View style={styles.row}>
           <IconButton
+            disabled={userID === data.posted_by}
             onPress={handleSaveItem}
             buttonStyle={{
               backgroundColor: colors.dark_opacity_2,

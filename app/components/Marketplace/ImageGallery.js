@@ -121,6 +121,22 @@ class PostPictures extends PureComponent {
             />
           )}
         />
+        <View
+          style={{
+            paddingTop: this.props.inserts.top,
+            position: "absolute",
+            paddingHorizontal: 10,
+          }}
+        >
+          <Button
+            onPress={() => this.props.navigation.goBack()}
+            style={styles.button}
+            type={3}
+            content={
+              <FontAwesome name="close" size={20} color={colors.white} />
+            }
+          />
+        </View>
       </View>
     );
   }

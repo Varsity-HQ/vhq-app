@@ -22,6 +22,7 @@ import { Image } from "react-native-expo-image-cache";
 import {
   ANONYMOUS_SETTINGS,
   CHAT_PAGE,
+  MY_MARKETPLACE_ADS,
   PROFILE_SETTINGS,
   UPDATE_PROFILE_PAGE,
 } from "../../navigation/routes";
@@ -299,12 +300,7 @@ function ProfileHeader({
           (auth_profile && (
             <View style={{ marginTop: 0 }}>
               <Button
-                onPress={() =>
-                  Alert.alert(
-                    "Coming soon",
-                    "This feature will be activated in the next release",
-                  )
-                }
+                onPress={() => navigation.navigate(MY_MARKETPLACE_ADS)}
                 type={3}
                 style={{ borderRadius: 100 }}
                 title="My Shop & Services"
