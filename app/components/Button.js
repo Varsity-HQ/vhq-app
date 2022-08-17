@@ -11,7 +11,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import colors from "../config/colors";
 
-function AppButton({
+function Button({
   title,
   loading,
   disabled,
@@ -308,4 +308,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppButton;
+export default Button;

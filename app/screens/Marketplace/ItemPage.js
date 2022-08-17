@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import CommonHeader from "../../components/Marketplace/CommonHeader";
-import ItemGallery from "../../components/Marketplace/ItemGallery";
+import ItemGallery from "../../components/Marketplace/ImageGallery";
 import ItemHeader from "../../components/Marketplace/ItemHeader";
 import Screen from "../../components/Screen";
 import ItemSlider from "../../components/Marketplace/ItemSlider";
@@ -17,11 +17,13 @@ import ItemPageHeader from "../../components/Marketplace/ItemPageHeader.js";
 import ItemSellerInfo from "../../components/Marketplace/ItemSellerInfo";
 import ItemAddListing from "../../components/Marketplace/ItemAddListing";
 import CommunityProtection from "../../components/Marketplace/CommunityProtection";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 //
-function ItemPage() {
+function ItemPage({ navigation }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const itemID = useRoute().params.id;
+  const inserts = useSafeAreaInsets();
 
   useEffect(() => {
     axios
@@ -75,7 +77,13 @@ function ItemPage() {
 
   return (
     <ScrollView scroll style={styles.container}>
-      <ItemGallery images={data.attachments} />
+      <View>
+        <ItemGallery
+          inserts={inserts}
+          navigation={navigation}
+          images={data.attachments}
+        />
+      </View>
       <ItemHeader data={data} />
       <ItemActions data={data.user_data} />
       <ItemSellerInfo data={data.user_data} />

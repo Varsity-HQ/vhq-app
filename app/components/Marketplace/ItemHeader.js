@@ -53,8 +53,11 @@ function ItemHeader({ data }) {
             icon={
               <FontAwesome name="bookmark" size={15} color={colors.secondary} />
             }
-            text={data.saved_count ? data.saved_count : "No" + " Saves"}
+            text={
+              data.saved_count ? data.saved_count + " saves" : "No" + " Saves"
+            }
           />
+
           <RoundedIconWithLabel
             icon={
               <FontAwesome

@@ -40,8 +40,16 @@ function ItemActions({ data }) {
           </Text>
         </View>
       </View>
-      <View style={styles.row}>
+      <View
+        style={[
+          styles.row,
+          {
+            opacity: 0.4,
+          },
+        ]}
+      >
         <AppTextInput
+          editable={false}
           width="75%"
           style={{
             flex: 1,
@@ -63,6 +71,7 @@ function ItemActions({ data }) {
         
         */}
         <Button
+          disabled
           style={{
             width: "20%",
             marginLeft: 10,

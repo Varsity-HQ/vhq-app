@@ -6,6 +6,7 @@ import Text from "./AppText";
 const width = Dimensions.get("window").width;
 
 function RoundedIconWithLabel({ icon, text }) {
+  if (!text) return null;
   return (
     <View style={styles.container}>
       <View style={styles.icon_container}>{icon}</View>
