@@ -1,7 +1,6 @@
 {
   "name": "vhq-app",
   "version": "2.0.1",
-  "main": "node_modules/expo/AppEntry.js",
   "license": "MIT",
   "scripts": {
     "start": "expo start",
@@ -117,7 +116,8 @@
     "redux-thunk": "^2.4.1",
     "use-memo-one": "^1.1.2",
     "uuid": "3.4.0",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "expo-splash-screen": "~0.14.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
