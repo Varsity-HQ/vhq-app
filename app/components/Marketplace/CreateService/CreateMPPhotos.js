@@ -8,6 +8,7 @@ import {
   set_tab_index,
   add_mc_image,
   remove_local_image,
+  remove_uploaded_image,
 } from "../../../store/actions/marketplaceActions";
 import MCPhoto from "./MCPhoto";
 
@@ -23,6 +24,7 @@ const mapDispatchToProps = (dispatch) => {
     set_tab_index: (index) => dispatch(set_tab_index(index)),
     add_mc_image: (image) => dispatch(add_mc_image(image)),
     remove_local_image: (index) => dispatch(remove_local_image(index)),
+    remove_uploaded_image: (index) => dispatch(remove_uploaded_image(index)),
   };
 };
 
@@ -32,14 +34,19 @@ function CreateMPPhotos({
   create,
   add_mc_image,
   remove_local_image,
+  remove_uploaded_image,
 }) {
   const handle_add_image = (data) => {
     add_mc_image(data);
     console.log({ data });
   };
 
-  const handle_remove = (index) => {
-    remove_local_image(index);
+  const handle_remove = (index, isUploaded) => {
+    if (isUploaded) {
+      remove_uploaded_image(index);
+    } else {
+      remove_local_image(index);
+    }
   };
 
   return (
@@ -66,11 +73,21 @@ function CreateMPPhotos({
           paddingVertical: 20,
         }}
       >
+        {data.attachments.map((x, index) => (
+          <MCPhoto
+            removePress={() => handle_remove(index, true)}
+            image={x}
+            key={x + index}
+          />
+        ))}
+
         {create.local_images.map((x, index) => (
           <MCPhoto
-            removePress={() => handle_remove(index)}
+            removePress={() =>
+              handle_remove(data.attachments.length - 1 + index)
+            }
             image={x}
-            key={index}
+            key={x + index}
           />
         ))}
 

@@ -168,6 +168,12 @@ export const remove_local_image = (index) => (dispatch) => {
     payload: index,
   });
 };
+export const remove_uploaded_image = (index) => (dispatch) => {
+  dispatch({
+    type: "MPC_REMOVE_UPLOADED_IMAGE",
+    payload: index,
+  });
+};
 export const select_everyone = (isChecked) => (dispatch) => {
   const new_targets = {
     first: isChecked,
@@ -246,6 +252,19 @@ export const handle_create_ad = () => async (dispatch) => {
         payload: false,
       });
     });
+};
+
+export const set_loading = () => (dispatch) => {
+  dispatch({
+    type: "MPC_LOADING",
+    payload: true,
+  });
+};
+export const set_ad_data = (data) => (dispatch) => {
+  dispatch({
+    type: "MPC_SET_AD_DATA",
+    payload: data,
+  });
 };
 
 const uploadMultipleImagesAsync = async (images) => {

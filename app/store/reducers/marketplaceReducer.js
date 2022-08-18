@@ -16,12 +16,34 @@ const initialState = {
     local_images: [],
     tabIndex: 0,
     uploading: false,
+    loading: false,
     loading_categories: true,
   },
 };
 
 const marketplaceReducer = (state = initialState, actions) => {
   switch (actions.type) {
+    case "MPC_SET_AD_DATA":
+      return {
+        ...state,
+        create: {
+          ...state.create,
+          data: {
+            ...actions.payload,
+            target: actions.payload.feed_targeting,
+            related: null,
+            attachments: actions.payload.attachments,
+          },
+        },
+      };
+    case "MPC_LOADING":
+      return {
+        ...state,
+        create: {
+          ...state.create,
+          loading: actions.payload,
+        },
+      };
     case "MPC_UPLOADING":
       return {
         ...state,
@@ -49,6 +71,25 @@ const marketplaceReducer = (state = initialState, actions) => {
           data: {
             ...state.create.data,
             target: actions.payload,
+          },
+        },
+      };
+    case "MPC_REMOVE_UPLOADED_IMAGE":
+      let ur_attachments = [];
+
+      state.create.data.attachments.forEach((x, index) => {
+        if (index !== actions.payload) {
+          ur_attachments.push(x);
+        }
+      });
+
+      return {
+        ...state,
+        create: {
+          ...state.create,
+          data: {
+            ...state.create.data,
+            attachments: ur_attachments,
           },
         },
       };

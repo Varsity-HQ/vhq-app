@@ -6,7 +6,7 @@ import Button from "../Button";
 import Text from "../AppText";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { MARKETPLACE_ITEM_PAGE } from "../../navigation/routes";
+import { CREATE_IN_DEP, MARKETPLACE_ITEM_PAGE } from "../../navigation/routes";
 import { useNavigation } from "@react-navigation/native";
 dayjs.extend(relativeTime);
 
@@ -48,6 +48,12 @@ function MyMarketplaceAd({ data }) {
         </Text>
         <View style={styles.row}>
           <Button
+            onPress={() =>
+              navigation.push(CREATE_IN_DEP, {
+                id: data.id,
+                edit: true,
+              })
+            }
             type={3}
             style={{ marginRight: 10, flex: 1 }}
             title="Edit Ad"

@@ -1,4 +1,5 @@
 const init_accdata = {
+  attachments: [],
   target: {
     first: true,
     second: true,

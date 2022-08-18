@@ -9,7 +9,11 @@ import AppTextInput from "../Input";
 import { TyphoonLine } from "react-native-remix-icon/src/icons";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { MARKETPLACE_HOME, MY_MARKETPLACE_ADS } from "../../navigation/routes";
+import {
+  CREATE_IN_DEP,
+  MARKETPLACE_HOME,
+  MY_MARKETPLACE_ADS,
+} from "../../navigation/routes";
 import axios from "axios";
 
 const height = Dimensions.get("window").height;
@@ -77,6 +81,12 @@ function ItemActions({ data, posted_by, userID, item_id }) {
             }}
             type={3}
             title="Edit Ad"
+            onPress={() => {
+              navigation.push(CREATE_IN_DEP, {
+                id: item_id,
+                edit: true,
+              });
+            }}
           />
           <Button
             onPress={() => {
