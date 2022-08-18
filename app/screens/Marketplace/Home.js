@@ -53,7 +53,7 @@ function Home({ loading, get_home, data, university, navigation }) {
         <CategoryMenu />
         <ListingSection
           t1="Recent services"
-          t2={`Browse services offered by students or people at the ${university}`}
+          // t2={`Browse services offered by students or people at the ${university}`}
           name="Services"
           data={data.market_items}
         />
@@ -61,7 +61,7 @@ function Home({ loading, get_home, data, university, navigation }) {
         <PageInviter page="marketplace-home" />
         <ListingSection
           t1="Recent listings"
-          t2="See what's on sale by browsing ads or classifieds posted by people around you"
+          // t2="See what's on sale by browsing ads or classifieds posted by people around you"
           name="Listings"
           data={data.listings}
         />

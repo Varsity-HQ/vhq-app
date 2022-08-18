@@ -170,10 +170,12 @@ export const remove_local_image = (index) => (dispatch) => {
   });
 };
 export const remove_uploaded_image = (index) => (dispatch) => {
+  let item_id = store.getState().marketplaceReducer.create.data.id;
   dispatch({
     type: "MPC_REMOVE_UPLOADED_IMAGE",
     payload: index,
   });
+  axios.get(`/marketplace/item/${item_id}/remove/${index}/image`);
 };
 export const select_everyone = (isChecked) => (dispatch) => {
   const new_targets = {

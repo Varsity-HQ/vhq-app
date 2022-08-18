@@ -48,7 +48,7 @@ function index({ page = "" }) {
                   Invite Friends
                 </Text>
                 <FontAwesome
-                  color={colors.white}
+                  color={colors.secondary}
                   size={20}
                   style={{
                     marginLeft: 7,
@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
   mh_container: {
     padding: 20,
     margin: 10,
-    backgroundColor: colors.v_st_bg_3,
+    // backgroundColor: colors.v_st_bg_3,
+    backgroundColor: colors.dark_opacity_2,
     borderRadius: 10,
   },
   row: {
@@ -81,9 +82,11 @@ const styles = StyleSheet.create({
     fontSize: RFValue(16),
     fontWeight: "600",
     marginBottom: 10,
+    color: colors.lighish2,
   },
   promo_text: {
     fontSize: RFValue(13),
+    color: colors.secondary,
   },
 });
 
