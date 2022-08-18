@@ -1,5 +1,6 @@
 const targetArraylizer = (targetObj) => {
   let targets = [];
+
   Object.keys(targetObj).forEach(function (key) {
     if (key === "first" && targetObj[key] === true) {
       targets.push("1st");
@@ -32,40 +33,44 @@ const targetObjectizer = (targetArray) => {
     postgraduates: false,
   };
 
-  targetArray.forEach((x) => {
-    if (x === "1st") {
-      targets = {
-        ...targets,
-        first: true,
-      };
-    }
-    if (x === "2nd") {
-      targets = {
-        ...targets,
-        second: true,
-      };
-    }
-    if (x === "3rd") {
-      targets = {
-        ...targets,
-        third: true,
-      };
-    }
-    if (x === "4th") {
-      targets = {
-        ...targets,
-        forth: true,
-      };
-    }
-    if (x === "postgraduates") {
-      targets = {
-        ...targets,
-        postgraduates: true,
-      };
-    }
-  });
+  if (Array.isArray(targetArray)) {
+    targetArray.forEach((x) => {
+      if (x === "1st") {
+        targets = {
+          ...targets,
+          first: true,
+        };
+      }
+      if (x === "2nd") {
+        targets = {
+          ...targets,
+          second: true,
+        };
+      }
+      if (x === "3rd") {
+        targets = {
+          ...targets,
+          third: true,
+        };
+      }
+      if (x === "4th") {
+        targets = {
+          ...targets,
+          forth: true,
+        };
+      }
+      if (x === "postgraduates") {
+        targets = {
+          ...targets,
+          postgraduates: true,
+        };
+      }
+    });
 
-  return targets;
+    return targets;
+  } else {
+    return targets;
+  }
 };
 
 export { targetArraylizer, targetObjectizer };
