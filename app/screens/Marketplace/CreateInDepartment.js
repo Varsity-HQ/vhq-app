@@ -86,6 +86,7 @@ function CreateInDepartment({
       .get(`/marketplace/${id}`)
       .then((data) => {
         set_ad_data(data.data);
+        setDepartment(data.data.department);
         return axios.get(`/marketplace/mystore/cats/${data.data.department}`);
       })
       .then((data) => {

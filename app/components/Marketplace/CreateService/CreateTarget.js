@@ -52,8 +52,8 @@ function CreateTarget({
             },
           ]}
         >
-          Choose who must see this service. Only people selected below will be
-          able to see this service.
+          Choose who must see this {create.data.department}. Only people
+          selected below will be able to see this {create.data.department}.
         </Text>
         <View style={styles.underline} />
         <View style={{ marginTop: 20 }}>
@@ -131,7 +131,15 @@ function CreateTarget({
             handle_create_ad();
             navigate.navigate(MY_MARKETPLACE_ADS);
           }}
-          title={create.uploading ? "Creating ad.." : "Create Ad"}
+          title={
+            create.uploading
+              ? create.data.id
+                ? "Updating ad.."
+                : "Creating ad.."
+              : create.data.id
+              ? "Update Ad"
+              : "Create Ad"
+          }
         />
       </View>
     </View>
