@@ -20,7 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "We use your location to show you relavent peers close to you when you're using the app",
+        "NSLocationWhenInUseUsageDescription": "We use your location to show you relevent peers close to you when you're using the app",
         "UIBackgroundModes": ["remote-notification"]
       },
       "bundleIdentifier": "com.varsityheadquarters.varsityhq",
