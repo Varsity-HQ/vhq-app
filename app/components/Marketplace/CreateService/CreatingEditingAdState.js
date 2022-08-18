@@ -26,7 +26,7 @@ function CreatingEditingAdState({ create, attachments }) {
       <View>
         <Text style={{ fontWeight: "700" }}>Job in progress</Text>
         <Text style={{ fontWeight: "500", color: colors.secondary }}>
-          Creating your service...
+          {create.data.id ? "Updating" : "Creating"} your service...
         </Text>
       </View>
     </View>

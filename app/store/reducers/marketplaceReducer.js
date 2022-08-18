@@ -1,3 +1,4 @@
+import { targetObjectizer } from "../../util/targetArraylizer";
 import initial_marketplace_ad_data from "./initial_marketplace_ad_data";
 
 const initialState = {
@@ -31,7 +32,7 @@ const marketplaceReducer = (state = initialState, actions) => {
           data: {
             ...initial_marketplace_ad_data,
             ...actions.payload,
-            target: actions.payload.feed_targeting,
+            target: targetObjectizer(actions.payload.feed_targeting),
             related: null,
             attachments: actions.payload.attachments,
           },

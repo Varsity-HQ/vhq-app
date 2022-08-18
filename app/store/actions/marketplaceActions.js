@@ -10,6 +10,7 @@ import {
 
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import uuid from "uuid";
+import { targetArraylizer } from "../../util/targetArraylizer";
 
 export const get_home = () => (dispatch) => {
   dispatch({
@@ -221,7 +222,7 @@ export const handle_create_ad = () => async (dispatch) => {
   const ready_ad_data = {
     ...ad_data,
     attachments: current_attachments.concat(attachment_urls),
-    feed_targeting: ad_data.target,
+    feed_targeting: targetArraylizer(ad_data.target),
     fromUniversity: store.getState().core.accData.university,
   };
 
@@ -238,7 +239,6 @@ export const handle_create_ad = () => async (dispatch) => {
       dispatch({
         type: "RESET_MPC",
       });
-
       Toast.show({
         type: "general",
         autoHide: false,
