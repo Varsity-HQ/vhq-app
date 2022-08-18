@@ -29,6 +29,7 @@ const marketplaceReducer = (state = initialState, actions) => {
         create: {
           ...state.create,
           data: {
+            ...initial_marketplace_ad_data,
             ...actions.payload,
             target: actions.payload.feed_targeting,
             related: null,

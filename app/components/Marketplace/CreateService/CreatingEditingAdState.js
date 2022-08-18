@@ -10,14 +10,19 @@ const width = Dimensions.get("window").width;
 const mapStateToProps = (state) => {
   return {
     create: state.marketplaceReducer.create,
+    attachments: state.marketplaceReducer.create.data.attachments,
   };
 };
 
-function CreatingEditingAdState({ create }) {
+function CreatingEditingAdState({ create, attachments }) {
   if (!create.uploading) return null;
   return (
     <View style={styles.container}>
-      <Image local uri={{ uri: create.local_images[0] }} style={styles.image} />
+      {attachments.length > 0 ? (
+        <Image uri={attachments[0]} style={styles.image} />
+      ) : (
+        <Image uri={{ uri: create.local_images[0] }} style={styles.image} />
+      )}
       <View>
         <Text style={{ fontWeight: "700" }}>Job in progress</Text>
         <Text style={{ fontWeight: "500", color: colors.secondary }}>

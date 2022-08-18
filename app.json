@@ -2,7 +2,7 @@
   "expo": {
     "name": "VarsityHQ",
     "slug": "vhq",
-    "version": "2.0.1",
+    "version": "1.1.6",
     "orientation": "portrait",
     "description": "A social media app for students in South African universities.",
     "userInterfaceStyle": "automatic",
@@ -20,17 +20,17 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "We use your location to show you relevent peers close to you when you're using the app",
+        "NSLocationWhenInUseUsageDescription": "We use your location to show you relavent peers close to you when you're using the app",
         "UIBackgroundModes": ["remote-notification"]
       },
       "bundleIdentifier": "com.varsityheadquarters.varsityhq",
-      "buildNumber": "2.0.1",
+      "buildNumber": "1.1.6",
       "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "googleServicesFile": "./google-services.json",
       "package": "com.varsityheadquarters.varsityhq",
-      "versionCode": 11,
+      "versionCode": 9,
       "useNextNotificationsApi": true,
       "permissions": []
     },

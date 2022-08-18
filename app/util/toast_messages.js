@@ -60,5 +60,5 @@ export const UPLOADED_MARKETPLACE_ITEM = {
 export const FAILED_TO_UPLOAD_MARKETPLACE_ITEM = {
   text1: undefined,
   text2:
-    "Failed : We encountered an error, please check your internet or try to create your ad again",
+    "Failed : We encountered an error, please check your internet or try again",
 };

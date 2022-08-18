@@ -208,6 +208,8 @@ export const handle_create_ad = () => async (dispatch) => {
     payload: true,
   });
   const ad_data = store.getState().marketplaceReducer.create.data;
+  const current_attachments =
+    store.getState().marketplaceReducer.create.data.attachments;
   const ad_local_marketplace =
     store.getState().marketplaceReducer.create.local_images;
 
@@ -218,13 +220,16 @@ export const handle_create_ad = () => async (dispatch) => {
 
   const ready_ad_data = {
     ...ad_data,
-    attachments: attachment_urls,
+    attachments: current_attachments.concat(attachment_urls),
     feed_targeting: ad_data.target,
     fromUniversity: store.getState().core.accData.university,
   };
 
   axios
-    .post("/market/addnew", ready_ad_data)
+    .post(
+      ad_data.id ? `/market/update/${ad_data.id}` : "/market/addnew",
+      ready_ad_data,
+    )
     .then(() => {
       dispatch({
         type: "MPC_UPLOADING",
