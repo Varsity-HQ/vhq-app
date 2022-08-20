@@ -32,7 +32,6 @@ function ItemPage({ navigation }) {
         let item = data.data;
         setData(item);
         setLoading(false);
-        console.log(item);
       })
       .catch((err) => {
         console.log(err);

@@ -21,7 +21,7 @@ function CreatingEditingAdState({ create, attachments }) {
       {attachments.length > 0 ? (
         <Image uri={attachments[0]} style={styles.image} />
       ) : (
-        <Image uri={{ uri: create.local_images[0] }} style={styles.image} />
+        <Image uri={create.local_images[0]} local style={styles.image} />
       )}
       <View>
         <Text style={{ fontWeight: "700" }}>Job in progress</Text>

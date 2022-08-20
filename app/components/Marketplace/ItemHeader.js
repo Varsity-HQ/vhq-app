@@ -17,7 +17,6 @@ import RoundedIconWithLabel from "../RoundedIconWithLabel";
 const height = Dimensions.get("window").height;
 
 function ItemHeader({ data }) {
-  console.log({ data });
   return (
     <View style={styles.main_container}>
       <View style={styles.f_container}>

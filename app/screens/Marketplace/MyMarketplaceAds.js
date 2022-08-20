@@ -35,8 +35,6 @@ function MyMarketplaceAds({ userID }) {
 
   const [data, loading, error] = useCollectionData(ad_query);
 
-  console.log({ data });
-
   return (
     <Screen scroll>
       <Header

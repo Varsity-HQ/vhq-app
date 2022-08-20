@@ -13,7 +13,6 @@ const mapStateToProps = (state) => {
 };
 
 function AdCreateSection({ tabIndex, categories, data }) {
-  console.log({ data });
   switch (tabIndex) {
     case 3:
       return <CreateTarget />;

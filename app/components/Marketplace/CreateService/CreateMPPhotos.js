@@ -38,7 +38,6 @@ function CreateMPPhotos({
 }) {
   const handle_add_image = (data) => {
     add_mc_image(data);
-    console.log({ data });
   };
 
   const handle_remove = (index, isUploaded) => {
@@ -83,8 +82,15 @@ function CreateMPPhotos({
 
         {create.local_images.map((x, index) => (
           <MCPhoto
+            local
             removePress={() =>
-              handle_remove(data.attachments.length - 1 + index)
+              handle_remove(
+                data.attachments.length === 0
+                  ? index
+                  : data.attachments.length - 1 + index,
+
+                false,
+              )
             }
             image={x}
             key={x + index}
