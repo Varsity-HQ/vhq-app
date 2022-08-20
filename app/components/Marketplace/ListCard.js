@@ -127,13 +127,13 @@ const styles = StyleSheet.create({
   card_image: {
     height: height * 0.12,
     width: height * 0.12,
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
+    // borderTopLeftRadius: 10,
+    // borderBottomLeftRadius: 10,
   },
   container: {
-    borderTopColor: colors.lighish,
-    borderTopWidth: 1,
-    paddingVertical: 10,
+    borderColor: colors.dark_opacity_2,
+    borderWidth: 1,
+    paddingVertical: 8,
     marginHorizontal: 10,
     flexDirection: "row",
   },

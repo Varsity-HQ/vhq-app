@@ -23,6 +23,13 @@ const stats = [
     onPress: null,
   },
 ];
+const marketplace = [
+  {
+    id: v4(),
+    title: "Department categories",
+    onPress: null,
+  },
+];
 
 function AdminHome(props) {
   const renderItemHandler = ({ item }) => {
@@ -50,6 +57,10 @@ function AdminHome(props) {
           {
             title: "Notification & Alerts",
             data: notifications,
+          },
+          {
+            title: "Marketplace",
+            data: marketplace,
           },
         ]}
         renderSectionHeader={({ section }) => {
