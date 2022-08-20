@@ -8,6 +8,8 @@ export const NOTIFICATIONS = "Notifications";
 
 //Admin Screens
 export const ADMIN_HOME = "AdminHome";
+export const ADMIN_MARKETPLACE_CATEGORIES = "AdminMarkplaceCategories";
+export const ADMIN_MARKETPLACE_CATEGORY = "AdminMarkplaceCategory";
 
 //Chat Screens
 export const CHAT_HOME = "ChatHome";

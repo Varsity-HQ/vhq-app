@@ -10,9 +10,9 @@ import Image from "../../components/Image";
 import { useNavigation } from "@react-navigation/native";
 import { CREATE_IN_DEP } from "../../navigation/routes";
 import CreatingEditingAdState from "../../components/Marketplace/CreateService/CreatingEditingAdState";
-import { connect } from "react-redux";
+import Category from "../../components/Marketplace/MarketplaceCategoryIconBtn";
 
-const width = Dimensions.get("window").width;
+import { connect } from "react-redux";
 
 const mapStateToProps = (state) => {
   return {
@@ -72,59 +72,13 @@ function Create({ uploading }) {
   );
 }
 
-const Category = ({ title, uri, dep, disabled }) => {
-  const navigation = useNavigation();
-  return (
-    <View style={styles.category}>
-      <TouchableOpacity
-        onPress={() => {
-          if (!disabled)
-            navigation.navigate(CREATE_IN_DEP, {
-              department: dep,
-            });
-        }}
-        style={styles.category_inner}
-      >
-        <Image style={styles.category_icon} local uri={uri} />
-        <Text
-          style={{
-            color: colors.secondary,
-            fontWeight: "700",
-          }}
-        >
-          {title}
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
 const styles = StyleSheet.create({
   categories_container: {
     flexDirection: "row",
     flexWrap: "wrap",
     marginTop: 10,
   },
-  category_icon: {
-    height: 50,
-    width: 50,
-    marginBottom: 10,
-  },
-  category_inner: {
-    backgroundColor: colors.dark_opacity_2,
-    padding: 20,
-    // borderRadius: 5,
-    flexDirection: "column",
-    alignItems: "center",
-    borderColor: colors.secondary_2,
-    borderTopColor: colors.primary,
-    borderTopWidth: 3,
-    // borderWidth: 2,
-  },
-  category: {
-    padding: 10,
-    width: width / 2,
-  },
+
   wrapper: {
     padding: 10,
   },

@@ -40,6 +40,8 @@ import {
   MARKETPLACE_CREATE,
   MARKETPLACE_ITEM_PAGE,
   CREATE_IN_DEP,
+  ADMIN_MARKETPLACE_CATEGORIES,
+  ADMIN_MARKETPLACE_CATEGORY,
 } from "./routes";
 import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
 import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
@@ -77,6 +79,8 @@ import MyMarketplaceAds from "../screens/Marketplace/MyMarketplaceAds";
 import CreateInDepartment from "../screens/Marketplace/CreateInDepartment";
 import ItemPage from "../screens/Marketplace/ItemPage";
 import Create from "../screens/Marketplace/Create";
+import MarketplaceCategories from "../screens/AdminScreens/MarketplaceCategories";
+import MarketplaceCategory from "../screens/AdminScreens/MarketplaceCategory";
 
 const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
@@ -350,6 +354,22 @@ const FeedNavigator = () => (
         }}
         name={ADMIN_HOME}
         component={AdminHome}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={ADMIN_MARKETPLACE_CATEGORIES}
+        component={MarketplaceCategories}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={ADMIN_MARKETPLACE_CATEGORY}
+        component={MarketplaceCategory}
       />
 
       {/* <Stack.Screen 

@@ -7,12 +7,13 @@ import Button from "../../components/Button";
 import colors from "../../config/colors";
 import { RFValue } from "react-native-responsive-fontsize";
 import { v4 } from "uuid";
+import { ADMIN_MARKETPLACE_CATEGORIES } from "../../navigation/routes";
 
 const notifications = [
   {
     id: v4(),
     title: "Alert users to update app",
-    onPress: null,
+    route: null,
   },
 ];
 
@@ -20,22 +21,22 @@ const stats = [
   {
     id: v4(),
     title: "Stats summary",
-    onPress: null,
+    route: null,
   },
 ];
 const marketplace = [
   {
     id: v4(),
-    title: "Department categories",
-    onPress: null,
+    title: "Manage Categories",
+    route: ADMIN_MARKETPLACE_CATEGORIES,
   },
 ];
 
-function AdminHome(props) {
+function AdminHome({ navigation }) {
   const renderItemHandler = ({ item }) => {
     return (
       <Button
-        onPress={item.onPress}
+        onPress={() => navigation.navigate(item.route)}
         type={3}
         style={styles.button}
         title={item.title}
