@@ -85,7 +85,7 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
     set_processing(true);
 
     let newUserData = {
-      username: username, // must run regex for correct pattern
+      username: username,
       email: email,
       password: password,
       rep_password: confirm_pass,

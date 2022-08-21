@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, FlatList } from "react-native";
 import Screen from "../../components/Screen";
 import CategoryPageHeader from "../../components/Marketplace/CategoryPageHeader";
+import ItemCard from "../../components/Marketplace/ItemCard";
 import ListCard from "../../components/Marketplace/ListCard";
 import { useRoute } from "@react-navigation/native";
 import {
@@ -48,7 +49,8 @@ function CategoryPage({ get_category, loading, data }) {
   }
 
   function renderItem({ item }) {
-    return <ListCard x={item} />;
+    // return <ListCard x={item} />;
+    return <ItemCard type={2} x={item} />;
   }
 
   if (loading) {
@@ -62,6 +64,7 @@ function CategoryPage({ get_category, loading, data }) {
   return (
     <Screen style={styles.container}>
       <FlatList
+        numColumns={2}
         ListHeaderComponent={
           <CategoryPageHeader data={data} category={category} />
         }

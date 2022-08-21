@@ -11,12 +11,10 @@ function TopJobs({ data }) {
       <View style={styles.heading_section}>
         <View>
           <Text style={{ fontWeight: "700", fontSize: RFValue(15) }}>
-            Browse Jobs
+            Browse Recent Jobs
           </Text>
         </View>
-        <View>
-          <Text>see more</Text>
-        </View>
+        <View>{/* <Text>see more</Text> */}</View>
       </View>
       <View>
         {data.map((x, index) => (

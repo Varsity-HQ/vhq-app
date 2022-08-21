@@ -45,6 +45,7 @@ function CategoryPageHeader({ category, skeleton, data, university }) {
       </View>
     );
   }
+  console.log(data);
   return (
     <View style={styles.container}>
       <CommonHeader />
@@ -69,7 +70,9 @@ function CategoryPageHeader({ category, skeleton, data, university }) {
         >
           Found {data.total_count} {category} at the {university}
         </Text>
-        <FilterByCategory category={category} data={data.categories} />
+        {/* {data.categories.length > 0 ? (
+          <FilterByCategory category={category} data={data.categories} />
+        ) : null} */}
       </View>
     </View>
   );

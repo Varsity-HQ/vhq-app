@@ -1,13 +1,21 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import Text from "../AppText";
 import { connect } from "react-redux";
 import colors from "../../config/colors";
 import ItemSlider from "./ItemSlider";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { MARKETPLACE_CAT_PAGE } from "../../navigation/routes";
 
-function ListingSection({ name, data, t1, t2 }) {
+function ListingSection({ name, data, t1, t2, query }) {
+  const navigation = useNavigation();
+
+  const handle_press_see_more = () => {
+    navigation.navigate(MARKETPLACE_CAT_PAGE, { category: query });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.default_padding}>
@@ -32,9 +40,11 @@ function ListingSection({ name, data, t1, t2 }) {
             </Text>
           </View>
           <View style={styles.row}>
-            <Text style={{ color: colors.secondary, marginRight: 10 }}>
-              see more
-            </Text>
+            <TouchableOpacity onPress={handle_press_see_more}>
+              <Text style={{ color: colors.secondary, marginRight: 10 }}>
+                see more
+              </Text>
+            </TouchableOpacity>
             <Ionicons
               name="arrow-forward"
               color={colors.secondary_2}

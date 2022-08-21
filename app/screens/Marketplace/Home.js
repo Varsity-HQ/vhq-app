@@ -12,7 +12,11 @@ import { get_home } from "../../store/actions/marketplaceActions";
 import ListingSection from "../../components/Marketplace/ListingSection";
 import FloatingButton from "../../components/FloatingButton";
 import { useFocusEffect } from "@react-navigation/native";
-import { MARKETPLACE_CREATE } from "../../navigation/routes";
+import {
+  LISTINGS_CATEGORY,
+  MARKETPLACE_CREATE,
+  SERVICES_CATEGORY,
+} from "../../navigation/routes";
 
 const mapStateToProps = (state) => {
   return {
@@ -55,6 +59,7 @@ function Home({ loading, get_home, data, university, navigation }) {
           t1="Recent services"
           // t2={`Browse services offered by students or people at the ${university}`}
           name="Services"
+          query={SERVICES_CATEGORY}
           data={data.market_items}
         />
         {/* <AdSpace /> */}
@@ -63,6 +68,7 @@ function Home({ loading, get_home, data, university, navigation }) {
           t1="Recent listings"
           // t2="See what's on sale by browsing ads or classifieds posted by people around you"
           name="Listings"
+          query={LISTINGS_CATEGORY}
           data={data.listings}
         />
         <TopJobs data={data.joblistings} />
