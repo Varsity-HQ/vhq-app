@@ -77,11 +77,12 @@ function ChatPage({ account }) {
   const queryRef = query(
     msgColRef,
     where("chat_id", "==", chat_id),
-    orderBy("sent_date"),
+    orderBy("sent_date", "desc"),
     limit(25),
   );
   const [messages_list, msg_loading, meerror] = useCollectionData(queryRef);
   /** get user */
+
   const accDocRef = isDatingChat
     ? doc(db, "discover_profiles", route.params.uid)
     : doc(db, "accounts", route.params.uid);
@@ -321,16 +322,13 @@ function ChatPage({ account }) {
               backgroundColor: colors.dark_opacity,
             },
           }}
+          scrollToBottom
           renderAvatar={renderAvatar}
           text={textMessage}
-          isKeyboardInternallyHandled={true}
-          // wrapInSafeArea={false}
-          infiniteScroll
           onInputTextChanged={(text) => onInputTextChanged(text)}
           renderUsernameOnMessage
-          inverted={true}
           lightboxProps={{ useNativeDriver: true }}
-          bottomOffset={insets.bottom}
+          // bottomOffset={insets.bottom}
           messages={messages_processed}
           onSend={(messages) => onSend(messages)}
           user={{
@@ -346,11 +344,6 @@ function ChatPage({ account }) {
           // }}
           //
           // onSend={messages => this.onSend(messages)}
-          // user={{
-          //   _id: this.state.userId,
-          //   name: this.state.userName,
-          //   avatar: this.state.userPhoto,
-          // }}
         />
         {/* <MsgInputContainer /> */}
 
