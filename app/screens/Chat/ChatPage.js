@@ -260,7 +260,6 @@ function ChatPage({ account }) {
   };
 
   const renderInputToolbar = (props) => {
-    return <MsgInputContainer />;
     return (
       <>
         <InputToolbar
@@ -314,51 +313,51 @@ function ChatPage({ account }) {
 
   return (
     <>
-      {/* <Screen style={styles.container}> */}
-      {/* <Header dating={isDatingChat} account={userData} /> */}
+      <Screen style={styles.container}>
+        <Header dating={isDatingChat} account={userData} />
+        <GiftedChat
+          listViewProps={{
+            style: {
+              backgroundColor: colors.dark_opacity,
+            },
+          }}
+          renderAvatar={renderAvatar}
+          text={textMessage}
+          isKeyboardInternallyHandled={true}
+          // wrapInSafeArea={false}
+          infiniteScroll
+          onInputTextChanged={(text) => onInputTextChanged(text)}
+          renderUsernameOnMessage
+          inverted={true}
+          lightboxProps={{ useNativeDriver: true }}
+          bottomOffset={insets.bottom}
+          messages={messages_processed}
+          onSend={(messages) => onSend(messages)}
+          user={{
+            _id: chat_acc_id,
+          }}
+          alwaysShowSend
+          // renderBubble={this.renderBubble}
+          renderInputToolbar={renderInputToolbar}
+          renderSend={renderSend}
 
-      <GiftedChat
-        listViewProps={{
-          style: {
-            backgroundColor: colors.dark_opacity,
-          },
-        }}
-        renderAvatar={renderAvatar}
-        text={textMessage}
-        isKeyboardInternallyHandled={true}
-        // wrapInSafeArea={false}
-        infiniteScroll
-        onInputTextChanged={(text) => onInputTextChanged(text)}
-        // renderUsernameOnMessage
-        inverted={true}
-        lightboxProps={{ useNativeDriver: true }}
-        bottomOffset={insets.bottom}
-        messages={messages_processed}
-        onSend={(messages) => onSend(messages)}
-        user={{
-          _id: chat_acc_id,
-        }}
-        alwaysShowSend
-        // messages={this.state.messages}
-        // renderBubble={this.renderBubble}
-        renderInputToolbar={renderInputToolbar}
-        renderSend={renderSend}
+          // renderAccessory={() => {
+          //   <></>;
+          // }}
+          //
+          // onSend={messages => this.onSend(messages)}
+          // user={{
+          //   _id: this.state.userId,
+          //   name: this.state.userName,
+          //   avatar: this.state.userPhoto,
+          // }}
+        />
+        {/* <MsgInputContainer /> */}
 
-        // renderAccessory={() => {
-        //   <></>;
-        // }}
-        //
-        // onSend={messages => this.onSend(messages)}
-        // user={{
-        //   _id: this.state.userId,
-        //   name: this.state.userName,
-        //   avatar: this.state.userPhoto,
-        // }}
-      />
-      {/* <MsgInputContainer /> */}
-
-      {/* {Platform.OS === "android" && <KeyboardAvoidingView behavior="padding" />} */}
-      {/* </Screen> */}
+        {Platform.OS === "android" && (
+          <KeyboardAvoidingView behavior="padding" />
+        )}
+      </Screen>
     </>
   );
 }
