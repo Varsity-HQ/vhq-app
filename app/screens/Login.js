@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   TouchableOpacity,
+  Keyboard,
 } from "react-native";
 import Screen from "../components/Screen";
 import { Ionicons } from "@expo/vector-icons";
@@ -49,6 +50,7 @@ const mapStateToProps = (state) => {
 
 function Login({ navigation, login_user, logging_in_user, logging_in_error }) {
   const handleSubmit = ({ email, password }) => {
+    Keyboard.dismiss();
     login_user(email, password);
   };
 

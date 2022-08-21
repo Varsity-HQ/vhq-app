@@ -6,6 +6,9 @@ import {
   ImageBackground,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Linking,
+  Alert,
+  Keyboard,
 } from "react-native";
 import Screen from "../components/Screen";
 import { Ionicons } from "@expo/vector-icons";
@@ -77,6 +80,7 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
   };
 
   const handle_signup = ({ email, password, confirm_pass }) => {
+    Keyboard.dismiss();
     console.log({ email, password });
     set_processing(true);
 
@@ -87,30 +91,55 @@ function Signup({ navigation, set_token, get_user, getting_account_data }) {
       rep_password: confirm_pass,
     };
 
-    axios
-      .post("/signup", newUserData)
-      .then((res) => {
-        set_token(res.data.token);
-        // console.log(res.data);
+    Alert.alert(
+      `By signing up to "VarsityHQ" you agree to our Terms and Conditions and Privacy Policy. We value user privacy.`,
+      `Press "Continue" to finish signup and start using our app.`,
+      [
+        {
+          text: "Terms and Conditions",
+          onPress: async () => {
+            const url = "https://varsityhq.co.za/terms-of-service";
+            const supported = await Linking.canOpenURL(url);
+            if (supported) {
+              await Linking.openURL(url);
+            }
+            set_processing(false);
+          },
+        },
+        {
+          text: "Continue",
+          onPress: () => {
+            axios
+              .post("/signup", newUserData)
+              .then((res) => {
+                set_token(res.data.token);
+                store.dispatch(get_user(true));
+              })
+              .catch((err) => {
+                set_processing(false);
 
-        store.dispatch(get_user(true));
-        // set_processing(false);
-      })
-      .catch((err) => {
-        set_processing(false);
+                if (err.response) {
+                  let errors = err.response.data;
+                  set_errors({ ...errors });
 
-        if (err.response) {
-          // console.log(err.response.data);
-          let errors = err.response.data;
-          set_errors({ ...errors });
-
-          if (errors.username) {
-            return setPage(0);
-          } else {
-            return setPage(1);
-          }
-        }
-      });
+                  if (errors.username) {
+                    return setPage(0);
+                  } else {
+                    return setPage(1);
+                  }
+                }
+              });
+          },
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+          onPress: () => {
+            set_processing(false);
+          },
+        },
+      ],
+    );
   };
 
   const handleOpenPP = async () => {

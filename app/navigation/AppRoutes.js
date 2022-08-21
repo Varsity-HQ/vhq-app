@@ -152,6 +152,7 @@ function NavigationStack({ core }) {
 const AppRoutes = ({ core, setExpoPushToken }) => {
   useOnlinePresence();
   useEffect(() => {
+    check_user_tnc_agreement();
     registerForPushNotificationsAsync().then(
       (token) => token && setExpoPushToken(token),
     );
@@ -162,6 +163,8 @@ const AppRoutes = ({ core, setExpoPushToken }) => {
 
     return () => {};
   }, []);
+
+  const check_user_tnc_agreement = () => {};
 
   const handleOpenSettings = () => {
     Linking.openSettings({ notification: true });

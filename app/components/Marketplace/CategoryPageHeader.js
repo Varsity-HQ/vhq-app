@@ -53,6 +53,7 @@ function CategoryPageHeader({ category, skeleton, data, university }) {
           style={{
             fontWeight: "700",
             fontSize: 15,
+            color: colors.secondary_2,
           }}
         >
           MARKETPLACE

@@ -133,8 +133,11 @@ const styles = StyleSheet.create({
   container: {
     borderColor: colors.dark_opacity_2,
     borderWidth: 1,
+    paddingHorizontal: 8,
     paddingVertical: 8,
     marginHorizontal: 10,
+    marginBottom: 5,
+    borderRadius: 7,
     flexDirection: "row",
   },
 });

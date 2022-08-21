@@ -15,6 +15,8 @@ import universityShortName from "../../util/universityShortName";
 import { normalizeText } from "../../util/responsivePx";
 import { RFValue } from "react-native-responsive-fontsize";
 import Input from "../Input";
+import Button from "../Button";
+import { SEARCH_RESULTS } from "../../navigation/routes";
 
 const mapStateToProps = (state) => {
   return {
@@ -59,10 +61,16 @@ function CommonHeader({ profilepic, university }) {
         </View>
       </View>
       <View style={{ paddingHorizontal: 10 }}>
-        <Input
+        <Button
+          onPress={() =>
+            navigation.navigate(SEARCH_RESULTS, {
+              page: 3,
+            })
+          }
+          type="search"
+          title="Search services or items..."
+          placeholderTextColor={colors.secondary}
           style={styles.searchbox}
-          type={2}
-          placeholder="Search marketplace.."
         />
       </View>
     </View>

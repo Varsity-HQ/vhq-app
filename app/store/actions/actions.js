@@ -9,6 +9,8 @@ import {
   POST_POST_SUCCESS_POSTED,
 } from "../../util/toast_messages";
 import { clearPostScheduledNotifications } from "../../notifications";
+import { Alert, Keyboard, Linking } from "react-native";
+import * as WebBrowser from "expo-web-browser";
 
 export const submit_report = () => (dispatch) => {
   dispatch({
@@ -1141,46 +1143,81 @@ export const login_user = (email, password) => (dispatch) => {
       password,
     })
     .then((data) => {
-      setAuthorizationHeader(data.data.token);
-
-      return axios.get("/get/account").then((user_data) => {
-        if (user_data.data.userID) {
-          dispatch({
-            type: "SET_USER_DATA",
-            payload: user_data.data,
-          });
-
-          dispatch({
-            type: "SET_BLOCKED_USERS",
-            payload: user_data.data?.blocked_users,
-          });
-
-          dispatch({
-            type: "SET_AUTH_STATE",
-            payload: true,
-          });
-
-          dispatch({
-            type: "LOGGING_IN_USER",
-            payload: false,
-          });
-          dispatch({
-            type: "SET_LOGGING_IN_ERROR",
-            payload: {},
-          });
-        } else {
-          dispatch({
-            type: "LOGGING_IN_USER",
-            payload: false,
-          });
-          dispatch({
-            type: "SET_LOGGING_IN_ERROR",
-            payload: {
-              error: "Something happened. Please try again or report issue.",
+      Alert.alert(
+        `To use "VarsityHQ" you must agree to our Terms and Conditions and Privacy Policy. We value user privacy.`,
+        `If you have read and agree, press "I agree" to continue and start using our app.`,
+        [
+          {
+            text: "Terms and Conditions",
+            onPress: async () => {
+              const url = "https://varsityhq.co.za/terms-of-service";
+              const supported = await Linking.canOpenURL(url);
+              if (supported) {
+                await Linking.openURL(url);
+              }
+              dispatch({
+                type: "LOGGING_IN_USER",
+                payload: false,
+              });
             },
-          });
-        }
-      });
+          },
+          {
+            text: "I agree",
+            onPress: () => {
+              setAuthorizationHeader(data.data.token);
+              return axios.get("/get/account").then((user_data) => {
+                if (user_data.data.userID) {
+                  dispatch({
+                    type: "SET_USER_DATA",
+                    payload: user_data.data,
+                  });
+
+                  dispatch({
+                    type: "SET_BLOCKED_USERS",
+                    payload: user_data.data?.blocked_users,
+                  });
+
+                  dispatch({
+                    type: "SET_AUTH_STATE",
+                    payload: true,
+                  });
+
+                  dispatch({
+                    type: "LOGGING_IN_USER",
+                    payload: false,
+                  });
+                  dispatch({
+                    type: "SET_LOGGING_IN_ERROR",
+                    payload: {},
+                  });
+                } else {
+                  dispatch({
+                    type: "LOGGING_IN_USER",
+                    payload: false,
+                  });
+                  dispatch({
+                    type: "SET_LOGGING_IN_ERROR",
+                    payload: {
+                      error:
+                        "Something happened. Please try again or report issue.",
+                    },
+                  });
+                }
+              });
+            },
+          },
+          {
+            text: "Cancel",
+            style: "cancel",
+            onPress: () => {
+              dispatch({
+                type: "LOGGING_IN_USER",
+                payload: false,
+              });
+            },
+          },
+        ],
+      );
     })
     .catch((err) => {
       dispatch({
