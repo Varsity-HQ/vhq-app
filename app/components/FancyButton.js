@@ -10,9 +10,10 @@ function FancyButton({
   onPress,
   header,
   subText,
+  style,
 }) {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <TouchableOpacity onPress={onPress} style={[styles.container, style]}>
       <View>
         <View
           style={[

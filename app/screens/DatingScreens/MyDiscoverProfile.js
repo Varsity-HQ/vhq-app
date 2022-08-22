@@ -188,6 +188,12 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
             }}
           >
             <FancyButton
+              style={[
+                !profile.purpose && {
+                  borderWidth: 1,
+                  borderColor: colors.redish_2,
+                },
+              ]}
               icon={
                 <FontAwesome5
                   name="user-friends"
@@ -225,6 +231,14 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
             />
             <InforBox
               header="Main information"
+              style={[
+                !profile.gender || !profile.age || !profile.sexual_orientation
+                  ? {
+                      borderWidth: 1,
+                      borderColor: colors.redish_2,
+                    }
+                  : null,
+              ]}
               data={[
                 {
                   title: "gender",

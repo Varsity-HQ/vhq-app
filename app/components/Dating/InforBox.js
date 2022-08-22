@@ -6,7 +6,7 @@ import Text from "../AppText";
 import { RFValue } from "react-native-responsive-fontsize";
 import Button from "../Button";
 
-const InforBox = ({ header, actionButton, data = [] }) => {
+const InforBox = ({ header, actionButton, data = [], style }) => {
   return (
     <View
       style={{
@@ -29,6 +29,7 @@ const InforBox = ({ header, actionButton, data = [] }) => {
           {
             paddingBottom: 10,
           },
+          style,
         ]}
       >
         <View

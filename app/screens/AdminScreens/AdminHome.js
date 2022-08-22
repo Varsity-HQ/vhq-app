@@ -28,7 +28,8 @@ const marketplace = [
   {
     id: v4(),
     title: "Manage Categories",
-    route: ADMIN_MARKETPLACE_CATEGORIES,
+    // route: ADMIN_MARKETPLACE_CATEGORIES,
+    route: null,
   },
 ];
 
@@ -36,7 +37,9 @@ function AdminHome({ navigation }) {
   const renderItemHandler = ({ item }) => {
     return (
       <Button
-        onPress={() => navigation.navigate(item.route)}
+        onPress={() => {
+          if (item.route) navigation.navigate(item.route);
+        }}
         type={3}
         style={styles.button}
         title={item.title}

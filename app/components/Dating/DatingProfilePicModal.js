@@ -92,7 +92,7 @@ function DatingProfilePicModal({
   const options = [
     {
       disabled: !m_profilepic ? true : false,
-      title: "Use VaristyHQ profile picture",
+      title: "Use main profile picture",
       onPress: !m_profilepic
         ? null
         : () => {
