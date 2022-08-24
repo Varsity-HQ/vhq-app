@@ -72,14 +72,16 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
       acc_data.userID,
       acc_data.discover_profile_id,
     ]),
+    // where("lastMessageSent", "!=", "Say hi"),
+    orderBy("lastMessageSent"),
     orderBy("last_update", "desc"),
   );
   const [chats, chats_loading, error] = useCollectionData(query_);
   const [chat_global_loader, set_chat_global_loader] = useState(false);
   //
-  const [c_all_loaded, set_c_all_loaded] = useState(false);
+  const [c_all_loaded, set_c_all_loaded] = useState(true);
 
-  // console.log({ error });
+  console.log({ error });
 
   let accounts_in_chat = [];
   let filtered_chats_allowed = [];
@@ -110,20 +112,6 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
       });
     });
 
-    function getAcc() {
-      let ua_promises = [];
-      accounts_in_chat.forEach((x) => {
-        const acc_ref = doc(db, "accounts", x);
-
-        ua_promises.push(getDoc(acc_ref));
-      });
-      return Promise.all(ua_promises);
-    }
-
-    const set_array_to_state = (n) => {
-      // set_parsed_acc({ n });
-    };
-
     let user_following = acc_data.user_following;
 
     chats.forEach((x) => {
@@ -133,14 +121,14 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
       if (index > -1) {
         filtered_chats_allowed.push(x);
         fchats_states.push({
-          id: __get_chatAcc_id(x, "d"),
+          id: __get_chatAcc_id(x, x.is_dating_chat ? "d" : null),
           isLoaded: false,
         });
       } else {
         if (x.is_dating_chat || x.is_marketplace_chat) {
           filtered_chats_allowed.push(x);
           fchats_states.push({
-            id: __get_chatAcc_id(x, "d"),
+            id: __get_chatAcc_id(x, x.is_dating_chat ? "d" : null),
             isLoaded: false,
           });
         } else {
@@ -194,9 +182,9 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
   const handleSetTabIndex = (index) => {
     setPageIndex(index);
 
-    if (index !== 1) {
-      set_c_all_loaded(false);
-    }
+    // if (index !== 1) {
+    //   set_c_all_loaded(true);
+    // }
 
     if (index === 3) {
       get_accounts();

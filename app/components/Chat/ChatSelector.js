@@ -46,7 +46,8 @@ function ChatSelector({ data, is_dating, display, handle_done_loading }) {
     handle_done_loading(uid);
   };
 
-  if (account_loading || !display) {
+  // if (account_loading || !display) {
+  if (account_loading) {
     return (
       <View style={styles.c_s_container}>
         <View style={styles.c_s_left_section}>

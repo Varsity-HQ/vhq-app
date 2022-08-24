@@ -53,17 +53,13 @@ function DatingIntroScreen({ profilepic, loading }) {
             <Image
               local
               style={styles.other_pp1}
-              uri={{
-                uri: "https://image.shutterstock.com/image-photo/women-beauty-health-wellness-make-600w-731113330.jpg",
-              }}
+              uri={require("../../assets/img3.jpg")}
             />
             <DatingLoader />
             <Image
               local
               style={styles.other_pp2}
-              uri={{
-                uri: "https://image.shutterstock.com/image-photo/women-beauty-health-wellness-make-600w-731113330.jpg",
-              }}
+              uri={require("../../assets/img1.jpg")}
             />
           </View>
           <Text
@@ -111,17 +107,13 @@ function DatingIntroScreen({ profilepic, loading }) {
           <Image
             local
             style={styles.other_pp1}
-            uri={{
-              uri: "https://image.shutterstock.com/image-photo/close-beauty-portrait-young-charming-600w-1931216711.jpg",
-            }}
+            uri={require("../../assets/img2.jpg")}
           />
           <Image style={styles.my_pp} uri={profilepic} />
           <Image
             local
             style={styles.other_pp2}
-            uri={{
-              uri: "https://image.shutterstock.com/image-photo/close-portrait-beautiful-girl-black-600w-2158289069.jpg",
-            }}
+            uri={require("../../assets/img4.jpg")}
           />
         </View>
         <Text style={[styles.center, styles.heading]}>
@@ -136,7 +128,7 @@ function DatingIntroScreen({ profilepic, loading }) {
           style={[styles.center, styles.create_button]}
           title="My PROFILE"
         />
-        <Text style={[styles.center, styles.text_bottom]}>version 1.0.0</Text>
+        <Text style={[styles.center, styles.text_bottom]}>v1.0.2</Text>
         {/* <TouchableOpacity onPress={() => navigation.navigate(DATING_CONTAINER)}>
         </TouchableOpacity> */}
       </View>
