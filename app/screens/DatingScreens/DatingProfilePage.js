@@ -321,7 +321,9 @@ function DatingProfilePage({
               />
               {/* <Text style={{ marginLeft: 10 }}>Great match !</Text> */}
             </View>
-            <InfoTextArea html={true} header="About" text={profile.about} />
+            {profile.about === "<div>Tell people about you..</div>" ? null : (
+              <InfoTextArea html={true} header="About" text={profile.about} />
+            )}
             <InforBox
               data={[
                 {

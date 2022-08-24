@@ -69,7 +69,11 @@
       "sub_options": null
     },
     {
-      "title": "It's a suspicious post or spam",
+      "title": "Nudity or sexual activity",
+      "sub_options": null
+    },
+    {
+      "title": "Hate speech or symbols",
       "sub_options": null
     },
     {
@@ -128,6 +132,10 @@
     },
     {
       "title": "It's a suspicious comment or spam",
+      "sub_options": null
+    },
+    {
+      "title": "Hate speech or symbols",
       "sub_options": null
     },
     {
