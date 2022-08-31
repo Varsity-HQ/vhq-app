@@ -84,7 +84,7 @@ function ChatPageHeader({ loading, username, account, dating = false }) {
   return (
     <View style={styles.container}>
       <View style={styles.inner_container}>
-        <View style={styles.inner_container}>
+        <View style={[styles.inner_container]}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back-sharp" size={34} color={colors.white} />
           </TouchableOpacity>

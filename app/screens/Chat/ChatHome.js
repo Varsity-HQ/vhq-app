@@ -73,7 +73,7 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
       acc_data.userID,
       acc_data.discover_profile_id,
     ]),
-    // where("lastMessageSent", "!=", "Say hi"),
+    where("lastMessageSent", "!=", "v72wA14Hj4%2SDDR"),
     orderBy("lastMessageSent"),
     orderBy("last_update", "desc"),
   );

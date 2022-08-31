@@ -1,5 +1,10 @@
 [
   {
+    "name": "Boston City Campus",
+    "short_name": "BCC",
+    "city": "Johannesburg"
+  },
+  {
     "name": "University of Cape Town",
     "short_name": "UCT",
     "city": "Cape Town"

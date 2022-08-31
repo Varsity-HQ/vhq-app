@@ -66,7 +66,7 @@ function ChatPage({ account }) {
   const [chat_id, set_chat_id] = useState("id");
   const [user_id, set_uid] = useState(null);
   const route = useRoute();
-  const isDatingChat = route.params.dating;
+  const isDatingChat = route.params.dating ? true : false;
   const isMarketplaceChat = false;
   const chat_acc_id = isDatingChat
     ? account.discover_profile_id
@@ -144,6 +144,8 @@ function ChatPage({ account }) {
       where("members", "array-contains", chat_acc_id),
     );
 
+    let chat_data = null;
+
     await getDocs(queryChats)
       .then((data) => {
         if (data.size === 0) {
@@ -153,6 +155,7 @@ function ChatPage({ account }) {
         data.forEach((x) => {
           x.data().members.forEach((m) => {
             if (m === other_u_uid) {
+              chat_data = x.data();
               return (__chat_id = x.id);
             }
           });
@@ -163,21 +166,26 @@ function ChatPage({ account }) {
       })
       .then(() => {
         const docRef = doc(db, "chats", __chat_id);
-        return updateDoc(docRef, {
-          opened: true,
-        });
+        if (chat_data?.sent_by !== chat_acc_id) {
+          return updateDoc(docRef, {
+            opened: true,
+          });
+        } else {
+          return;
+        }
       })
       .catch((err) => {});
 
     if (__no_chats && __chat_id === "") {
       await addDoc(chatsRef, {
-        lastMessageSent: "Say hi",
+        lastMessageSent: "v72wA14Hj4%2SDDR",
         last_update: new Date().toISOString(),
         members: [chat_acc_id, other_u_uid],
         sent_by: chat_acc_id,
         opened: true,
         is_dating_chat: isDatingChat,
         is_marketplace_chat: isMarketplaceChat,
+        // profiles : [{},{}]
       })
         .then((cdata) => {
           __chat_id = cdata.id;
@@ -218,12 +226,12 @@ function ChatPage({ account }) {
         });
       })
       .then(() => {
-        return axios.post("/chat/handle/sentmsg", {
-          send_to: isDatingChat ? userData.id : userData.userID,
-          sent_by: chat_acc_id,
-          message: messages[0].text,
-          sent_by_user: account.firstname + " " + account.surname,
-        });
+        // return axios.post("/chat/handle/sentmsg", {
+        //   send_to: isDatingChat ? userData.id : userData.userID,
+        //   sent_by: chat_acc_id,
+        //   message: messages[0].text,
+        //   sent_by_user: account.firstname + " " + account.surname,
+        // });
       })
       .catch((err) => {});
   };
@@ -328,7 +336,7 @@ function ChatPage({ account }) {
           onInputTextChanged={(text) => onInputTextChanged(text)}
           renderUsernameOnMessage
           lightboxProps={{ useNativeDriver: true }}
-          // bottomOffset={insets.bottom}
+          bottomOffset={insets.bottom}
           messages={messages_processed}
           onSend={(messages) => onSend(messages)}
           user={{

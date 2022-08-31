@@ -353,12 +353,7 @@ class PostCard extends PureComponent {
                 />
                 <Text style={{ fontSize: normalizeText(12), color: "#4f708a" }}>
                   {/* {data.application} */}
-                  VarsityHQ ~{""}
-                  {Platform.OS === "ios" && " iPhone"}
-                  {Platform.OS === "android" && " Android"}
-                  {Platform.OS === "web" && " Web"}
-                  {Platform.OS === "macos" && " Mac"}
-                  {Platform.OS === "windows" && " Windows"}
+                  VarsityHQ ~{data.application}
                 </Text>
               </View>
             </View>
@@ -527,12 +522,7 @@ const EventPost = ({
               />
               <Text style={{ fontSize: RFValue(11), color: "#4f708a" }}>
                 {/* {data.application} */}
-                VarsityHQ ~{""}
-                {Platform.OS === "ios" && " iPhone"}
-                {Platform.OS === "android" && " Android"}
-                {Platform.OS === "web" && " Web"}
-                {Platform.OS === "macos" && " Mac"}
-                {Platform.OS === "windows" && " Windows"}
+                VarsityHQ ~ {data.application}
               </Text>
             </View>
           </View>
