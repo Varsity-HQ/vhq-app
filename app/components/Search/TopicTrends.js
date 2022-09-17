@@ -38,7 +38,9 @@ function TopicTrends({ trends }) {
       {topicTrends.length > 0 && (
         <View style={[styles.container, { marginBottom: 10 }]}>
           <View>
-            <Text style={styles.header}>Topic Trends</Text>
+            <Text style={[styles.header, { color: colors.secondary }]}>
+              Trending
+            </Text>
           </View>
           {topicTrends.map((x, index) => (
             <Trend x={x} key={index} />
@@ -49,7 +51,9 @@ function TopicTrends({ trends }) {
       {recentTrends.length > 0 && (
         <View style={[styles.container]}>
           <View>
-            <Text style={styles.header}>Past Trends</Text>
+            <Text style={[styles.header, { color: colors.secondary_2 }]}>
+              Past Trends
+            </Text>
           </View>
           {recentTrends.map((x, index) => (
             <Trend show_total x={x} key={index} />

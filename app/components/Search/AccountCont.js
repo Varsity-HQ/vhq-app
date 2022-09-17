@@ -71,7 +71,7 @@ function AccountCont({ data, follow_account, unfollow_account, removeButton }) {
     <View style={styles.container}>
       <TouchableWithoutFeedback
         onPress={() =>
-          navigation.navigate(routes.PROFILE, {
+          navigation.push(routes.PROFILE, {
             username: data.username,
           })
         }

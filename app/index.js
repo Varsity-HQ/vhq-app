@@ -31,7 +31,7 @@ import {
   SimpleLineIcons,
 } from "@expo/vector-icons";
 import { navigationRef } from "./navigation/rootNavigation";
-import { setPromoNots } from "./notifications";
+// import { setPromoNots } from "./notifications";
 import store from "./store/store";
 
 if (!getApps().length) {
@@ -142,7 +142,6 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
             payload: data.data?.blocked_users,
           });
           setAuthState(true);
-          setPromoNots();
         })
         .catch((err) => {
           console.error(err);
