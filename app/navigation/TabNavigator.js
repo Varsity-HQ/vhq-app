@@ -154,14 +154,14 @@ const AppNavigator = ({ user_id, is_active }) => {
             <RIcon name="chat-3-line" color={color} size={size} />
           ),
           tabBarShowLabel: true,
-          tabBarBadge: user_snapshot?.new_chats_count,
-          tabBarBadgeStyle: {
-            backgroundColor: colors.dark,
-            borderColor: colors.primary,
-            borderWidth: 1,
-            color: colors.primary,
-            padding: 0,
-          },
+          // tabBarBadge: user_snapshot?.new_chats_count,
+          // tabBarBadgeStyle: {
+          //   backgroundColor: colors.dark,
+          //   borderColor: colors.primary,
+          //   borderWidth: 1,
+          //   color: colors.primary,
+          //   padding: 0,
+          // },
         }}
         name="Chat"
         component={ChatNavigator}

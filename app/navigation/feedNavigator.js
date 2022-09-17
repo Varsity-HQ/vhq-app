@@ -84,7 +84,6 @@ import MarketplaceCategory from "../screens/AdminScreens/MarketplaceCategory";
 
 const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
-
 const Drawer = createDrawerNavigator();
 //
 const HomeDrawerNavigator = () => {

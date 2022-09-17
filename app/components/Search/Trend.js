@@ -8,7 +8,7 @@ import colors from "../../config/colors";
 import TrendMenu from "./TrendMenu";
 import Text from "../AppText";
 
-function Trend({ x }) {
+function Trend({ x, show_total }) {
   const [reported, setReported] = useState(false);
   const navigation = useNavigation();
 
@@ -47,7 +47,14 @@ function Trend({ x }) {
               {ShortenUniName(x.target_university)}
             </Text>
             <Text style={styles.tr_t2}>{x.hashtag_name}</Text>
-            <Text style={styles.tr_t3}>{x.hashtag_count_last48} Posts</Text>
+            {x.hashtag_count_last48 > 0 ? (
+              <Text style={styles.tr_t4}>
+                {x.hashtag_count} recent post
+                {x.hashtag_count_last48 > 1 ? "s" : ""}
+              </Text>
+            ) : (
+              <Text style={styles.tr_t4}>Used {x.hashtag_count} times</Text>
+            )}
           </View>
         </View>
         <View>
@@ -78,6 +85,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: colors.secondary,
+  },
+  tr_t4: {
+    marginTop: 5,
+    fontSize: 14,
+    fontWeight: "500",
+    color: colors.secondary_2,
   },
   trend: {
     padding: 10,
