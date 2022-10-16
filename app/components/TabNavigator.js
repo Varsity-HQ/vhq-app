@@ -32,7 +32,11 @@ function TabNavigator({
   };
   if (type === 2) {
     return (
-      <ScrollView horizontal={true} style={[styles.container_2, style]}>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        horizontal={true}
+        style={[styles.container_2, style]}
+      >
         {items.map((x, index) => {
           return (
             <TouchableWithoutFeedback
@@ -82,7 +86,11 @@ function TabNavigator({
   }
 
   return (
-    <ScrollView horizontal={true} style={[styles.container, style]}>
+    <ScrollView
+      showsHorizontalScrollIndicator={false}
+      horizontal={true}
+      style={[styles.container, style]}
+    >
       {items.map((x, index) => {
         return (
           <TouchableWithoutFeedback key={index} onPress={() => handlePress(x)}>

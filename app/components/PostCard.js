@@ -160,7 +160,7 @@ class PostCard extends PureComponent {
     }
 
     return (
-      <>
+      <View style={styles.wrapper_container}>
         <View style={styles.container}>
           <View
             style={{
@@ -374,7 +374,7 @@ class PostCard extends PureComponent {
 
           {/* <PostCardFooter data={data} /> */}
         </View>
-      </>
+      </View>
     );
   }
 }
@@ -608,12 +608,22 @@ const styles = StyleSheet.create({
     // width: verticalScale(40),
     width: height * 0.058,
   },
+  wrapper_container: {
+    paddingVertical: 0,
+    paddingTop: 10,
+    paddingHorizontal: 7,
+    backgroundColor: colors.dark_2,
+  },
   container: {
-    // paddingHorizontal: 10,
+    paddingHorizontal: 10,
     paddingTop: 15,
-    paddingBottom: 10,
-    borderBottomColor: colors.black,
-    borderBottomWidth: 2,
+    paddingBottom: 15,
+    // borderBottomColor: colors.black,
+    borderBottomWidth: 0,
+    backgroundColor: colors.dark,
+    // borderTopLeftRadius: 10,
+    // borderTopRightRadius: 10,
+    borderRadius: 10,
   },
 });
 

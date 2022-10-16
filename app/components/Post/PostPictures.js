@@ -47,9 +47,10 @@ class PostPictures extends PureComponent {
       return (
         <Image
           style={{
-            height: deviceWidth * 0.5,
-            width: "95%",
-            // width: deviceWidth - 20,
+            // height: deviceWidth * 0.5,
+            // width: "95%",
+            width: deviceWidth - 20,
+            height: deviceWidth - 20,
             borderRadius: 7,
           }}
           uri={this.props.images[0]}
@@ -60,8 +61,8 @@ class PostPictures extends PureComponent {
       return (
         <Image
           style={{
-            height: deviceWidth * 0.5,
-            width: "100%",
+            width: deviceWidth - 20,
+            height: deviceWidth - 20,
             borderRadius: 7,
           }}
           uri={this.props.images[0]}

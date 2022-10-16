@@ -30,33 +30,25 @@ import HomeFeedMenu from "./HomeFeedMenu";
 
 const home_tabs = [
   {
-    title: "Posts",
+    title: "Recent",
     index: 1,
-    icon: (
-      <MaterialCommunityIcons
-        color={colors.white}
-        size={18}
-        name="post-outline"
-      />
-    ),
+    icon: null,
   },
   {
     title: "Events",
     index: 2,
-    icon: <FontAwesome color={colors.white} size={16} name="calendar-o" />,
+    icon: null,
   },
   {
     title: "Meet Friends",
     index: 3,
     navTo: DISCOVER_PAGE,
-    icon: (
-      <FontAwesome color={colors.white} size={16} name="arrow-circle-o-right" />
-    ),
+    icon: null,
   },
   {
     title: "Offers",
     index: 4,
-    icon: <FontAwesome color={colors.white} size={16} name="tags" />,
+    icon: null,
   },
 ];
 
@@ -86,7 +78,12 @@ const Header = ({
   const [user_snapshot, loading, error] = useDocumentData(userDocRef);
 
   return (
-    <View>
+    <View
+      style={{
+        paddingBottom: 5,
+        backgroundColor: colors.dark_2,
+      }}
+    >
       <View style={styles.header}>
         <View style={{ width: "30%" }}>
           <TouchableWithoutFeedback
@@ -159,6 +156,7 @@ const Header = ({
       <View style={styles.tabbar_container}>
         <TabNavigator
           active={index}
+          type={2}
           onPress={(i) => setTab(i)}
           items={home_tabs}
         />
@@ -318,9 +316,8 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   tabbar_container: {
-    borderTopWidth: 3,
+    borderTopWidth: 0,
     borderRadius: 0,
-    borderTopColor: colors.primary,
     backgroundColor: colors.dark,
   },
   profilepic: {
@@ -393,6 +390,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: normalizeText(18),
     overflow: "hidden",
+    // marginBottom: 10,
+    backgroundColor: colors.dark,
   },
   container: {},
 });
