@@ -3,7 +3,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const user_key = "vhq_user_obj";
 
 const storeUserObj = async (obj) => {
-  console.log("storing user obj");
   try {
     await AsyncStorage.setItem(user_key, obj);
   } catch (error) {
@@ -12,7 +11,6 @@ const storeUserObj = async (obj) => {
 };
 
 const getUserObj = async () => {
-  console.log("getting user obj");
   try {
     return await AsyncStorage.getItem(user_key);
   } catch (error) {

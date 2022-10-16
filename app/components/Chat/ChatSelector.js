@@ -110,10 +110,9 @@ function ChatSelector({ data, is_dating, display, handle_done_loading }) {
                     </Text>
                   </View>
                 </View>
-                <Text>
+                <Text ellipsizeMode="tail" numberOfLines={1}>
                   {sent_by_me && "me :"}
-                  <Text style={styles.c_s_msg_preview}>
-                    {" "}
+                  <Text numberOfLines={1} style={styles.c_s_msg_preview}>
                     {data.lastMessageSent}
                   </Text>
                 </Text>
@@ -168,10 +167,9 @@ function ChatSelector({ data, is_dating, display, handle_done_loading }) {
                   </Text>
                 </View>
               </View>
-              <Text>
+              <Text ellipsizeMode="tail" numberOfLines={1}>
                 {sent_by_me && "me :"}
-                <Text style={styles.c_s_msg_preview}>
-                  {" "}
+                <Text numberOfLines={1} style={styles.c_s_msg_preview}>
                   {data.lastMessageSent}
                 </Text>
               </Text>
