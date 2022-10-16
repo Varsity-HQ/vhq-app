@@ -126,9 +126,6 @@ const Header = ({
               size={20}
             />
             {/* <FontAwesome name="university" color={colors.secondary} size={20} /> */}
-            <Text style={styles.header_uni_text}>
-              {user_snapshot ? user_snapshot?.new_notications_count : 0}
-            </Text>
 
             {!user_snapshot?.new_notifications_opened && user_snapshot ? (
               <View style={styles.n_badge} />
@@ -283,9 +280,9 @@ const styles = StyleSheet.create({
   n_badge: {
     height: 14,
     width: 14,
-    backgroundColor: colors.primary,
+    backgroundColor: "red",
     borderWidth: 2,
-    borderColor: colors.primary,
+    borderColor: colors.redish_2,
     borderRadius: 100,
     position: "absolute",
     top: -5,
@@ -343,7 +340,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     padding: normalizeText(8),
     marginRight: 10,
-    paddingLeft: 15,
+    paddingHorizontal: 15,
     // paddingHorizontal: normalizeText(18),
     // paddingVertical: normalizeText(8),
     flexDirection: "row",

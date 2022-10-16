@@ -33,6 +33,7 @@ import {
 import { navigationRef } from "./navigation/rootNavigation";
 // import { setPromoNots } from "./notifications";
 import store from "./store/store";
+import async_storage from "./auth/async_storage";
 
 if (!getApps().length) {
   initializeApp(firebaseConfig);
@@ -131,21 +132,48 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
   const restoreToken = async () => {
     _loadAssetsAsync();
     const token = await auth_storage.getToken();
+    const user_data = await async_storage.getUserObj();
     if (token) {
       set_token(token);
-      await axios
-        .get("/get/account")
-        .then((data) => {
-          set_user(data.data);
-          store.dispatch({
-            type: "SET_BLOCKED_USERS",
-            payload: data.data?.blocked_users,
-          });
-          setAuthState(true);
-        })
-        .catch((err) => {
-          console.error(err);
+
+      let parsedObj = JSON.parse(user_data);
+      if (user_data && parsedObj.userID) {
+        set_user(parsedObj);
+        store.dispatch({
+          type: "SET_BLOCKED_USERS",
+          payload: parsedObj?.blocked_users,
         });
+        setAuthState(true);
+        axios
+          .get("/get/account")
+          .then((data) => {
+            console.log("update local object");
+            set_user(data.data);
+            store.dispatch({
+              type: "SET_BLOCKED_USERS",
+              payload: data.data?.blocked_users,
+            });
+            async_storage.storeUserObj(JSON.stringify(data.data));
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } else {
+        await axios
+          .get("/get/account")
+          .then((data) => {
+            set_user(data.data);
+            store.dispatch({
+              type: "SET_BLOCKED_USERS",
+              payload: data.data?.blocked_users,
+            });
+            setAuthState(true);
+            async_storage.storeUserObj(JSON.stringify(data.data));
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
     } else {
       setAuthState(false);
     }

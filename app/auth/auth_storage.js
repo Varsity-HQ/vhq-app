@@ -2,6 +2,7 @@ import * as SecureStore from "expo-secure-store";
 import jwtDecode from "jwt-decode";
 
 const key = "vhq_auth_token";
+const user_key = "vhq_user_obj";
 
 const storeToken = async (authToken) => {
   try {
