@@ -39,7 +39,7 @@ function ChatSelector({ data, is_dating, display, handle_done_loading }) {
 
   useEffect(() => {
     // console.log({ uid, isDone: !account_loading, data: account });
-    if (!account_loading || account_loading) set_done_loading();
+    // if (!account_loading || account_loading) set_done_loading();
   });
 
   const set_done_loading = () => {

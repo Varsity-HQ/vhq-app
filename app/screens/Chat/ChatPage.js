@@ -50,6 +50,8 @@ import { connect } from "react-redux";
 import { v4 } from "uuid";
 import axios from "axios";
 
+import { _chat_head_data } from "../../util/chatRoomUtils";
+
 const mapStateToProps = (state) => {
   return {
     account: state.core.accData,
@@ -177,10 +179,30 @@ function ChatPage({ account }) {
       .catch((err) => {});
 
     if (__no_chats && __chat_id === "") {
+      let new_chat_head = {
+        lastMessageSent: "v72wA14Hj4%2SDDR",
+        last_update: new Date().toISOString(),
+        members: [chat_acc_id, other_u_uid],
+        memebers_chat_heads: _chat_head_data(userData, isDatingChat),
+        sent_by: chat_acc_id,
+        opened: true,
+        is_dating_chat: isDatingChat,
+        is_marketplace_chat: isMarketplaceChat,
+      };
+
+      console.log({ new_chat_head });
+
+      return;
       await addDoc(chatsRef, {
         lastMessageSent: "v72wA14Hj4%2SDDR",
         last_update: new Date().toISOString(),
         members: [chat_acc_id, other_u_uid],
+        memebers_chat_heads: [
+          {
+            ..._chat_head_data(userData, true),
+          },
+          {},
+        ],
         sent_by: chat_acc_id,
         opened: true,
         is_dating_chat: isDatingChat,
