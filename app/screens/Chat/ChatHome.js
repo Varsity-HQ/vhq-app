@@ -23,6 +23,7 @@ import TabbedScreenComponent from "../../components/TabbedScreenComponent";
 import { get_accounts } from "../../store/actions/chatPage";
 import {
   FontAwesome,
+  FontAwesome5,
   MaterialCommunityIcons,
   Ionicons,
 } from "@expo/vector-icons";
@@ -37,9 +38,9 @@ const chat_tabs = [
     icon: <MaterialCommunityIcons color={colors.white} size={18} name="chat" />,
   },
   {
-    title: "Strangers",
+    title: "Discover chats",
     index: 2,
-    icon: <FontAwesome color={colors.white} size={16} name="life-ring" />,
+    icon: <FontAwesome5 color={colors.white} size={16} name="user-astronaut" />,
   },
   {
     title: "Accounts",
@@ -73,20 +74,17 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
       acc_data.userID,
       acc_data.discover_profile_id,
     ]),
-    where("lastMessageSent", "!=", "v72wA14Hj4%2SDDR"),
-    orderBy("lastMessageSent"),
+    // where("lastMessageSent", "!=", "v72wA14Hj4%2SDDR"),
+    // orderBy("lastMessageSent"),
     orderBy("last_update", "desc"),
   );
   const [chats, chats_loading, error] = useCollectionData(query_);
-  const [chat_global_loader, set_chat_global_loader] = useState(false);
-  //
-  const [c_all_loaded, set_c_all_loaded] = useState(true);
 
   let accounts_in_chat = [];
-  let filtered_chats_allowed = [];
-  let filtered_chats_requests = [];
+  let dating_chats = [];
+  let all_chats = [];
 
-  console.log({ filtered_chats_allowed });
+  console.log({ chats });
 
   useEffect(() => {
     if (pageIndex === 3) {
@@ -101,8 +99,6 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
       </Screen>
     );
   }
-
-  let fchats_states = [];
 
   if (!chats_loading) {
     chats.forEach((x) => {
@@ -119,21 +115,12 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
       let index = user_following.findIndex(
         (acc) => acc.following_user === __get_chatAcc_id(x),
       );
-      if (index > -1) {
-        filtered_chats_allowed.push(x);
-        fchats_states.push({
-          id: __get_chatAcc_id(x, x.is_dating_chat ? "d" : null),
-          isLoaded: false,
-        });
-      } else {
-        if (x.is_dating_chat || x.is_marketplace_chat) {
-          filtered_chats_allowed.push(x);
-          fchats_states.push({
-            id: __get_chatAcc_id(x, x.is_dating_chat ? "d" : null),
-            isLoaded: false,
-          });
-        } else {
-          filtered_chats_requests.push(x);
+
+      if (x.lastMessageSent !== "v72wA14Hj4%2SDDR") {
+        all_chats.push(x);
+
+        if (x.is_dating_chat) {
+          dating_chats.push(x);
         }
       }
     });
@@ -141,23 +128,6 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
 
   const refreshHandler = () => {};
   const loadMoreHandler = () => {};
-
-  const handle_chat_finished_load = (uid) => {
-    // console.log({ uid });
-    let updated = [];
-    let ready_states = [];
-    fchats_states.forEach((x) => {
-      if (x.id === uid) {
-        updated.push({ ...x, isLoaded: true });
-        ready_states.push(true);
-      } else {
-        updated.push(x);
-        ready_states.push(x.isLoaded);
-      }
-    });
-    fchats_states = updated;
-    set_c_all_loaded(!ready_states.includes(false));
-  };
 
   const listRenderingHandler = ({ item }) => {
     if (!item) return null;
@@ -215,7 +185,7 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
             ),
             allowLoadMore: false,
             loadMoreHandler: loadMoreHandler,
-            tabCounter: filtered_chats_requests.length,
+            tabCounter: dating_chats.length,
           },
           {
             keyExtractor: (item) => _accountsKeyExtractor(item),
@@ -228,13 +198,13 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
           {
             loading: chats_loading,
             loading_more: false,
-            data: filtered_chats_allowed,
+            data: all_chats,
             refreshing: false,
           },
           {
             loading: chats_loading,
             loading_more: false,
-            data: filtered_chats_requests,
+            data: dating_chats,
             refreshing: false,
           },
           {

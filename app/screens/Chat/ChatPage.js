@@ -179,24 +179,38 @@ function ChatPage({ account }) {
       .catch((err) => {});
 
     if (__no_chats && __chat_id === "") {
-      let new_chat_head = {
-        lastMessageSent: "v72wA14Hj4%2SDDR",
-        last_update: new Date().toISOString(),
-        members: [chat_acc_id, other_u_uid],
-        members_chat_heads: _chat_head_data(userData, isDatingChat),
-        sent_by: chat_acc_id,
-        opened: true,
-        is_dating_chat: isDatingChat,
-        is_marketplace_chat: isMarketplaceChat,
-      };
+      let user_account = {};
 
-      await addDoc(chatsRef, new_chat_head)
-        .then((cdata) => {
-          __chat_id = cdata.id;
+      await getDoc(accDocRef)
+        .then(async (data) => {
+          user_account = data.data();
+
+          let new_chat_head = {
+            lastMessageSent: "v72wA14Hj4%2SDDR",
+            last_update: new Date().toISOString(),
+            members: [chat_acc_id, other_u_uid],
+            members_chat_heads: _chat_head_data(user_account, isDatingChat),
+            sent_by: chat_acc_id,
+            opened: true,
+            is_dating_chat: isDatingChat,
+            is_marketplace_chat: isMarketplaceChat,
+          };
+
+          await addDoc(chatsRef, new_chat_head)
+            .then((cdata) => {
+              __chat_id = cdata.id;
+            })
+            .catch((err) => {
+              console.error(err);
+            });
         })
         .catch((err) => {
-          console.error(err);
+          console.log(err);
         });
+
+      //   const accDocRef = isDatingChat
+      // ? doc(db, "discover_profiles", route.params.uid)
+      // : doc(db, "accounts", route.params.uid);
     }
 
     if (__chat_id) {

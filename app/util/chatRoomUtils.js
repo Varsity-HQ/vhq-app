@@ -8,9 +8,9 @@ const _chat_head_data = (user_data, is_dating) => {
 
   let chat_heads = [];
 
-  if (!user_data) {
-    return [];
-  }
+  // if (!user_data) {
+  //   return [];
+  // }
 
   console.log({ user_data });
 

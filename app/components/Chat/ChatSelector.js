@@ -41,6 +41,7 @@ function ChatSelector({ data, is_dating }) {
 
   useEffect(() => {
     let chi = data.members_chat_heads;
+
     if (Array.isArray(chi)) {
       if (chi.length == 2) {
         let c_h_data = {};
@@ -59,7 +60,7 @@ function ChatSelector({ data, is_dating }) {
   }, []);
 
   // if (account_loading || !display) {
-  if (account_loading && !has_chat_headers && chat_header_data) {
+  if (account_loading && !has_chat_headers) {
     return (
       <View style={styles.c_s_container}>
         <View style={styles.c_s_left_section}>
@@ -117,7 +118,7 @@ function ChatSelector({ data, is_dating }) {
                 <Text style={styles.c_s_name}>{header_data.nickname}</Text>
                 <View style={styles.c_s_user_time}>
                   <View>
-                    <OnlineIndicator online={account.is_online} />
+                    <OnlineIndicator online={account?.is_online} />
                   </View>
                   <View style={styles.c_s_time_stamp}>
                     <Text style={styles.c_s_time_text}>
