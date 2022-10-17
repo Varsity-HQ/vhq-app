@@ -183,32 +183,14 @@ function ChatPage({ account }) {
         lastMessageSent: "v72wA14Hj4%2SDDR",
         last_update: new Date().toISOString(),
         members: [chat_acc_id, other_u_uid],
-        memebers_chat_heads: _chat_head_data(userData, isDatingChat),
+        members_chat_heads: _chat_head_data(userData, isDatingChat),
         sent_by: chat_acc_id,
         opened: true,
         is_dating_chat: isDatingChat,
         is_marketplace_chat: isMarketplaceChat,
       };
 
-      console.log({ new_chat_head });
-
-      return;
-      await addDoc(chatsRef, {
-        lastMessageSent: "v72wA14Hj4%2SDDR",
-        last_update: new Date().toISOString(),
-        members: [chat_acc_id, other_u_uid],
-        memebers_chat_heads: [
-          {
-            ..._chat_head_data(userData, true),
-          },
-          {},
-        ],
-        sent_by: chat_acc_id,
-        opened: true,
-        is_dating_chat: isDatingChat,
-        is_marketplace_chat: isMarketplaceChat,
-        // profiles : [{},{}]
-      })
+      await addDoc(chatsRef, new_chat_head)
         .then((cdata) => {
           __chat_id = cdata.id;
         })

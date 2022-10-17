@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, TouchableHighlight } from "react-native";
 import Image from "../Image";
 import Text from "../AppText";
@@ -23,7 +23,7 @@ import { CHAT_PAGE } from "../../navigation/routes";
 import OnlineIndicator from "../Dating/OnlineIndicator";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-function ChatSelector({ data, is_dating, display, handle_done_loading }) {
+function ChatSelector({ data, is_dating }) {
   if (!data) return null;
 
   const navigation = useNavigation();
@@ -36,18 +36,30 @@ function ChatSelector({ data, is_dating, display, handle_done_loading }) {
     : collection(db, "accounts");
   const userDocRef = doc(accCol, uid);
   const [account, account_loading, err] = useDocumentData(userDocRef);
+  const [has_chat_headers, set_has_chat_headers] = useState(false);
+  const [chat_header_data, set_chat_header_data] = useState(null);
 
   useEffect(() => {
-    // console.log({ uid, isDone: !account_loading, data: account });
-    // if (!account_loading || account_loading) set_done_loading();
-  });
-
-  const set_done_loading = () => {
-    handle_done_loading(uid);
-  };
+    let chi = data.members_chat_heads;
+    if (Array.isArray(chi)) {
+      if (chi.length == 2) {
+        let c_h_data = {};
+        chi.forEach((x) => {
+          if (x.uid === uid) {
+            c_h_data = x;
+          }
+        });
+        set_has_chat_headers(true);
+        set_chat_header_data(c_h_data);
+      } else {
+        set_has_chat_headers(false);
+        set_chat_header_data(null);
+      }
+    }
+  }, []);
 
   // if (account_loading || !display) {
-  if (account_loading) {
+  if (account_loading && !has_chat_headers && chat_header_data) {
     return (
       <View style={styles.c_s_container}>
         <View style={styles.c_s_left_section}>
@@ -71,13 +83,16 @@ function ChatSelector({ data, is_dating, display, handle_done_loading }) {
   const sent_by_me = data.sent_by !== uid;
 
   if (is_dating) {
+    let header_data = has_chat_headers ? chat_header_data : account;
+    console.log({ header_data });
+    if (!header_data) return null;
     return (
       <TouchableHighlight
         underlayColor={colors.dark_2}
         onPress={() => {
           navigation.navigate(CHAT_PAGE, {
             uid: uid,
-            username: account.nickname,
+            username: header_data.nickname,
             dating: true,
           });
         }}
@@ -87,7 +102,7 @@ function ChatSelector({ data, is_dating, display, handle_done_loading }) {
             <View style={styles.c_s_left_section}>
               <View>
                 <Image
-                  uri={account.profilepic}
+                  uri={header_data.profilepic}
                   style={styles.chat_profile_pic}
                 />
                 <View style={styles.profile_side_icon_container}>
@@ -99,7 +114,7 @@ function ChatSelector({ data, is_dating, display, handle_done_loading }) {
                 </View>
               </View>
               <View>
-                <Text style={styles.c_s_name}>{account.nickname}</Text>
+                <Text style={styles.c_s_name}>{header_data.nickname}</Text>
                 <View style={styles.c_s_user_time}>
                   <View>
                     <OnlineIndicator online={account.is_online} />
@@ -136,28 +151,33 @@ function ChatSelector({ data, is_dating, display, handle_done_loading }) {
     );
   }
 
+  let header_data = has_chat_headers ? chat_header_data : account;
+  if (!header_data) return null;
   return (
     <TouchableHighlight
       underlayColor={colors.dark_2}
       onPress={() => {
         navigation.navigate(CHAT_PAGE, {
           uid: uid,
-          username: account.username,
+          username: header_data.username,
         });
       }}
     >
       <View style={styles.c_s_container}>
         <>
           <View style={styles.c_s_left_section}>
-            <Image uri={account.profilepic} style={styles.chat_profile_pic} />
+            <Image
+              uri={header_data.profilepic}
+              style={styles.chat_profile_pic}
+            />
             <View>
               <Text style={styles.c_s_name}>
-                {account.firstname} {account.surname}
+                {header_data.firstname} {header_data.surname}
               </Text>
               <View style={styles.c_s_user_time}>
                 <View>
                   <Text>
-                    @{account.username}
+                    @{header_data.username}
                     <Text style={styles.c_s_dot_sptor}> •</Text>
                   </Text>
                 </View>

@@ -82,11 +82,11 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
   //
   const [c_all_loaded, set_c_all_loaded] = useState(true);
 
-  console.log({ error });
-
   let accounts_in_chat = [];
   let filtered_chats_allowed = [];
   let filtered_chats_requests = [];
+
+  console.log({ filtered_chats_allowed });
 
   useEffect(() => {
     if (pageIndex === 3) {
@@ -170,22 +170,11 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
       );
     }
 
-    return (
-      <ChatSelector
-        display={c_all_loaded}
-        handle_done_loading={handle_chat_finished_load}
-        is_dating={item.is_dating_chat}
-        data={item}
-      />
-    );
+    return <ChatSelector is_dating={item.is_dating_chat} data={item} />;
   };
 
   const handleSetTabIndex = (index) => {
     setPageIndex(index);
-
-    // if (index !== 1) {
-    //   set_c_all_loaded(true);
-    // }
 
     if (index === 3) {
       get_accounts();
