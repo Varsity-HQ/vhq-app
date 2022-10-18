@@ -83,9 +83,6 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
   let accounts_in_chat = [];
   let dating_chats = [];
   let all_chats = [];
-
-  console.log({ chats });
-
   useEffect(() => {
     if (pageIndex === 3) {
       get_accounts();

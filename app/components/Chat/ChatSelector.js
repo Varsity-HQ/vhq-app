@@ -85,7 +85,6 @@ function ChatSelector({ data, is_dating }) {
 
   if (is_dating) {
     let header_data = has_chat_headers ? chat_header_data : account;
-    console.log({ header_data });
     if (!header_data) return null;
     return (
       <TouchableHighlight

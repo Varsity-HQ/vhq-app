@@ -51,6 +51,7 @@ import { v4 } from "uuid";
 import axios from "axios";
 
 import { _chat_head_data } from "../../util/chatRoomUtils";
+import { sendPushNotification } from "../../util/sendPushNotification";
 
 const mapStateToProps = (state) => {
   return {
@@ -60,8 +61,6 @@ const mapStateToProps = (state) => {
 
 function ChatPage({ account }) {
   const [textMessage, onInputTextChanged] = useState("");
-
-  const [messages, setMessages] = useState([]);
   const insets = useSafeAreaInsets();
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState(null);
@@ -117,23 +116,6 @@ function ChatPage({ account }) {
     setUsername(route.params.username);
     set_uid(route.params.uid);
     process_chat_id(route.params.uid);
-
-    setMessages([
-      {
-        _id: 1,
-        text: "Good morning",
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: "React Native",
-          avatar:
-            "https://varsityhq.imgix.net/vhq_e08dbdf1-d0f1-4bfd-9881-331a10d34402.jpeg",
-        },
-        system: true,
-        received: true,
-        // pending: true,
-      },
-    ]);
   }, []);
 
   const process_chat_id = async (other_u_uid) => {
@@ -243,7 +225,49 @@ function ChatPage({ account }) {
           opened: false,
         });
       })
-      .then(() => {
+      .then(async () => {
+        let receiver_id = route.params.uid;
+        const userRef = isDatingChat
+          ? doc(db, "discover_profiles", receiver_id)
+          : doc(db, "accounts", receiver_id);
+
+        let proceed, user_data, notificationToken;
+
+        await getDoc(userRef)
+          .then(async (data) => {
+            if (!isDatingChat) {
+              notificationToken = data.data().notificationToken;
+            } else {
+              let accRef = doc(db, "accounts", data.data().parentID);
+              return getDoc(accRef);
+            }
+          })
+          .then((dis_data) => {
+            if (isDatingChat) {
+              notificationToken = dis_data.data().notificationToken;
+            }
+
+            if (notificationToken) {
+              sendPushNotification(notificationToken, {
+                title: "[chikx] sent you a message",
+                body: "Tab to see your message DM",
+                username: route.params.username,
+                user_id: route.params.uid,
+                isDatingChat: isDatingChat,
+              });
+            }
+
+            console.log({
+              isDatingChat,
+              notificationToken,
+              receiver_id,
+            });
+            //
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
         // return axios.post("/chat/handle/sentmsg", {
         //   send_to: isDatingChat ? userData.id : userData.userID,
         //   sent_by: chat_acc_id,

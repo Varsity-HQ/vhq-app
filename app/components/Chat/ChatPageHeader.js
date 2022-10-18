@@ -50,7 +50,7 @@ function ChatPageHeader({ loading, username, account, dating = false }) {
               <Ionicons
                 name="arrow-back-sharp"
                 size={34}
-                color={colors.white}
+                color={colors.secondary_2}
               />
             </TouchableOpacity>
             <View style={styles.inner_container}>
@@ -86,7 +86,11 @@ function ChatPageHeader({ loading, username, account, dating = false }) {
       <View style={styles.inner_container}>
         <View style={[styles.inner_container]}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="arrow-back-sharp" size={34} color={colors.white} />
+            <Ionicons
+              name="arrow-back-sharp"
+              size={34}
+              color={colors.secondary_2}
+            />
           </TouchableOpacity>
           <View style={styles.inner_container}>
             <Image uri={account.profilepic} style={styles.profilepic} />

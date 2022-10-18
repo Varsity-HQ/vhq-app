@@ -1,3 +1,4 @@
 To take care of.
 
-!.update chat name after name rename for discovery and profile.
+1. Update chat name after name rename for discovery and profile.
+2. Get discover profile is not loaded yet for logged in user

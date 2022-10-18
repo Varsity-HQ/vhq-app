@@ -196,6 +196,7 @@ const styles = StyleSheet.create({
   },
   c_s_time_text: {
     fontSize: RFValue(11),
+    color: colors.secondary_2,
   },
   c_s_dot_sptor: {
     fontSize: RFValue(15),
