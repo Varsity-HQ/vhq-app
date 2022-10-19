@@ -74,8 +74,6 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
       acc_data.userID,
       acc_data.discover_profile_id,
     ]),
-    // where("lastMessageSent", "!=", "v72wA14Hj4%2SDDR"),
-    // orderBy("lastMessageSent"),
     orderBy("last_update", "desc"),
   );
   const [chats, chats_loading, error] = useCollectionData(query_);
@@ -83,6 +81,7 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
   let accounts_in_chat = [];
   let dating_chats = [];
   let all_chats = [];
+
   useEffect(() => {
     if (pageIndex === 3) {
       get_accounts();

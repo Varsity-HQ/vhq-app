@@ -29,6 +29,7 @@ import {
 import styles from "../../components/Profile/styles";
 import { follow_account, unfollow_account } from "../../store/actions/actions";
 import { set_following } from "../../store/actions/profile";
+import axios from "axios";
 
 const mapStateToProps = (state) => {
   return {
@@ -94,6 +95,18 @@ function ProfileHeader({
       follow_account(uid);
       set_following(true);
     }
+  };
+
+  const goToFol = (page) => {
+    // auth_profile && navigation.navigate("FOLLOWERS");
+    axios
+      .get("/u/following/get")
+      .then((data) => {
+        console.log(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -202,15 +215,19 @@ function ProfileHeader({
               </View>
             )}
             <View style={{ flexDirection: "row", marginTop: 5 }}>
-              <Text>
-                {user.followers ? user.followers : 0}{" "}
-                <Text style={{ color: colors.secondary }}>Followers</Text>
-              </Text>
+              <TouchableOpacity onPress={() => goToFol("followers")}>
+                <Text>
+                  {user.followers ? user.followers : 0}{" "}
+                  <Text style={{ color: colors.secondary }}>Followers</Text>
+                </Text>
+              </TouchableOpacity>
               <Text>&nbsp;|&nbsp;</Text>
-              <Text>
-                {user.following}{" "}
-                <Text style={{ color: colors.secondary }}>Following</Text>
-              </Text>
+              <TouchableOpacity onPress={() => goToFol("following")}>
+                <Text>
+                  {parseInt(user.following) - 1}{" "}
+                  <Text style={{ color: colors.secondary }}>Following</Text>
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
