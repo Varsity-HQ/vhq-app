@@ -18,8 +18,16 @@ const gender_list = [
     label: "Female",
   },
   {
-    value: "Trans/..",
-    label: "Trans/..",
+    value: "Transgender",
+    label: "Transgender",
+  },
+  {
+    value: "Nonconforming",
+    label: "Nonconforming",
+  },
+  {
+    value: "Non-binary",
+    label: "Non-binary",
   },
   {
     value: "Rather not say",

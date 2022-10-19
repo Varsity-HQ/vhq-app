@@ -248,21 +248,14 @@ function ChatPage({ account }) {
             }
 
             if (notificationToken) {
-              sendPushNotification(notificationToken, {
+              return sendPushNotification(notificationToken, {
                 title: "[chikx] sent you a message",
-                body: "Tab to see your message DM",
+                body: messages[0].text,
                 username: route.params.username,
                 user_id: route.params.uid,
                 isDatingChat: isDatingChat,
               });
             }
-
-            console.log({
-              isDatingChat,
-              notificationToken,
-              receiver_id,
-            });
-            //
           })
           .catch((err) => {
             console.log(err);
