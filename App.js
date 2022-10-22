@@ -9,7 +9,7 @@ import {
 
 // import "react-native-gesture-handler";
 
-// console.ignoredYellowBox = ['Setting a timer'];
+// console.ignoredYellowBox = ['Setting a timer']; 
 
 import { LogBox } from "react-native";
 // import _ from "lodash";
