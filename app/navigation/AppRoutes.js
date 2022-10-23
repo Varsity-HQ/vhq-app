@@ -152,6 +152,13 @@ function NavigationStack({ core }) {
 const AppRoutes = ({ core, setExpoPushToken }) => {
   useOnlinePresence();
   useEffect(() => {
+    //
+
+    Notifications.addNotificationReceivedListener((notification) => {
+      console.log({ notification });
+    });
+
+    //
     check_user_tnc_agreement();
     registerForPushNotificationsAsync().then(
       (token) => token && setExpoPushToken(token),

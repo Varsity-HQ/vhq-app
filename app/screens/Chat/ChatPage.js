@@ -249,7 +249,9 @@ function ChatPage({ account }) {
 
             if (notificationToken) {
               return sendPushNotification(notificationToken, {
-                title: "[chikx] sent you a message",
+                title: `[${
+                  isDatingChat ? "Someone" : account.username
+                }] sent you a message`,
                 body: messages[0].text,
                 username: route.params.username,
                 user_id: route.params.uid,

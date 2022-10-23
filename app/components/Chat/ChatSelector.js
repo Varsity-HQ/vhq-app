@@ -27,6 +27,7 @@ function ChatSelector({ data, is_dating }) {
   if (!data) return null;
 
   const navigation = useNavigation();
+  // const uid = "6oNjLZb2y9SuzQRtbtmIRifykRy1";
   const uid = __get_chatAcc_id(data, is_dating ? "d" : "");
 
   if (!uid) return null;
