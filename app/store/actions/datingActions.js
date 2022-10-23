@@ -7,6 +7,9 @@ import {
   updateDoc,
   getDoc,
   deleteDoc,
+  getDocs,
+  query,
+  where,
 } from "firebase/firestore";
 import uuid from "uuid";
 import * as geofire from "geofire-common";
@@ -57,6 +60,14 @@ export const remove_dating_profile_picture = () => async (dispatch) => {
     payload: "",
   });
 
+  const discover_profile_id = store.getState().core.accData.discover_profile_id;
+
+  const chat_ref = collection(db, "chats");
+  const query_ = query(
+    chat_ref,
+    where("members", "array-contains-any", [discover_profile_id]),
+  );
+
   axios
     .get("/deletesubprofilepic")
     .then(() => {
@@ -67,6 +78,31 @@ export const remove_dating_profile_picture = () => async (dispatch) => {
       dispatch({
         type: "DATING_UPDATE_PROFILE_PIC",
         payload: "",
+      });
+    })
+    .then(() => {
+      return getDocs(query_);
+    })
+    .then((data) => {
+      data.forEach((x) => {
+        let chat_heads = [];
+        let chat_id = x.id;
+        x.data().members_chat_heads &&
+          x.data().members_chat_heads.forEach((c) => {
+            if (c.uid === discover_profile_id) {
+              chat_heads.push({
+                ...c,
+                profilepic: "",
+              });
+            } else {
+              chat_heads.push(c);
+            }
+          });
+        const docRef = doc(db, "chats", chat_id);
+        x.data().members_chat_heads &&
+          updateDoc(docRef, {
+            members_chat_heads: chat_heads,
+          });
       });
     })
     .catch((err) => {
@@ -83,6 +119,14 @@ export const import_vhq_profile_to_dating = () => async (dispatch) => {
     type: "SET_UPLOADING_DATING_PROFILE_PIC",
     payload: true,
   });
+
+  const discover_profile_id = store.getState().core.accData.discover_profile_id;
+
+  const chat_ref = collection(db, "chats");
+  const query_ = query(
+    chat_ref,
+    where("members", "array-contains-any", [discover_profile_id]),
+  );
 
   let current_vhq_pp = store.getState().core.accData.profilepic;
 
@@ -101,6 +145,31 @@ export const import_vhq_profile_to_dating = () => async (dispatch) => {
         dispatch({
           type: "SET_UPLOADING_DATING_PROFILE_PIC",
           payload: false,
+        });
+      })
+      .then(() => {
+        return getDocs(query_);
+      })
+      .then((data) => {
+        data.forEach((x) => {
+          let chat_heads = [];
+          let chat_id = x.id;
+          x.data().members_chat_heads &&
+            x.data().members_chat_heads.forEach((c) => {
+              if (c.uid === discover_profile_id) {
+                chat_heads.push({
+                  ...c,
+                  profilepic: profilepic_url,
+                });
+              } else {
+                chat_heads.push(c);
+              }
+            });
+          const docRef = doc(db, "chats", chat_id);
+          x.data().members_chat_heads &&
+            updateDoc(docRef, {
+              members_chat_heads: chat_heads,
+            });
         });
       })
       .catch((err) => {
@@ -123,6 +192,14 @@ export const upload_dating_profile_picture = (image) => async (dispatch) => {
     payload: true,
   });
 
+  const discover_profile_id = store.getState().core.accData.discover_profile_id;
+
+  const chat_ref = collection(db, "chats");
+  const query_ = query(
+    chat_ref,
+    where("members", "array-contains-any", [discover_profile_id]),
+  );
+
   if (image) {
     let profilepic_url = await uploadImageAsync(image);
 
@@ -138,6 +215,31 @@ export const upload_dating_profile_picture = (image) => async (dispatch) => {
         dispatch({
           type: "SET_UPLOADING_DATING_PROFILE_PIC",
           payload: false,
+        });
+      })
+      .then(() => {
+        return getDocs(query_);
+      })
+      .then((data) => {
+        data.forEach((x) => {
+          let chat_heads = [];
+          let chat_id = x.id;
+          x.data().members_chat_heads &&
+            x.data().members_chat_heads.forEach((c) => {
+              if (c.uid === discover_profile_id) {
+                chat_heads.push({
+                  ...c,
+                  profilepic: profilepic_url,
+                });
+              } else {
+                chat_heads.push(c);
+              }
+            });
+          const docRef = doc(db, "chats", chat_id);
+          x.data().members_chat_heads &&
+            updateDoc(docRef, {
+              members_chat_heads: chat_heads,
+            });
         });
       })
       .catch((err) => {
@@ -257,7 +359,15 @@ const create_discover_profile = async (dispatch) => {
 
 export const save_dating_nickname = (nickname) => async (dispatch) => {
   const discover_profile_id = store.getState().core.accData.discover_profile_id;
+
   const uDiscProfileRef = doc(db, "discover_profiles", discover_profile_id);
+  const acc_data = store.getState().core.accData;
+
+  const chat_ref = collection(db, "chats");
+  const query_ = query(
+    chat_ref,
+    where("members", "array-contains-any", [discover_profile_id]),
+  );
 
   dispatch({
     type: "DATING_UPDATE_NICKNAME_LOADING",
@@ -271,6 +381,31 @@ export const save_dating_nickname = (nickname) => async (dispatch) => {
       dispatch({
         type: "DATING_UPDATE_NICKNAME",
         payload: nickname,
+      });
+    })
+    .then(() => {
+      return getDocs(query_);
+    })
+    .then((data) => {
+      data.forEach((x) => {
+        let chat_heads = [];
+        let chat_id = x.id;
+        x.data().members_chat_heads &&
+          x.data().members_chat_heads.forEach((c) => {
+            if (c.uid === discover_profile_id) {
+              chat_heads.push({
+                ...c,
+                nickname: nickname,
+              });
+            } else {
+              chat_heads.push(c);
+            }
+          });
+        const docRef = doc(db, "chats", chat_id);
+        x.data().members_chat_heads &&
+          updateDoc(docRef, {
+            members_chat_heads: chat_heads,
+          });
       });
     })
     .catch((err) => {
