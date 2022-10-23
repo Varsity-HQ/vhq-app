@@ -27,9 +27,11 @@ function ChatSelector({ data, is_dating }) {
   if (!data) return null;
 
   const navigation = useNavigation();
-  const uid = __get_chatAcc_id(data, "d");
+  const uid = __get_chatAcc_id(data, is_dating ? "d" : "");
 
   if (!uid) return null;
+
+  console.log({ uid });
 
   const accCol = is_dating
     ? collection(db, "discover_profiles")

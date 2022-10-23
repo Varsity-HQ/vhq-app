@@ -86,7 +86,6 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
   );
   const [chats, chats_loading, error] = useCollectionData(query_);
 
-  let accounts_in_chat = [];
   let dating_chats = [];
   let all_chats = [];
 
@@ -126,21 +125,9 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
   }
 
   if (!chats_loading) {
-    chats.forEach((x) => {
-      x.members.forEach((m) => {
-        if (m !== acc_data.userID) {
-          accounts_in_chat.push(m);
-        }
-      });
-    });
-
-    let user_following = acc_data.user_following;
+    console.log({ chats });
 
     chats.forEach((x) => {
-      let index = user_following.findIndex(
-        (acc) => acc.following_user === __get_chatAcc_id(x),
-      );
-
       if (x.lastMessageSent !== "v72wA14Hj4%2SDDR") {
         all_chats.push(x);
 
