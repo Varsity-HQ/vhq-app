@@ -20,31 +20,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const subTabs = [
-  {
-    index: 1,
-    title: "all",
-    icon: (
-      <MaterialCommunityIcons
-        color={colors.dark_2}
-        size={30}
-        name="heart-multiple-outline"
-      />
-    ),
-  },
-  {
-    index: 2,
-    title: "all",
-    icon: (
-      <MaterialCommunityIcons
-        color={colors.dark_2}
-        size={30}
-        name="star-box-multiple-outline"
-      />
-    ),
-  },
-];
-
 function Header({ profilepic, tabs, activeTabIndex, setTabIndex, data }) {
   const [index, setIndex] = React.useState(activeTabIndex);
   const navigation = useNavigation();

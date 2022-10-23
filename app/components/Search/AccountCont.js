@@ -23,7 +23,13 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-function AccountCont({ data, follow_account, unfollow_account, removeButton }) {
+function AccountCont({
+  data,
+  follow_account,
+  unfollow_account,
+  removeButton,
+  chat,
+}) {
   const navigation = useNavigation();
   const [following, setFollowing] = useState(false);
 
@@ -37,6 +43,13 @@ function AccountCont({ data, follow_account, unfollow_account, removeButton }) {
   const handleAction = () => {
     if (following) return unfollowAccount();
     if (!following) return followAccount();
+  };
+
+  const handleChatAction = () => {
+    navigation.navigate(routes.CHAT_PAGE, {
+      uid: data.userID,
+      username: data.username,
+    });
   };
 
   const unfollowAccount = () => {
@@ -100,6 +113,13 @@ function AccountCont({ data, follow_account, unfollow_account, removeButton }) {
             type={following ? 5 : 8}
             onPress={handleAction}
             title={following ? "Following" : "Follow"}
+          />
+        )}
+        {chat && (
+          <Button
+            type={following ? 5 : 8}
+            onPress={handleChatAction}
+            title={"Message"}
           />
         )}
       </View>

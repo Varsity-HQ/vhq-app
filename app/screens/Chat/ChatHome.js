@@ -30,6 +30,7 @@ import {
 import AccountCont from "../../components/Search/AccountCont";
 import colors from "../../config/colors";
 import uuid from "uuid";
+import axios from "axios";
 
 const chat_tabs = [
   {
@@ -66,6 +67,13 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
   const [userAccountsModal, set_modal_state] = useState(false);
   const [activetab, setactivetab] = useState(0);
   const [pageIndex, setPageIndex] = useState(1);
+
+  const [accounts_tab, set_accounts_tab] = useState({
+    accounts: [],
+    loading: true,
+    last_visible: null,
+  });
+
   //
   const chat_ref = collection(db, "chats");
   const query_ = query(
@@ -84,9 +92,30 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
 
   useEffect(() => {
     if (pageIndex === 3) {
-      get_accounts();
+      handle_get_accounts();
     }
   }, []);
+
+  const handle_get_accounts = () => {
+    axios
+      .get("/u/following/get")
+      .then((data) => {
+        set_accounts_tab({
+          ...accounts_tab,
+          loading: false,
+          accounts: data.data.accounts,
+          last_visible: data.data.lastVisible,
+        });
+        console.log(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        set_accounts_tab({
+          ...accounts_tab,
+          loading: false,
+        });
+      });
+  };
 
   if (error) {
     return (
@@ -131,7 +160,7 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
     if (pageIndex === 3) {
       return (
         <View style={{ paddingHorizontal: 10, marginTop: 10 }}>
-          <AccountCont removeButton data={item} />
+          <AccountCont chat removeButton data={item} />
         </View>
       );
     }
@@ -143,7 +172,7 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
     setPageIndex(index);
 
     if (index === 3) {
-      get_accounts();
+      handle_get_accounts();
     }
   };
 
@@ -204,9 +233,9 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
             refreshing: false,
           },
           {
-            loading: chatPage.loading_accounts,
+            loading: accounts_tab.loading,
             loading_more: false,
-            data: chatPage.accounts,
+            data: accounts_tab.accounts,
             refreshing: false,
           },
         ]}
