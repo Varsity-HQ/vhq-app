@@ -11,6 +11,15 @@ import {
 import { clearPostScheduledNotifications } from "../../notifications";
 import { Alert, Keyboard, Linking } from "react-native";
 import * as WebBrowser from "expo-web-browser";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import db from "../../util/fb_admin";
 
 export const submit_report = () => (dispatch) => {
   dispatch({
@@ -305,6 +314,13 @@ export const update_profile_pic = (uri) => async (dispatch) => {
     payload: true,
   });
 
+  const userID = store.getState().core.accData.userID;
+  const chat_ref = collection(db, "chats");
+  const query_ = query(
+    chat_ref,
+    where("members", "array-contains-any", [userID]),
+  );
+
   let uploaded = await uploadImageAsync(uri);
   //
   axios
@@ -318,6 +334,33 @@ export const update_profile_pic = (uri) => async (dispatch) => {
         type: "UPDATE_PROFILE_PIC",
         payload: uploaded,
       });
+    })
+    .then(() => {
+      return getDocs(query_);
+    })
+    .then((data) => {
+      data.forEach((x) => {
+        let chat_heads = [];
+        let chat_id = x.id;
+        x.data().members_chat_heads &&
+          x.data().members_chat_heads.forEach((c) => {
+            if (c.uid === userID) {
+              chat_heads.push({
+                ...c,
+                profilepic: uploaded,
+              });
+            } else {
+              chat_heads.push(c);
+            }
+          });
+
+        const docRef = doc(db, "chats", chat_id);
+        x.data().members_chat_heads &&
+          updateDoc(docRef, {
+            members_chat_heads: chat_heads,
+          });
+      });
+      return;
     })
     .catch((err) => {
       dispatch({
