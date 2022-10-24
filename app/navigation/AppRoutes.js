@@ -175,6 +175,17 @@ const AppRoutes = ({ core, setExpoPushToken }) => {
           });
         }
       }
+
+      if (pageHandler === "post") {
+        if (notification_data.p_id) {
+          navigation.navigate(routes.POST_PAGE, {
+            post_id: notification_data.p_id,
+          });
+        }
+      }
+
+      // post->
+      // p_id
     });
 
     // Notifications.addNotificationReceivedListener((notification) => {
