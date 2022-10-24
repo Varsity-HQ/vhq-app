@@ -183,7 +183,13 @@ const AppRoutes = ({ core, setExpoPushToken }) => {
           });
         }
       }
-
+      if (pageHandler === "profile") {
+        if (notification_data.uname) {
+          navigation.navigate(routes.PROFILE, {
+            username: notification_data.uname,
+          });
+        }
+      }
       // post->
       // p_id
     });
