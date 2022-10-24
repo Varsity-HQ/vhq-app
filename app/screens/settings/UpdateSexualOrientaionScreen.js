@@ -59,6 +59,7 @@ function UpdateSexualOrientationScreen({
 
   const save_so = () => {
     update_sexual_orientation(l_so, isEnabled);
+    navigation.goBack();
   };
   return (
     <Screen>

@@ -42,6 +42,7 @@ function UpdateUniversityScreen({
 
   const saveUni = () => {
     update_university(l_uni);
+    navigation.goBack();
   };
 
   return (

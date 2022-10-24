@@ -32,7 +32,10 @@ function UpdateSurnameScreen({ navigation, update, loading, surname }) {
         backIcon
         buttonText="Save"
         title="Surname"
-        rightPress={() => update(value)}
+        rightPress={() => {
+          update(value);
+          navigation.goBack();
+        }}
       />
       <View style={styles.container}>
         <Input

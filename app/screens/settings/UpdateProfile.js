@@ -36,6 +36,7 @@ function UpdateProfile({ loading, navigation, userData, update_profile_pic }) {
   const update_dp = () => {
     if (!changedPP) return;
     update_profile_pic(profilepic);
+    // navigation.goBack();
   };
 
   return (

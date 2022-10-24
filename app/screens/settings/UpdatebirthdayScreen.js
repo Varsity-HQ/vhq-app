@@ -44,6 +44,7 @@ function UpdatebirthdayScreen({ loading, dob, navigation, update_dob }) {
     const dateAsISOStr = new Date(date).toISOString();
     let d = dateAsISOStr.split("T")[0];
     update_dob(d, years);
+    navigation.goBack();
   };
   //
   const handleDateConfirm = (e) => {

@@ -54,6 +54,7 @@ function YearOfStudyScreen({
 
   const saveYos = () => {
     update_yearofstudy(yof);
+    navigation.goBack();
   };
 
   return (

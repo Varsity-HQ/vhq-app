@@ -53,6 +53,7 @@ function UpdateGenderScreen({ gender, update_gender, loading, navigation }) {
 
   const saveGender = () => {
     update_gender(l_gender);
+    navigation.goBack();
   };
 
   return (

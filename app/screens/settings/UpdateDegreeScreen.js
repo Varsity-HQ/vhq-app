@@ -32,7 +32,10 @@ function UpdateDegreeScreen({ navigation, update_degree, loading, degree }) {
         backBtnText="Done"
         buttonText="Save"
         title="My Course"
-        rightPress={() => update_degree(l_degree)}
+        rightPress={() => {
+          update_degree(l_degree);
+          navigation.goBack();
+        }}
       />
       <View style={styles.container}>
         <Text>What degree are you currently studying</Text>

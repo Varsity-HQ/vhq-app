@@ -49,6 +49,7 @@ function UpdateSexualOrientationScreen({
 
   const save_st = () => {
     updates_gender_pref(l_st, isEnabled);
+    navigation.goBack();
   };
 
   return (

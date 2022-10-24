@@ -32,7 +32,10 @@ function UpdateUsernameScreen({ navigation, update, loading, username }) {
         backIcon
         buttonText="Save"
         title="Username"
-        rightPress={() => update(value)}
+        rightPress={() => {
+          update(value);
+          navigation.goBack();
+        }}
       />
       <View style={styles.container}>
         <Input

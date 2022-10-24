@@ -32,7 +32,10 @@ function UpdateAboutScreen({ navigation, update, loading, about }) {
         backIcon
         buttonText="Save"
         title="Bio"
-        rightPress={() => update(value)}
+        rightPress={() => {
+          update(value);
+          navigation.goBack();
+        }}
       />
       <View style={styles.container}>
         <Input

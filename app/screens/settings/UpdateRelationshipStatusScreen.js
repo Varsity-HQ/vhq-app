@@ -51,6 +51,7 @@ function UpdateRelationshipStatusScreen({
 
   const save_rs = () => {
     update_relationship_status(l_rs);
+    navigation.goBack();
   };
 
   return (
