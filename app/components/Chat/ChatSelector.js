@@ -32,8 +32,6 @@ function ChatSelector({ data, is_dating }) {
 
   if (!uid) return null;
 
-  console.log({ uid });
-
   const accCol = is_dating
     ? collection(db, "discover_profiles")
     : collection(db, "accounts");

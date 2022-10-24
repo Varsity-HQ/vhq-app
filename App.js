@@ -9,7 +9,7 @@ import {
 
 // import "react-native-gesture-handler";
 
-// console.ignoredYellowBox = ['Setting a timer']; 
+// console.ignoredYellowBox = ['Setting a timer'];
 
 import { LogBox } from "react-native";
 // import _ from "lodash";
@@ -23,10 +23,12 @@ LogBox.ignoreLogs(["Setting a timer"]);
 
 export default function App() {
   return (
+    // <React.MOde>
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <Provider store={store}>
         <IndexContainer />
       </Provider>
     </SafeAreaProvider>
+    // </React.MOde>
   );
 }

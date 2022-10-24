@@ -154,10 +154,6 @@ const AppRoutes = ({ core, setExpoPushToken }) => {
   useEffect(() => {
     //
 
-    Notifications.addNotificationReceivedListener((notification) => {
-      console.log({ notification });
-    });
-
     //
     check_user_tnc_agreement();
     registerForPushNotificationsAsync().then(
@@ -165,8 +161,25 @@ const AppRoutes = ({ core, setExpoPushToken }) => {
     );
 
     Notifications.addNotificationResponseReceivedListener((notification) => {
-      navigation.navigate("LOGIN");
+      const pageHandler =
+        notification?.notification?.request?.content?.data?._page;
+      const notification_data =
+        notification?.notification?.request?.content?.data;
+
+      if (pageHandler === "chat") {
+        if (notification_data.user_id && notification_data.username) {
+          navigation.navigate(routes.CHAT_PAGE, {
+            uid: notification_data.user_id,
+            username: notification_data.username,
+            dating: notification_data.isDatingChat,
+          });
+        }
+      }
     });
+
+    // Notifications.addNotificationReceivedListener((notification) => {
+    //   console.log({ notificationRECEIVED: notification });
+    // });
 
     return () => {};
   }, []);

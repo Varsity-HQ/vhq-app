@@ -105,7 +105,6 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
           accounts: data.data.accounts,
           last_visible: data.data.lastVisible,
         });
-        console.log(data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -125,8 +124,6 @@ function ChatHome({ acc_data, get_accounts, chatPage }) {
   }
 
   if (!chats_loading) {
-    console.log({ chats });
-
     chats.forEach((x) => {
       if (x.lastMessageSent !== "v72wA14Hj4%2SDDR") {
         all_chats.push(x);

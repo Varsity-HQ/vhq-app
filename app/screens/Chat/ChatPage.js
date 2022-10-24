@@ -256,6 +256,7 @@ function ChatPage({ account }) {
                 username: route.params.username,
                 user_id: route.params.uid,
                 isDatingChat: isDatingChat,
+                _page: "chat",
               });
             }
           })
