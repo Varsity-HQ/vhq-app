@@ -1,3 +1,4 @@
+import { useRoute } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, useWindowDimensions } from "react-native";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
@@ -22,8 +23,11 @@ const mapStateToProps = (state) => {
 
 function ProfileFollowing({ core }) {
   const layout = useWindowDimensions();
+  const params = useRoute();
 
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(
+    params.params?.tab === "followers" ? 0 : 1,
+  );
   const [routes] = React.useState([
     { key: "followers", title: "Followers" },
     { key: "following", title: "Following" },
@@ -33,10 +37,7 @@ function ProfileFollowing({ core }) {
     <Screen>
       <Header backIcon title={core.username} />
       <TabView
-        lazy={({ route }) => {
-          route.name === "following";
-          route.name === "followers";
-        }}
+        lazy
         style={{
           backgroundColor: colors.dark,
         }}

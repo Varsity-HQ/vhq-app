@@ -3,24 +3,36 @@ import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 function ProfileTabFollowing(props) {
-  const [data, set_data] = useState([]);
-  const [loading, set_loading] = useState(true);
+  const [data, set_data] = useState({
+    loading: true,
+    accounts: [],
+    last_v: null,
+  });
   useEffect(() => {
     try {
+      console.log("following");
       get_accounts();
     } catch (error) {
       console.log(error);
     }
     return () => {
-      set_loading(true);
+      set_data({
+        loading: true,
+        accounts: [],
+        last_v: null,
+      });
     };
   }, []);
 
   const get_accounts = async () => {
     try {
       const res = await axios.get("/u/following/get");
-      console.log(res.data);
-      set_loading(false);
+      set_data({
+        ...data,
+        accounts: res.data.accounts,
+        last_v: res.data.lastVisible,
+        loading: false,
+      });
     } catch (err) {
       console.log(err);
     }
