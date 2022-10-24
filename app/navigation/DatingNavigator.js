@@ -1,37 +1,34 @@
-import React, { useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React, { useEffect } from "react";
 
-import Profile from "../screens/Profile";
-import DatingIntroScreen from "../screens/DatingScreens/DatingIntroScreen";
 // import DatingEncountersScreen from "../components/Dating/SwipeContainer";
 
-import * as routes from "./routes";
-import CSConfirmGender from "../screens/DatingScreens/CreateShow/CSConfirmGender";
-import CSName from "../screens/DatingScreens/CreateShow/CSName";
-import CSLookingFor from "../screens/DatingScreens/CreateShow/CSLookingFor";
-import CSInterestedIn from "../screens/DatingScreens/CreateShow/CSInterestedIn";
-import UpdateUniversityScreen from "../screens/settings/UpdateUniversityScreen";
-import DatingContainer from "../screens/DatingScreens/DatingContainer";
 import * as Location from "expo-location";
+import { connect } from "react-redux";
+import CSAbout from "../screens/DatingScreens/CreateShow/CSAbout";
+import CSConfirmGender from "../screens/DatingScreens/CreateShow/CSConfirmGender";
+import CSInterestedIn from "../screens/DatingScreens/CreateShow/CSInterestedIn";
+import CSLookingFor from "../screens/DatingScreens/CreateShow/CSLookingFor";
+import CSMainInfo from "../screens/DatingScreens/CreateShow/CSMainInfo";
+import CSName from "../screens/DatingScreens/CreateShow/CSName";
+import DatingContainer from "../screens/DatingScreens/DatingContainer";
 import DatingProfilePage from "../screens/DatingScreens/DatingProfilePage";
 import MyDiscoverProfile from "../screens/DatingScreens/MyDiscoverProfile";
-import CSAbout from "../screens/DatingScreens/CreateShow/CSAbout";
-import { connect } from "react-redux";
+import PreferencesScreen from "../screens/settings/PreferencesScreen";
+import UpdateUniversityScreen from "../screens/settings/UpdateUniversityScreen";
 import {
   initialize_discover_page,
   update_user_location,
 } from "../store/actions/datingActions";
-import CSMainInfo from "../screens/DatingScreens/CreateShow/CSMainInfo";
-import PreferencesScreen from "../screens/settings/PreferencesScreen";
+import * as routes from "./routes";
 //
+import DatingFilters from "../screens/DatingScreens/DatingFilters";
+import MyDiscoverProfileHowDoILook from "../screens/DatingScreens/MyDiscoverProfileHowDoILook";
 import UpdatebirthdayScreen from "../screens/settings/UpdatebirthdayScreen";
 import UpdateGenderScreen from "../screens/settings/UpdateGenderScreen";
 import UpdateRelationshipStatusScreen from "../screens/settings/UpdateRelationshipStatusScreen";
-import UpdateSexualOrientaionScreen from "../screens/settings/UpdateSexualOrientaionScreen";
 import UpdateSexTargetScreen from "../screens/settings/UpdateSexTargetScreen";
-import MyDiscoverProfileHowDoILook from "../screens/DatingScreens/MyDiscoverProfileHowDoILook";
-import DatingFilters from "../screens/DatingScreens/DatingFilters";
-import ChatPage from "../screens/Chat/ChatPage";
+import UpdateSexualOrientaionScreen from "../screens/settings/UpdateSexualOrientaionScreen";
 
 const Stack = createNativeStackNavigator();
 

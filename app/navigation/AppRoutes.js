@@ -1,35 +1,27 @@
-import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {
-  StyleSheet,
-  Alert,
-  Linking,
-  Platform,
-  NativeModules,
-} from "react-native";
+import React, { useEffect } from "react";
+import { Alert, Linking, Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 // Screens
-import PostPage from "../screens/PostPage";
-import SetupUniversity from "../screens/SetupUniversity";
-import SetupPersonalInformation from "../screens/SetupPersonalInformation";
-import AddPostPage from "../screens/AddPostPage";
+import * as Notifications from "expo-notifications";
+import useOnlinePresence from "../auth/useOnlinePresence";
 import OverlayLoader from "../components/OverlayLoader";
 import colors from "../config/colors";
-import * as routes from "./routes";
-
-import * as Notifications from "expo-notifications";
-import { setExpoPushToken } from "../store/actions/auth_actions";
-import ForgotToAddProfilePic from "../screens/ForgotToAddProfilePic";
-import CreateEventPage from "../screens/CreateEventPage";
-import Profile from "../screens/Profile";
-import UpdateUniversityScreen from "../screens/settings/UpdateUniversityScreen";
-import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
-import TabNavigator from "./TabNavigator";
+import AddPostPage from "../screens/AddPostPage";
 import ChatPage from "../screens/Chat/ChatPage";
+import CreateEventPage from "../screens/CreateEventPage";
+import ForgotToAddProfilePic from "../screens/ForgotToAddProfilePic";
+import PostPage from "../screens/PostPage";
+import Profile from "../screens/Profile";
+import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
+import UpdateUniversityScreen from "../screens/settings/UpdateUniversityScreen";
+import SetupPersonalInformation from "../screens/SetupPersonalInformation";
+import SetupUniversity from "../screens/SetupUniversity";
+import { setExpoPushToken } from "../store/actions/auth_actions";
 import navigation from "./rootNavigation";
-import useOnlinePresence from "../auth/useOnlinePresence";
-import ChatPage2 from "../screens/Chat/ChatPage2";
+import * as routes from "./routes";
+import TabNavigator from "./TabNavigator";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({

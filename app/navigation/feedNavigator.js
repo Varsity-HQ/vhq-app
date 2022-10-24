@@ -1,86 +1,79 @@
-import React from "react";
-import { ScrollView, View } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import Home from "../screens/Home";
-import Profile from "../screens/Profile";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
 import FloatingButton from "../components/FloatingButton";
-import {
-  ANONYMOUS_SETTINGS,
-  HOME,
-  PROFILE,
-  PROFILE_SETTINGS,
-  PREFERENCES,
-  YEAR_OF_STUDY,
-  UPDATE_DEGREE,
-  UPDATE_BIRTHDAY,
-  UPDATE_GENDER,
-  UPDATE_UNIVERSITY,
-  UPDATE_RELATIONSHIP_STATUS,
-  UPDATE_SO_STATUS,
-  UPDATE_S_TARGET,
-  UPDATE_PROFILE_PAGE,
-  UPDATE_USERNAME,
-  UPDATE_FIRSTNAME,
-  UPDATE_SURNAME,
-  UPDATE_ABOUT,
-  POLL_DETAILS,
-  NOTIFICATIONS,
-  HASHTAG_SCREEN,
-  SEARCH_RESULTS,
-  POST_PAGE,
-  REFER_A_FRIEND,
-  QCOINS_OFFERS,
-  DISCOVER_PAGE,
-  ADMIN_HOME,
-  ABOUT_PAGE,
-  MY_MARKETPLACE_ADS,
-  MARKETPLACE_CREATE,
-  MARKETPLACE_ITEM_PAGE,
-  CREATE_IN_DEP,
-  ADMIN_MARKETPLACE_CATEGORIES,
-  ADMIN_MARKETPLACE_CATEGORY,
-} from "./routes";
-import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
-import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
-import PreferencesScreen from "../screens/settings/PreferencesScreen";
-import YearOfStudyScreen from "../screens/settings/YearOfStudyScreen";
-import UpdateDegreeScreen from "../screens/settings/UpdateDegreeScreen";
-import UpdatebirthdayScreen from "../screens/settings/UpdatebirthdayScreen";
-import UpdateGenderScreen from "../screens/settings/UpdateGenderScreen";
-import UpdateUniversityScreen from "../screens/settings/UpdateUniversityScreen";
-import UpdateRelationshipStatusScreen from "../screens/settings/UpdateRelationshipStatusScreen";
-import UpdateSexualOrientaionScreen from "../screens/settings/UpdateSexualOrientaionScreen";
-import UpdateSexTargetScreen from "../screens/settings/UpdateSexTargetScreen";
-import UpdateProfile from "../screens/settings/UpdateProfile";
-import UpdateAbout from "../screens/settings/UpdateAbout";
-import UpdateUsernameScreen from "../screens/settings/UpdateUsernameScreen";
-import UpdateSurnameScreen from "../screens/settings/UpdateSurnameScreen";
-import UpdateFirstnameScreen from "../screens/settings/UpdateFirstnameScreen";
-import PollDetails from "../screens/PollDetails";
-import Notifications from "../screens/Notifications";
-import DrawerContent from "./DrawerContent";
-import HomeScreen from "../screens/HomeTabs/HomeScreen";
-import HashtagScreen from "../screens/HashtagScreen/index";
-import EventsScreen from "../screens/HomeTabs/EventsScreen";
-import colors from "../config/colors";
-import Screen from "../components/Screen";
-import VirtualizedView from "../components/VirtualizedViewBacked";
-import SearchResults from "../screens/SearchResults";
-import PostPage from "../screens/PostPage";
-import ReferAFriend from "../screens/ReferAFriend";
-import QcoinsOffersPage from "../screens/QcoinsOffersPage";
-import DiscoverPage from "../screens/DiscoverPage";
-import AdminHome from "../screens/AdminScreens/AdminHome";
 import About from "../screens/About";
-import MyMarketplaceAds from "../screens/Marketplace/MyMarketplaceAds";
-import CreateInDepartment from "../screens/Marketplace/CreateInDepartment";
-import ItemPage from "../screens/Marketplace/ItemPage";
-import Create from "../screens/Marketplace/Create";
+import AdminHome from "../screens/AdminScreens/AdminHome";
 import MarketplaceCategories from "../screens/AdminScreens/MarketplaceCategories";
 import MarketplaceCategory from "../screens/AdminScreens/MarketplaceCategory";
+import DiscoverPage from "../screens/DiscoverPage";
+import HashtagScreen from "../screens/HashtagScreen/index";
+import Home from "../screens/Home";
+import Create from "../screens/Marketplace/Create";
+import CreateInDepartment from "../screens/Marketplace/CreateInDepartment";
+import ItemPage from "../screens/Marketplace/ItemPage";
+import MyMarketplaceAds from "../screens/Marketplace/MyMarketplaceAds";
+import Notifications from "../screens/Notifications";
+import PollDetails from "../screens/PollDetails";
+import Profile from "../screens/Profile";
+import ProfileFollowing from "../screens/ProfileFollowing";
+import QcoinsOffersPage from "../screens/QcoinsOffersPage";
+import ReferAFriend from "../screens/ReferAFriend";
+import SearchResults from "../screens/SearchResults";
+import AnonymousSettingsScreen from "../screens/settings/AnonymousSettingsScreen";
+import PreferencesScreen from "../screens/settings/PreferencesScreen";
+import ProfileSettingsScreen from "../screens/settings/ProfileSettingsScreen";
+import UpdateAbout from "../screens/settings/UpdateAbout";
+import UpdatebirthdayScreen from "../screens/settings/UpdatebirthdayScreen";
+import UpdateDegreeScreen from "../screens/settings/UpdateDegreeScreen";
+import UpdateFirstnameScreen from "../screens/settings/UpdateFirstnameScreen";
+import UpdateGenderScreen from "../screens/settings/UpdateGenderScreen";
+import UpdateProfile from "../screens/settings/UpdateProfile";
+import UpdateRelationshipStatusScreen from "../screens/settings/UpdateRelationshipStatusScreen";
+import UpdateSexTargetScreen from "../screens/settings/UpdateSexTargetScreen";
+import UpdateSexualOrientaionScreen from "../screens/settings/UpdateSexualOrientaionScreen";
+import UpdateSurnameScreen from "../screens/settings/UpdateSurnameScreen";
+import UpdateUniversityScreen from "../screens/settings/UpdateUniversityScreen";
+import UpdateUsernameScreen from "../screens/settings/UpdateUsernameScreen";
+import YearOfStudyScreen from "../screens/settings/YearOfStudyScreen";
+import DrawerContent from "./DrawerContent";
+import {
+  ABOUT_PAGE,
+  ADMIN_HOME,
+  ADMIN_MARKETPLACE_CATEGORIES,
+  ADMIN_MARKETPLACE_CATEGORY,
+  ANONYMOUS_SETTINGS,
+  CREATE_IN_DEP,
+  DISCOVER_PAGE,
+  HASHTAG_SCREEN,
+  HOME,
+  MARKETPLACE_CREATE,
+  MARKETPLACE_ITEM_PAGE,
+  MY_MARKETPLACE_ADS,
+  NOTIFICATIONS,
+  POLL_DETAILS,
+  PREFERENCES,
+  PROFILE,
+  PROFILE_FOLLOWING,
+  PROFILE_SETTINGS,
+  QCOINS_OFFERS,
+  REFER_A_FRIEND,
+  SEARCH_RESULTS,
+  UPDATE_ABOUT,
+  UPDATE_BIRTHDAY,
+  UPDATE_DEGREE,
+  UPDATE_FIRSTNAME,
+  UPDATE_GENDER,
+  UPDATE_PROFILE_PAGE,
+  UPDATE_RELATIONSHIP_STATUS,
+  UPDATE_SO_STATUS,
+  UPDATE_SURNAME,
+  UPDATE_S_TARGET,
+  UPDATE_UNIVERSITY,
+  UPDATE_USERNAME,
+  YEAR_OF_STUDY,
+} from "./routes";
 
 const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
@@ -195,6 +188,14 @@ const FeedNavigator = () => (
         name={PROFILE}
         component={Profile}
       />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={PROFILE_FOLLOWING}
+        component={ProfileFollowing}
+      />
+
       <Stack.Screen
         options={{
           headerShown: false,

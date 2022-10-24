@@ -23,6 +23,7 @@ import {
   ANONYMOUS_SETTINGS,
   CHAT_PAGE,
   MY_MARKETPLACE_ADS,
+  PROFILE_FOLLOWING,
   PROFILE_SETTINGS,
   UPDATE_PROFILE_PAGE,
 } from "../../navigation/routes";
@@ -97,16 +98,10 @@ function ProfileHeader({
     }
   };
 
-  const goToFol = (page) => {
-    // auth_profile && navigation.navigate("FOLLOWERS");
-    axios
-      .get("/u/following/get")
-      .then((data) => {
-        console.log(data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const goToFol = (tab) => {
+    navigation.navigate(PROFILE_FOLLOWING, {
+      tab: tab,
+    });
   };
 
   return (

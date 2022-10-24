@@ -67,6 +67,7 @@ export const ADD_POST = "AddPost";
 export const SEARCH = "Search";
 export const HOME = "Home";
 export const PROFILE = "Profile";
+export const PROFILE_FOLLOWING = "ProfileFollowing";
 export const REFER_A_FRIEND = "ReferAFriend";
 export const QCOINS_OFFERS = "QcoinsOffers";
 export const POST_PAGE = "PostPage";
