@@ -23,11 +23,9 @@ const mapStateToProps = (state) => {
 
 function ProfileFollowing({ core }) {
   const layout = useWindowDimensions();
-  const params = useRoute();
+  const { params } = useRoute();
 
-  const [index, setIndex] = React.useState(
-    params.params?.tab === "followers" ? 0 : 1,
-  );
+  const [index, setIndex] = React.useState(params?.tab === "followers" ? 0 : 1);
   const [routes] = React.useState([
     { key: "followers", title: "Followers" },
     { key: "following", title: "Following" },
