@@ -1,35 +1,9 @@
-import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
 import messages from "./messages";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MINUTE = 60;
 const HOUR = 3600;
-
-const setPromoNots = async () => {
-  await clearScheduledNotifications();
-  let length = messages.general_promos.length;
-  schedulePushNotification(messages.general_promos[randomNumber(length)], HOUR);
-  schedulePushNotification(
-    messages.general_promos[randomNumber(length)],
-    HOUR * 4,
-  );
-  schedulePushNotification(
-    messages.general_promos[randomNumber(length)],
-    HOUR * 6,
-  );
-  schedulePushNotification(
-    messages.general_promos[randomNumber(length)],
-    HOUR * 9,
-  );
-  schedulePushNotification(
-    messages.general_promos[randomNumber(length)],
-    HOUR * 14,
-  );
-  schedulePushNotification(messages.bring_back[0], HOUR * 24);
-  schedulePushNotification(messages.bring_back[1], HOUR * 48);
-  schedulePushNotification(messages.bring_back[2], HOUR * 72);
-};
 
 const setPostReminders = async () => {
   let noti_ids = [];
@@ -53,7 +27,7 @@ const setPostReminders = async () => {
   }
 };
 
-const clearPostScheduledNotifications = async () => {
+const cancelNotification = async () => {
   try {
     let postNotiIds = await AsyncStorage.getItem("@post_notifications");
     if (postNotiIds != null) {
@@ -65,17 +39,8 @@ const clearPostScheduledNotifications = async () => {
     }
   } catch (e) {}
 };
-
-const clearScheduledNotifications = async () => {
-  await Notifications.cancelAllScheduledNotificationsAsync();
-};
-
 const minuteToSeconds = (min) => {
   return min * MINUTE;
-};
-
-const randomNumber = (max) => {
-  return Math.round(Math.random() * (max - 1));
 };
 
 async function schedulePushNotification(message, seconds) {
@@ -97,10 +62,4 @@ async function cancelNotification(notifId) {
   await Notifications.cancelScheduledNotificationAsync(notifId);
 }
 
-export {
-  schedulePushNotification,
-  cancelNotification,
-  setPostReminders,
-  clearPostScheduledNotifications,
-  setPromoNots,
-};
+export { schedulePushNotification, cancelNotification, setPostReminders };

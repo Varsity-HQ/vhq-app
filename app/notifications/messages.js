@@ -57,7 +57,7 @@ const bring_back = [
 const post_reminders = [
   {
     id: 8,
-    title: "You forgot something 🍂",
+    title: "Did you forget to post ? 🍂",
     body: "You probably forgot to click the post button. Tap here and write something and post on VarsityHQ ✨",
   },
   {
@@ -67,7 +67,7 @@ const post_reminders = [
   },
   {
     id: 11,
-    title: "Too shy to post something ?",
+    title: "Still thinking about what to post ?",
     body: "Try switching to anonymous when you post if you scared of being known and post without anyone knowing who you are. it's a safe space, try it 😊",
   },
 ];

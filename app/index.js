@@ -1,47 +1,45 @@
-import React, { useEffect, useRef, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
+import React, { useState } from "react";
 import AppNavigator from "./navigation/AppRoutes";
 
-import AuthRoutes from "./navigation/AuthRoutes";
-import vhqTheme from "./navigation/navigationTheme";
-import axios from "axios";
-import { connect } from "react-redux";
-import auth_storage from "./auth/auth_storage";
-import AppLoading from "expo-app-loading";
 import {
-  setAuthState,
-  set_user_token,
-  set_token,
-  set_user,
-} from "./store/actions/actions";
-import Toast from "react-native-toast-message";
-import { useFonts } from "expo-font";
-import * as Font from "expo-font";
-import { initializeApp, getApps } from "firebase/app";
-import { firebaseConfig } from "./util/fb_config";
-import { Image, StatusBar } from "react-native";
-import AppToast from "./components/AppToast";
-import { Asset } from "expo-asset";
-import * as Notifications from "expo-notifications";
-import {
+  Feather,
   FontAwesome,
   Ionicons,
   MaterialCommunityIcons,
-  Feather,
   SimpleLineIcons,
 } from "@expo/vector-icons";
-import { navigationRef } from "./navigation/rootNavigation";
-// import { setPromoNots } from "./notifications";
-import store from "./store/store";
+import axios from "axios";
+import AppLoading from "expo-app-loading";
+import { Asset } from "expo-asset";
+import * as Font from "expo-font";
+import { useFonts } from "expo-font";
+import { getApps, initializeApp } from "firebase/app";
+import { Image, StatusBar } from "react-native";
+import Toast from "react-native-toast-message";
+import { connect } from "react-redux";
 import async_storage from "./auth/async_storage";
+import auth_storage from "./auth/auth_storage";
+import AppToast from "./components/AppToast";
+import AuthRoutes from "./navigation/AuthRoutes";
+import vhqTheme from "./navigation/navigationTheme";
+import { navigationRef } from "./navigation/rootNavigation";
+import {
+  setAuthState,
+  set_token,
+  set_user,
+  set_user_token,
+} from "./store/actions/actions";
+import store from "./store/store";
+import { firebaseConfig } from "./util/fb_config";
 
 if (!getApps().length) {
   initializeApp(firebaseConfig);
 }
 
-axios.defaults.baseURL = "http://192.168.68.125:5000";
+// axios.defaults.baseURL = "http://192.168.68.125:5000";
 // axios.defaults.baseURL = "http://192.168.0.116:5000";
-// axios.defaults.baseURL = "https://api.varsityhq.co.za";
+axios.defaults.baseURL = "https://api.varsityhq.co.za";
 
 const toastConfig = {
   general: ({ text1, text2 }) => <AppToast text1={text1} text2={text2} />,
