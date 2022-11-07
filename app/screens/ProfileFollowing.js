@@ -1,7 +1,12 @@
 import { useRoute } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, useWindowDimensions } from "react-native";
-import { SceneMap, TabBar, TabView } from "react-native-tab-view";
+import {
+  SceneMap,
+  TabBar,
+  TabView,
+  SceneRendererProps,
+} from "react-native-tab-view";
 import { connect } from "react-redux";
 import Text from "../components/AppText";
 import Header from "../components/headers/header3";
@@ -9,11 +14,6 @@ import Screen from "../components/Screen";
 import colors from "../config/colors";
 import ProfileTabFollowers from "./ProfileTabFollowers";
 import ProfileTabFollowing from "./ProfileTabFollowing";
-
-const renderScene = SceneMap({
-  followers: ProfileTabFollowers,
-  following: ProfileTabFollowing,
-});
 
 const mapStateToProps = (state) => {
   return {
@@ -31,10 +31,28 @@ function ProfileFollowing({ core }) {
     { key: "following", title: "Following" },
   ]);
 
+  // const renderScene = SceneMap({
+  //   followers: ProfileTabFollowers,
+  //   following: ProfileTabFollowing,
+  // });
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case "followers":
+        return <ProfileTabFollowers username={params.username} />;
+      case "following":
+        return <ProfileTabFollowing username={params.username} />;
+      default:
+        return null;
+    }
+  };
+
+  let username = params.username;
+
   return (
     <Screen>
-      <Header backIcon title={core.username} />
+      <Header backIcon title={username ? username : core.username} />
       <TabView
+        {...params}
         lazy
         style={{
           backgroundColor: colors.dark,

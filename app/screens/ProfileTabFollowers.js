@@ -4,7 +4,7 @@ import { StyleSheet, View, FlatList } from "react-native";
 import Loading from "../components/Loaders/HomeUploading";
 import AccountCard from "../components/Search/AccountCont";
 
-function ProfileTabFollowers(props) {
+function ProfileTabFollowers({ username }) {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [data, setData] = useState({
@@ -30,7 +30,13 @@ function ProfileTabFollowers(props) {
     if (stop) return;
 
     try {
-      let res = await axios.get(`/u/followers/get${lv ? "?l_id=" + lv : ""}`);
+      let unString = username ? `?username=${username}` : "";
+      if (username && lv) {
+        unString = username ? `&username=${username}` : "";
+      }
+      let res = await axios.get(
+        `/u/followers/get${lv ? "?l_id=" + lv : ""}${unString}`,
+      );
       let accounts = data.accounts;
 
       let newAccounts = !lv
