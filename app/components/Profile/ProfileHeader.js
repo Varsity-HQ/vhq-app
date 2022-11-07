@@ -99,6 +99,7 @@ function ProfileHeader({
   };
 
   const goToFol = (tab) => {
+    if (!auth_profile) return;
     navigation.navigate(PROFILE_FOLLOWING, {
       tab: tab,
     });

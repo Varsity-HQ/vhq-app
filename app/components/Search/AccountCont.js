@@ -35,8 +35,6 @@ function AccountCont({
   const navigation = useNavigation();
   const [following, setFollowing] = useState(false);
 
-  console.log(data);
-
   useFocusEffect(
     React.useCallback(() => {
       let userid = data.userID;

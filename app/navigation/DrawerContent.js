@@ -33,6 +33,7 @@ import {
   QCOINS_OFFERS,
   DISCOVER_PAGE,
   MY_MARKETPLACE_ADS,
+  PROFILE_FOLLOWING,
 } from "./routes";
 import { logOutUser } from "../store/actions/actions";
 import { save_post_user } from "../store/actions/profile";
@@ -84,6 +85,12 @@ function DrawerContent({ props, product, account, save_post_user }) {
     );
   };
 
+  const goToFol = (tab) => {
+    navigation.navigate(PROFILE_FOLLOWING, {
+      tab: tab,
+    });
+  };
+
   return (
     <DrawerContentScrollView
       style={{
@@ -112,11 +119,17 @@ function DrawerContent({ props, product, account, save_post_user }) {
             @{account.username}
           </Text>
           <View style={[styles.center, styles.row, { marginTop: 15 }]}>
-            <Text style={[styles.subText]}>
-              {account.followers ? account.followers : 0} Followers
-            </Text>
+            <TouchableOpacity onPress={() => goToFol("followers")}>
+              <Text style={[styles.subText]}>
+                {account.followers ? account.followers : 0} Followers
+              </Text>
+            </TouchableOpacity>
             <Text style={[styles.subText_2]}>&nbsp;|&nbsp;</Text>
-            <Text style={[styles.subText]}>{account.following} Following</Text>
+            <TouchableOpacity onPress={() => goToFol("following")}>
+              <Text style={[styles.subText]}>
+                {account.following} Following
+              </Text>
+            </TouchableOpacity>
           </View>
         </Drawer.Section>
         <View style={styles.divider} />
