@@ -33,7 +33,7 @@ const cancelNotification = async () => {
     if (postNotiIds != null) {
       postNotiIds = JSON.parse(postNotiIds);
       postNotiIds.forEach((x) => {
-        cancelNotification(x);
+        cancelSingleNotification(x);
       });
       await AsyncStorage.removeItem("@post_notifications");
     }
@@ -58,7 +58,7 @@ async function schedulePushNotification(message, seconds) {
   return id;
 }
 
-async function cancelNotification(notifId) {
+async function cancelSingleNotification(notifId) {
   await Notifications.cancelScheduledNotificationAsync(notifId);
 }
 

@@ -37,9 +37,9 @@ if (!getApps().length) {
   initializeApp(firebaseConfig);
 }
 
-// axios.defaults.baseURL = "http://192.168.68.125:5000";
+axios.defaults.baseURL = "http://192.168.68.129:5005";
 // axios.defaults.baseURL = "http://192.168.0.116:5000";
-axios.defaults.baseURL = "https://api.varsityhq.co.za";
+// axios.defaults.baseURL = "https://api.varsityhq.co.za";
 
 const toastConfig = {
   general: ({ text1, text2 }) => <AppToast text1={text1} text2={text2} />,
@@ -143,7 +143,7 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
         });
         setAuthState(true);
         axios
-          .get("/get/account")
+          .get("/get/account?platform=ios")
           .then((data) => {
             console.log("update local object");
             set_user(data.data);
@@ -158,7 +158,7 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
           });
       } else {
         await axios
-          .get("/get/account")
+          .get("/get/account?platform=ios")
           .then((data) => {
             set_user(data.data);
             store.dispatch({

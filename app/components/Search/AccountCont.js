@@ -16,6 +16,8 @@ import check_if_followed from "../../util/check_if_followed";
 import * as routes from "../../navigation/routes";
 import { follow_account, unfollow_account } from "../../store/actions/actions";
 
+const sAccount = "jL5PPJzZuqWuqHLz7jb5ECS7cHu2";
+
 const mapDispatchToProps = (dispatch) => {
   return {
     follow_account: (uid) => dispatch(follow_account(uid)),
@@ -32,6 +34,8 @@ function AccountCont({
 }) {
   const navigation = useNavigation();
   const [following, setFollowing] = useState(false);
+
+  console.log(data);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -108,7 +112,7 @@ function AccountCont({
         </View>
       </TouchableWithoutFeedback>
       <View>
-        {!removeButton && (
+        {!removeButton && data.userID !== sAccount && (
           <Button
             type={following ? 5 : 8}
             onPress={handleAction}
