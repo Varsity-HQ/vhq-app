@@ -25,6 +25,7 @@ import PostCard from "../components/PostCard";
 import { check_post_reported } from "../util/postUtil";
 import check_user_blocked from "../util/check_user_blocked";
 import { unblock_user } from "../store/actions/filterActions";
+import { FlashList } from "@shopify/flash-list";
 
 const mapStateToProps = (state) => {
   return {
@@ -194,10 +195,11 @@ class Profile extends PureComponent {
 
     return (
       <Screen>
-        <FlatList
+        <FlashList
+          estimatedItemSize={344}
           onEndReached={this.handleLoadMore}
           onEndReachedThreshold={0.5}
-          initialNumToRender={10}
+          // initialNumToRender={10}
           renderItem={this.handleListRendering}
           keyExtractor={(item) => item.id}
           data={

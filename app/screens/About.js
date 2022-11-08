@@ -29,7 +29,7 @@ function About(props) {
               },
             ]}
           >
-            VarsityHQ v2.0.0
+            VarsityHQ v2.1.3
           </Text>
           <Text style={styles.text}>
             Copyright 2021-2022 Varsity Headquarters (Pty) Ltd, all rights

@@ -127,7 +127,7 @@ function DrawerContent({ props, product, account, save_post_user }) {
             <Text style={[styles.subText_2]}>&nbsp;|&nbsp;</Text>
             <TouchableOpacity onPress={() => goToFol("following")}>
               <Text style={[styles.subText]}>
-                {account.following} Following
+                {parseInt(account.following) - 1} Following
               </Text>
             </TouchableOpacity>
           </View>

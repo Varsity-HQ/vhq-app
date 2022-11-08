@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 import { View, StyleSheet, Dimensions, Image as ImageO } from "react-native";
-import Carousel from "react-native-snap-carousel";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import colors from "../../config/colors";
 import Image from "../Image";
