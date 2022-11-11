@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { View, StyleSheet } from "react-native";
 import Screen from "../../components/Screen";
 import TabbedScreenComponent from "../../components/TabbedScreenComponent";
@@ -72,9 +72,17 @@ const DatingContainer = ({
   }
 
   const [activeTabIndex, setActiveTabIndex] = React.useState(1);
-  const [center, setCenter] = React.useState([0, 0]);
   const [pokes_loading, setPokesLoading] = React.useState(true);
   const [pokesProfiles, setPokesProfiles] = React.useState([]);
+
+  const collectionRef = collection(db, "discover_profiles");
+  const queryRef = query(
+    collectionRef,
+    // where("is_active", "==", true),
+    where("gender", "in", profile.show_me),
+    orderBy("last_online", "desc"),
+  );
+  const [profiles, ploading, perror] = useCollectionData(queryRef);
 
   let userRef = null;
   let userData = null;
@@ -92,7 +100,7 @@ const DatingContainer = ({
 
   const tabs = [
     {
-      title: "Near me",
+      title: "Browse",
       index: 1,
       icon: (
         <FontAwesome
@@ -116,60 +124,23 @@ const DatingContainer = ({
     },
   ];
 
-  let hooks = [];
-  const radiusInM = 200 * 1000;
-  const bounds = geofire.geohashQueryBounds(center, radiusInM);
-  let promises = [];
-
-  for (const b of bounds) {
-    if (is_active) {
-      const collectionRef = collection(db, "discover_profiles");
-      const queryRef = query(
-        collectionRef,
-        orderBy("hashed_location"),
-        where("is_active", "==", true),
-        where("gender", "in", profile.show_me),
-        startAt(b[0]),
-        endAt(b[1]),
-      );
-      promises.push(getDocs(queryRef));
-      hooks.push(useCollectionData(queryRef));
-    } else {
-      hooks = [];
-      promises = [];
-    }
-  }
-
   useFocusEffect(
     React.useCallback(() => {
-      if (is_active) {
-        if (!profile.hashed_location) {
-          handle_without_location();
-        } else {
-          handle_with_location();
-        }
-      }
+      //run some code
     }, []),
   );
 
-  const handle_with_location = () => {
-    setCenter([profile.lat, profile.long]);
-  };
+  useEffect(() => {
+    update_last_online();
+  }, []);
 
-  const handle_without_location = () => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      if (status === "granted") {
-        let location = await Location.getCurrentPositionAsync({});
-        update_user_location(location);
-        setCenter([location.coords?.latitude, location.coords?.longitude]);
-      }
-    })();
+  const update_last_online = async () => {
+    if (discover_profile_id) {
+      let userRef = doc(db, "discover_profiles", discover_profile_id);
+      await updateDoc(userRef, {
+        last_online: new Date().toISOString(),
+      });
+    }
   };
 
   const setTabIndex = (index) => {
@@ -231,28 +202,18 @@ const DatingContainer = ({
   let accounts = [];
   let loaders = [];
 
-  if (is_active) {
-    for (const hook of hooks) {
-      loaders.push(hook[1]);
-      // console.log({ is_array: Array.isArray(hook[0]) });
-      if (!hook[1]) {
-        hook[0].forEach((x) => {
-          if (
-            discover_profile_id &&
-            x.id !== discover_profile_id &&
-            !own_profile.blocked.includes(x.id) &&
-            !x.blocked.includes(discover_profile_id)
-          ) {
-            const lat = x.lat;
-            const lng = x.long;
-            const distanceInKm = geofire.distanceBetween([lat, lng], center);
-            const distanceInM = distanceInKm * 1000;
-            // if (distanceInM <= radiusInM) {
-            if (distanceInM <= profile.filters.distance * 1000) {
-              accounts.push(x);
-            }
-          }
-        });
+  console.log({ profiles });
+  console.log({ perror });
+
+  if ((is_active && !ploading) || typeof profiles === undefined) {
+    for (const x of profiles) {
+      if (
+        discover_profile_id &&
+        x.id !== discover_profile_id &&
+        !own_profile.blocked.includes(x.id) &&
+        !x.blocked.includes(discover_profile_id)
+      ) {
+        accounts.push(x);
       }
     }
   }
@@ -260,6 +221,7 @@ const DatingContainer = ({
   return (
     <Screen>
       <TabbedScreenComponent
+        estimatedItemSize={187}
         activeTabIndex={activeTabIndex}
         setTabIndex={setTabIndex}
         tabOptions={tabs}
@@ -297,7 +259,7 @@ const DatingContainer = ({
         ]}
         tabStates={[
           {
-            loading: loaders.includes(true),
+            loading: ploading || typeof profiles === undefined,
             loading_more: false,
             data: accounts,
             refreshing: false,

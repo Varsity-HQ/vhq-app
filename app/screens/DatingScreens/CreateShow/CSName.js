@@ -24,12 +24,18 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-function CSName({ nickname, save_dating_nickname, saving_nickname }) {
+function CSName({
+  nickname,
+  save_dating_nickname,
+  saving_nickname,
+  navigation,
+}) {
   const [s_nickname, set_nickname] = useState(nickname);
 
   const handle_save_nickname = () => {
     if (nickname == s_nickname) return;
     save_dating_nickname(s_nickname);
+    navigation.goBack();
   };
 
   return (

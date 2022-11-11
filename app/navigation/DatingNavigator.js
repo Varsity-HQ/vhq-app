@@ -11,7 +11,7 @@ import CSInterestedIn from "../screens/DatingScreens/CreateShow/CSInterestedIn";
 import CSLookingFor from "../screens/DatingScreens/CreateShow/CSLookingFor";
 import CSMainInfo from "../screens/DatingScreens/CreateShow/CSMainInfo";
 import CSName from "../screens/DatingScreens/CreateShow/CSName";
-import DatingContainer from "../screens/DatingScreens/DatingContainer";
+import DatingContainer from "../screens/DatingScreens/DatingContainer.activitybased";
 import DatingProfilePage from "../screens/DatingScreens/DatingProfilePage";
 import MyDiscoverProfile from "../screens/DatingScreens/MyDiscoverProfile";
 import PreferencesScreen from "../screens/settings/PreferencesScreen";
@@ -69,18 +69,18 @@ const DatingNavigator = ({
 }) => {
   useEffect(() => {
     initialize_discover_page();
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
+    // (async () => {
+    //   let { status } = await Location.requestForegroundPermissionsAsync();
+    //   if (status !== "granted") {
+    //     setErrorMsg("Permission to access location was denied");
+    //     return;
+    //   }
 
-      if (status === "granted") {
-        let location = await Location.getCurrentPositionAsync({});
-        update_user_location(location);
-      }
-    })();
+    //   if (status === "granted") {
+    //     let location = await Location.getCurrentPositionAsync({});
+    //     update_user_location(location);
+    //   }
+    // })();
   }, []);
 
   return (

@@ -344,7 +344,8 @@ function DatingProfilePage({
                 {
                   title: "s_orientation",
                   text: profile.sexual_orientation,
-                  hide: !profile.sexual_orientation,
+                  hide:
+                    !profile.sexual_orientation || !profile.show_sorientation,
                 },
                 {
                   title: "yearOfStudy",

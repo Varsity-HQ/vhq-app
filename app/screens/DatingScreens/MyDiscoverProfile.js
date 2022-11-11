@@ -203,7 +203,7 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
               }
               onPress={() => navigation.navigate(CS_LOOKING_FOR)}
               header="What are you interested in"
-              subText="Specify what you are looking for."
+              subText={`"I'm here ${profile.purpose.replace(/_/g, " ")}"`}
             />
             <FancyButton
               onPress={() => navigation.navigate(CS_INTERESTED_IN)}
@@ -215,7 +215,15 @@ function MyDiscoverProfile({ uploading_profilepic, profilepic, profile }) {
                 />
               }
               header="Control who you see"
-              subText="Who are you interested in.."
+              subText={`Show me ${
+                profile.show_me.length === 2 ? " both " : " only "
+              } ${JSON.stringify(profile.show_me)
+                .replace(/le/g, "les")
+                .replace(/","/g, " and ")
+                .slice(2)
+                .slice(0, -2)
+                .trim()
+                .toLowerCase()}`}
             />
             <Button
               type={2}

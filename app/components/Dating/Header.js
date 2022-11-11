@@ -1,5 +1,11 @@
 import React from "react";
-import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import Text from "../AppText";
 import Image from "../Image";
 import { connect } from "react-redux";
@@ -40,6 +46,7 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex, data }) {
           </TouchableOpacity>
           <Text style={styles.titleStyle}>Discover</Text>
         </View>
+
         <View style={[styles.menu_container]}>
           {tabs.map((x) => (
             <TouchableOpacity
@@ -86,6 +93,12 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex, data }) {
           </TouchableOpacity>
         </View>
       </View>
+      <View style={styles.bottom_section}>
+        <Text style={styles.subtitle}>Fresh faces</Text>
+        <ScrollView horizontal>
+          <Text>es</Text>
+        </ScrollView>
+      </View>
       {/* <DatingVisibility /> */}
       {/* <DatingMenu /> */}
       {/* <SwipeContainer /> */}
@@ -93,6 +106,19 @@ function Header({ profilepic, tabs, activeTabIndex, setTabIndex, data }) {
   );
 }
 const styles = StyleSheet.create({
+  subtitle: {
+    fontSize: 18,
+    marginLeft: 12,
+    fontWeight: "700",
+    color: colors.secondary,
+  },
+  bottom_section: {
+    borderTopColor: colors.black,
+    borderTopWidth: 1,
+    paddingBottom: 15,
+    paddingTop: 15,
+    display: "none",
+  },
   left_container: {
     flexDirection: "row",
     alignItems: "center",
