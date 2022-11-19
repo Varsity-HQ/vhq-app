@@ -175,6 +175,9 @@ const AppRoutes = ({ core, setExpoPushToken }) => {
           });
         }
       }
+      if (pageHandler === "addpost") {
+        navigation.navigate(routes.ADD_POST);
+      }
       if (pageHandler === "profile") {
         if (notification_data.uname) {
           navigation.navigate(routes.PROFILE, {

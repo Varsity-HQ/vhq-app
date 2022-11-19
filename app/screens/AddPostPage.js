@@ -167,7 +167,8 @@ class AddPostPage extends Component {
     this._isMounted = true;
     KeyboardEventListener.subscribe(
       ({ keyboardHeight, layoutAnimationConfig }) => {
-        LayoutAnimation.configureNext(layoutAnimationConfig);
+        // LayoutAnimation.configureNext(layoutAnimationConfig);
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         if (this._isMounted) this.setState({ keyboardHeight });
       },
     );

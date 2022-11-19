@@ -621,9 +621,10 @@ const styles = StyleSheet.create({
     // borderBottomColor: colors.black,
     borderBottomWidth: 0,
     backgroundColor: colors.dark,
-    // borderTopLeftRadius: 10,
-    // borderTopRightRadius: 10,
-    borderRadius: 10,
+    //
+    // borderBottomLeftRadius: 0,
+    // borderBottomRightRadius: 0,
+    borderRadius: 0,
   },
 });
 

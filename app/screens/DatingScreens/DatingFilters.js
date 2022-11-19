@@ -14,7 +14,7 @@ function DatingFilters(props) {
       {/* //gender filter */}
       <InterestFilter />
       {/* //filter by online */}
-      <FilterBy />
+      {/* <FilterBy />  Filter by Distance */}
       {/* //filter by purpose */}
       <LookingFor />
       {/* //filter by university */}

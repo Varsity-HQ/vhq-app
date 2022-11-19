@@ -17,6 +17,7 @@ class TabbedScreenComponent extends React.PureComponent {
       ].refreshHandler();
     } else null;
   };
+
   //
   reachedEndTrigger = () => {
     if (
