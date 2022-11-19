@@ -156,13 +156,20 @@ function ChatSelector({ data, is_dating }) {
   if (!header_data) return null;
   return (
     <TouchableHighlight
+      //
       underlayColor={colors.dark_2}
+      //
       onPress={() => {
+        //
         navigation.navigate(CHAT_PAGE, {
+          //
           uid: uid,
+          //
           username: header_data.username,
+          //
         });
       }}
+      //
     >
       <View style={styles.c_s_container}>
         <>

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ActivityIndicator, View, StyleSheet } from "react-native";
+import { ActivityIndicator, View, StyleSheet, FlatList } from "react-native";
 import Screen from "../components/Screen";
 import PostCard from "../components/PostCard";
 import Text from "../components/AppText";
@@ -18,7 +18,7 @@ import Loader from "../components/Loaders/Loader";
 import HomeUploading from "../components/Loaders/HomeUploading";
 import OfferCard from "../components/Post/OfferCard";
 import { RFValue } from "react-native-responsive-fontsize";
-import { FlashList } from "@shopify/flash-list";
+// import { FlashList } from "@shopify/flash-list";
 
 const mapStateToProps = (state) => {
   return {
@@ -146,7 +146,7 @@ class Home extends PureComponent {
 
     return (
       <Screen>
-        <FlashList
+        <FlatList
           removeClippedSubviews={true}
           // extraData={posts}
           ref={this.props.scrollRef}

@@ -1,4 +1,4 @@
-import { FlashList } from "@shopify/flash-list";
+// import { FlashList } from "@shopify/flash-list";
 import React from "react";
 import { View, StyleSheet, FlatList } from "react-native";
 import Text from "../AppText";
@@ -53,7 +53,7 @@ class TabbedScreenComponent extends React.PureComponent {
       estimatedItemSize = 344,
     } = this.props;
     return (
-      <FlashList
+      <FlatList
         estimatedItemSize={estimatedItemSize}
         style={style ? style : null}
         initialNumToRender={initialNumToRender ? initialNumToRender : 10}

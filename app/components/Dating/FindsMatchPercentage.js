@@ -13,6 +13,7 @@ const mapStateToProps = (state) => {
 };
 
 function FindsMatchPercentage({ forceValue, data, profile }) {
+  return null;
   const [percetage, setPercantage] = useState(0);
 
   useEffect(() => {
