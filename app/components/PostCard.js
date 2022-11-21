@@ -149,6 +149,7 @@ class PostCard extends PureComponent {
 
     if (data.postType === "event_post") {
       return (
+        // <EventPostCard/>
         <EventPost
           setPostNotInterested={() => this.setPostNotInterested()}
           handleOpenPost={this.handleOpenPost}

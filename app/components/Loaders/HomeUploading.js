@@ -9,11 +9,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-function uploadLoader({ overlayloader, size, speed }) {
+function uploadLoader({ overlayloader, size, speed, style }) {
   //   if (!overlayloader) return null;
   return (
     <>
-      <View style={styles.lottie_container}>
+      <View style={[styles.lottie_container, style]}>
         <LottieView
           style={size === "small" ? styles.lottie_small : styles.lottie}
           autoPlay

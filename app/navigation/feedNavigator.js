@@ -8,6 +8,7 @@ import AdminHome from "../screens/AdminScreens/AdminHome";
 import MarketplaceCategories from "../screens/AdminScreens/MarketplaceCategories";
 import MarketplaceCategory from "../screens/AdminScreens/MarketplaceCategory";
 import DiscoverPage from "../screens/DiscoverPage";
+import EventInterested from "../screens/EventInterested";
 import HashtagScreen from "../screens/HashtagScreen/index";
 import Home from "../screens/Home";
 import Create from "../screens/Marketplace/Create";
@@ -73,6 +74,7 @@ import {
   UPDATE_UNIVERSITY,
   UPDATE_USERNAME,
   YEAR_OF_STUDY,
+  EVENT_INTERESTED,
 } from "./routes";
 
 const Stack = createNativeStackNavigator();
@@ -127,6 +129,13 @@ const FeedNavigator = () => (
         }}
         name={HASHTAG_SCREEN}
         component={HashtagScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={EVENT_INTERESTED}
+        component={EventInterested}
       />
 
       <Stack.Screen

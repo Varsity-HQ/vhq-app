@@ -13,7 +13,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
-import { POST_PAGE, PROFILE } from "../../navigation/routes";
+import { EVENT_INTERESTED, POST_PAGE, PROFILE } from "../../navigation/routes";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
 import {
@@ -66,8 +66,10 @@ function PostMenu({
 
   const handleCopyLink = () => {
     handleModal();
-    setTimeout(() => {
-      Clipboard.setString(`https://web.varsityhq.co.za/p/${data.id}`);
+    setTimeout(async () => {
+      await Clipboard.setStringAsync(
+        `https://web.varsityhq.co.za/p/${data.id}`,
+      );
       Toast.show({
         type: "general",
         autoHide: true,
@@ -110,6 +112,13 @@ function PostMenu({
     );
   };
 
+  const handleShowInterested = () => {
+    handleModal();
+    navigation.navigate(EVENT_INTERESTED, {
+      post_id: data.id,
+    });
+  };
+
   const options = [
     {
       borderBottom: true,
@@ -135,6 +144,18 @@ function PostMenu({
       ),
     },
     {
+      onPress: () => handleShowInterested(),
+      hide: data.posted_by !== auth_acc_id,
+      title: `Show interested`,
+      icon: (
+        <Ionicons
+          color={colors.secondary}
+          name="people-outline"
+          size={iconSize}
+        />
+      ),
+    },
+    {
       onPress: () => {
         handleModal();
         navigation.navigate(POST_PAGE, {
@@ -142,7 +163,7 @@ function PostMenu({
         });
       },
       title: `Go to ${event ? "event" : "post"}`,
-      hide: post_page || data.anonymous_post,
+      hide: !event ? post_page || data.anonymous_post : false,
       icon: (
         <Ionicons
           color={colors.secondary}
