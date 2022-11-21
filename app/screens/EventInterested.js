@@ -13,13 +13,12 @@ import uuid from "uuid";
 import Screen from "../components/Screen";
 import Loading from "../components/Loaders/HomeUploading";
 import Header from "../components/EventInterested/Header";
+import AccountCont from "../components/Search/AccountCont";
 
 const height = Dimensions.get("window").height;
 
 const mapStateToProps = (state) => {
-  return {
-    poll_details: state.data.poll_details,
-  };
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -28,19 +27,22 @@ const mapDispatchToProps = (dispatch) => {
 
 class PollVoters extends PureComponent {
   state = {
-    voters: [],
+    event: {},
+    interested: [],
     lastVisible: null,
     loading: true,
     refreshing: false,
   };
 
-  fetchVoters = (p_id) => {
-    let poll_id = this.props.poll_details.poll.id;
+  fetchVoters = () => {
+    let post_id = this.props.route.params.post_id;
     axios
-      .get(`/poll/voters/${poll_id}`)
+      .get(`/get/event/${post_id}`)
       .then((data) => {
+        console.log(data.data);
         this.setState({
-          voters: data.data.voters,
+          event: data.data.event,
+          interested: data.data.interested,
           lastVisible: data.data.lastVisible,
           loading: false,
           refreshing: false,
@@ -61,30 +63,37 @@ class PollVoters extends PureComponent {
   };
 
   componentDidMount = () => {
-    // this.fetchVoters();
+    this.fetchVoters();
   };
 
-  renderItem = ({ item }) => <View></View>;
+  renderItem = ({ item }) => (
+    <View style={{ paddingHorizontal: 10 }}>
+      <AccountCont chat removeButton data={item} />
+    </View>
+  );
 
   render() {
     return (
       <Screen style={styles.container}>
-        <Header />
-        {this.state.loading ? (
-          <Loading
-            size="large"
-            style={{ alignSelf: "center", marginTop: 30 }}
-            color={colors.white}
-          />
-        ) : (
-          <FlatList
-            data={this.state.voters}
-            keyExtractor={(item) => item.poll_id + uuid.v4()}
-            renderItem={this.renderItem}
-            onRefresh={() => this.pullToRefresh()}
-            refreshing={this.state.refreshing}
-          />
-        )}
+        <FlatList
+          data={this.state.interested}
+          keyExtractor={(item) => item.userID + uuid.v4()}
+          renderItem={this.renderItem}
+          onRefresh={() => this.pullToRefresh()}
+          refreshing={this.state.refreshing}
+          ListHeaderComponent={
+            <Header loading={this.state.loading} data={this.state.event} />
+          }
+          ListFooterComponent={
+            this.state.loading ? (
+              <Loading
+                size="large"
+                style={{ alignSelf: "center", marginTop: 30 }}
+                color={colors.white}
+              />
+            ) : null
+          }
+        />
       </Screen>
     );
   }
