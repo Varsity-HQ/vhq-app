@@ -47,7 +47,7 @@ function DatingVisibility({
 
   const toggleSwitch = (active) => {
     if (active) {
-      update_location();
+      // update_location();
     }
     toggle_dating_active(active);
   };
@@ -75,12 +75,16 @@ function DatingVisibility({
       </View>
       <View>
         <Switch
-          disabled={updating_is_active}
+          // disabled={updating_is_active}
           style={styles.switcher}
           trackColor={{ false: colors.secondary, true: colors.primary }}
           ios_backgroundColor={colors.dark_opacity_2}
           onValueChange={toggleSwitch}
-          value={is_active}
+          // value={is_active}
+
+          ///turned off turning dating profile off
+          disabled={true}
+          value={true}
         />
       </View>
     </View>
