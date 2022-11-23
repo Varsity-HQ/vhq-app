@@ -65,7 +65,8 @@ function ProfileMenu({
   const navigation = useNavigation();
   const options = [
     {
-      hidden: !admin,
+      // hidden: !admin,
+      hidden: true,
       title: "Administration",
       icon: (
         <Ionicons
