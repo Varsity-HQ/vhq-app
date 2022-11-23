@@ -37,9 +37,9 @@ if (!getApps().length) {
   initializeApp(firebaseConfig);
 }
 
-axios.defaults.baseURL = "http://192.168.68.129:5000";
+// axios.defaults.baseURL = "http://192.168.68.129:5000";
 // axios.defaults.baseURL = "http://192.168.0.116:5000";
-// axios.defaults.baseURL = "https://api.varsityhq.co.za";
+axios.defaults.baseURL = "https://api.varsityhq.co.za";
 
 const toastConfig = {
   general: ({ text1, text2 }) => <AppToast text1={text1} text2={text2} />,

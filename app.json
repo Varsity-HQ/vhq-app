@@ -2,7 +2,7 @@
   "expo": {
     "name": "VarsityHQ",
     "slug": "vhq",
-    "version": "2.1.5",
+    "version": "2.2.1",
     "orientation": "portrait",
     "description": "A social media app for students in South African universities.",
     "userInterfaceStyle": "automatic",
@@ -16,35 +16,27 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "We use your location to show you relavent peers close to you when you're using the app",
-        "UIBackgroundModes": [
-          "remote-notification"
-        ]
+        "UIBackgroundModes": ["remote-notification"]
       },
       "bundleIdentifier": "com.varsityheadquarters.varsityhq",
-      "buildNumber": "2.1.5"
+      "buildNumber": "2.2.1"
     },
     "android": {
       "googleServicesFile": "./google-services.json",
       "package": "com.varsityheadquarters.varsityhq",
-      "versionCode": 19,
+      "versionCode": 20,
       "useNextNotificationsApi": true,
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ]
+      "permissions": ["android.permission.RECORD_AUDIO"]
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "plugins": [
-      "expo-build-properties"
-    ],
+    "plugins": ["expo-build-properties"],
     "extra": {
       "eas": {
         "projectId": "c847835f-b2ef-43c9-9115-9c9cee661cf7"
