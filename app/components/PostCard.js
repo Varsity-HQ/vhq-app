@@ -36,6 +36,7 @@ import { check_post_reported } from "../util/postUtil";
 import check_user_blocked from "../util/check_user_blocked";
 import PostNotInterested from "./Skeletons/PostNotInterested";
 import { not_interested_in_content } from "../store/actions/filterActions";
+import { useNavigation } from "@react-navigation/native";
 
 dayjs.extend(Localize);
 
@@ -151,6 +152,7 @@ class PostCard extends PureComponent {
       return (
         // <EventPostCard/>
         <EventPost
+          eventPage={this.props.eventPage}
           setPostNotInterested={() => this.setPostNotInterested()}
           handleOpenPost={this.handleOpenPost}
           handleOpenProfile={this.handleOpenProfile}
@@ -386,10 +388,19 @@ const EventPost = ({
   handleOpenPost,
   handleOpenProfile,
   setPostNotInterested,
+  eventPage = false,
 }) => {
+  const navigation = useNavigation();
   return (
     <>
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {
+            paddingHorizontal: eventPage ? 0 : 10,
+          },
+        ]}
+      >
         <View
           style={{
             display: "none",
@@ -473,9 +484,19 @@ const EventPost = ({
               justifyContent: "center",
             }}
           >
-            <PostPictures event images={data.attachments} />
+            <PostPictures
+              event
+              eventPage={eventPage}
+              images={data.attachments}
+            />
           </View>
           <View style={{ padding: 10 }}>
+            {eventPage ? (
+              <View style={styles.row}>
+                <Text style={styles.detailsText}>Event details</Text>
+              </View>
+            ) : null}
+
             <View style={styles.row}>
               <Ionicons name="md-calendar" color={colors.white} size={14} />
               <Text style={styles.event_date}>
@@ -529,7 +550,11 @@ const EventPost = ({
           </View>
         </View>
 
-        <EventFooterButtons data={data} />
+        <EventFooterButtons
+          navigation={navigation}
+          eventPage={eventPage}
+          data={data}
+        />
 
         {/* <PostCardFooter data={data} />  */}
       </View>
@@ -538,6 +563,13 @@ const EventPost = ({
 };
 
 const styles = StyleSheet.create({
+  detailsText: {
+    fontWeight: "700",
+    fontSize: 18,
+    color: colors.white,
+    marginBottom: 10,
+    color: colors.secondary,
+  },
   row: {
     flexDirection: "row",
     alignItems: "center",

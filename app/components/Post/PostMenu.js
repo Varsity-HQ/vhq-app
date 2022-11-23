@@ -52,6 +52,7 @@ function PostMenu({
   event,
   onReportSubmitted,
   setPostNotInterested,
+  eventPage,
 }) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
@@ -163,7 +164,11 @@ function PostMenu({
         });
       },
       title: `Go to ${event ? "event" : "post"}`,
-      hide: !event ? post_page || data.anonymous_post : false,
+      hide: !event
+        ? post_page || data.anonymous_post
+        : eventPage
+        ? eventPage
+        : false,
       icon: (
         <Ionicons
           color={colors.secondary}

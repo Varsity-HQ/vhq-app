@@ -41,6 +41,7 @@ class PostPictures extends PureComponent {
     if (this.props.images.length === 0) return null;
 
     const { imgWidth, imgHeight } = this.state;
+    const { eventPage } = this.props;
 
     if (this.props.event && this.props.images.length === 1) {
       return (
@@ -48,8 +49,8 @@ class PostPictures extends PureComponent {
           style={{
             // height: imgHeight,
             width: "100%",
-            height: deviceWidth - 20,
-            borderRadius: 7,
+            height: eventPage ? imgHeight : deviceWidth - 20,
+            borderRadius: eventPage ? 0 : 7,
           }}
           uri={this.props.images[0]}
         />

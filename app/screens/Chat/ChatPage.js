@@ -394,7 +394,7 @@ function ChatPage({ account }) {
         {/* <MsgInputContainer /> */}
 
         {Platform.OS === "android" && (
-          <KeyboardAvoidingView behavior="padding" />
+          <KeyboardAvoidingView behavior="position" />
         )}
       </Screen>
     </>

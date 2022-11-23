@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { check_post_liked } from "../../util/postUtil";
 import { connect } from "react-redux";
 import { like_post, unlike_post } from "../../store/actions/actions";
+import { EVENT_INTERESTED } from "../../navigation/routes";
 
 const { height } = Dimensions.get("window");
 
@@ -18,12 +19,24 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+const mapStateToProps = (state) => {
+  return {
+    auth_acc_id: state.core.accData.userID,
+  };
+};
+
 class EventFooterButtons extends React.PureComponent {
   state = {
     intrested: false,
   };
 
   handleIntrested = () => {
+    const data = this.props.data;
+    if (data.posted_by === this.props.auth_acc_id)
+      return this.props.navigation.navigate(EVENT_INTERESTED, {
+        post_id: data.id,
+      });
+
     if (this.state.intrested) {
       this.props.unlike_post(this.props.data.id);
     } else {
@@ -42,7 +55,7 @@ class EventFooterButtons extends React.PureComponent {
   };
 
   render() {
-    const { data } = this.props;
+    const { data, auth_acc_id } = this.props;
     return (
       <View style={[styles.row, { paddingHorizontal: 10, marginTop: 0 }]}>
         <View style={styles.width80}>
@@ -52,15 +65,18 @@ class EventFooterButtons extends React.PureComponent {
               { height: height * 0.05, padding: 0 },
               !this.state.intrested && {
                 borderWidth: 2,
-                borderColor: colors.secondary,
+                borderColor:
+                  data.posted_by === auth_acc_id
+                    ? colors.primary
+                    : colors.secondary,
               },
             ]}
             content={
               <View style={[styles.row, { marginTop: 0 }]}>
                 <Ionicons
-                  name="star"
+                  name={data.posted_by === auth_acc_id ? "md-people" : "star"}
                   color={this.state.intrested ? colors.white : colors.secondary}
-                  size={16}
+                  size={data.posted_by === auth_acc_id ? 18 : 16}
                 />
                 <Text
                   style={{
@@ -71,22 +87,33 @@ class EventFooterButtons extends React.PureComponent {
                       : colors.secondary,
                   }}
                 >
-                  {this.state.intrested ? "Interested" : "Interested ?"}
+                  {data.posted_by === auth_acc_id
+                    ? "Show interested"
+                    : this.state.intrested
+                    ? "Interested"
+                    : "Interested ?"}
                 </Text>
               </View>
             }
-            type={this.state.intrested ? 4 : 3}
+            type={
+              data.posted_by === auth_acc_id ? 3 : this.state.intrested ? 4 : 3
+            }
           />
         </View>
         <View style={[styles.width20, { paddingLeft: 10 }]}>
-          <PostMenu height={height * 0.05} event data={data} />
+          <PostMenu
+            height={height * 0.05}
+            event
+            eventPage={this.props.eventPage}
+            data={data}
+          />
         </View>
       </View>
     );
   }
 }
 
-export default connect(null, mapDispatchToProps)(EventFooterButtons);
+export default connect(mapStateToProps, mapDispatchToProps)(EventFooterButtons);
 
 const styles = StyleSheet.create({
   row: {

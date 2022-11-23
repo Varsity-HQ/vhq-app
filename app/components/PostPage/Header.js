@@ -28,6 +28,9 @@ import {
 } from "../../store/actions/actions";
 import { BOOKMARKED_POST, REMOVE_BOOKMARK } from "../../util/toast_messages";
 import Toast from "react-native-toast-message";
+import Loader from "../Loaders/HomeUploading";
+import MeetYourHost from "../Event/MeetYourHost";
+import EventHeader from "../Event/EventHeader";
 
 dayjs.extend(localizedFormat);
 
@@ -98,6 +101,69 @@ function HeaderPostContent({
     setIsLiked(!isLiked);
   };
 
+  if (post?.postType === "event_post") {
+    return (
+      <View>
+        <View style={styles.header}>
+          <View style={styles.h_left_sec}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons
+                name="arrow-back-outline"
+                color={colors.white}
+                size={30}
+              />
+            </TouchableOpacity>
+            {loading ? (
+              <Text
+                style={[
+                  styles.h_username,
+                  {
+                    color: colors.secondary_2,
+                  },
+                ]}
+              >
+                loading ...
+              </Text>
+            ) : (
+              <Text style={styles.h_username}>Leave event</Text>
+            )}
+          </View>
+          <View>
+            {!loading ? (
+              <PostMenu post_page data={{ ...post, ...account }} />
+            ) : null}
+
+            {/* <Ionicons
+            name="ellipsis-horizontal-outline"
+            color={colors.white}
+            size={35}
+          /> */}
+          </View>
+        </View>
+        <EventHeader data={{ ...post, ...account }} />
+        <View style={{ paddingVertical: 5 }}>
+          <View
+            style={{
+              paddingHorizontal: 10,
+            }}
+          >
+            <Text
+              style={[
+                styles.u_name,
+                {
+                  color: colors.secondary,
+                },
+              ]}
+            >
+              About event
+            </Text>
+            <Content html={post.postHtmlText} />
+          </View>
+        </View>
+        <MeetYourHost data={account} />
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -110,7 +176,16 @@ function HeaderPostContent({
             />
           </TouchableOpacity>
           {loading ? (
-            <Text style={styles.h_username}>Loading post...</Text>
+            <Text
+              style={[
+                styles.h_username,
+                {
+                  color: colors.secondary_2,
+                },
+              ]}
+            >
+              loading ...
+            </Text>
           ) : (
             <Text style={styles.h_username}>
               {post.anonymous_post ? (
@@ -122,7 +197,7 @@ function HeaderPostContent({
           )}
         </View>
         <View>
-          {loading ? (
+          {!loading ? (
             <PostMenu post_page data={{ ...post, ...account }} />
           ) : null}
 
@@ -144,7 +219,7 @@ function HeaderPostContent({
             },
           ]}
         >
-          <ActivityIndicator color={colors.primary} animating size="large" />
+          <Loader color={colors.primary} animating size="large" />
         </View>
       ) : (
         <View>
@@ -361,7 +436,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   header: {
-    padding: 10,
+    paddingBottom: 10,
     borderBottomColor: colors.lighish,
     borderBottomWidth: 1,
     justifyContent: "space-between",
