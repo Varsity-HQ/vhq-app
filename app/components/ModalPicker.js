@@ -64,7 +64,6 @@ function ModalPicker({
               title={headerText}
             />
           )}
-
           <FlatList
             initialNumToRender={20}
             style={{ marginTop: 20 }}

@@ -7,13 +7,16 @@ import Button from "../../components/Button";
 import colors from "../../config/colors";
 import { RFValue } from "react-native-responsive-fontsize";
 import { v4 } from "uuid";
-import { ADMIN_MARKETPLACE_CATEGORIES } from "../../navigation/routes";
+import {
+  ADMIN_ALERT_USERS,
+  ADMIN_MARKETPLACE_CATEGORIES,
+} from "../../navigation/routes";
 
 const notifications = [
   {
     id: v4(),
     title: "Alert users to update app",
-    route: null,
+    route: ADMIN_ALERT_USERS,
   },
 ];
 
