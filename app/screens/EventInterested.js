@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import {
   View,
   StyleSheet,
@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-class PollVoters extends PureComponent {
+class EventInterested extends Component {
   state = {
     event: {},
     interested: [],
@@ -34,12 +34,13 @@ class PollVoters extends PureComponent {
     refreshing: false,
   };
 
-  fetchVoters = () => {
+  fetchInterested = () => {
     let post_id = this.props.route.params.post_id;
+    console.log("get event", post_id);
     axios
       .get(`/get/event/${post_id}`)
       .then((data) => {
-        console.log(data.data);
+        // console.log(data.data);
         this.setState({
           event: data.data.event,
           interested: data.data.interested,
@@ -49,6 +50,7 @@ class PollVoters extends PureComponent {
         });
       })
       .catch((err) => {
+        // console.log({ err });
         this.setState({
           refreshing: false,
         });
@@ -59,11 +61,11 @@ class PollVoters extends PureComponent {
     this.setState({
       refreshing: true,
     });
-    this.fetchVoters();
+    this.fetchInterested();
   };
 
   componentDidMount = () => {
-    this.fetchVoters();
+    this.fetchInterested();
   };
 
   renderItem = ({ item }) => (
@@ -123,4 +125,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PollVoters);
+export default connect(mapStateToProps, mapDispatchToProps)(EventInterested);

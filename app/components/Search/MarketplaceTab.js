@@ -65,7 +65,9 @@ const Item = ({ hit }) => {
           </Text>
         </View>
         <View>
-          {hit.pricing && <Text style={styles.pricing}>R{hit.pricing}</Text>}
+          {hit.pricing ? (
+            <Text style={styles.pricing}>R{hit.pricing}</Text>
+          ) : null}
         </View>
       </View>
     </TouchableOpacity>

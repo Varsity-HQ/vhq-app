@@ -14,16 +14,14 @@ function AccountsResultsTab({ hits, hasMore, refineNext }) {
         keyExtractor={(item) => item.objectID}
         renderItem={({ item }) => <HighlightMatch hit={item} />}
         ListFooterComponent={
-          hits.length === 0 ? (
-            () => (
-              <View style={{ padding: 10, marginTop: 10 }}>
-                <Text style={{ alignSelf: "center", color: colors.secondary }}>
-                  No Results
-                </Text>
-              </View>
-            )
-          ) : (
+          hits.length !== 0 ? (
             <Searchinindicator />
+          ) : (
+            <View style={{ padding: 10, marginTop: 10 }}>
+              <Text style={{ alignSelf: "center", color: colors.secondary }}>
+                No Results
+              </Text>
+            </View>
           )
         }
       />

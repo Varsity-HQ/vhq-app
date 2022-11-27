@@ -71,7 +71,7 @@ const AppNavigator = ({ user_id, is_active, discover_profile_id }) => {
       if (x.lastMessageSent !== "v72wA14Hj4%2SDDR") {
         const uid = __get_chatAcc_id(x, x.is_dating_chat ? "d" : "");
         const sent_by_me = x.sent_by !== uid;
-        console.log({ sent_by_me });
+        // console.log({ sent_by_me });
         if (!x.opened && !sent_by_me) {
           all_chats.push(x);
         }
@@ -79,7 +79,7 @@ const AppNavigator = ({ user_id, is_active, discover_profile_id }) => {
     });
   }
 
-  console.log({ all_chats });
+  // console.log({ all_chats });
 
   const padBtm = () => {
     if (Platform.OS === "android") {
