@@ -70,12 +70,14 @@ function YearOfStudyScreen({
       <View style={styles.container}>
         <Text>What's your current year of study</Text>
         <DropDown
+          headerText="Year of study"
           yearOfStudy
           style={styles.dropdown}
           value={yof}
           setValue={(e) => set_yof(e)}
           items={uniYears}
           placeholder="Current year of study"
+          // type={2}
         />
         <Text style={styles.note_txt}>
           <Text

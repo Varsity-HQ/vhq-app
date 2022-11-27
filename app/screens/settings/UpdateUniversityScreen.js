@@ -64,7 +64,8 @@ function UpdateUniversityScreen({
           value={l_uni}
           setValue={(e) => set_uni(e)}
           items={universities}
-          placeholder="Select your gender"
+          headerText="Your university"
+          placeholder="Select your university"
         />
         <Text style={styles.note_txt}>
           <Text

@@ -9,10 +9,11 @@ import ModalPicker from "../ModalPicker";
 function DropDown({
   type,
   items,
-  headerText = "Select Universites",
+  headerText = "",
   value,
   setValue,
   style,
+  placeholder,
   ...props
 }) {
   const [open, setOpen] = useState(false);
@@ -31,12 +32,12 @@ function DropDown({
     setOpen(false);
   };
 
-  if (Platform.OS === "android" || type === 2) {
+  if (Platform.OS === "android" || type === 2 || true) {
     return (
       <View style={style}>
         <ModalPicker
           onSelectItem={(x) => handleSelection(x, "modal")}
-          headerText={headerText}
+          headerText={headerText ? headerText : placeholder}
           items={items}
           value={value}
           placeholder={props.placeholder}
@@ -45,28 +46,6 @@ function DropDown({
       </View>
     );
   }
-
-  return (
-    <View style={[styles.container, style]}>
-      <DropDownPicker
-        {...props}
-        open={open}
-        value={value}
-        dropDownDirection="BOTTOM"
-        items={items}
-        setOpen={setOpen}
-        setValue={(callback) => handleSelection(callback, "dropdown")}
-        // setItems={setItems}
-        style={styles.dropdown}
-        textStyle={styles.textStyle}
-        labelStyle={styles.labelStyle}
-        dropDownContainerStyle={styles.dropDownContainerStyle}
-        searchTextInputStyle={styles.textStyle}
-        searchPlaceholderTextColor={colors.secondary}
-        // ={styles.arrowIconStyle}
-      />
-    </View>
-  );
 }
 
 const styles = StyleSheet.create({

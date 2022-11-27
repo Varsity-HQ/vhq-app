@@ -51,8 +51,13 @@ function ModalPicker({
           </Text>
         </View>
       </TouchableOpacity>
-      <Modal visible={modalVisible} animationType="slide">
-        <SafeAreaView style={styles.modal_container}>
+      <Modal
+        // statusBarTranslucent
+        transparent
+        visible={modalVisible}
+        animationType="slide"
+      >
+        <Screen style={styles.modal_container}>
           {headerText && (
             <Header
               backPress={() => setModalVisible(false)}
@@ -83,7 +88,7 @@ function ModalPicker({
             title="Close"
             onPress={() => setModalVisible(false)}
           />
-        </SafeAreaView>
+        </Screen>
       </Modal>
     </>
   );
@@ -117,9 +122,10 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   modal_container: {
-    backgroundColor: colors.dark,
     // padding: 5,
+    backgroundColor: colors.dark,
     flex: 1,
+    paddingBottom: 20,
   },
   fake_modal_textinput: {
     paddingHorizontal: 10,

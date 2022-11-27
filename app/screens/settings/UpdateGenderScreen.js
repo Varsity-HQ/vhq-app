@@ -74,6 +74,7 @@ function UpdateGenderScreen({ gender, update_gender, loading, navigation }) {
           setValue={(e) => set_gender(e)}
           items={gender_list}
           placeholder="Select your gender"
+          headerText="Your gender"
         />
         <Text style={styles.note_txt}>
           <Text
