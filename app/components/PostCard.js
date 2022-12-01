@@ -398,6 +398,8 @@ const EventPost = ({
           styles.container,
           {
             paddingHorizontal: eventPage ? 0 : 10,
+            borderTopColor: colors.dark_2,
+            borderTopWidth: 10,
           },
         ]}
       >
@@ -657,7 +659,7 @@ const styles = StyleSheet.create({
     //
     // borderBottomLeftRadius: 0,
     // borderBottomRightRadius: 0,
-    borderRadius: 0,
+    borderRadius: 10,
   },
 });
 

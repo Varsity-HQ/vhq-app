@@ -37,7 +37,7 @@ const Footer = ({
     );
   }
 
-  return null;
+  return <View style={styles.emptySpace}></View>;
 };
 
 const styles = StyleSheet.create({
@@ -45,6 +45,10 @@ const styles = StyleSheet.create({
     marginTop: 30,
     flexDirection: "row",
     justifyContent: "center",
+  },
+  emptySpace: {
+    padding: 150,
+    backgroundColor: colors.dark_2,
   },
 });
 

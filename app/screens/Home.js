@@ -344,13 +344,17 @@ const FooterLoadings = ({ loading, tab, loading_more, data = [] }) => {
   if (loading_more) {
     return <Footer loadingMore={true} />;
   }
-  return null;
+  return <View style={styles.emptySpace}></View>;
 };
 
 const styles = StyleSheet.create({
   textCenter: {
     textAlign: "center",
     marginBottom: 5,
+  },
+  emptySpace: {
+    padding: 40,
+    backgroundColor: colors.dark_2,
   },
 });
 

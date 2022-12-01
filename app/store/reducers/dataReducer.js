@@ -282,6 +282,8 @@ const dataReducer = (state = initialData, actions) => {
         loading_more: false,
       };
 
+      console.log("reducer executed");
+
       return {
         ...state,
         home_data: updated_home_top_data,

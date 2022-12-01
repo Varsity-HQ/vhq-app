@@ -9,9 +9,11 @@ function Footer({ loadingMore }) {
       style={{
         position: "relative",
         paddingVertical: 40,
-        marginTop: 10,
-        marginBottom: 50,
-        borderColor: colors.primary,
+        paddingTop: 40,
+        // marginBottom: 50,
+        // borderColor: colors.primary,
+        backgroundColor: colors.dark_2,
+        paddingBottom: 100,
       }}
     >
       <ActivityIndicator color={colors.primary} animating size="large" />

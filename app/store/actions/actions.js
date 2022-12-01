@@ -986,7 +986,10 @@ const handle_get_home_posts = (props, dispatch) => {
         payload: data.data.items,
       });
 
+      console.log("4");
+
       if (props.more && data.data.lastVisible === null) {
+        console.log("1");
         return dispatch({
           type: props.top ? "SET_TOP_HOME_POSTS" : "SET_HOME_POSTS",
           payload: {
@@ -996,7 +999,10 @@ const handle_get_home_posts = (props, dispatch) => {
         });
       }
 
+      console.log("5");
+
       if (data.data.lastVisible === null && new_posts.length === 0) {
+        console.log("2");
         return dispatch({
           type: props.top ? "SET_TOP_HOME_POSTS" : "SET_HOME_POSTS",
           payload: {
@@ -1006,11 +1012,14 @@ const handle_get_home_posts = (props, dispatch) => {
         });
       }
 
-      if (
-        data.data.lastVisible !== props.top
-          ? store.getState().data.home_data.top_page_cursor
-          : store.getState().data.home_data.page_cursor
-      ) {
+      console.log("6");
+
+      let cursor = props.top
+        ? store.getState().data.home_data.top_page_cursor
+        : store.getState().data.home_data.page_cursor;
+
+      if (data.data.lastVisible !== cursor) {
+        console.log("3");
         return dispatch({
           type: props.top ? "SET_TOP_HOME_POSTS" : "SET_HOME_POSTS",
           payload: {
