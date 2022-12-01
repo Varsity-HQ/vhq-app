@@ -921,7 +921,7 @@ export const get_home_posts = (props) => (dispatch) => {
 const handle_get_home_posts = (props, dispatch) => {
   let lastVisible = null;
 
-  if (props?.init) {
+  if (props.init) {
     lastVisible = null;
   }
 
@@ -933,7 +933,9 @@ const handle_get_home_posts = (props, dispatch) => {
     });
   }
   if (props.more) {
-    lastVisible = store.getState().data.home_data.page_cursor;
+    lastVisible = props.top
+      ? store.getState().data.home_data.top_page_cursor
+      : store.getState().data.home_data.page_cursor;
     dispatch({
       type: "HOME_LOADING_MORE",
       payload: true,
@@ -963,7 +965,9 @@ const handle_get_home_posts = (props, dispatch) => {
   axios
     .get(`/get/home${query}`)
     .then((data) => {
-      let currentPosts = store.getState().data.home_data.posts;
+      let currentPosts = props.top
+        ? store.getState().data.home_data.top_posts
+        : store.getState().data.home_data.posts;
       let new_posts = !lastVisible
         ? data.data.posts
         : currentPosts.concat(data.data.posts);
@@ -984,7 +988,7 @@ const handle_get_home_posts = (props, dispatch) => {
 
       if (props.more && data.data.lastVisible === null) {
         return dispatch({
-          type: "SET_HOME_POSTS",
+          type: props.top ? "SET_TOP_HOME_POSTS" : "SET_HOME_POSTS",
           payload: {
             posts: [...new Set(new_posts)],
             cursor: null,
@@ -994,7 +998,7 @@ const handle_get_home_posts = (props, dispatch) => {
 
       if (data.data.lastVisible === null && new_posts.length === 0) {
         return dispatch({
-          type: "SET_HOME_POSTS",
+          type: props.top ? "SET_TOP_HOME_POSTS" : "SET_HOME_POSTS",
           payload: {
             posts: [],
             cursor: null,
@@ -1003,10 +1007,12 @@ const handle_get_home_posts = (props, dispatch) => {
       }
 
       if (
-        data.data.lastVisible !== store.getState().data.home_data.page_cursor
+        data.data.lastVisible !== props.top
+          ? store.getState().data.home_data.top_page_cursor
+          : store.getState().data.home_data.page_cursor
       ) {
         return dispatch({
-          type: "SET_HOME_POSTS",
+          type: props.top ? "SET_TOP_HOME_POSTS" : "SET_HOME_POSTS",
           payload: {
             posts: [...new Set(new_posts)],
             cursor: data.data.lastVisible,

@@ -32,6 +32,9 @@ const mapStateToProps = (state) => {
     posts: state.data.home_data.posts,
     error: state.data.home_data.error,
 
+    loading_top: state.data.home_data.loading_top,
+    top_posts: state.data.home_data.top_posts,
+
     events: state.data.home_data.events,
     loading_events: state.data.home_data.loading_events,
     events_error: state.data.home_data.events_error,
@@ -57,6 +60,7 @@ function HomeWrapper(props) {
         refresh: false,
         init: true,
         more: false,
+        top: true,
       });
     }, []),
   );
@@ -81,7 +85,7 @@ class Home extends PureComponent {
   }
 
   onRefresh() {
-    if (this.state.index !== 1) return;
+    if (this.state.index !== 1 || this.state.index !== 2) return;
 
     this.props.get_home_posts({
       refresh: true,
@@ -92,7 +96,8 @@ class Home extends PureComponent {
   }
 
   handleLoadMore() {
-    // if ()
+    if (this.state.index === 1 && this.props.top_posts.length < 0) return;
+    if (this.state.index === 2 && this.props.posts.length < 0) return;
 
     this.props.get_home_posts({
       refresh: true,
@@ -150,6 +155,9 @@ class Home extends PureComponent {
       loading,
       loading_more,
 
+      loading_top,
+      top_posts,
+
       // events
       events,
       loading_events,
@@ -178,9 +186,9 @@ class Home extends PureComponent {
               tab={this.state.index}
               data={
                 this.state.index === 1
-                  ? loading
+                  ? loading_top
                     ? []
-                    : posts
+                    : top_posts
                   : this.state.index === 2
                   ? loading
                     ? []
@@ -197,7 +205,7 @@ class Home extends PureComponent {
               }
               loading={
                 this.state.index === 1
-                  ? loading
+                  ? loading_top
                   : this.state.index === 2
                   ? loading
                   : this.state.index === 3
@@ -219,9 +227,9 @@ class Home extends PureComponent {
           }
           data={
             this.state.index === 1
-              ? loading
+              ? loading_top
                 ? []
-                : posts
+                : top_posts
               : this.state.index === 2
               ? loading
                 ? []

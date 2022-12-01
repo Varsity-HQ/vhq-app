@@ -10,6 +10,10 @@ const initialData = {
   },
 
   home_data: {
+    loading_top: true,
+    top_page_cursor: null,
+    top_posts: [],
+
     loading: true,
     page_cursor: null,
     posts: [],
@@ -242,6 +246,9 @@ const dataReducer = (state = initialData, actions) => {
         error: false,
         refreshing: false,
         loading_more: false,
+        loading_top: true,
+        top_page_cursor: null,
+        top_posts: [],
       };
 
       return {
@@ -263,6 +270,21 @@ const dataReducer = (state = initialData, actions) => {
       return {
         ...state,
         home_data: updated_home_data,
+      };
+    case "SET_TOP_HOME_POSTS":
+      let updated_home_top_data = {
+        ...state.home_data,
+        loading_top: false,
+        top_page_cursor: actions.payload.cursor,
+        top_posts: actions.payload.posts,
+        error: false,
+        refreshing: false,
+        loading_more: false,
+      };
+
+      return {
+        ...state,
+        home_data: updated_home_top_data,
       };
 
     case "RESET_DATA":
