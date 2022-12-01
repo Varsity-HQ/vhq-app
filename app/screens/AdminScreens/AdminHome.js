@@ -10,6 +10,7 @@ import { v4 } from "uuid";
 import {
   ADMIN_ALERT_USERS,
   ADMIN_MARKETPLACE_CATEGORIES,
+  ADMIN_STATS_SUMMARY,
 } from "../../navigation/routes";
 
 const notifications = [
@@ -24,7 +25,7 @@ const stats = [
   {
     id: v4(),
     title: "Stats summary",
-    route: null,
+    route: ADMIN_STATS_SUMMARY,
   },
 ];
 const marketplace = [
@@ -65,10 +66,10 @@ function AdminHome({ navigation }) {
             title: "Notification & Alerts",
             data: notifications,
           },
-          {
-            title: "Marketplace",
-            data: marketplace,
-          },
+          // {
+          //   title: "Marketplace",
+          //   data: marketplace,
+          // },
         ]}
         renderSectionHeader={({ section }) => {
           if (section.data.length === 0) {

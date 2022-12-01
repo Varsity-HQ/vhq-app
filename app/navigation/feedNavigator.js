@@ -5,6 +5,7 @@ import React from "react";
 import FloatingButton from "../components/FloatingButton";
 import About from "../screens/About";
 import AdminHome from "../screens/AdminScreens/AdminHome";
+import AdminStatsSummary from "../screens/AdminScreens/AdminStatsSummary";
 import AlertUsers from "../screens/AdminScreens/AlertUsers";
 import MarketplaceCategories from "../screens/AdminScreens/MarketplaceCategories";
 import MarketplaceCategory from "../screens/AdminScreens/MarketplaceCategory";
@@ -77,6 +78,7 @@ import {
   YEAR_OF_STUDY,
   EVENT_INTERESTED,
   ADMIN_ALERT_USERS,
+  ADMIN_STATS_SUMMARY,
 } from "./routes";
 
 const Stack = createNativeStackNavigator();
@@ -373,6 +375,14 @@ const FeedNavigator = () => (
         }}
         name={ADMIN_ALERT_USERS}
         component={AlertUsers}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={ADMIN_STATS_SUMMARY}
+        component={AdminStatsSummary}
       />
       <Stack.Screen
         options={{

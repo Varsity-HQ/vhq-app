@@ -30,6 +30,11 @@ import HomeFeedMenu from "./HomeFeedMenu";
 
 const home_tabs = [
   {
+    title: "Popular",
+    index: 1,
+    icon: null,
+  },
+  {
     title: "Recent",
     index: 1,
     icon: null,
