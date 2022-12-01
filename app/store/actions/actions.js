@@ -921,7 +921,7 @@ export const get_home_posts = (props) => (dispatch) => {
 const handle_get_home_posts = (props, dispatch) => {
   let lastVisible = null;
 
-  if (props.init) {
+  if (props?.init) {
     lastVisible = null;
   }
 
@@ -947,8 +947,21 @@ const handle_get_home_posts = (props, dispatch) => {
     });
   }
 
+  let query = "";
+  if (props.top) {
+    query = `?top=true`;
+  }
+  if (lastVisible) {
+    query = "?pt_ad=" + lastVisible;
+  }
+  if (lastVisible && props.top) {
+    query = `?top=true&pt_ad=${lastVisible}`;
+  }
+
+  console.log({ query });
+
   axios
-    .get(`/get/home${lastVisible ? "?pt_ad=" + lastVisible : ""}`)
+    .get(`/get/home${query}`)
     .then((data) => {
       let currentPosts = store.getState().data.home_data.posts;
       let new_posts = !lastVisible

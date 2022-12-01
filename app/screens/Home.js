@@ -76,6 +76,7 @@ class Home extends PureComponent {
       refresh: false,
       init: true,
       more: false,
+      top: true,
     });
   }
 
@@ -86,15 +87,18 @@ class Home extends PureComponent {
       refresh: true,
       init: false,
       more: false,
+      top: this.state.index === 1 ? true : false,
     });
   }
 
   handleLoadMore() {
+    // if ()
+
     this.props.get_home_posts({
       refresh: true,
       init: false,
       more: true,
-      top: false,
+      top: this.state.index === 1 ? true : false,
     });
   }
 
@@ -105,7 +109,10 @@ class Home extends PureComponent {
     if (this.state.index === 2) {
       return <PostCard navigation={this.props.navigation} data={item} />;
     }
-    if (this.state.index === 4) {
+    if (this.state.index === 3) {
+      return <PostCard navigation={this.props.navigation} data={item} />;
+    }
+    if (this.state.index === 5) {
       return <OfferCard navigation={this.props.navigation} data={item} />;
     }
     return null;
@@ -119,7 +126,12 @@ class Home extends PureComponent {
     });
 
     if (index === 2) {
-      this.props.get_home_posts();
+      this.props.get_home_posts({
+        refresh: false,
+        init: true,
+        more: false,
+        top: false,
+      });
     }
     if (index === 3) {
       this.props.get_home_events();
@@ -170,10 +182,14 @@ class Home extends PureComponent {
                     ? []
                     : posts
                   : this.state.index === 2
+                  ? loading
+                    ? []
+                    : posts
+                  : this.state.index === 3
                   ? loading_events
                     ? []
                     : events
-                  : this.state.index === 4
+                  : this.state.index === 5
                   ? loading_offers
                     ? []
                     : offers
@@ -183,8 +199,10 @@ class Home extends PureComponent {
                 this.state.index === 1
                   ? loading
                   : this.state.index === 2
+                  ? loading
+                  : this.state.index === 3
                   ? loading_events
-                  : this.state.index === 4
+                  : this.state.index === 5
                   ? loading_offers
                   : false
               }
@@ -192,6 +210,8 @@ class Home extends PureComponent {
                 this.state.index === 1
                   ? loading_more
                   : this.state.index === 2
+                  ? loading_more
+                  : this.state.index === 3
                   ? false
                   : false
               }
@@ -203,10 +223,14 @@ class Home extends PureComponent {
                 ? []
                 : posts
               : this.state.index === 2
+              ? loading
+                ? []
+                : posts
+              : this.state.index === 3
               ? loading_events
                 ? []
                 : events
-              : this.state.index === 4
+              : this.state.index === 5
               ? loading_offers
                 ? []
                 : offers

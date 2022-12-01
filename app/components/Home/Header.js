@@ -201,7 +201,7 @@ const Header = ({
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
-              height: index !== 4 ? null : 0,
+              height: index !== 5 ? null : 0,
               zIndex: 1,
             }}
           >
@@ -243,7 +243,7 @@ const Header = ({
         </View>
       )}
 
-      <OffersHeader show={index === 4} />
+      <OffersHeader show={index === 5} />
     </View>
   );
 };
