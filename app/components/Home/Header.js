@@ -36,23 +36,23 @@ const home_tabs = [
   },
   {
     title: "Recent",
-    index: 1,
-    icon: null,
-  },
-  {
-    title: "Events",
     index: 2,
     icon: null,
   },
   {
-    title: "Meet Friends",
+    title: "Events",
     index: 3,
+    icon: null,
+  },
+  {
+    title: "Meet Friends",
+    index: 4,
     navTo: DISCOVER_PAGE,
     icon: null,
   },
   {
     title: "Offers",
-    index: 4,
+    index: 5,
     icon: null,
   },
 ];
@@ -252,10 +252,18 @@ const SimpleHeaderText = ({ tab, university, isShowingUnfilteredPosts }) => {
   let textder = isShowingUnfilteredPosts
     ? "showing all posts"
     : "showing posts from " + universityShortName(university);
-  if (tab === 4) {
+  if (tab === 5) {
     return null;
   }
   if (tab === 1) {
+    return (
+      <>
+        <Text style={{ fontWeight: "700" }}>Explore top | </Text>
+        <Text style={{ fontSize: 14 }}>{textder}</Text>
+      </>
+    );
+  }
+  if (tab === 2) {
     return (
       <>
         <Text style={{ fontWeight: "700" }}>Timeline | </Text>
@@ -263,7 +271,7 @@ const SimpleHeaderText = ({ tab, university, isShowingUnfilteredPosts }) => {
       </>
     );
   }
-  if (tab === 2) {
+  if (tab === 3) {
     return (
       <>
         <Text style={{ fontWeight: "700" }}>Events | </Text>

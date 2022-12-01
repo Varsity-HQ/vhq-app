@@ -94,6 +94,7 @@ class Home extends PureComponent {
       refresh: true,
       init: false,
       more: true,
+      top: false,
     });
   }
 
@@ -118,10 +119,13 @@ class Home extends PureComponent {
     });
 
     if (index === 2) {
+      this.props.get_home_posts();
+    }
+    if (index === 3) {
       this.props.get_home_events();
     }
 
-    if (index === 4) {
+    if (index === 5) {
       this.props.get_home_offers();
     }
   };
@@ -215,7 +219,7 @@ class Home extends PureComponent {
           onRefresh={() => this.onRefresh()}
           refreshing={this.props.refreshing}
           onEndReached={() => {
-            if (this.state.index === 1) {
+            if (this.state.index === 1 || this.state.index === 2) {
               this.handleLoadMore();
             }
           }}
@@ -227,7 +231,7 @@ class Home extends PureComponent {
 }
 
 const FooterLoadings = ({ loading, tab, loading_more, data = [] }) => {
-  if (tab === 1 && loading) {
+  if ((tab === 1 || tab === 2) && loading) {
     return (
       <>
         <Post />
@@ -237,7 +241,7 @@ const FooterLoadings = ({ loading, tab, loading_more, data = [] }) => {
     );
   }
 
-  if (data.length === 0 && tab === 1) {
+  if (data.length === 0 && (tab === 1 || tab === 2)) {
     return (
       <View
         style={{
@@ -275,7 +279,7 @@ const FooterLoadings = ({ loading, tab, loading_more, data = [] }) => {
     );
   }
 
-  if (tab === 2 && loading) {
+  if (tab === 3 && loading) {
     return (
       <View
         style={{
@@ -289,7 +293,7 @@ const FooterLoadings = ({ loading, tab, loading_more, data = [] }) => {
       </View>
     );
   }
-  if (tab === 4 && loading) {
+  if (tab === 5 && loading) {
     return (
       <View
         style={{
