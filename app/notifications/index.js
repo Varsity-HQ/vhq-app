@@ -80,6 +80,7 @@ async function schedulePushNotification(
         ...data,
       },
       sound: "default",
+      "content-available": 1,
     },
     trigger: {
       seconds: seconds,

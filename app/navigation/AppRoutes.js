@@ -23,6 +23,10 @@ import navigation from "./rootNavigation";
 import * as routes from "./routes";
 import TabNavigator from "./TabNavigator";
 
+import * as TaskManager from "expo-task-manager";
+import { async } from "@firebase/util";
+const BACKGROUND_NOTIFICATION_TASK = "BACKGROUND-NOTIFICATION-TASK";
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -30,6 +34,9 @@ Notifications.setNotificationHandler({
     shouldSetBadge: true,
   }),
 });
+
+Notifications.setBadgeCountAsync(0);
+Notifications.dismissAllNotificationsAsync();
 
 const mapStateToProps = (state) => {
   return {
@@ -143,6 +150,22 @@ function NavigationStack({ core }) {
 
 const AppRoutes = ({ core, setExpoPushToken }) => {
   useOnlinePresence();
+
+  TaskManager.defineTask(
+    BACKGROUND_NOTIFICATION_TASK,
+    ({ data, error, executionInfo }) =>
+      handleNewNotification(data.notification),
+  );
+
+  const handleNewNotification = async () => {
+    try {
+      let current_badge_count = await Notifications.getBadgeCountAsync();
+      await Notifications.setBadgeCountAsync(current_badge_count + 1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     //
 
@@ -151,49 +174,57 @@ const AppRoutes = ({ core, setExpoPushToken }) => {
     registerForPushNotificationsAsync().then(
       (token) => token && setExpoPushToken(token),
     );
+    Notifications.registerTaskAsync(BACKGROUND_NOTIFICATION_TASK);
 
-    Notifications.addNotificationResponseReceivedListener((notification) => {
-      const pageHandler =
-        notification?.notification?.request?.content?.data?._page;
-      const notification_data =
-        notification?.notification?.request?.content?.data;
+    Notifications.addNotificationResponseReceivedListener(
+      async (notification) => {
+        const pageHandler =
+          notification?.notification?.request?.content?.data?._page;
+        const notification_data =
+          notification?.notification?.request?.content?.data;
 
-      if (pageHandler === "chat") {
-        if (notification_data.user_id && notification_data.username) {
-          navigation.navigate(routes.CHAT_PAGE, {
-            uid: notification_data.user_id,
-            username: notification_data.username,
-            dating: notification_data.isDatingChat,
-          });
+        if (pageHandler === "chat") {
+          if (notification_data.user_id && notification_data.username) {
+            navigation.navigate(routes.CHAT_PAGE, {
+              uid: notification_data.user_id,
+              username: notification_data.username,
+              dating: notification_data.isDatingChat,
+            });
+          }
         }
-      }
 
-      if (pageHandler === "post") {
-        if (notification_data.p_id) {
-          navigation.navigate(routes.POST_PAGE, {
-            post_id: notification_data.p_id,
-          });
+        if (pageHandler === "post") {
+          if (notification_data.p_id) {
+            navigation.navigate(routes.POST_PAGE, {
+              post_id: notification_data.p_id,
+            });
+          }
         }
-      }
-      if (pageHandler === "addpost") {
-        navigation.navigate(routes.ADD_POST);
-      }
-      if (pageHandler === "profile") {
-        if (notification_data.uname) {
-          navigation.navigate(routes.PROFILE, {
-            username: notification_data.uname,
-          });
+        if (pageHandler === "addpost") {
+          navigation.navigate(routes.ADD_POST);
         }
-      }
-      // post->
-      // p_id
-    });
+        if (pageHandler === "profile") {
+          if (notification_data.uname) {
+            navigation.navigate(routes.PROFILE, {
+              username: notification_data.uname,
+            });
+          }
+        }
 
-    // Notifications.addNotificationReceivedListener((notification) => {
-    //   console.log({ notificationRECEIVED: notification });
-    // });
+        // post->
+        // p_id
+      },
+    );
 
-    return () => {};
+    const foregroundReceivedNotificationSubscription =
+      Notifications.addNotificationReceivedListener(() => {
+        handleNewNotification();
+      });
+
+    return () => {
+      foregroundReceivedNotificationSubscription.remove();
+      Notifications.unregisterTaskAsync(BACKGROUND_NOTIFICATION_TASK);
+    };
   }, []);
 
   const check_user_tnc_agreement = () => {};
