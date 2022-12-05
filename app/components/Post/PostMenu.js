@@ -244,6 +244,9 @@ function PostMenu({
             color={colors.white}
             name="ios-ellipsis-horizontal-outline"
             size={30}
+            style={{
+              marginRight: 10,
+            }}
           />
         </TouchableWithoutFeedback>
       )}

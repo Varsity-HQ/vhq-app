@@ -436,6 +436,7 @@ const styles = StyleSheet.create({
   h_left_sec: {
     alignItems: "center",
     flexDirection: "row",
+    paddingLeft: 10,
   },
   header: {
     paddingBottom: 10,
