@@ -146,7 +146,7 @@ function PostMenu({
     },
     {
       onPress: () => handleShowInterested(),
-      hide: data.posted_by !== auth_acc_id,
+      hide: data.posted_by !== auth_acc_id || !eventPage,
       title: `Show interested`,
       icon: (
         <Ionicons
