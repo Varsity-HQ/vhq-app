@@ -234,10 +234,12 @@ function HeaderPostContent({
             <TouchableWithoutFeedback
               onPress={
                 !post.anonymous_post
-                  ? () =>
+                  ? () => {
+                      if (account.username === "account") return;
                       navigation.navigate(PROFILE, {
                         username: account.username,
-                      })
+                      });
+                    }
                   : null
               }
             >

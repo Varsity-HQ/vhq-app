@@ -118,6 +118,8 @@ class PostCard extends PureComponent {
   };
 
   handleOpenProfile = () => {
+    if (this.props.data.username === "account") return;
+
     this.props.save_post_user(this.props.data);
     //
     this.props.navigation.push(routes.PROFILE, {
@@ -232,26 +234,28 @@ class PostCard extends PureComponent {
                     </View>
 
                     {this.props.isShowingUnfilteredPosts ? (
-                      <View
-                        style={{
-                          borderRadius: 100,
-                          borderWidth: 1,
-                          borderColor: colors.secondary,
-                          paddingHorizontal: 10,
-                          paddingVertical: 2,
-                          backgroundColor: colors.dark_opacity_2,
-                        }}
-                      >
-                        <Text
+                      data.university ? (
+                        <View
                           style={{
-                            fontSize: 12,
-                            color: colors.secondary,
-                            fontWeight: "700",
+                            borderRadius: 100,
+                            borderWidth: 1,
+                            borderColor: colors.secondary,
+                            paddingHorizontal: 10,
+                            paddingVertical: 2,
+                            backgroundColor: colors.dark_opacity_2,
                           }}
                         >
-                          {universityShortName(data.university)}
-                        </Text>
-                      </View>
+                          <Text
+                            style={{
+                              fontSize: 12,
+                              color: colors.secondary,
+                              fontWeight: "700",
+                            }}
+                          >
+                            {universityShortName(data.university)}
+                          </Text>
+                        </View>
+                      ) : null
                     ) : (
                       <FontAwesome
                         style={styles.username}

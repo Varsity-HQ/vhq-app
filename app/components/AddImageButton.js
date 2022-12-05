@@ -50,7 +50,7 @@ function AddImageButton({
           quality: 0.7,
           // aspect: [1, 1],
           // aspect: [1.91, 1],
-          presentationStyle: 0,
+          // presentationStyle: 0,
           allowsEditing: true,
         });
 
@@ -59,7 +59,8 @@ function AddImageButton({
         } else {
         }
       } catch (error) {
-        console.error("Error reading image");
+        console.error(error);
+        // console.error("Error reading image");
       }
     } else {
       Alert.alert(
