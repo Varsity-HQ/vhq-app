@@ -60,7 +60,7 @@ function DrawerContent({ props, product, account, save_post_user }) {
 
   const handleNavigateToProfile = () => {
     navigation.dispatch(DrawerActions.closeDrawer());
-    navigation.navigate(PROFILE, {
+    navigation.push(PROFILE, {
       username: account.username,
     });
     save_post_user(account);

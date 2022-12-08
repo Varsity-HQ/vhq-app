@@ -43,7 +43,7 @@ function AccountCard({
 
   const handleGoToAccount = (user) => {
     save_post_user(data);
-    navigation.navigate(PROFILE, {
+    navigation.push(PROFILE, {
       username: user,
     });
   };

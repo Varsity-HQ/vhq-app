@@ -40,6 +40,7 @@ import UpdateSurnameScreen from "../screens/settings/UpdateSurnameScreen";
 import UpdateUniversityScreen from "../screens/settings/UpdateUniversityScreen";
 import UpdateUsernameScreen from "../screens/settings/UpdateUsernameScreen";
 import YearOfStudyScreen from "../screens/settings/YearOfStudyScreen";
+import Search from "../screens/SearchScreen";
 import DrawerContent from "./DrawerContent";
 import {
   ABOUT_PAGE,
@@ -79,7 +80,10 @@ import {
   EVENT_INTERESTED,
   ADMIN_ALERT_USERS,
   ADMIN_STATS_SUMMARY,
+  ALL_TRENDING_HASHTAGS,
+  SEARCH,
 } from "./routes";
+import AllHashtags from "../screens/AllHashtags";
 
 const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
@@ -117,6 +121,14 @@ const FeedNavigator = () => (
         name={HOME}
         component={HomeDrawerNavigator}
       />
+
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={SEARCH}
+        component={Search}
+      />
       <Stack.Screen
         options={{
           headerShown: false,
@@ -125,6 +137,14 @@ const FeedNavigator = () => (
         }}
         name={SEARCH_RESULTS}
         component={SearchResults}
+      />
+
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name={ALL_TRENDING_HASHTAGS}
+        component={AllHashtags}
       />
 
       <Stack.Screen

@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   View,
-  Image as LocalImage,
   StyleSheet,
   Dimensions,
   TouchableWithoutFeedback,
   TouchableOpacityBase,
   TouchableOpacity,
 } from "react-native";
-import { Image } from "react-native-expo-image-cache";
 import universityShortName from "../../util/universityShortName";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import Text from "../AppText";
@@ -23,10 +21,19 @@ import { normalizeText } from "../../util/responsivePx";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { doc } from "firebase/firestore";
 import db from "../../util/fb_admin";
-import { DISCOVER_PAGE, NOTIFICATIONS } from "../../navigation/routes";
+import {
+  DISCOVER_PAGE,
+  NOTIFICATIONS,
+  PROFILE,
+  SEARCH,
+  SEARCH_NAVIGATOR,
+} from "../../navigation/routes";
 import { RFValue } from "react-native-responsive-fontsize";
 import OffersHeader from "./OffersHeader";
 import HomeFeedMenu from "./HomeFeedMenu";
+import Image from "../Image";
+import Ricon from "react-native-remix-icon";
+import { AccountBoxFill } from "react-native-remix-icon/src/icons";
 
 const home_tabs = [
   {
@@ -90,36 +97,46 @@ const Header = ({
       }}
     >
       <View style={styles.header}>
-        <View style={{ width: "30%" }}>
-          <TouchableWithoutFeedback
-            onPress={
-              () => navigation.openDrawer()
-              // navigation.navigate("Profile", { username: username })
-            }
+        <View style={styles.left_section}>
+          {/* <TouchableWithoutFeedback onPress={}> */}
+          <TouchableOpacity
+            onPress={() => navigation.openDrawer()}
+            style={[
+              styles.header_uni_wrapper,
+              { marginLeft: 10, backgroundColor: colors.dark },
+            ]}
           >
-            {profilepic ? (
-              <Image
-                transitionDuration={300}
-                style={styles.profilepic}
-                uri={profilepic}
-              />
-            ) : (
-              <LocalImage
-                style={styles.profilepic}
-                source={require("../../assets/avatar.png")}
-              />
-            )}
-          </TouchableWithoutFeedback>
+            <Ricon name="menu-3-fill" color={colors.white} size={25} />
+            {!user_snapshot?.new_notifications_opened && user_snapshot ? (
+              <View style={styles.n_badge} />
+            ) : null}
+          </TouchableOpacity>
+
+          {/* <Image
+              transitionDuration={300}
+              style={styles.profilepic}
+              uri={profilepic}
+            /> */}
+          {/* </TouchableWithoutFeedback> */}
+          <Text
+            // numberOfLines={1}
+            // adjustsFontSizeToFit
+            allowFontScaling={false}
+            style={styles.vhq_title}
+          >
+            VarsityHQ
+          </Text>
         </View>
-        <Text
-          // numberOfLines={1}
-          // adjustsFontSizeToFit
-          allowFontScaling={false}
-          style={styles.vhq_title}
-        >
-          VarsityHQ
-        </Text>
         <View style={styles.header_uni_container}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(SEARCH)}
+            style={[styles.header_uni_wrapper, { marginRight: 10 }]}
+          >
+            <Ricon name="search-2-line" color={colors.secondary} size={23} />
+            {!user_snapshot?.new_notifications_opened && user_snapshot ? (
+              <View style={styles.n_badge} />
+            ) : null}
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate(NOTIFICATIONS)}
             style={styles.header_uni_wrapper}
@@ -128,31 +145,31 @@ const Header = ({
               name="bell"
               color={colors.secondary}
               // style={{ marginRight: 10 }}
-              size={20}
+              size={23}
             />
-            {/* <FontAwesome name="university" color={colors.secondary} size={20} /> */}
-
             {!user_snapshot?.new_notifications_opened && user_snapshot ? (
               <View style={styles.n_badge} />
             ) : null}
-
-            {/* <Text style={styles.header_uni_text}>
-              {universityShortName(university)}
-            </Text> */}
           </TouchableOpacity>
-          {/* <TouchableOpacity style={styles.header_uni_wrapper}> */}
-          {/* <FontAwesome
-              name="university"
-              color={colors.secondary}
-              // style={{ marginRight: 10 }}
-              size={20}
-            /> */}
-          {/* <FontAwesome name="university" color={colors.secondary} size={20} /> */}
-          {/* <Text style={styles.header_uni_text}>2</Text>
-            <Text style={styles.header_uni_text}>
-              {universityShortName(university)}
-            </Text> */}
-          {/* </TouchableOpacity> */}
+          <TouchableOpacity
+            onPress={() =>
+              navigation.push(PROFILE, {
+                username,
+              })
+            }
+            style={
+              (styles.header_uni_wrapper,
+              {
+                padding: 0,
+              })
+            }
+          >
+            <Image
+              transitionDuration={300}
+              style={styles.profilepic}
+              uri={profilepic}
+            />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.tabbar_container}>
@@ -331,13 +348,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dark,
   },
   profilepic: {
-    height: height * 0.07,
-    width: height * 0.07,
-
-    marginLeft: 15,
+    height: height * 0.045,
+    width: height * 0.045,
+    position: "relative",
+    // height: height * 0.05,
+    // width: height * 0.05,
+    // marginLeft: 15,
     borderRadius: 100,
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: colors.dark_opacity_2,
+    marginRight: 10,
   },
   header_uni_text: {
     marginLeft: 7,
@@ -348,17 +368,18 @@ const styles = StyleSheet.create({
     fontSize: RFValue(14),
   },
   header_uni_wrapper: {
-    borderWidth: 2,
+    borderWidth: 0,
     borderColor: colors.secondary_2,
     borderRadius: 50,
-    padding: normalizeText(8),
+    padding: normalizeText(10),
     marginRight: 10,
-    paddingHorizontal: 15,
+    // paddingHorizontal: 15,
     // paddingHorizontal: normalizeText(18),
     // paddingVertical: normalizeText(8),
     flexDirection: "row",
     alignItems: "center",
     position: "relative",
+    backgroundColor: colors.dark_2,
   },
   // header_uni_wrapper: {
   //   borderWidth: 2,
@@ -373,19 +394,16 @@ const styles = StyleSheet.create({
   //   alignItems: "center",
   // },
   header_uni_container: {
-    width: "30%",
     display: "flex",
-    flexDirection: "row-reverse",
+    flexDirection: "row",
     alignItems: "center",
     // height: 10,
   },
   vhq_title: {
-    fontSize: RFValue(30),
+    fontSize: RFValue(23),
     // fontSize: 38%,
-    fontWeight: "800",
     color: colors.white,
     fontFamily: "Lobster-Regular",
-    width: "40%",
     // borderWidth: 1,
     // borderColor: "red",
     // alignItems: "center",
@@ -404,6 +422,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dark,
   },
   container: {},
+  left_section: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+  },
 });
 
 export default connect(mapStateToProps, null)(Header);

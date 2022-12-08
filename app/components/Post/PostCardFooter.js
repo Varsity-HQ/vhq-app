@@ -46,7 +46,7 @@ function CommentComponent({ x }) {
     >
       <Text
         onPress={() =>
-          navigation.navigate(PROFILE, {
+          navigation.push(PROFILE, {
             username: x.commenter_username,
           })
         }

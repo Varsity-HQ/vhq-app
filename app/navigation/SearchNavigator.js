@@ -32,54 +32,7 @@ const SearchNavigator = () => {
         //   />
         // ),
       })}
-    >
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name={routes.SEARCH}
-        component={Search}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false,
-          // gestureEnabled: false,
-          animation: "fade",
-        }}
-        name={routes.SEARCH_RESULTS}
-        component={SearchResults}
-      />
-
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name={routes.HASHTAG_SCREEN}
-        component={HashtagScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name={routes.PROFILE_SETTINGS}
-        component={ProfileSettingsScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name={routes.ALL_TRENDING_HASHTAGS}
-        component={AllHashtags}
-      />
-
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-        name={routes.PROFILE}
-        component={Profile}
-      />
-    </Stack.Navigator>
+    ></Stack.Navigator>
   );
 };
 

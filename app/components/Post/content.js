@@ -51,7 +51,7 @@ const CustomTextRenderer = (props) => {
   function handleUsernamePress(name, matchIndex /*: number*/) {
     let pattern = /@(\w+)/;
     let match = name.match(pattern);
-    navigation.navigate(PROFILE, {
+    navigation.push(PROFILE, {
       username: match[1],
     });
   }

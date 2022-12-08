@@ -97,7 +97,7 @@ function CommentTextInput({
       <View style={[styles.comment_box_container]}>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate(PROFILE, {
+            navigation.push(PROFILE, {
               username: username,
             })
           }

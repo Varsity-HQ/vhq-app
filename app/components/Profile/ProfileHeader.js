@@ -99,7 +99,7 @@ function ProfileHeader({
   };
 
   const goToFol = (tab) => {
-    navigation.navigate(PROFILE_FOLLOWING, {
+    navigation.push(PROFILE_FOLLOWING, {
       tab: tab,
       username: !auth_profile ? user.username : null,
     });

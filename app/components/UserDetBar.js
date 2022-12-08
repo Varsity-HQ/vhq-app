@@ -23,7 +23,7 @@ function UserDetBar({ username, profilepic, university, style }) {
     <View style={[styles.container, style]}>
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate(PROFILE, {
+          navigation.push(PROFILE, {
             username: username,
           })
         }

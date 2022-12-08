@@ -236,7 +236,7 @@ function HeaderPostContent({
                 !post.anonymous_post
                   ? () => {
                       if (account.username === "account") return;
-                      navigation.navigate(PROFILE, {
+                      navigation.push(PROFILE, {
                         username: account.username,
                       });
                     }

@@ -57,7 +57,7 @@ function Notification({ data, flag_notification_opened }) {
     }
 
     flag_notification_opened(data.id);
-    return navigation.navigate(PROFILE, {
+    return navigation.push(PROFILE, {
       username: data.username,
     });
   };
@@ -66,7 +66,7 @@ function Notification({ data, flag_notification_opened }) {
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate(PROFILE, {
+          navigation.push(PROFILE, {
             username: data.username,
           })
         }

@@ -21,7 +21,7 @@ function ItemSellerInfo({ data }) {
         <Text style={styles.header}>Meet the seller</Text>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate(PROFILE, {
+            navigation.push(PROFILE, {
               username: data.username,
             })
           }

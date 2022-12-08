@@ -26,7 +26,7 @@ function UserMenu({ data }) {
       title: "Visit profile",
       onPress: () => {
         handleModal();
-        navigation.navigate(PROFILE, {
+        navigation.push(PROFILE, {
           username: data.username,
         });
       },

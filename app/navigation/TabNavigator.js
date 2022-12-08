@@ -128,10 +128,10 @@ const AppNavigator = ({ user_id, is_active, discover_profile_id }) => {
 
       <Tab.Screen
         options={{
-          tabBarLabel: "Explore",
+          tabBarLabel: "AskVI",
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <RIcon name="search-2-line" color={color} size={size} />
+            <RIcon name="questionnaire-line" color={color} size={size} />
           ),
         }}
         name={routes.SEARCH_NAVIGATOR}

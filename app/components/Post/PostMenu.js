@@ -182,7 +182,7 @@ function PostMenu({
       onPress: () => {
         save_post_user(data);
         handleModal();
-        navigation.navigate(PROFILE, {
+        navigation.push(PROFILE, {
           username: data.username,
         });
       },
