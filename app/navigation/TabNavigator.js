@@ -3,7 +3,7 @@ import { Platform } from "react-native";
 import colors from "../config/colors";
 import FeedNavigator from "./feedNavigator";
 import ChatNavigator from "./ChatNavigator";
-import SearchNavigator from "./SearchNavigator";
+import AskViNavigator from "./AskViNavigator";
 import DatingNavigator from "./DatingNavigator";
 import * as routes from "./routes";
 import {
@@ -134,8 +134,8 @@ const AppNavigator = ({ user_id, is_active, discover_profile_id }) => {
             <RIcon name="questionnaire-line" color={color} size={size} />
           ),
         }}
-        name={routes.SEARCH_NAVIGATOR}
-        component={SearchNavigator}
+        name={routes.ASKVI_NAVIGATOR}
+        component={AskViNavigator}
       />
       <Tab.Screen
         options={{

@@ -52,6 +52,7 @@ class TabbedScreenComponent extends React.PureComponent {
       numColumns = 1,
       style,
       estimatedItemSize = 344,
+      tabStyles,
     } = this.props;
     return (
       <FlatList
@@ -64,7 +65,11 @@ class TabbedScreenComponent extends React.PureComponent {
             {TopHeader}
             {showTabHeader ? (
               <TabNavigator
-                style={removeTabBorder ? styles.borderlessTabStyle : {}}
+                style={
+                  removeTabBorder
+                    ? [{}, styles.borderlessTabStyle, tabStyles]
+                    : [{}, tabStyles]
+                }
                 type={tabStyle ? tabStyle : 1}
                 active={activeTabIndex}
                 onPress={(i) => setTabIndex(i)}

@@ -3,8 +3,11 @@ export const APP_NAVIGATOR = "AppNavigator";
 export const FEED_NAVIGATOR = "FeedNavigator";
 export const SEARCH_NAVIGATOR = "SearchNavigator";
 export const DATING_NAVIGATOR = "DatingNavigator";
+export const ASKVI_NAVIGATOR = "AskViNavigator";
 
 export const NOTIFICATIONS = "Notifications";
+
+export const ASKVI_HOME = "AskViHome";
 
 //Admin Screens
 export const ADMIN_HOME = "AdminHome";
