@@ -1,7 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import React, { useState } from "react";
 import AppNavigator from "./navigation/AppRoutes";
-
 import {
   Feather,
   FontAwesome,
@@ -37,7 +36,7 @@ if (!getApps().length) {
   initializeApp(firebaseConfig);
 }
 
-axios.defaults.baseURL = "http://192.168.8.104:5000";
+axios.defaults.baseURL = "http://192.168.8.101:5000";
 // axios.defaults.baseURL = "http://192.168.68.129:5000";
 // axios.defaults.baseURL = "http://192.168.0.116:5000";
 // axios.defaults.baseURL = "https://api.varsityhq.co.za";

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, StyleSheet, Platform } from "react-native";
+import { Text as AppText, StyleSheet, Platform } from "react-native";
 import colors from "../config/colors";
 import EStyleSheet from "react-native-extended-stylesheet";
 import { normalizeText } from "../util/responsivePx";
@@ -7,7 +7,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 const allowFontScaling = false;
 
-function AppText({ children, style, regular = true, ...props }) {
+function Text({ children, style, regular = true, ...props }) {
   let font_styles = {};
   if (Array.isArray(style)) {
     style.forEach((x) => {
@@ -22,48 +22,48 @@ function AppText({ children, style, regular = true, ...props }) {
     (font_styles?.fontWeight === "bold" && !font_styles?.fontFamily)
   ) {
     return (
-      <Text
+      <AppText
         allowFontScaling={allowFontScaling}
         {...props}
         style={[styles.text, font_styles, { fontFamily: "Ubuntu-bold" }]}
       >
         {children}
-      </Text>
+      </AppText>
     );
   }
 
   if (font_styles?.fontWeight === "600" && !font_styles?.fontFamily) {
     return (
-      <Text
+      <AppText
         allowFontScaling={allowFontScaling}
         {...props}
         style={[styles.text, font_styles, { fontFamily: "Ubuntu-medium" }]}
       >
         {children}
-      </Text>
+      </AppText>
     );
   }
 
   if (font_styles?.fontFamily) {
     return (
-      <Text
+      <AppText
         allowFontScaling={allowFontScaling}
         {...props}
         style={[styles.text, font_styles]}
       >
         {children}
-      </Text>
+      </AppText>
     );
   }
 
   return (
-    <Text
+    <AppText
       allowFontScaling={allowFontScaling}
       {...props}
       style={[styles.text, font_styles, { fontFamily: "Ubuntu-regular" }]}
     >
       {children}
-    </Text>
+    </AppText>
   );
 }
 
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppText;
+export default Text;
