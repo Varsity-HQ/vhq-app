@@ -104,6 +104,19 @@ class AddPostPage extends Component {
       postType: postType,
     });
   };
+  switchToQuestion = () => {
+    let postType = this.state.postType;
+
+    if (postType !== "askvi_post") {
+      postType = "askvi_post";
+    } else {
+      postType = "normal_post";
+    }
+    this.setState({
+      local_attachments: [],
+      postType: postType,
+    });
+  };
 
   removePollField = (e) => {
     let poll_fields = this.state.poll_fields;
@@ -284,9 +297,13 @@ class AddPostPage extends Component {
                 buttonRightPress={this.handleSubmit}
                 backPress={() => this.props.navigation.goBack()}
                 buttonText="Post"
-                title="Create Post"
+                title={
+                  this.state.postType === "askvi_post"
+                    ? "Ask a question"
+                    : "Create Post"
+                }
               />
-              <AddPostH2 />
+              {this.state.postType !== "askvi_post" ? <AddPostH2 /> : null}
             </View>
             <View
               style={{
@@ -296,6 +313,9 @@ class AddPostPage extends Component {
             >
               <RTextEditor
                 // hasContent={this.state.pollCreate}
+                placeholder={
+                  this.state.postType === "askvi_post" ? "Ask something..." : ""
+                }
                 pollCreate={this.state.pollCreate}
                 handleChange={this.handleEditorChange}
               />
@@ -385,6 +405,26 @@ class AddPostPage extends Component {
                     size={22}
                   />
                 </TouchableOpacity>
+                <View
+                  style={[
+                    this.state.pollCreate && {
+                      opacity: 0.3,
+                    },
+                  ]}
+                >
+                  <TouchableOpacity
+                    disabled={this.state.pollCreate}
+                    style={[
+                      styles.obutton,
+                      this.state.postType === "askvi_post" && {
+                        backgroundColor: colors.darkish3,
+                      },
+                    ]}
+                    onPress={this.switchToQuestion}
+                  >
+                    <Text style={styles.eventtext}>AskVI</Text>
+                  </TouchableOpacity>
+                </View>
                 <View
                   style={[
                     this.state.pollCreate && {
