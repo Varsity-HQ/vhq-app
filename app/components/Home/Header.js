@@ -107,9 +107,6 @@ const Header = ({
             ]}
           >
             <Ricon name="menu-3-fill" color={colors.white} size={25} />
-            {!user_snapshot?.new_notifications_opened && user_snapshot ? (
-              <View style={styles.n_badge} />
-            ) : null}
           </TouchableOpacity>
 
           {/* <Image
@@ -133,9 +130,6 @@ const Header = ({
             style={[styles.header_uni_wrapper, { marginRight: 10 }]}
           >
             <Ricon name="search-2-line" color={colors.secondary} size={23} />
-            {!user_snapshot?.new_notifications_opened && user_snapshot ? (
-              <View style={styles.n_badge} />
-            ) : null}
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate(NOTIFICATIONS)}
