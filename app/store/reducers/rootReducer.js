@@ -12,6 +12,7 @@ import discoveryPage from "./discoveryPage";
 import datingReducer from "./datingReducer";
 import filterReducer from "./filterReducer";
 import marketplaceReducer from "./marketplaceReducer";
+import askviReducer from "./askviPageReducer";
 
 const rootReducer = combineReducers({
   core,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   loaders: loadersReducer,
   postPage: postPageReducer,
   notifications: notificationsReducer,
+  askvi: askviReducer,
   profile,
   hashtagPage,
   chatPage,
