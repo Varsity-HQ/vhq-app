@@ -18,7 +18,7 @@ const tabs = [
     index: 1,
     icon: (
       <MaterialCommunityIcons
-        color={colors.white}
+        color={colors.secondary}
         size={18}
         name="post-outline"
       />
@@ -27,7 +27,7 @@ const tabs = [
   {
     title: "Popular",
     index: 2,
-    icon: <FontAwesome color={colors.white} size={16} name="calendar-o" />,
+    icon: <FontAwesome color={colors.secondary} size={16} name="line-chart" />,
   },
 ];
 
