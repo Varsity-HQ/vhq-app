@@ -46,7 +46,7 @@ function HomeHeader(props) {
             alignItems: "center",
           }}
         >
-          <Text style={styles.header}>Questions</Text>
+          <Text style={styles.header}>ASKVI..</Text>
           <View>
             <Button
               onPress={() => navigation.navigate(MARKETPLACE_CREATE)}
@@ -59,7 +59,9 @@ function HomeHeader(props) {
             />
           </View>
         </View>
-        <Text>Browse, ask and answer questions from people around you</Text>
+        <Text>
+          Browse and ask the VarsityHQ community a question and seek information
+        </Text>
         {/* <Button
           onPress={() =>
             navigation.navigate(SEARCH_RESULTS, {

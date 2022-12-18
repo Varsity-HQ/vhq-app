@@ -50,7 +50,7 @@ const handle_get_home_questions = (props, dispatch) => {
   console.log({ query });
 
   axios
-    .get(`/questions/get${query}`)
+    .get(`/askvi/questions/get${query}`)
     .then((data) => {
       let currentPosts = props.top
         ? store.getState().askvi.top_questions

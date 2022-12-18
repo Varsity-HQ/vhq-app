@@ -6,6 +6,11 @@ import Text from "../../components/AppText";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../config/colors";
 import HomeHeader from "../../components/AskVi/HomeHeader";
+import { connect } from "react-redux";
+import { get_home_questions } from "../../store/actions/askviPage";
+import PostCard from "../../components/PostCard";
+import { AlignJustify } from "react-native-remix-icon/src/icons";
+import Button from "../../components/Button";
 
 const tabs = [
   {
@@ -25,6 +30,24 @@ const tabs = [
     icon: <FontAwesome color={colors.white} size={16} name="calendar-o" />,
   },
 ];
+
+const mapStateToProps = (state) => {
+  return {
+    loading_recent: state.askvi.loading_recent,
+    loading_more: state.askvi.loading_more,
+    refreshing: state.askvi.refreshing,
+    recent_questions: state.askvi.recent_questions,
+    error: state.askvi.error,
+    loading_top: state.askvi.loading_top,
+    top_questions: state.askvi.top_questions,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get_home_questions: (c) => dispatch(get_home_questions(c)),
+  };
+};
 
 class AskViHome extends Component {
   state = {
@@ -46,22 +69,21 @@ class AskViHome extends Component {
     });
   };
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    this.props.get_home_questions({
+      refresh: false,
+      init: true,
+      more: false,
+      top: false,
+    });
+  };
 
   listRenderingHandler = ({ item }) => {
     if (this.state.activeTabIndex === 1) {
-      return (
-        <View>
-          <Text>tab 1 card {item}</Text>
-        </View>
-      );
+      return <PostCard navigation={this.props.navigation} data={item} />;
     }
     if (this.state.activeTabIndex === 2) {
-      return (
-        <View>
-          <Text>tab 2 card {item}</Text>
-        </View>
-      );
+      return <PostCard navigation={this.props.navigation} data={item} />;
     }
 
     return null;
@@ -76,52 +98,46 @@ class AskViHome extends Component {
 
   render() {
     return (
-      <Screen style={[styles.container]}>
-        <TabbedScreenComponent
-          activeTabIndex={this.state.activeTabIndex}
-          setTabIndex={this.setTabIndex}
-          tabStyle={2}
-          removeTabBorder
-          tabOptions={tabs}
-          tabStyles={styles.tabStyles}
-          TopHeader={<HomeHeader />}
-          listRenderingHandler={this.listRenderingHandler}
-          tabsConfig={[
-            {
-              keyExtractor: (item) => item,
-              customLoader: <Text>loading</Text>,
-              useCustomLoader: false,
-              noDataComponent: (
-                <View>
-                  <Text>no data</Text>
-                </View>
-              ),
-              allowRefresh: true,
-              refreshHandler: this.refreshHandler,
-            },
-            {
-              keyExtractor: (item) => item,
-              noDataComponent: null,
-              allowLoadMore: false,
-              loadMoreHandler: this.loadMoreHandler,
-            },
-          ]}
-          tabStates={[
-            {
-              loading: this.state.mockState.loading_posts,
-              loading_more: this.state.mockState.loading_more_posts,
-              data: this.state.mockState.posts,
-              refreshing: false,
-            },
-            {
-              loading: this.state.mockState.loading_events,
-              loading_more: this.state.mockState.loading_more_events,
-              data: this.state.mockState.events,
-              refreshing: false,
-            },
-          ]}
-        />
-      </Screen>
+      <TabbedScreenComponent
+        activeTabIndex={this.state.activeTabIndex}
+        setTabIndex={this.setTabIndex}
+        tabStyle={2}
+        removeTabBorder
+        tabOptions={tabs}
+        tabStyles={styles.tabStyles}
+        TopHeader={<HomeHeader />}
+        listRenderingHandler={this.listRenderingHandler}
+        tabsConfig={[
+          {
+            keyExtractor: (item) => item,
+            customLoader: <Text>loading</Text>,
+            useCustomLoader: false,
+            noDataComponent: <NoData />,
+            allowRefresh: true,
+            refreshHandler: this.refreshHandler,
+          },
+          {
+            keyExtractor: (item) => item,
+            noDataComponent: null,
+            allowLoadMore: false,
+            loadMoreHandler: this.loadMoreHandler,
+          },
+        ]}
+        tabStates={[
+          {
+            loading: this.props.loading_recent,
+            loading_more: this.props.loading_more,
+            data: this.props.recent_questions,
+            refreshing: this.props.refreshing,
+          },
+          {
+            loading: this.props.loading_top,
+            loading_more: this.props.loading_more,
+            data: this.props.top_questions,
+            refreshing: this.props.refreshing,
+          },
+        ]}
+      />
     );
   }
 }
@@ -139,4 +155,46 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AskViHome;
+export default connect(mapStateToProps, mapDispatchToProps)(AskViHome);
+
+const NoData = () => {
+  return (
+    <View
+      style={{
+        paddingVertical: 40,
+        paddingHorizontal: 40,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <View
+        style={{
+          width: "100%",
+          paddingVertical: 40,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: colors.dark_2,
+          borderRadius: 20,
+        }}
+      >
+        <View>
+          <Text
+            style={{
+              color: colors.secondary,
+              textAlign: "center",
+            }}
+          >
+            No one has asked anything yet
+          </Text>
+        </View>
+        <View
+          style={{
+            paddingTop: 10,
+          }}
+        >
+          <Button type={3} title="Ask something" />
+        </View>
+      </View>
+    </View>
+  );
+};
