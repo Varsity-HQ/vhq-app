@@ -23,30 +23,34 @@ const useOnlinePresence = () => {
   const lastOnlineRef = ref(db, `accounts/${userID}/lastOnline`);
 
   const _handleAppStateChange = (nextAppState) => {
-    if (
-      appState.current.match(/inactive|background/) &&
-      nextAppState === "active"
-    ) {
-      // console.log("App has come to the foreground!");
-    }
+    try {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === "active"
+      ) {
+        // console.log("App has come to the foreground!");
+      }
 
-    appState.current = nextAppState;
-    setAppStateVisible(appState.current);
-    // if (appState.current !== "active") {
-    //   set(myConnectionsRef, false);
-    //   set(lastOnlineRef, serverTimestamp());
-    // }
-    if (appState.current === "active") {
-      set(myConnectionsRef, true);
-      set(lastOnlineRef, serverTimestamp());
-    }
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+      // if (appState.current !== "active") {
+      //   set(myConnectionsRef, false);
+      //   set(lastOnlineRef, serverTimestamp());
+      // }
+      if (appState.current === "active") {
+        set(myConnectionsRef, true);
+        set(lastOnlineRef, serverTimestamp());
+      }
+    } catch (err) {}
   };
 
   const saveOnlineStatus = async () => {
-    set(myConnectionsRef, true);
-    set(lastOnlineRef, serverTimestamp());
-    onDisconnect(myConnectionsRef).set(false);
-    onDisconnect(lastOnlineRef).set(serverTimestamp());
+    try {
+      set(myConnectionsRef, true);
+      set(lastOnlineRef, serverTimestamp());
+      onDisconnect(myConnectionsRef).set(false);
+      onDisconnect(lastOnlineRef).set(serverTimestamp());
+    } catch (err) {}
   };
 
   useEffect(() => {

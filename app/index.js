@@ -1,5 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppNavigator from "./navigation/AppRoutes";
 import {
   Feather,
@@ -31,15 +31,23 @@ import {
 } from "./store/actions/actions";
 import store from "./store/store";
 import { firebaseConfig } from "./util/fb_config";
+import * as Linking from "expo-linking";
+import Text from "./components/AppText";
+import Screen from "./components/Screen";
+import * as routes from "./navigation/routes";
 
 if (!getApps().length) {
   initializeApp(firebaseConfig);
 }
 
-axios.defaults.baseURL = "http://192.168.8.103:5000";
+// axios.defaults.baseURL = "http://192.168.8.103:5000";
 // axios.defaults.baseURL = "http://192.168.68.129:5000";
 // axios.defaults.baseURL = "http://192.168.0.116:5000";
-// axios.defaults.baseURL = "https://api.varsityhq.co.za";
+axios.defaults.baseURL = "https://api.varsityhq.co.za";
+
+const prefix = Linking.createURL("vhq://app");
+const universal = Linking.createURL("https://web.varsityhq.co.za");
+const universal2 = Linking.createURL("https://varsityhq.co.za");
 
 const toastConfig = {
   general: ({ text1, text2 }) => <AppToast text1={text1} text2={text2} />,
@@ -86,6 +94,50 @@ function cacheFonts(fonts) {
 function App({ authenticated, set_user, setAuthState, set_token, userID }) {
   const [isReady, setisReady] = useState();
   const [isAssetsCached, setIsAssetsCached] = useState(false);
+  const [urlData, setLinkData] = useState(null);
+
+  const config = {
+    screens: {
+      // ScreenB: {
+      //   path: "/p/:pid",
+      //   parse: {
+      //     pid: (pid) => `${pid}`,
+      //   },
+      // },
+      [routes.CHAT_HOME]: "chat",
+      [routes.REFER_A_FRIEND]: "refer",
+    },
+  };
+
+  const linking = {
+    prefixes: [universal, universal2],
+    config,
+  };
+
+  useEffect(() => {
+    async function getInitialURL() {
+      const initialURL = await Linking.getInitialURL();
+      if (initialURL) setLinkData(Linking.parse(initialURL));
+    }
+
+    const linkListener = Linking.addEventListener("url", handleDeepLink);
+
+    if (!urlData) {
+      getInitialURL();
+    }
+
+    return () => {
+      linkListener.remove();
+      // Linking.removeEventListener("url");
+    };
+  }, []);
+
+  const handleDeepLink = (event) => {
+    let link = event?.url;
+    let data = link && Linking.parse(link);
+    console.log(data);
+    // setData(data);
+  };
 
   let [fontsLoaded] = useFonts({
     "Lobster-Regular": require("./Fonts/Lobster-Regular.ttf"),
@@ -200,7 +252,14 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
         showHideTransition="fade"
         hidden={false}
       />
-      <NavigationContainer ref={navigationRef} theme={vhqTheme}>
+      <Screen>
+        <Text>{urlData && JSON.stringify(urlData)}</Text>
+      </Screen>
+      <NavigationContainer
+        linking={linking}
+        ref={navigationRef}
+        theme={vhqTheme}
+      >
         {/* <SafeAreaView style={{ flex: 1 }}> */}
         {authenticated && userID ? <AppNavigator /> : <AuthRoutes />}
         {/* </SafeAreaView> */}

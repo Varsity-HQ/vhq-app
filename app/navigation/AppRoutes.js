@@ -25,6 +25,8 @@ import TabNavigator from "./TabNavigator";
 
 import * as TaskManager from "expo-task-manager";
 import { async } from "@firebase/util";
+import ChatHome from "../screens/Chat/ChatHome";
+import ReferAFriend from "../screens/ReferAFriend";
 const BACKGROUND_NOTIFICATION_TASK = "BACKGROUND-NOTIFICATION-TASK";
 
 Notifications.setNotificationHandler({
@@ -140,8 +142,24 @@ function NavigationStack({ core }) {
             headerShown: false,
             animation: "slide_from_right",
           }}
+          name={routes.CHAT_HOME}
+          component={ChatHome}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+            animation: "slide_from_right",
+          }}
           name={routes.CHAT_PAGE}
           component={ChatPage}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+            animation: "slide_from_right",
+          }}
+          name={routes.REFER_A_FRIEND}
+          component={ReferAFriend}
         />
       </Stack.Navigator>
     </>
