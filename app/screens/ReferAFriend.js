@@ -9,7 +9,6 @@ class ReferAFriend extends PureComponent {
     return (
       <Screen>
         <FlatList ListHeaderComponent={<Header />} />
-        <AppButton title="Test" />
       </Screen>
     );
   }

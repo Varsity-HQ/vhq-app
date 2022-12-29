@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import Loader from "../Loaders/HomeUploading";
 import * as Clipboard from "expo-clipboard";
+import { PROFILE } from "../../navigation/routes";
 
 const mapStateToProps = (state) => {
   return {
@@ -19,6 +20,8 @@ const mapStateToProps = (state) => {
 
 function Header({ account }) {
   const navigation = useNavigation();
+  const routes = navigation.getState()?.routes;
+  const prevRoute = routes[routes.length - 2];
   const [loading, setLoading] = useState(true);
   const [refData, setRefData] = useState(null);
   const [linkCopied, setLinkCopied] = useState(false);
@@ -45,7 +48,11 @@ function Header({ account }) {
   return (
     <>
       <HeaderComponent
-        backPress={() => navigation.goBack()}
+        backPress={() => {
+          prevRoute?.name
+            ? navigation.goBack()
+            : navigation.navigate("AppNavigator");
+        }}
         backBtnText="back to profile"
         showAccount
         backIcon

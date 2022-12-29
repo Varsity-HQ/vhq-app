@@ -45,7 +45,7 @@ if (!getApps().length) {
 // axios.defaults.baseURL = "http://192.168.0.116:5000";
 axios.defaults.baseURL = "https://api.varsityhq.co.za";
 
-const prefix = Linking.createURL("vhq://app");
+// const prefix = Linking.createURL("vhq://app");
 const universal = Linking.createURL("https://web.varsityhq.co.za");
 const universal2 = Linking.createURL("https://varsityhq.co.za");
 
@@ -252,9 +252,9 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
         showHideTransition="fade"
         hidden={false}
       />
-      <Screen>
+      {/* <Screen>
         <Text>{urlData && JSON.stringify(urlData)}</Text>
-      </Screen>
+      </Screen> */}
       <NavigationContainer
         linking={linking}
         ref={navigationRef}

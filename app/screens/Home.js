@@ -18,6 +18,7 @@ import Loader from "../components/Loaders/Loader";
 import HomeUploading from "../components/Loaders/HomeUploading";
 import OfferCard from "../components/Post/OfferCard";
 import { RFValue } from "react-native-responsive-fontsize";
+import InvititionPopups from "../components/InvitationPopups/InvititionPopups";
 // import { FlashList } from "@shopify/flash-list";
 
 const mapStateToProps = (state) => {
@@ -170,6 +171,7 @@ class Home extends PureComponent {
 
     return (
       <Screen>
+        <InvititionPopups type="" />
         <FlatList
           removeClippedSubviews={true}
           // extraData={posts}
