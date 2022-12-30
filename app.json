@@ -3,7 +3,7 @@
     "scheme": "https",
     "name": "VarsityHQ",
     "slug": "vhq",
-    "version": "2.2.7",
+    "version": "2.2.9",
     "orientation": "portrait",
     "description": "A social media app for students in South African universities.",
     "userInterfaceStyle": "automatic",
@@ -25,19 +25,60 @@
         "UIBackgroundModes": ["remote-notification"]
       },
       "bundleIdentifier": "com.varsityheadquarters.varsityhq",
-      "buildNumber": "2.2.7"
+      "buildNumber": "2.2.9",
+      "associatedDomains": [
+        "applinks:varsityhq.co.za",
+        "applinks:web.varsityhq.co.za"
+      ]
     },
     "android": {
       "googleServicesFile": "./google-services.json",
       "package": "com.varsityheadquarters.varsityhq",
-      "versionCode": 26,
+      "versionCode": 28,
       "useNextNotificationsApi": true,
-      "permissions": ["android.permission.RECORD_AUDIO"]
+      "permissions": ["android.permission.RECORD_AUDIO"],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "varsityhq.co.za",
+              "pathPrefix": "/"
+            },
+            {
+              "scheme": "https",
+              "host": "varsityhq.co.za",
+              "pathPrefix": "*"
+            },
+            {
+              "scheme": "https",
+              "host": "*.varsityhq.co.za",
+              "pathPrefix": "/"
+            },
+            {
+              "scheme": "https",
+              "host": "varsityhq.co.za",
+              "pathPrefix": "/refer"
+            },
+            {
+              "scheme": "https",
+              "host": "varsityhq.co.za",
+              "pathPrefix": "/chat"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "plugins": ["expo-build-properties"],
+    "plugins": [
+      "expo-build-properties",
+      "./plugins/withAndroidVerifiedLinksWorkaround"
+    ],
     "extra": {
       "eas": {
         "projectId": "c847835f-b2ef-43c9-9115-9c9cee661cf7"

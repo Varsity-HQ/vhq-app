@@ -12,6 +12,9 @@ function InvititionPopups(props) {
     <View style={styles.popup_container}>
       <Image style={styles.icon} local uri={ReferIcon} />
       {/* <Text>es</Text> */}
+      <View style={styles.textBelow}>
+        <Text>Invite</Text>
+      </View>
     </View>
     // </View>
   );
@@ -25,7 +28,7 @@ const styles = StyleSheet.create({
   },
   popup_container: {
     position: "absolute",
-    top: 160,
+    top: height * 0.22,
     left: 0,
     // transform: "translate(-50%,-50%)",
     zIndex: 99999,
@@ -33,7 +36,7 @@ const styles = StyleSheet.create({
     width: 100,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
-    backgroundColor: "red",
+    // backgroundColor: "red",
   },
 });
 
