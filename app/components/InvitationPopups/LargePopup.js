@@ -24,7 +24,7 @@ function LargePopup({ open_state }) {
 
   const options = [
     {
-      title: "Close",
+      title: "Not",
       onPress: () => {
         handleModal();
       },
@@ -66,13 +66,15 @@ function LargePopup({ open_state }) {
                 />
               </View>
               <Text style={styles.heading}>
-                Invite a friend to VarsityHQ and earn cash rewards up to
+                Invite a friend to VarsityHQ and earn cash rewards of up to
               </Text>
               <View style={styles.cup_container}>
-                <Text style={styles.cash_up_to}>R800</Text>
+                <Text style={styles.cash_up_to}>R100</Text>
+                <Text style={styles.subtext2}>Per 10 invites</Text>
               </View>
               <Text style={styles.subtext}>
-                You can request payout for cash or redeem for VarsityHQ offers
+                You can request payout for cash rewards or redeem for VarsityHQ
+                offers
               </Text>
               <View>
                 <Button style={styles.gs_btn} title="Get started" />
@@ -134,6 +136,14 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textAlign: "center",
   },
+  subtext2: {
+    color: colors.secondary_2,
+    fontSize: 18,
+    paddingHorizontal: 20,
+    marginBottom: 10,
+    fontWeight: "400",
+    textAlign: "center",
+  },
   subtext: {
     color: colors.secondary,
     fontSize: 18,
@@ -150,6 +160,8 @@ const styles = StyleSheet.create({
   },
   cup_container: {
     padding: 20,
+    paddingVertical: 5,
+    paddingBottom: 0,
     borderColor: colors.v_st_bg_5,
     borderWidth: 2,
     borderRadius: 100,
@@ -160,7 +172,6 @@ const styles = StyleSheet.create({
   cash_up_to: {
     color: colors.v_st_bg_5,
     fontSize: 38,
-    marginLeft: 20,
     fontWeight: "700",
     alignSelf: "center",
   },

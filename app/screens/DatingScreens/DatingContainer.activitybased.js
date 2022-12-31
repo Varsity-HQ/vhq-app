@@ -202,9 +202,6 @@ const DatingContainer = ({
   let accounts = [];
   let loaders = [];
 
-  console.log({ profiles });
-  console.log({ perror });
-
   if ((is_active && !ploading) || typeof profiles === undefined) {
     for (const x of profiles) {
       if (

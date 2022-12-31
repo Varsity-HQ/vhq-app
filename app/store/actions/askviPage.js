@@ -70,7 +70,6 @@ const handle_get_home_questions = (props, dispatch) => {
       });
 
       if (props.more && data.data.lastVisible === null) {
-        console.log("1");
         return dispatch({
           type: props.top
             ? "SET_TOP_ASK_QUESTIONS"
@@ -82,10 +81,7 @@ const handle_get_home_questions = (props, dispatch) => {
         });
       }
 
-      console.log("5");
-
       if (data.data.lastVisible === null && new_posts.length === 0) {
-        console.log("2");
         return dispatch({
           type: props.top
             ? "SET_TOP_ASK_QUESTIONS"
@@ -97,14 +93,11 @@ const handle_get_home_questions = (props, dispatch) => {
         });
       }
 
-      console.log("6");
-
       let cursor = props.top
         ? store.getState().askvi.top_page_cursor
         : store.getState().askvi.recent_page_cursor;
 
       if (data.data.lastVisible !== cursor) {
-        console.log("3");
         return dispatch({
           type: props.top
             ? "SET_TOP_ASK_QUESTIONS"

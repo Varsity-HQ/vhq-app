@@ -6,8 +6,6 @@ import PostCard from "../PostCard";
 const width = Dimensions.get("window").width;
 
 function EventHeader({ data }) {
-  console.log({ data });
-
   return (
     <View style={styles.container}>
       {/* <Image uri={data.attachments[0]} style={styles.image} /> */}

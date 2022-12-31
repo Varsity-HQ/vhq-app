@@ -19,7 +19,9 @@ class PostPictures extends PureComponent {
       const screenWidth = Dimensions.get("window").width;
       const scaleFactor = width / screenWidth;
       const imageHeight = height / scaleFactor;
-      this.setState({ imgWidth: screenWidth, imgHeight: imageHeight });
+      try {
+        this.setState({ imgWidth: screenWidth, imgHeight: imageHeight });
+      } catch (err) {}
     });
   };
 

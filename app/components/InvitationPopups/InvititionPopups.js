@@ -13,7 +13,7 @@ const width = Dimensions.get("screen").width;
 function InvititionPopups(props) {
   return (
     <>
-      <LargePopup open_state={true} />
+      <LargePopup open_state={false} />
       <View style={styles.popup_container}>
         <Image style={styles.icon} local uri={ReferIcon} />
       </View>
@@ -38,11 +38,11 @@ const styles = StyleSheet.create({
     // top: height * 0.2,
     // left: 10,
     bottom: 60 + height * 0.09,
-    right: 10,
+    right: 15,
     // transform: "translate(-50%,-50%)",
     zIndex: 99999,
-    height: 130,
-    width: 110,
+    height: 120,
+    width: 100,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
     // backgroundColor: "red",

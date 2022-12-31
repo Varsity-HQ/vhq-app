@@ -41,7 +41,6 @@ function AlertUsers(props) {
         setLoading(false);
       });
   };
-  console.log(textHeader);
   return (
     <Screen style={styles.container}>
       <HeaderedHeader

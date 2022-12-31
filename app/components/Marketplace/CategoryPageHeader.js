@@ -45,7 +45,7 @@ function CategoryPageHeader({ category, skeleton, data, university }) {
       </View>
     );
   }
-  console.log(data);
+  // console.log(data);
   return (
     <View style={styles.container}>
       <CommonHeader />
