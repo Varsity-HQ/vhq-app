@@ -61,7 +61,7 @@ function HomeWrapper(props) {
         refresh: false,
         init: true,
         more: false,
-        top: true,
+        top: false,
       });
     }, []),
   );
@@ -72,7 +72,7 @@ function HomeWrapper(props) {
 
 class Home extends PureComponent {
   state = {
-    index: 1,
+    index: 2,
     loading: false,
   };
 
@@ -81,7 +81,7 @@ class Home extends PureComponent {
       refresh: false,
       init: true,
       more: false,
-      top: true,
+      top: false,
     });
   }
 
@@ -131,12 +131,12 @@ class Home extends PureComponent {
       index,
     });
 
-    if (index === 2) {
+    if (index === 1) {
       this.props.get_home_posts({
         refresh: false,
         init: true,
         more: false,
-        top: false,
+        top: true,
       });
     }
     if (index === 3) {

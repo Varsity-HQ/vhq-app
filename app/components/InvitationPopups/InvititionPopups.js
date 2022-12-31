@@ -3,8 +3,6 @@ import { View, StyleSheet, Dimensions } from "react-native";
 import Text from "../AppText";
 import ReferIcon from "../../assets/refer_icon.png";
 import Image from "../Image";
-import { color } from "react-native-reanimated";
-import colors from "../../config/colors";
 import LargePopup from "./LargePopup";
 
 const height = Dimensions.get("screen").height;
