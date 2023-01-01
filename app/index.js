@@ -197,7 +197,6 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
         axios
           .get("/get/account?platform=ios")
           .then((data) => {
-            console.log("update local object");
             set_user(data.data);
             store.dispatch({
               type: "SET_BLOCKED_USERS",
