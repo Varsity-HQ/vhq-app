@@ -24,6 +24,8 @@ import * as Clipboard from "expo-clipboard";
 import check_if_followed from "../../util/check_if_followed";
 import { normalizeText } from "../../util/responsivePx";
 import { RFValue } from "react-native-responsive-fontsize";
+import { POST_PAGE } from "../../navigation/routes";
+import { save_local_post } from "../../store/actions/postPage";
 
 const mapStateToProps = (state) => {
   return {
@@ -38,6 +40,7 @@ const mapDispatchToProps = (dispatch) => {
     remove_bookmark: (pid) => dispatch(remove_bookmark(pid)),
     bookmark_post: (pid) => dispatch(bookmark_post(pid)),
     follow_account: (uid) => dispatch(follow_account(uid)),
+    save_local_post: (post) => dispatch(save_local_post(post)),
   };
 };
 
@@ -171,14 +174,16 @@ class PostCardButtons extends PureComponent {
               <MaterialCommunityIcons
                 name="arrow-down-bold-outline"
                 size={RFValue(22)}
-                color={this.state.post_liked ? colors.redish_2 : colors.white}
+                color={colors.white}
               />
             </TouchableOpacity>
           )}
 
           <View style={styles.button}>
             <Commenticon fill={colors.white} size={RFValue(22)} />
-            <Text style={styles.button_text}>{data.comments_count}</Text>
+            <Text style={styles.button_text}>
+              {data.comments_count} {askvi ? "answers" : null}
+            </Text>
           </View>
           {!askvi && (
             <TouchableOpacity
@@ -214,20 +219,38 @@ class PostCardButtons extends PureComponent {
               </TouchableOpacity>
             )}
         </View>
-        <TouchableOpacity
-          onPress={this.handleBookmarkPress}
-          style={styles.button}
-        >
-          {this.state.bookmarked ? (
-            <Ionicons name="bookmark" size={RFValue(22)} color={colors.white} />
-          ) : (
-            <Ionicons
-              name="bookmark-outline"
-              size={RFValue(22)}
-              color={colors.white}
-            />
-          )}
-        </TouchableOpacity>
+        {askvi ? (
+          <TouchableOpacity
+            onPress={() => {
+              this.props.save_local_post(data);
+              this.props.navigation.navigate(POST_PAGE, {
+                post_id: data.id,
+              });
+            }}
+            style={styles.button_askvi}
+          >
+            <Text>Answer this</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={this.handleBookmarkPress}
+            style={styles.button}
+          >
+            {this.state.bookmarked ? (
+              <Ionicons
+                name="bookmark"
+                size={RFValue(22)}
+                color={colors.white}
+              />
+            ) : (
+              <Ionicons
+                name="bookmark-outline"
+                size={RFValue(22)}
+                color={colors.white}
+              />
+            )}
+          </TouchableOpacity>
+        )}
       </View>
     );
   }
@@ -250,6 +273,14 @@ const styles = StyleSheet.create({
     marginRight: 15,
     // flex: 1,
     // backgroundColor: colors.dark,
+  },
+  button_askvi: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 12,
+    backgroundColor: colors.primary,
+    borderRadius: 100,
+    paddingVertical: 8,
   },
   button_f: {
     flexDirection: "row",

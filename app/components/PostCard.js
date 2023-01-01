@@ -535,7 +535,12 @@ const AskviPost = ({
           </View>
         </View>
 
-        <PostCardButtons askvi={true} hideFollowBtn={true} data={data} />
+        <PostCardButtons
+          navigation={navigation}
+          askvi={true}
+          hideFollowBtn={true}
+          data={data}
+        />
         {/* <View
           style={{
             // flexDirection: "row",
