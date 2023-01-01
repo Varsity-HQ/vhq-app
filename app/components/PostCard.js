@@ -475,8 +475,6 @@ const AskviPost = ({
                       </View>
                     ) : null
                   ) : null}
-
-                  {/* @{data.username} -{" "} */}
                 </View>
               </View>
             </View>

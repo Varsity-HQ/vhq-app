@@ -86,8 +86,7 @@ class Home extends PureComponent {
   }
 
   onRefresh() {
-    if (this.state.index !== 1 || this.state.index !== 2) return;
-
+    if (this.state.index !== 1 && this.state.index !== 2) return;
     this.props.get_home_posts({
       refresh: true,
       init: false,
