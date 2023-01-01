@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import colors from "../../config/colors";
-import { Ionicons, Feather } from "@expo/vector-icons";
+import { Ionicons, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import Text from "../AppText";
 import { check_post_bookmarked, check_post_liked } from "../../util/postUtil";
 import { connect } from "react-redux";
@@ -112,6 +112,7 @@ class PostCardButtons extends PureComponent {
   render() {
     const data = this.props.data;
     const hideFollowBtn = this.props.hideFollowBtn;
+    const askvi = this.props.askvi;
     return (
       <View
         style={{
@@ -127,34 +128,70 @@ class PostCardButtons extends PureComponent {
             flexDirection: "row",
           }}
         >
-          <TouchableOpacity onPress={this.handleLikePost} style={styles.button}>
-            {this.state.post_liked ? (
-              <Ionicons
-                name="heart"
-                size={RFValue(24)}
-                color={colors.redish_2}
+          <TouchableOpacity
+            onPress={this.handleLikePost}
+            style={[
+              styles.button,
+              {
+                marginRight: askvi ? 10 : 15,
+              },
+            ]}
+          >
+            {askvi ? (
+              <MaterialCommunityIcons
+                name="arrow-up-bold-outline"
+                size={RFValue(22)}
+                color={this.state.post_liked ? colors.redish_2 : colors.white}
               />
             ) : (
-              <Ionicons
-                name="heart-outline"
-                size={RFValue(24)}
-                color={colors.white}
-              />
+              <>
+                {this.state.post_liked ? (
+                  <Ionicons
+                    name="heart"
+                    size={RFValue(24)}
+                    color={colors.redish_2}
+                  />
+                ) : (
+                  <Ionicons
+                    name="heart-outline"
+                    size={RFValue(24)}
+                    color={colors.white}
+                  />
+                )}
+              </>
             )}
 
             <Text style={styles.button_text}>{data.likes_count}</Text>
           </TouchableOpacity>
+          {askvi && (
+            <TouchableOpacity
+              onPress={this.handleLikePost}
+              style={styles.button}
+            >
+              <MaterialCommunityIcons
+                name="arrow-down-bold-outline"
+                size={RFValue(22)}
+                color={this.state.post_liked ? colors.redish_2 : colors.white}
+              />
+            </TouchableOpacity>
+          )}
+
           <View style={styles.button}>
             <Commenticon fill={colors.white} size={RFValue(22)} />
             <Text style={styles.button_text}>{data.comments_count}</Text>
           </View>
-          <TouchableOpacity onPress={this.handleCopyPost} style={styles.button}>
-            <Ionicons
-              name="copy-outline"
-              size={RFValue(21)}
-              color={colors.white}
-            />
-          </TouchableOpacity>
+          {!askvi && (
+            <TouchableOpacity
+              onPress={this.handleCopyPost}
+              style={styles.button}
+            >
+              <Ionicons
+                name="copy-outline"
+                size={RFValue(21)}
+                color={colors.white}
+              />
+            </TouchableOpacity>
+          )}
           {!this.state.following_poster &&
             !data.anonymous_post &&
             !hideFollowBtn && (

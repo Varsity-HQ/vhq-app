@@ -441,7 +441,7 @@ const AskviPost = ({
                     lineBreakMode="tail"
                     style={styles.askvi_cat_name}
                   >
-                    askvi/general
+                    askvi/{data.askvi_category}
                   </Text>
                 </View>
                 <View
@@ -535,7 +535,7 @@ const AskviPost = ({
           </View>
         </View>
 
-        <PostCardButtons hideFollowBtn={true} data={data} />
+        <PostCardButtons askvi={true} hideFollowBtn={true} data={data} />
         {/* <View
           style={{
             // flexDirection: "row",
