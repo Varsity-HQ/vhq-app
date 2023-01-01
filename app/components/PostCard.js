@@ -474,13 +474,7 @@ const AskviPost = ({
                         </Text>
                       </View>
                     ) : null
-                  ) : (
-                    <FontAwesome
-                      style={styles.username}
-                      name="university"
-                      size={10}
-                    />
-                  )}
+                  ) : null}
 
                   {/* @{data.username} -{" "} */}
                 </View>
