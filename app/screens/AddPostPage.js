@@ -241,7 +241,11 @@ class AddPostPage extends Component {
     if (this.state.postText.length < 10)
       return Alert.alert(
         "Too short",
-        "Please write more content on your post.",
+        `${
+          this.state.postType === "askvi_post"
+            ? "Make people understand your question by using more words."
+            : "Please write more content on your post."
+        }`,
         [
           {
             text: "Alright bet",
