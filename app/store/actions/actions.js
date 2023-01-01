@@ -866,16 +866,11 @@ export const get_user_page = (username) => {
 };
 
 export const showFilteredPosts = (filter) => (dispatch) => {
-  let isShowingUnfilteredPosts =
-    store.getState().core.accData.isShowingUnfilteredPosts;
-
-  // if (isShowingUnfilteredPosts === filter) return;
-
-  if (filter) switch_to_filtered_posts(dispatch);
-  else switch_to_unfiltered_posts(dispatch);
+  if (filter.set_filter) switch_to_filtered_posts(dispatch, filter.tab);
+  else switch_to_unfiltered_posts(dispatch, filter.tab);
 };
 
-const switch_to_filtered_posts = (dispatch) => {
+const switch_to_filtered_posts = (dispatch, tab) => {
   dispatch({
     type: "SWITCTH_IS_LOADING_FILTERED_POSTS",
     payload: false,
@@ -887,14 +882,22 @@ const switch_to_filtered_posts = (dispatch) => {
   axios
     .get(`/home/posts/filterposts/true`)
     .then(() => {
-      handle_get_home_posts(false, dispatch);
+      handle_get_home_posts(
+        {
+          refresh: false,
+          init: true,
+          more: false,
+          top: tab === 1 ? true : false,
+        },
+        dispatch,
+      );
     })
     .catch((err) => {
       console.err(err);
     });
 };
 
-const switch_to_unfiltered_posts = (dispatch) => {
+const switch_to_unfiltered_posts = (dispatch, tab) => {
   dispatch({
     type: "SWITCTH_IS_LOADING_FILTERED_POSTS",
     payload: true,
@@ -907,7 +910,15 @@ const switch_to_unfiltered_posts = (dispatch) => {
   axios
     .get(`/home/posts/filterposts/false`)
     .then(() => {
-      handle_get_home_posts(false, dispatch);
+      handle_get_home_posts(
+        {
+          refresh: false,
+          init: true,
+          more: false,
+          top: tab === 1 ? true : false,
+        },
+        dispatch,
+      );
     })
     .catch((err) => {
       console.err(err);

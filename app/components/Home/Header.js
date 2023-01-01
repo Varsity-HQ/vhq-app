@@ -240,7 +240,7 @@ const Header = ({
                 paddingRight: 18,
               }}
             >
-              <HomeFeedMenu />
+              <HomeFeedMenu tab_index={index} />
             </View>
           </View>
 

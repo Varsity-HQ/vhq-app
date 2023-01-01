@@ -28,7 +28,12 @@ const mapDispatchToProps = (dispatch) => {
 
 const iconSize = 32;
 
-function PostMenu({ university, isShowingUnfilteredPosts, showFilteredPosts }) {
+function PostMenu({
+  university,
+  isShowingUnfilteredPosts,
+  showFilteredPosts,
+  tab_index,
+}) {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
 
@@ -109,7 +114,7 @@ function PostMenu({ university, isShowingUnfilteredPosts, showFilteredPosts }) {
             {isShowingUnfilteredPosts ? (
               <TouchableOpacity
                 onPress={() => {
-                  showFilteredPosts(true);
+                  showFilteredPosts({ set_filter: true, tab: tab_index });
                   handleModal();
                 }}
                 style={styles.menuButton}
@@ -140,7 +145,7 @@ function PostMenu({ university, isShowingUnfilteredPosts, showFilteredPosts }) {
             ) : (
               <TouchableOpacity
                 onPress={() => {
-                  showFilteredPosts(false);
+                  showFilteredPosts({ set_filter: false, tab: tab_index });
                   handleModal();
                 }}
                 style={styles.menuButton}
