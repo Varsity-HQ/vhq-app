@@ -37,6 +37,7 @@ import check_user_blocked from "../util/check_user_blocked";
 import PostNotInterested from "./Skeletons/PostNotInterested";
 import { not_interested_in_content } from "../store/actions/filterActions";
 import { useNavigation } from "@react-navigation/native";
+import ImageC from "./Image";
 
 dayjs.extend(Localize);
 
@@ -160,6 +161,22 @@ class PostCard extends PureComponent {
           handleOpenProfile={this.handleOpenProfile}
           profilepic={this.profilepic}
           data={data}
+        />
+      );
+    }
+    if (data.postType === "askvi_post") {
+      return (
+        // <EventPostCard/>
+        <AskviPost
+          isShowingUnfilteredPosts={this.props.isShowingUnfilteredPosts}
+          eventPage={this.props.eventPage}
+          setPostNotInterested={() => this.setPostNotInterested()}
+          handleOpenPost={this.handleOpenPost}
+          handleOpenProfile={this.handleOpenProfile}
+          profilepic={this.profilepic}
+          data={data}
+          reportedToggle={this.reportedToggle}
+          hideFollowBtn={hideFollowBtn}
         />
       );
     }
@@ -386,6 +403,156 @@ class PostCard extends PureComponent {
   }
 }
 
+const AskviPost = ({
+  data,
+  profilepic,
+  handleOpenPost,
+  handleOpenProfile,
+  isShowingUnfilteredPosts,
+  setPostNotInterested,
+  eventPage = false,
+  reportedToggle,
+  hideFollowBtn,
+}) => {
+  const navigation = useNavigation();
+  return (
+    <View style={styles.wrapper_container}>
+      <View style={styles.askvi_container}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            ...styles.def_padding,
+          }}
+        >
+          <TouchableWithoutFeedback
+            onPress={() => {
+              data.anonymous_post ? null : handleOpenProfile();
+            }}
+          >
+            <View style={{ flexDirection: "row" }}>
+              <View>
+                <View style={styles.askvi_post_header}>
+                  <ImageC style={styles.askvi_pp} uri={data.profilepic} />
+                  <Text
+                    ellipsizeMode="tail"
+                    numberOfLines={1}
+                    lineBreakMode="tail"
+                    style={styles.askvi_cat_name}
+                  >
+                    askvi/general
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  {isShowingUnfilteredPosts ? (
+                    data.university ? (
+                      <View
+                        style={{
+                          marginTop: 3,
+                          borderRadius: 100,
+                          borderWidth: 1,
+                          borderColor: colors.secondary,
+                          paddingHorizontal: 10,
+                          paddingVertical: 2,
+                          backgroundColor: colors.dark_opacity_2,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            color: colors.secondary,
+                            fontWeight: "600",
+                          }}
+                        >
+                          {data.university}
+                        </Text>
+                      </View>
+                    ) : null
+                  ) : (
+                    <FontAwesome
+                      style={styles.username}
+                      name="university"
+                      size={10}
+                    />
+                  )}
+
+                  {/* @{data.username} -{" "} */}
+                </View>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+          <View style={{ marginRight: 10 }}>
+            <PostMenu
+              setPostNotInterested={setPostNotInterested}
+              onReportSubmitted={reportedToggle}
+              data={data}
+            />
+          </View>
+        </View>
+
+        <View style={styles.content_container}>
+          <PostPictures images={data.attachments} />
+          <TouchableWithoutFeedback onPress={() => handleOpenPost()}>
+            <View style={styles.def_padding}>
+              <Content html={data.postHtmlText} />
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+        <View
+          style={{
+            // marginTop: 15,
+            justifyContent: "space-between",
+            flexDirection: "row",
+            ...styles.def_padding,
+          }}
+        >
+          <Text style={{ fontSize: RFValue(11), color: colors.secondary }}>
+            Asked at &nbsp;•&nbsp;
+            {dayjs(data.created_at).format("LT")}
+          </Text>
+
+          <View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <ImageLocal
+                style={{
+                  height: 18,
+                  width: 18,
+                  marginRight: 5,
+                }}
+                source={require("../assets/vhqcat-small.png")}
+              />
+              <Text style={{ fontSize: normalizeText(12), color: "#4f708a" }}>
+                {/* {data.application} */}
+                VHQ AskVI
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        <PostCardButtons hideFollowBtn={true} data={data} />
+        {/* <View
+          style={{
+            // flexDirection: "row",
+            // alignItems: "flex-end",
+            paddingTop: 5,
+          }}
+        >
+          <Text style={styles.date_posted}>
+            {dayjs(data.created_at).fromNow()}
+          </Text>
+        </View> */}
+
+        {/* <PostCardFooter data={data} /> */}
+      </View>
+    </View>
+  );
+};
 const EventPost = ({
   data,
   profilepic,
@@ -608,6 +775,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  askvi_post_header: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   button: {
     flexDirection: "row",
     alignItems: "center",
@@ -636,6 +807,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     display: "flex",
   },
+  askvi_cat_name: {
+    fontWeight: "600",
+    fontSize: RFValue(13),
+    color: colors.white,
+    alignItems: "center",
+    flexDirection: "row",
+    display: "flex",
+  },
   p_avatar: {
     borderRadius: 50,
     backgroundColor: colors.darkish3,
@@ -646,6 +825,19 @@ const styles = StyleSheet.create({
     // height: verticalScale(40),
     // width: verticalScale(40),
     width: height * 0.058,
+  },
+  askvi_pp: {
+    borderRadius: 50,
+    backgroundColor: colors.darkish3,
+    height: 25,
+    width: 25,
+    marginRight: 5,
+  },
+  wrapper_container: {
+    paddingVertical: 0,
+    paddingTop: 10,
+    paddingHorizontal: 7,
+    backgroundColor: colors.dark_2,
   },
   wrapper_container: {
     paddingVertical: 0,
@@ -660,6 +852,19 @@ const styles = StyleSheet.create({
     // borderBottomColor: colors.black,
     borderBottomWidth: 0,
     backgroundColor: colors.dark,
+    //
+    // borderBottomLeftRadius: 0,
+    // borderBottomRightRadius: 0,
+    borderRadius: 10,
+  },
+  askvi_container: {
+    paddingHorizontal: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    // borderBottomColor: colors.black,
+    backgroundColor: colors.dark_opacity_2,
+    borderColor: colors.lighish2,
+    borderWidth: 1,
     //
     // borderBottomLeftRadius: 0,
     // borderBottomRightRadius: 0,
