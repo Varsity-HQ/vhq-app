@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   Platform,
   StyleSheet,
-  Text,
   View,
   ScrollView,
   TouchableOpacity,
@@ -30,6 +29,9 @@ import {
   clearPostScheduledNotifications,
   setPostReminders,
 } from "../notifications";
+
+import Text from "../components/AppText";
+import AskViCategories from "../components/AskVi/AskViCategories";
 
 const { width: deviceWidth } = Dimensions.get("window");
 
@@ -88,6 +90,7 @@ class AddPostPage extends Component {
         choiceName: "",
       },
     ],
+    askvi_category: "general",
   };
 
   switchToPollPost = () => {
@@ -213,6 +216,12 @@ class AddPostPage extends Component {
     });
   };
 
+  handleSetCategory = (c) => {
+    this.setState({
+      askvi_category: c,
+    });
+  };
+
   removeImage = (index) => {
     let cur_images = this.state.local_attachments;
     let new_array = [];
@@ -271,7 +280,6 @@ class AddPostPage extends Component {
         }
       });
     }
-
     if (_proceed) {
       this.props.post_new(postObj, this.state.local_attachments);
       this.props.navigation.navigate(HOME);
@@ -296,7 +304,11 @@ class AddPostPage extends Component {
               <Header
                 buttonRightPress={this.handleSubmit}
                 backPress={() => this.props.navigation.goBack()}
-                buttonText="Post"
+                buttonText={
+                  this.state.postType === "askvi_post"
+                    ? "Post question"
+                    : "Post"
+                }
                 title={
                   this.state.postType === "askvi_post"
                     ? "Ask a question"
@@ -320,7 +332,14 @@ class AddPostPage extends Component {
                 handleChange={this.handleEditorChange}
               />
             </View>
-
+            {this.state.postType == "askvi_post" ? (
+              <View style={styles.category_section}>
+                <AskViCategories
+                  set_category={this.handleSetCategory}
+                  category={this.state.askvi_category}
+                />
+              </View>
+            ) : null}
             {this.state.pollCreate && (
               <PollCreate
                 removePollField={this.removePollField}
@@ -329,7 +348,6 @@ class AddPostPage extends Component {
                 poll_fields={this.state.poll_fields}
               />
             )}
-
             <View style={styles.images_container}>
               {this.state.local_attachments.map((x, index) => (
                 <TouchableWithoutFeedback key={index}>
@@ -388,23 +406,6 @@ class AddPostPage extends Component {
                     style={[styles.obutton]}
                   />
                 </View>
-
-                <TouchableOpacity
-                  // disabled={this.state.local_attachments.length > 0}
-                  onPress={this.switchToPollPost}
-                  style={[
-                    styles.obutton,
-                    this.state.pollCreate && {
-                      backgroundColor: colors.darkish3,
-                    },
-                  ]}
-                >
-                  <Foundation
-                    name="graph-bar"
-                    color={colors.secondary}
-                    size={22}
-                  />
-                </TouchableOpacity>
                 <View
                   style={[
                     this.state.pollCreate && {
@@ -425,21 +426,43 @@ class AddPostPage extends Component {
                     <Text style={styles.eventtext}>AskVI</Text>
                   </TouchableOpacity>
                 </View>
-                <View
-                  style={[
-                    this.state.pollCreate && {
-                      opacity: 0.3,
-                    },
-                  ]}
-                >
+                {this.state.postType === "askvi_post" ? null : (
                   <TouchableOpacity
-                    disabled={this.state.pollCreate}
-                    style={styles.obutton}
-                    onPress={() => this.props.navigation.navigate(CREATE_EVENT)}
+                    // disabled={this.state.local_attachments.length > 0}
+                    onPress={this.switchToPollPost}
+                    style={[
+                      styles.obutton,
+                      this.state.pollCreate && {
+                        backgroundColor: colors.darkish3,
+                      },
+                    ]}
                   >
-                    <Text style={styles.eventtext}>Event</Text>
+                    <Foundation
+                      name="graph-bar"
+                      color={colors.secondary}
+                      size={22}
+                    />
                   </TouchableOpacity>
-                </View>
+                )}
+                {this.state.postType === "askvi_post" ? null : (
+                  <View
+                    style={[
+                      this.state.pollCreate && {
+                        opacity: 0.3,
+                      },
+                    ]}
+                  >
+                    <TouchableOpacity
+                      disabled={this.state.pollCreate}
+                      style={styles.obutton}
+                      onPress={() =>
+                        this.props.navigation.navigate(CREATE_EVENT)
+                      }
+                    >
+                      <Text style={styles.eventtext}>Event</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
               </ScrollView>
             </View>
           </View>
@@ -450,6 +473,15 @@ class AddPostPage extends Component {
 }
 
 const styles = StyleSheet.create({
+  category_section: {
+    borderTopWidth: 0,
+    borderTopColor: colors.dark_opacity_2,
+    borderBottomColor: colors.dark_opacity_2,
+    borderBottomWidth: 1,
+    paddingHorizontal: 12,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
   remove_button: {
     position: "absolute",
     zIndex: 1,

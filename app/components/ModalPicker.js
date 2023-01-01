@@ -36,20 +36,25 @@ function ModalPicker({
   input_style,
   value,
   headerText,
+  content,
 }) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <>
       <TouchableOpacity onPress={() => setModalVisible(true)}>
-        <View style={[input_style, styles.fake_modal_textinput]}>
-          <Text
-            style={{
-              color: colors.secondary,
-            }}
-          >
-            {value ? value : placeholder}
-          </Text>
-        </View>
+        {content ? (
+          content
+        ) : (
+          <View style={[input_style, styles.fake_modal_textinput]}>
+            <Text
+              style={{
+                color: colors.secondary,
+              }}
+            >
+              {value ? value : placeholder}
+            </Text>
+          </View>
+        )}
       </TouchableOpacity>
       <Modal
         // statusBarTranslucent

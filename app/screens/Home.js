@@ -134,11 +134,12 @@ class Home extends PureComponent {
     if (index === 1) {
       this.props.get_home_posts({
         refresh: false,
-        init: true,
+        init: this.props.loading_top,
         more: false,
         top: true,
       });
     }
+
     if (index === 3) {
       this.props.get_home_events();
     }

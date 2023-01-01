@@ -11,7 +11,7 @@ const width = Dimensions.get("screen").width;
 function InvititionPopups(props) {
   return (
     <>
-      <LargePopup open_state={false} />
+      {/* <LargePopup open_state={true} /> */}
       <View style={styles.popup_container}>
         <Image style={styles.icon} local uri={ReferIcon} />
       </View>

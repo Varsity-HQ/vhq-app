@@ -1,0 +1,106 @@
+[
+  {
+    "value": "general",
+    "label": "General"
+  },
+  {
+    "value": "nsfas",
+    "label": "Nsfas"
+  },
+  {
+    "value": "academic",
+    "label": "Academic"
+  },
+  {
+    "value": "politics",
+    "label": "Politics"
+  },
+  {
+    "value": "sports",
+    "label": "Sports"
+  },
+  {
+    "value": "health",
+    "label": "Health"
+  },
+  {
+    "value": "music",
+    "label": "Music"
+  },
+  {
+    "value": "gaming",
+    "label": "Gaming"
+  },
+  {
+    "value": "restaurants",
+    "label": "Restaurants"
+  },
+  {
+    "value": "arts",
+    "label": "Arts"
+  },
+  {
+    "value": "culture",
+    "label": "Culture"
+  },
+  {
+    "value": "accommodation",
+    "label": "Accommodation"
+  },
+  {
+    "value": "vibes",
+    "label": "Vibes"
+  },
+  {
+    "value": "relationships",
+    "label": "Relationships"
+  },
+  {
+    "value": "friends",
+    "label": "Friends"
+  },
+  {
+    "value": "self-care",
+    "label": "Self-care"
+  },
+  {
+    "value": "entertainment",
+    "label": "Entertainment"
+  },
+  {
+    "value": "religion",
+    "label": "Religion"
+  },
+  {
+    "value": "ask-guys",
+    "label": "Ask Guys"
+  },
+  {
+    "value": "ask-girls",
+    "label": "Ask Girls"
+  },
+  {
+    "value": "social",
+    "label": "Social"
+  },
+  {
+    "value": "mental-health",
+    "label": "Mental Health"
+  },
+  {
+    "value": "business",
+    "label": "Business"
+  },
+  {
+    "value": "tech",
+    "label": "Tech"
+  },
+  {
+    "value": "life-hacks",
+    "label": "Life Hacks"
+  },
+  {
+    "value": "help",
+    "label": "Help"
+  }
+]

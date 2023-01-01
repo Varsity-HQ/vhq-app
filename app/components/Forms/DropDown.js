@@ -14,6 +14,8 @@ function DropDown({
   setValue,
   style,
   placeholder,
+  dropdownWrapperStyle,
+  content,
   ...props
 }) {
   const [open, setOpen] = useState(false);
@@ -40,8 +42,9 @@ function DropDown({
           headerText={headerText ? headerText : placeholder}
           items={items}
           value={value}
+          content={content}
           placeholder={props.placeholder}
-          input_style={styles.dropdown}
+          input_style={[styles.dropdown, dropdownWrapperStyle]}
         />
       </View>
     );
