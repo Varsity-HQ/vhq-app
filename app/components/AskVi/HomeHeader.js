@@ -8,7 +8,11 @@ import colors from "../../config/colors";
 import Button from "../Button";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import { MARKETPLACE_CREATE, SEARCH_RESULTS } from "../../navigation/routes";
+import {
+  ADD_POST,
+  MARKETPLACE_CREATE,
+  SEARCH_RESULTS,
+} from "../../navigation/routes";
 import AppButton from "../Button";
 
 function HomeHeader(props) {
@@ -49,7 +53,11 @@ function HomeHeader(props) {
           <Text style={styles.header}>ASKVI..</Text>
           <View>
             <Button
-              onPress={() => navigation.navigate(MARKETPLACE_CREATE)}
+              onPress={() =>
+                navigation.navigate(ADD_POST, {
+                  preselected: "askvi_post",
+                })
+              }
               style={{
                 borderRadius: 100,
                 paddingVertical: 10,

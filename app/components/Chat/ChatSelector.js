@@ -87,6 +87,7 @@ function ChatSelector({ data, is_dating }) {
   if (is_dating) {
     let header_data = has_chat_headers ? chat_header_data : account;
     if (!header_data) return null;
+
     return (
       <TouchableHighlight
         underlayColor={colors.dark_2}
@@ -154,22 +155,16 @@ function ChatSelector({ data, is_dating }) {
 
   let header_data = has_chat_headers ? chat_header_data : account;
   if (!header_data) return null;
+
   return (
     <TouchableHighlight
-      //
       underlayColor={colors.dark_2}
-      //
       onPress={() => {
-        //
         navigation.navigate(CHAT_PAGE, {
-          //
           uid: uid,
-          //
           username: header_data.username,
-          //
         });
       }}
-      //
     >
       <View style={styles.c_s_container}>
         <>

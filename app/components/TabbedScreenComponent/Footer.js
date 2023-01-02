@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   emptySpace: {
     padding: 150,
-    backgroundColor: colors.dark_2,
+    // backgroundColor: colors.dark_2,
     flex: 1,
     // borderBottomColor: "red",
     // borderBottomWidth: 1,

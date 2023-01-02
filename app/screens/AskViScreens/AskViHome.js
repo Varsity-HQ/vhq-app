@@ -90,7 +90,12 @@ class AskViHome extends Component {
   };
 
   refreshHandler = () => {
-    console.log("triggered");
+    this.props.get_home_questions({
+      refresh: false,
+      init: true,
+      more: false,
+      top: false,
+    });
   };
   loadMoreHandler = () => {
     console.log("allowLoadMore triggered");
@@ -109,15 +114,16 @@ class AskViHome extends Component {
         listRenderingHandler={this.listRenderingHandler}
         tabsConfig={[
           {
-            keyExtractor: (item) => item,
+            keyExtractor: (item) => item.id,
             customLoader: <Text>loading</Text>,
             useCustomLoader: false,
             noDataComponent: <NoData />,
             allowRefresh: true,
             refreshHandler: this.refreshHandler,
+            loadMoreHandler: this.loadMoreHandler,
           },
           {
-            keyExtractor: (item) => item,
+            keyExtractor: (item) => item.id,
             noDataComponent: null,
             allowLoadMore: false,
             loadMoreHandler: this.loadMoreHandler,

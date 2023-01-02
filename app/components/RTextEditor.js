@@ -1,18 +1,9 @@
 import React, { Component } from "react";
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  AccessibilityInfo,
-  findNodeHandle,
-} from "react-native";
+import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import colors from "../config/colors";
 import {
-  actions,
-  getContentCSS,
   RichEditor,
-  RichToolbar,
+  // RichToolbar,
 } from "react-native-pell-rich-editor";
 import Text from "../components/AppText";
 
@@ -64,8 +55,7 @@ class RTextEditor extends Component {
               // hideKeyboardAccessoryView={
               //   hideKeyboardAccessoryView ? hideKeyboardAccessoryView : true
               // }
-              // initialFocus={true}
-
+              initialFocus={false}
               //  editorStyle={contentStyle} // default light style
               ref={this.richText}
               // useContainer={true}

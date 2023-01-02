@@ -2,8 +2,10 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { useNavigation } from "@react-navigation/native";
-import { ASKVI_HOME } from "./routes";
+import { ADD_POST, ASKVI_HOME } from "./routes";
 import AskViHome from "../screens/AskViScreens/AskViHome";
+import AddPostPage from "../screens/AddPostPage";
+
 const Stack = createNativeStackNavigator();
 
 const s_options = {
@@ -20,6 +22,11 @@ const AskViNavigator = () => {
       }}
       initialRouteName={ASKVI_HOME}
     >
+      <Stack.Screen
+        options={s_options}
+        name={ADD_POST}
+        component={AddPostPage}
+      />
       <Stack.Screen
         options={s_options}
         name={ASKVI_HOME}
