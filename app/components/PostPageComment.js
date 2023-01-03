@@ -222,7 +222,7 @@ function PostPageComment({
                       onPress={handleLikeComment}
                     >
                       <FontAwesome
-                        name="heart"
+                        name={isAskVIAnswer ? "thumbs-o-up" : "heart"}
                         size={18}
                         color={
                           commentLiked ? colors.redish_2 : colors.secondary
@@ -234,7 +234,7 @@ function PostPageComment({
                         }}
                       >
                         {" "}
-                        Helpful
+                        {isAskVIAnswer ? "Helpful" : null}{" "}
                         {data.comment_likes > 0 || data.comment_likes !== "0"
                           ? `${data.comment_likes}`
                           : ""}{" "}

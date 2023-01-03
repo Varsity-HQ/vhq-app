@@ -47,6 +47,7 @@ function CommentTextInput({
   sendPostComment,
   cancelReplyComment,
   replyTo,
+  postType,
 }) {
   const navigation = useNavigation();
   const [commentText, setCommentText] = useState("");
@@ -102,7 +103,7 @@ function CommentTextInput({
             })
           }
         >
-          {account.anonymous_profile ? (
+          {account.anonymous_profile && postType !== "askvi_post" ? (
             <Image
               style={styles.profilepic}
               local
@@ -121,9 +122,15 @@ function CommentTextInput({
           selectionColor={colors.primary}
           placeholderTextColor={colors.secondary_2}
           style={styles.comment_input}
-          placeholder={`Respond to ${
-            replyTo ? replyTo.username : returnPostOwner()
-          } ${account.anonymous_profile ? "anonymously" : ""}`}
+          placeholder={
+            postType === "askvi_post"
+              ? "Write an answer to this.."
+              : `Respond to ${replyTo ? replyTo.username : returnPostOwner()} ${
+                  account.anonymous_profile && postType !== "askvi_post"
+                    ? "anonymously"
+                    : ""
+                }`
+          }
         />
         {/* Turned off after comments show their being posted */}
         {/* {post_page.commenting ? (

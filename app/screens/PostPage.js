@@ -84,6 +84,7 @@ class PostPage extends React.PureComponent {
   );
 
   render() {
+    const postType = this.props.post_page.post?.post?.postType;
     return (
       <>
         <Screen style={styles.container}>
@@ -132,6 +133,7 @@ class PostPage extends React.PureComponent {
               ]}
             >
               <CommentTextInput
+                postType={postType}
                 returnProfilePicture={this.returnProfilePicture}
               />
             </View>

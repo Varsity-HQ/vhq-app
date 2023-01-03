@@ -9,6 +9,7 @@ import {
   LayoutAnimation,
   Alert,
   Dimensions,
+  Keyboard,
 } from "react-native";
 import colors from "../config/colors";
 import Header from "../components/headers/header2";
@@ -181,7 +182,7 @@ class AddPostPage extends Component {
 
   componentDidMount = async () => {
     this._isMounted = true;
-
+    Keyboard.dismiss();
     let preselected = this.props.route.params?.preselected;
     let preselectable_postTypes = ["askvi_post"];
     if (preselected && preselectable_postTypes.includes(preselected)) {
