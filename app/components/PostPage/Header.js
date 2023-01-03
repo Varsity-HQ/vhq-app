@@ -17,6 +17,7 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 import emojis from "../../util/emojis";
 import { PROFILE } from "../../navigation/routes";
 import PostMenu from "../Post/PostMenu";
+import ImageC from "../Image";
 import PostPictures from "../Post/PostPictures";
 import PollSection from "../Post/PollSection";
 import { check_post_bookmarked, check_post_liked } from "../../util/postUtil";
@@ -31,6 +32,7 @@ import Toast from "react-native-toast-message";
 import Loader from "../Loaders/HomeUploading";
 import MeetYourHost from "../Event/MeetYourHost";
 import EventHeader from "../Event/EventHeader";
+import universityShortName from "../../util/universityShortName";
 
 dayjs.extend(localizedFormat);
 
@@ -164,6 +166,220 @@ function HeaderPostContent({
       </View>
     );
   }
+
+  if (post?.postType === "askvi_post") {
+    return (
+      <View style={styles.container}>
+        <View
+          style={[
+            styles.header,
+            {
+              borderBottomWidth: 0,
+              paddingBottom: 0,
+            },
+          ]}
+        >
+          <View style={styles.h_left_sec}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons
+                name="arrow-back-outline"
+                color={colors.white}
+                size={30}
+              />
+            </TouchableOpacity>
+            {loading ? (
+              <Text
+                style={[
+                  styles.h_username,
+                  {
+                    color: colors.secondary_2,
+                  },
+                ]}
+              >
+                loading ...
+              </Text>
+            ) : (
+              <Text style={styles.h_username}>
+                <>askvi/{post.askvi_category}</>
+              </Text>
+            )}
+          </View>
+          <View>
+            {!loading ? (
+              <PostMenu post_page data={{ ...post, ...account }} />
+            ) : null}
+          </View>
+        </View>
+        {loading ? (
+          <View
+            style={[
+              styles.header,
+              {
+                justifyContent: "center",
+                paddingVertical: 50,
+                borderBottomWidth: 0,
+              },
+            ]}
+          >
+            <Loader color={colors.primary} animating size="large" />
+          </View>
+        ) : (
+          <View>
+            <View
+              style={{
+                paddingHorizontal: 0,
+                borderBottomColor: colors.lighish,
+                borderBottomWidth: 1,
+              }}
+            >
+              <View style={{ paddingBottom: 5 }}>
+                <View
+                  style={{
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  <Text style={styles.post_meta}>
+                    Asked at {dayjs(post.created_at).format("LT")} ~ on{" "}
+                    <Text
+                      style={[{ color: colors.secondary }, styles.post_meta]}
+                    >
+                      VHQ&nbsp;{post.application}
+                    </Text>
+                  </Text>
+                </View>
+                <PostPictures images={post.attachments} />
+                <View
+                  style={{
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  <Content fontSize={21} html={post.postHtmlText} />
+                </View>
+              </View>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  if (account.username === "account") return;
+                  navigation.push(PROFILE, {
+                    username: account.username,
+                  });
+                }}
+              >
+                <View style={{ flexDirection: "row", paddingHorizontal: 10 }}>
+                  <ImageC uri={account.profilepic} style={styles.q_p_avatar} />
+                  <View
+                    style={{
+                      marginLeft: 10,
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={[
+                        styles.username,
+                        {
+                          fontSize: 14,
+                        },
+                      ]}
+                    >
+                      asked by u/{account.username} -
+                    </Text>
+                    <View style={styles.postUnisecASKV}>
+                      <FontAwesome
+                        style={styles.post_meta_av}
+                        name="university"
+                        size={10}
+                      />
+                      <Text style={styles.post_meta_av}>
+                        &nbsp;{universityShortName(post.fromUniversity)}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </TouchableWithoutFeedback>
+              <View
+                style={{
+                  paddingBottom: 10,
+                  marginHorizontal: 10,
+                  borderBottomWidth: 1,
+                  borderBottomColor: colors.lighish,
+                }}
+              ></View>
+              <View
+                style={{
+                  paddingVertical: 10,
+                  paddingHorizontal: 10,
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  flexDirection: "row",
+                }}
+              >
+                <View
+                  style={{
+                    alignItems: "center",
+                    flexDirection: "row",
+                  }}
+                >
+                  <TouchableOpacity
+                    style={{
+                      alignItems: "center",
+                      flexDirection: "row",
+                    }}
+                    onPress={handleLikePost}
+                  >
+                    {isLiked ? (
+                      <Ionicons
+                        name="heart"
+                        size={25}
+                        color={colors.redish_2}
+                      />
+                    ) : (
+                      <Ionicons
+                        name="heart-outline"
+                        size={25}
+                        color={colors.white}
+                      />
+                    )}
+
+                    <Text style={{ fontSize: 15 }}>
+                      &nbsp;{post.likes_count} Likes
+                    </Text>
+                  </TouchableOpacity>
+                  <View
+                    style={{
+                      marginLeft: 10,
+                      alignItems: "center",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <Text style={{ fontSize: 15 }}>
+                      &nbsp;{post.comments_count} answer/s
+                    </Text>
+                  </View>
+                </View>
+                <TouchableOpacity onPress={handleBookMark}>
+                  <View
+                    style={{
+                      marginLeft: 10,
+                      marginRight: 10,
+                      alignItems: "center",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <FontAwesome
+                      color={colors.white}
+                      name={!isBookMarked ? "bookmark-o" : "bookmark"}
+                      size={25}
+                    />
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        )}
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -396,10 +612,22 @@ function HeaderPostContent({
 }
 
 const styles = StyleSheet.create({
+  postUnisecASKV: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: 5,
+  },
   postUnisec: {
     marginTop: 5,
     flexDirection: "row",
     alignItems: "center",
+  },
+  q_p_avatar: {
+    height: 22,
+    width: 22,
+    borderRadius: 50,
+    overflow: "hidden",
+    backgroundColor: colors.darkish3,
   },
   p_avatar: {
     height: 45,
@@ -409,6 +637,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.darkish3,
   },
   post_meta: {
+    color: colors.secondary,
+    fontSize: 14,
+  },
+  post_meta_av: {
     color: colors.secondary,
     fontSize: 14,
   },

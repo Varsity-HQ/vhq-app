@@ -55,10 +55,12 @@ function PostPageComment({
   handleCloseResponses,
   like_main_comment,
   unlike_main_comment,
+  postType,
 }) {
   const updateRef = useRef();
 
   const [commentReported, setCommentReported] = useState(false);
+  const [isAskVIAnswer] = useState(postType === "askvi_post");
 
   const [isCommentModalVisible, setIsCommentModalVisible] =
     React.useState(false);
@@ -232,9 +234,10 @@ function PostPageComment({
                         }}
                       >
                         {" "}
+                        Helpful
                         {data.comment_likes > 0 || data.comment_likes !== "0"
                           ? `${data.comment_likes}`
-                          : ""}
+                          : ""}{" "}
                       </AppText>
                     </TouchableOpacity>
                     <TouchableOpacity

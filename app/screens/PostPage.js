@@ -77,6 +77,7 @@ class PostPage extends React.PureComponent {
 
   renderComments = ({ item }) => (
     <PostPageComment
+      postType={this.props.post_page.post?.post?.postType}
       returnProfilePicture={this.returnProfilePicture}
       data={item}
     />

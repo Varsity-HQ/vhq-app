@@ -74,6 +74,7 @@ const CustomTextRenderer = (props) => {
         styles.text,
         {
           color: props.textColor ? props.textColor : colors.white,
+          fontSize: props.fontSize ? props.fontSize : RFValue(13),
         },
       ]}
       parse={[
@@ -118,16 +119,25 @@ class Content extends PureComponent {
   render() {
     const html = this.props.html;
     const color = this.props.color;
+    const fontSize = this.props.fontSize;
     return (
       <View style={styles.container}>
         {/* <Text>{html}</Text> */}
         <RenderHtml
           renderers={{
             p: (props) => (
-              <CustomTextRenderer textColor={color ? color : null} {...props} />
+              <CustomTextRenderer
+                fontSize={fontSize ? fontSize : null}
+                textColor={color ? color : null}
+                {...props}
+              />
             ),
             div: (props) => (
-              <CustomTextRenderer textColor={color ? color : null} {...props} />
+              <CustomTextRenderer
+                fontSize={fontSize ? fontSize : null}
+                textColor={color ? color : null}
+                {...props}
+              />
             ),
           }}
           // renderers={(props) => AnimatedSpanRenderer(props)}
