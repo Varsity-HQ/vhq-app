@@ -136,7 +136,7 @@ class PostCardButtons extends PureComponent {
             style={[
               styles.button,
               {
-                marginRight: askvi ? 10 : 15,
+                marginRight: askvi ? 6 : 15,
               },
             ]}
           >
@@ -144,7 +144,7 @@ class PostCardButtons extends PureComponent {
               <MaterialCommunityIcons
                 name="arrow-up-bold-outline"
                 size={RFValue(22)}
-                color={this.state.post_liked ? colors.redish_2 : colors.white}
+                color={this.state.post_liked ? colors.green : colors.white}
               />
             ) : (
               <>

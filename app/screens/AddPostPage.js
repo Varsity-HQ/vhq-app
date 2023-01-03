@@ -181,6 +181,15 @@ class AddPostPage extends Component {
 
   componentDidMount = async () => {
     this._isMounted = true;
+
+    let preselected = this.props.route.params?.preselected;
+    let preselectable_postTypes = ["askvi_post"];
+    if (preselected && preselectable_postTypes.includes(preselected)) {
+      this.setState({
+        postType: preselected,
+      });
+    }
+
     KeyboardEventListener.subscribe(
       ({ keyboardHeight, layoutAnimationConfig }) => {
         // LayoutAnimation.configureNext(layoutAnimationConfig);

@@ -11,6 +11,8 @@ import { get_home_questions } from "../../store/actions/askviPage";
 import PostCard from "../../components/PostCard";
 import { AlignJustify } from "react-native-remix-icon/src/icons";
 import Button from "../../components/Button";
+import { useNavigation } from "@react-navigation/native";
+import { ADD_POST } from "../../navigation/routes";
 
 const tabs = [
   {
@@ -64,6 +66,23 @@ class AskViHome extends Component {
   };
 
   setTabIndex = (index) => {
+    if (index === 2) {
+      this.props.get_home_questions({
+        refresh: false,
+        init: false,
+        more: false,
+        top: true,
+      });
+    }
+    if (index === 1) {
+      this.props.get_home_questions({
+        refresh: false,
+        init: false,
+        more: false,
+        top: true,
+      });
+    }
+
     this.setState({
       activeTabIndex: index,
     });
@@ -91,14 +110,19 @@ class AskViHome extends Component {
 
   refreshHandler = () => {
     this.props.get_home_questions({
-      refresh: false,
-      init: true,
+      refresh: true,
+      init: false,
       more: false,
-      top: false,
+      top: this.state.index === 1 ? true : false,
     });
   };
   loadMoreHandler = () => {
-    console.log("allowLoadMore triggered");
+    this.props.get_home_questions({
+      refresh: true,
+      init: false,
+      more: true,
+      top: this.state.index === 1 ? true : false,
+    });
   };
 
   render() {
@@ -115,8 +139,6 @@ class AskViHome extends Component {
         tabsConfig={[
           {
             keyExtractor: (item) => item.id,
-            customLoader: <Text>loading</Text>,
-            useCustomLoader: false,
             noDataComponent: <NoData />,
             allowRefresh: true,
             refreshHandler: this.refreshHandler,
@@ -164,6 +186,7 @@ const styles = StyleSheet.create({
 export default connect(mapStateToProps, mapDispatchToProps)(AskViHome);
 
 const NoData = () => {
+  const navigation = useNavigation();
   return (
     <View
       style={{
@@ -198,7 +221,15 @@ const NoData = () => {
             paddingTop: 10,
           }}
         >
-          <Button type={3} title="Ask something" />
+          <Button
+            onPress={() =>
+              navigation.navigate(ADD_POST, {
+                preselected: "askvi_post",
+              })
+            }
+            type={3}
+            title="Ask something"
+          />
         </View>
       </View>
     </View>
