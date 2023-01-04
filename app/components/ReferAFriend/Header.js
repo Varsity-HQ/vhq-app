@@ -77,10 +77,11 @@ function Header({ account }) {
               <Text style={styles.heading}>Your balance</Text>
               <Text>
                 <Text style={styles.currency}>R</Text>{" "}
-                <Text style={styles.balance_count}>4</Text>
+                <Text style={styles.balance_count}>{refData.credits}</Text>
               </Text>
               <Text style={styles.r_t}>
-                You can request payout of minimum R100 to cash.
+                You can request payout of minimum R{refData.minimum_payout} to
+                cash.
               </Text>
             </View>
             <View>
@@ -120,14 +121,14 @@ function Header({ account }) {
 
             <Text style={styles.text_center}>
               Invite a new person to download and use VarsityHQ. After their
-              first post your both earn up to R10 each
+              first post your both earn R{refData.cost_per_ref} each
             </Text>
           </View>
           <View style={{ paddingVertical: 20 }}>
             <View style={styles.row}>
-              <RefRewardsBox per_ref="10" num={5} />
-              <RefRewardsBox per_ref="10" num={10} />
-              <RefRewardsBox per_ref="10" num={20} />
+              <RefRewardsBox per_ref={refData.cost_per_ref} num={5} />
+              <RefRewardsBox per_ref={refData.cost_per_ref} num={10} />
+              <RefRewardsBox per_ref={refData.cost_per_ref} num={20} />
             </View>
             <Text style={[styles.text_center, { fontWeight: "700" }]}>
               Refer Stats
