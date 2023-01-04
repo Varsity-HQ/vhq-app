@@ -15,6 +15,8 @@ export const ADMIN_MARKETPLACE_CATEGORIES = "AdminMarkplaceCategories";
 export const ADMIN_MARKETPLACE_CATEGORY = "AdminMarkplaceCategory";
 export const ADMIN_ALERT_USERS = "AdminAlertUsers";
 export const ADMIN_STATS_SUMMARY = "AdminStatsSummary";
+export const REWARD_PRICINGS = "RewardPricings";
+export const REWARD_REQUESTS = "RewardRequests";
 
 //Chat Screens
 export const CHAT_HOME = "ChatHome";

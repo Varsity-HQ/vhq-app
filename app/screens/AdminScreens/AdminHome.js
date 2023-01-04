@@ -11,6 +11,7 @@ import {
   ADMIN_ALERT_USERS,
   ADMIN_MARKETPLACE_CATEGORIES,
   ADMIN_STATS_SUMMARY,
+  REWARD_PRICINGS,
 } from "../../navigation/routes";
 
 const notifications = [
@@ -34,6 +35,13 @@ const marketplace = [
     title: "Manage Categories",
     // route: ADMIN_MARKETPLACE_CATEGORIES,
     route: null,
+  },
+];
+const reward_n_offers = [
+  {
+    id: v4(),
+    title: "Manage Reward Pricings",
+    route: REWARD_PRICINGS,
   },
 ];
 
@@ -61,6 +69,10 @@ function AdminHome({ navigation }) {
           {
             title: "Insights",
             data: stats,
+          },
+          {
+            title: "Rewards & Offers",
+            data: reward_n_offers,
           },
           {
             title: "Notification & Alerts",

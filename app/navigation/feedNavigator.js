@@ -82,8 +82,10 @@ import {
   ADMIN_STATS_SUMMARY,
   ALL_TRENDING_HASHTAGS,
   SEARCH,
+  REWARD_PRICINGS,
 } from "./routes";
 import AllHashtags from "../screens/AllHashtags";
+import RewardPricings from "../screens/AdminScreens/RewardPricings";
 
 const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
@@ -419,6 +421,14 @@ const FeedNavigator = () => (
         }}
         name={ADMIN_MARKETPLACE_CATEGORY}
         component={MarketplaceCategory}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={REWARD_PRICINGS}
+        component={RewardPricings}
       />
 
       {/* <Stack.Screen 

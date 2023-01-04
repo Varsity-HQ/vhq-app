@@ -40,10 +40,27 @@ function Button({
     return (
       <TouchableOpacity
         {...props}
-        style={[styles.button_8, style]}
+        style={[
+          styles.button_8,
+          style,
+          disabled && {
+            borderColor: colors.green,
+            backgroundColor: colors.green,
+          },
+        ]}
         onPress={handleOnPress}
       >
-        <Text style={[styles.text_t8, textStyle]}>{title}</Text>
+        <Text
+          style={[
+            styles.text_t8,
+            textStyle,
+            disabled && {
+              color: colors.white,
+            },
+          ]}
+        >
+          {title}
+        </Text>
       </TouchableOpacity>
     );
   }

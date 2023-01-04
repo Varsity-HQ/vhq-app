@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     paddingVertical: 30,
+    paddingHorizontal: 20,
     borderBottomColor: colors.dark_2,
     borderTopColor: colors.black,
     // borderTopWidth: 2,
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: 15,
     marginTop: 6,
+    textAlign: "center",
   },
   headerTextContainer: {
     flexDirection: "column",
