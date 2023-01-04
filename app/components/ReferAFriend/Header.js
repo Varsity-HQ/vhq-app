@@ -27,6 +27,8 @@ function Header({ account }) {
   const [loading, setLoading] = useState(true);
   const [refData, setRefData] = useState(null);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [refString, setRefString] = useState("");
+  const [applyingRef, setApplyingRef] = useState(false);
 
   useEffect(() => {
     axios
@@ -40,9 +42,31 @@ function Header({ account }) {
       });
   }, []);
 
-  const handleCopyLink = () => {
-    Clipboard.setString(`https://varsityhq.co.za/r/${refData.referral_code}`);
+  const handleCopyLink = async () => {
+    await Clipboard.setStringAsync(
+      `https://varsityhq.co.za/r/${refData.referral_code}`,
+    );
     setLinkCopied(true);
+  };
+
+  const handleSubmitCode = async () => {
+    setApplyingRef(true);
+    let refCode = refString
+      .replace("https://varsityhq.co.za/r/", "")
+      .replace(/\//g, "")
+      .trim();
+
+    try {
+      let res = await axios.get(`/u/applyrefcode/${refCode}`);
+      setApplyingRef(false);
+    } catch (err) {
+      console.log(err);
+      setApplyingRef(false);
+    }
+  };
+
+  const handleSetCode = (e) => {
+    setRefString(e);
   };
 
   return (
@@ -86,16 +110,23 @@ function Header({ account }) {
             </View>
             <View>
               <Text style={styles.text_center}>
-                You can enter a refer code below
+                You can enter a refer code or link below
               </Text>
               <View style={styles.ref_box}>
                 <Input
                   type={1}
                   width="70%"
                   style={styles.en_c}
+                  onChangeText={handleSetCode}
                   placeholder="Enter a refer code here to earn"
                 />
-                <Button title={"Enter"} style={styles.en_btn} type={3} />
+                <Button
+                  disabled={applyingRef}
+                  onPress={handleSubmitCode}
+                  title={applyingRef ? "Wait.." : "Enter"}
+                  style={styles.en_btn}
+                  type={3}
+                />
               </View>
             </View>
             <TouchableOpacity
@@ -108,17 +139,13 @@ function Header({ account }) {
               ]}
             >
               <Text>Your code</Text>
-              <Text style={styles.code}>
-                {refData.referral_code}
-                {/* {account.referral_code} */}
-              </Text>
+              <Text style={styles.code}>{refData.referral_code}</Text>
               <Text style={{ color: colors.secondary }}>
                 {linkCopied
                   ? "Link copied to clipboard !"
                   : "Click to copy link to clipboard"}
               </Text>
             </TouchableOpacity>
-
             <Text style={styles.text_center}>
               Invite a new person to download and use VarsityHQ. After their
               first post your both earn R{refData.cost_per_ref} each
