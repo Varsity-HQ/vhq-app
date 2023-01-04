@@ -12,6 +12,7 @@ export default {
   secondary: "#b1d5e7",
   secondary_2: "#5c809c",
   skblue: "#4682ac",
+  gold: "#FFD700",
   dark: "#15202b",
   dark_2: "#1c2e42",
   dark_opacity: "#15202b8a",

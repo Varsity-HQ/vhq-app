@@ -11,6 +11,9 @@ import axios from "axios";
 import Loader from "../Loaders/HomeUploading";
 import * as Clipboard from "expo-clipboard";
 import { PROFILE } from "../../navigation/routes";
+import RefRewardsBox from "./RefRewardsBox";
+import RefImage from "../../assets/refer_icon.png";
+import Input from "../Input";
 
 const mapStateToProps = (state) => {
   return {
@@ -39,9 +42,7 @@ function Header({ account }) {
   }, []);
 
   const handleCopyLink = () => {
-    Clipboard.setString(
-      `https://web.varsityhq.co.za?referralCode=${refData.referral_code}`,
-    );
+    Clipboard.setString(`https://varsityhq.co.za/r/${refData.referral_code}`);
     setLinkCopied(true);
   };
 
@@ -73,15 +74,36 @@ function Header({ account }) {
       ) : (
         <View style={styles.container}>
           <View style={styles.section_one}>
-            <Text style={styles.heading}>Refer a friend</Text>
+            <View style={styles.balance_section}>
+              <Text style={styles.heading}>Your balance</Text>
+              <Text>
+                <Text style={styles.currency}>R</Text>{" "}
+                <Text style={styles.balance_count}>4</Text>
+              </Text>
+              <Text style={styles.r_t}>
+                You can request payout of minimum R100 to cash.
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.text_center}>
+                You can enter a refer code below
+              </Text>
+              <View style={styles.ref_box}>
+                <Input
+                  type={1}
+                  width="70%"
+                  style={styles.en_c}
+                  placeholder="Enter a refer code here to earn"
+                />
+                <Button title={"Enter"} style={styles.en_btn} type={3} />
+              </View>
+            </View>
             <TouchableOpacity
               onPress={handleCopyLink}
               style={[
                 styles.button,
                 {
-                  backgroundColor: linkCopied
-                    ? colors.darkish3
-                    : colors.darkish,
+                  backgroundColor: linkCopied ? "#ffd70012" : colors.darkish,
                 },
               ]}
             >
@@ -96,13 +118,18 @@ function Header({ account }) {
                   : "Click to copy link to clipboard"}
               </Text>
             </TouchableOpacity>
+
             <Text style={styles.text_center}>
-              Share your code or referral link to a friend and earn 3 VarsityHQ
-              coins when they use it to join VarsityHQ and post for the first
-              time.
+              Invite a new person to download and use VarsityHQ. After their
+              first post your both earn up to R10 each
             </Text>
           </View>
           <View style={{ paddingVertical: 20 }}>
+            <View style={styles.row}>
+              <RefRewardsBox per_ref="10" num={5} />
+              <RefRewardsBox per_ref="10" num={10} />
+              <RefRewardsBox per_ref="10" num={20} />
+            </View>
             <Text style={[styles.text_center, { fontWeight: "700" }]}>
               Refer Stats
             </Text>
@@ -134,6 +161,48 @@ function Header({ account }) {
 }
 
 const styles = StyleSheet.create({
+  balance_section: {
+    width: "100%",
+    // borderColor: colors.primary,
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: colors.darkish3,
+    padding: 10,
+    marginBottom: 20,
+    paddingVertical: 20,
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  currency: {
+    fontWeight: "700",
+    fontSize: RFValue(25),
+    color: colors.secondary,
+  },
+  balance_count: {
+    fontWeight: "700",
+    fontSize: RFValue(25),
+  },
+  r_t: {
+    color: colors.secondary,
+    marginTop: 10,
+    fontSize: 14,
+    textAlign: "center",
+  },
+  en_c: {
+    flex: 1,
+    borderRadius: 5,
+  },
+  en_btn: {
+    marginLeft: 10,
+  },
+  ref_box: {
+    flexDirection: "row",
+    width: "100%",
+    marginVertical: 10,
+  },
+  ref_image: {
+    height: 150,
+  },
   bordered_view: {
     borderWidth: 1,
     borderColor: colors.white,
@@ -153,10 +222,11 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginVertical: 5,
     fontSize: RFValue(20),
+    color: "#FFD700",
   },
   button: {
     width: "100%",
-    borderColor: colors.primary,
+    borderColor: "#FFD700",
     borderWidth: 1,
     borderRadius: 5,
 
@@ -167,7 +237,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   heading: {
-    fontSize: RFValue(18),
+    fontSize: RFValue(16),
+    marginBottom: 10,
     fontWeight: "700",
   },
   section_one: {
@@ -177,6 +248,11 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     borderBottomColor: colors.secondary,
     borderBottomWidth: 1,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   container: {
     padding: 10,

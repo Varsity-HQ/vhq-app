@@ -85,7 +85,7 @@ function AppTextInput({
         selectionColor={colors.primary}
         onChangeText={onChangeText}
         placeholderTextColor={colors.grayer}
-        style={styles.text}
+        style={[styles.text, style]}
         value={value}
         {...otherProps}
       />
