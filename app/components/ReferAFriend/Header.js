@@ -12,7 +12,6 @@ import Loader from "../Loaders/HomeUploading";
 import * as Clipboard from "expo-clipboard";
 import { PROFILE } from "../../navigation/routes";
 import RefRewardsBox from "./RefRewardsBox";
-import RefImage from "../../assets/refer_icon.png";
 import Input from "../Input";
 
 const mapStateToProps = (state) => {

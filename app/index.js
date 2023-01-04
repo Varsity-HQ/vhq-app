@@ -40,7 +40,7 @@ if (!getApps().length) {
   initializeApp(firebaseConfig);
 }
 
-axios.defaults.baseURL = "http://192.168.8.101:5000";
+axios.defaults.baseURL = "http://192.168.8.102:5000";
 // axios.defaults.baseURL = "http://192.168.68.129:5000";
 // axios.defaults.baseURL = "http://192.168.0.116:5000";
 // axios.defaults.baseURL = "https://api.varsityhq.co.za";

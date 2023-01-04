@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import Text from "../AppText";
-import GoldCoins from "../../assets/gold-coins.png";
+import GoldCoins from "../../assets/gold-coins400x172.png";
 import Image from "../Image";
 import colors from "../../config/colors";
 

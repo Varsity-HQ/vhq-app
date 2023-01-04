@@ -13,7 +13,7 @@ import Text from "../AppText";
 import Image from "../Image";
 import { color } from "react-native-reanimated";
 import dayjs from "dayjs";
-import ReferIcon from "../../assets/gold-coins.png";
+import ReferIcon from "../../assets/gold-coins400x172.png";
 
 const iconSize = 32;
 

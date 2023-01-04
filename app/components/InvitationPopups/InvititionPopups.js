@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import Text from "../AppText";
-import ReferIcon from "../../assets/refer_icon.png";
+import ReferIcon from "../../assets/refer_icon340x405.png";
 import Image from "../Image";
 import LargePopup from "./LargePopup";
 
