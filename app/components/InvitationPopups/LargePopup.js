@@ -6,7 +6,7 @@ import Button from "../Button";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
-import { POST_PAGE, PROFILE } from "../../navigation/routes";
+import { POST_PAGE, PROFILE, REFER_A_FRIEND } from "../../navigation/routes";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
 import Text from "../AppText";
@@ -17,14 +17,12 @@ import ReferIcon from "../../assets/gold-coins400x172.png";
 
 const iconSize = 32;
 
-function LargePopup({ open_state }) {
-  const [isModalVisible, setIsModalVisible] = React.useState(open_state);
-  const handleModal = () => setIsModalVisible(() => !isModalVisible);
+function LargePopup({ open_state, handleModal, data }) {
   const navigation = useNavigation();
 
   const options = [
     {
-      title: "Not",
+      title: "Close",
       onPress: () => {
         handleModal();
       },
@@ -50,7 +48,7 @@ function LargePopup({ open_state }) {
         swipeDirection={["down"]}
         style={styles.modal_bg}
         onBackdropPress={handleModal}
-        isVisible={isModalVisible}
+        isVisible={open_state}
         useNativeDriver={true}
       >
         <View style={styles.content}>
@@ -69,15 +67,24 @@ function LargePopup({ open_state }) {
                 Invite a friend to VarsityHQ and earn cash rewards of up to
               </Text>
               <View style={styles.cup_container}>
-                <Text style={styles.cash_up_to}>R100</Text>
+                <Text style={styles.cash_up_to}>
+                  R{parseFloat(data.cost_per_ref) * 10}
+                </Text>
                 <Text style={styles.subtext2}>Per 10 invites</Text>
               </View>
               <Text style={styles.subtext}>
-                You can request payout for cash rewards or redeem for VarsityHQ
-                offers
+                Click button below to use or get referral code. You can request
+                payout for cash rewards.
               </Text>
               <View>
-                <Button style={styles.gs_btn} title="Get started" />
+                <Button
+                  onPress={() => {
+                    navigation.navigate(REFER_A_FRIEND);
+                    handleModal();
+                  }}
+                  style={styles.gs_btn}
+                  title="Get started"
+                />
               </View>
             </View>
             {options.map((x, index) => {
@@ -146,7 +153,7 @@ const styles = StyleSheet.create({
   },
   subtext: {
     color: colors.secondary,
-    fontSize: 18,
+    fontSize: 16,
     paddingHorizontal: 20,
     marginBottom: 10,
     fontWeight: "400",
