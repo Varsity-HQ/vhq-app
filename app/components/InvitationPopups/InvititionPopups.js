@@ -21,7 +21,7 @@ function InvititionPopups(props) {
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (!refData.loading) {
+    if (refData.loading) {
       get_cost_for_ref();
     }
   }, []);

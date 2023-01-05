@@ -171,7 +171,7 @@ class Home extends PureComponent {
 
     return (
       <Screen>
-        <InvititionPopups type="" />
+        {!loading ? <InvititionPopups type="" /> : null}
         <FlatList
           removeClippedSubviews={true}
           // extraData={posts}
