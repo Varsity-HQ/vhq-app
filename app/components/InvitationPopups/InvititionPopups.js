@@ -49,7 +49,6 @@ function InvititionPopups(props) {
           open_state={show_ref_popup}
         />
       ) : null}
-
       {show_ref_icon ? (
         <View style={styles.popup_container}>
           <TouchableOpacity
