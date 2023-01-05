@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import HeaderComponent from "../headers/header3";
 import Text from "../AppText";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -49,19 +49,79 @@ function Header({ account }) {
     setLinkCopied(true);
   };
 
+  const alert_box = (title, msg) => {
+    return Alert.alert(title, msg, [
+      {
+        text: "Okay cool",
+      },
+    ]);
+  };
+
   const handleSubmitCode = async () => {
-    setApplyingRef(true);
     let refCode = refString
       .replace("https://varsityhq.co.za/r/", "")
       .replace(/\//g, "")
       .trim();
 
+    if (!refCode)
+      return alert_box(
+        "Invalid code",
+        "Please paste a valid refer link or code",
+      );
+    setApplyingRef(true);
+
     try {
       let res = await axios.get(`/u/applyrefcode/${refCode}`);
+      let status_msg = res?.data?.message;
+      if (status_msg === "done") {
+        let new_credit_balance =
+          parseFloat(refData.credits) + parseFloat(refData.cost_per_ref);
+        setRefData({
+          ...refData,
+          credits: new_credit_balance,
+        });
+        alert_box(
+          "Success",
+          `You have earned R${refData.cost_per_ref}. Refer people to VarsityHQ and earn`,
+        );
+      }
+
       setApplyingRef(false);
     } catch (err) {
       console.log(err);
       setApplyingRef(false);
+      let error = err?.response?.data?.error;
+      console.log({ error });
+      if (error === "invalid-code") {
+        return alert_box(
+          "Invalid code",
+          "Please paste a valid refer link or code",
+        );
+      }
+      if (error === "already-referred") {
+        return alert_box(
+          "Action denied",
+          "You already used a refer code. Copy your refer link below and share with new people to earn",
+        );
+      }
+      if (error === "not-new-account") {
+        return alert_box(
+          "Action denied",
+          "Code only works for new accounts. Copy your refer link below and share with new people to earn",
+        );
+      }
+      if (error === "havent-posted-yet") {
+        return alert_box(
+          "Action denied",
+          "You have to post at least once before you attempt to use code",
+        );
+      }
+      if (error === "own-code") {
+        return alert_box(
+          "Action denied",
+          "You attempted to use your own code, ask someone to share their referral code with you or share your own to earn",
+        );
+      }
     }
   };
 
@@ -110,7 +170,7 @@ function Header({ account }) {
             </View>
             <View>
               <Text style={styles.text_center}>
-                You can enter a refer code or link below
+                You can paste a refer code or refer link below
               </Text>
               <View style={styles.ref_box}>
                 <Input
@@ -148,7 +208,7 @@ function Header({ account }) {
             </TouchableOpacity>
             <Text style={styles.text_center}>
               Invite a new person to download and use VarsityHQ. After their
-              first post your both earn R{refData.cost_per_ref} each
+              first post you both earn R{refData.cost_per_ref} each
             </Text>
           </View>
           <View style={{ paddingVertical: 20 }}>
