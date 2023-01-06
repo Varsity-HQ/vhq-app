@@ -57,11 +57,11 @@ const home_tabs = [
     navTo: DISCOVER_PAGE,
     icon: null,
   },
-  {
-    title: "Offers",
-    index: 5,
-    icon: null,
-  },
+  // {
+  //   title: "Offers",
+  //   index: 5,
+  //   icon: null,
+  // },
 ];
 
 const height = Dimensions.get("window").height;
