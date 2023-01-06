@@ -31,16 +31,22 @@ function Header({ account }) {
   const [applyingRef, setApplyingRef] = useState(false);
 
   useEffect(() => {
-    axios
-      .get("/u/getrefferalinfo")
-      .then((data) => {
-        setRefData(data.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    get_ref_info();
   }, []);
+
+  const get_ref_info = () => {
+    try {
+      axios
+        .get("/u/getrefferalinfo")
+        .then((data) => {
+          setRefData(data.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } catch (error) {}
+  };
 
   const handleCopyLink = async () => {
     await Clipboard.setStringAsync(

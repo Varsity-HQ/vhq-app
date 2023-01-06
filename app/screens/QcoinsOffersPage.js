@@ -28,15 +28,6 @@ function QcoinsOffersPage({ navigation, userID }) {
 
   useEffect(() => {
     get_coins_n_ref_data();
-    axios
-      .get("/get/coins-offers")
-      .then((data) => {
-        setData(data.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
   }, []);
 
   const get_coins_n_ref_data = async () => {
