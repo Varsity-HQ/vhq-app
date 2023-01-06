@@ -34,6 +34,7 @@ import {
   DISCOVER_PAGE,
   MY_MARKETPLACE_ADS,
   PROFILE_FOLLOWING,
+  REFER_A_FRIEND,
 } from "./routes";
 import { logOutUser } from "../store/actions/actions";
 import { save_post_user } from "../store/actions/profile";
@@ -198,6 +199,21 @@ function DrawerContent({ props, product, account, save_post_user }) {
           <TouchableOpacity
             onPress={() => {
               navigation.dispatch(DrawerActions.closeDrawer());
+              navigation.navigate(REFER_A_FRIEND);
+            }}
+            style={{
+              paddingHorizontal: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 30,
+            }}
+          >
+            <FontAwesome name="money" size={25} color={colors.secondary} />
+            <Text style={{ marginLeft: 20 }}>Earn from referrals</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.dispatch(DrawerActions.closeDrawer());
               navigation.navigate(QCOINS_OFFERS);
             }}
             style={{
@@ -210,6 +226,7 @@ function DrawerContent({ props, product, account, save_post_user }) {
             <FontAwesome name="tags" size={25} color={colors.secondary} />
             <Text style={{ marginLeft: 20 }}>Qcoins & Offers</Text>
           </TouchableOpacity>
+
           {/* <View
             style={{
               paddingHorizontal: 10,
