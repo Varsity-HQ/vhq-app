@@ -6,7 +6,11 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
-import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import {
+  Ionicons,
+  FontAwesome,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import colors from "../../config/colors";
 import { TouchableWithoutFeedback, Image } from "react-native";
 import Text from "../AppText";
@@ -67,6 +71,7 @@ function HeaderPostContent({
   const navigation = useNavigation();
   const [isBookMarked, setIsBookMarked] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [isDownvoted, setIsDownvoted] = useState(false);
 
   useEffect(() => {
     if (!post) return;
@@ -101,6 +106,11 @@ function HeaderPostContent({
       like_post(post.id);
     }
     setIsLiked(!isLiked);
+  };
+  const handleDownvotePost = () => {
+    unlike_post(post.id);
+    setIsLiked(false);
+    setIsDownvoted(true);
   };
 
   if (post?.postType === "event_post") {
@@ -326,23 +336,28 @@ function HeaderPostContent({
                     }}
                     onPress={handleLikePost}
                   >
-                    {isLiked ? (
-                      <Ionicons
-                        name="heart"
-                        size={25}
-                        color={colors.redish_2}
-                      />
-                    ) : (
-                      <Ionicons
-                        name="heart-outline"
-                        size={25}
-                        color={colors.white}
-                      />
-                    )}
-
-                    <Text style={{ fontSize: 15 }}>
-                      &nbsp;{post.likes_count} Likes
+                    <MaterialCommunityIcons
+                      name="arrow-up-bold-outline"
+                      size={25}
+                      color={isLiked ? colors.green : colors.white}
+                    />
+                    <Text style={{ fontSize: 15, marginLeft: 5 }}>
+                      &nbsp;{post.likes_count}
                     </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      alignItems: "center",
+                      flexDirection: "row",
+                      marginLeft: 10,
+                    }}
+                    onPress={handleDownvotePost}
+                  >
+                    <MaterialCommunityIcons
+                      name="arrow-down-bold-outline"
+                      size={25}
+                      color={isDownvoted ? colors.redish_2 : colors.white}
+                    />
                   </TouchableOpacity>
                   <View
                     style={{
