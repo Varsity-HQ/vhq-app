@@ -50,6 +50,7 @@ class PostCardButtons extends PureComponent {
     post_liked: false,
     myPost: false,
     following_poster: false,
+    down_voted: false,
   };
 
   componentDidMount = () => {
@@ -69,13 +70,25 @@ class PostCardButtons extends PureComponent {
     }
   };
 
-  handleCopyPost = () => {
-    Clipboard.setString(`https://web.varsityhq.co.za/p/${this.props.data.id}`);
+  handleCopyPost = async () => {
+    await Clipboard.setStringAsync(
+      `https://web.varsityhq.co.za/p/${this.props.data.id}`,
+    );
     Toast.show({
       type: "general",
       autoHide: true,
       ...COPY_POST_URL,
     });
+  };
+
+  handleDownVotePost = () => {
+    if (!this.state.down_voted) {
+      this.props.unlike_post(this.props.data.id);
+      this.setState({
+        down_voted: true,
+        post_liked: false,
+      });
+    }
   };
 
   handleLikePost = () => {
@@ -168,13 +181,13 @@ class PostCardButtons extends PureComponent {
           </TouchableOpacity>
           {askvi && (
             <TouchableOpacity
-              onPress={this.handleLikePost}
+              onPress={this.handleDownVotePost}
               style={styles.button}
             >
               <MaterialCommunityIcons
                 name="arrow-down-bold-outline"
                 size={RFValue(22)}
-                color={colors.white}
+                color={this.state.down_voted ? colors.redish : colors.white}
               />
             </TouchableOpacity>
           )}

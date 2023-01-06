@@ -232,11 +232,15 @@ function ChatPage({ account }) {
           : doc(db, "accounts", receiver_id);
 
         let proceed, user_data, notificationToken;
+        let new_notications_count = 0;
 
         await getDoc(userRef)
           .then(async (data) => {
             if (!isDatingChat) {
               notificationToken = data.data().notificationToken;
+              new_notications_count = parseInt(
+                data.data().new_notications_count,
+              );
             } else {
               let accRef = doc(db, "accounts", data.data().parentID);
               return getDoc(accRef);
@@ -257,6 +261,7 @@ function ChatPage({ account }) {
                 user_id: route.params.uid,
                 isDatingChat: isDatingChat,
                 _page: "chat",
+                badge: new_notications_count + 1,
               });
             }
           })

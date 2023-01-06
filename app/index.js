@@ -40,7 +40,7 @@ if (!getApps().length) {
   initializeApp(firebaseConfig);
 }
 
-axios.defaults.baseURL = "http://192.168.8.102:5000";
+axios.defaults.baseURL = "http://192.168.8.101:5000";
 // axios.defaults.baseURL = "http://192.168.68.129:5000";
 // axios.defaults.baseURL = "http://192.168.0.116:5000";
 // axios.defaults.baseURL = "https://api.varsityhq.co.za";
@@ -52,6 +52,7 @@ const universal2 = Linking.createURL("https://varsityhq.co.za");
 const toastConfig = {
   general: ({ text1, text2 }) => <AppToast text1={text1} text2={text2} />,
 };
+
 //
 const mapStateToProps = (state) => {
   return {
@@ -151,8 +152,6 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
 
   const _loadAssetsAsync = async () => {
     const imageAssets = cacheImages([
-      "https://image.shutterstock.com/image-photo/close-beauty-portrait-young-charming-600w-1931216711.jpg",
-      "https://image.shutterstock.com/image-photo/portrait-beautiful-african-american-female-600w-721419679.jpg",
       require("./assets/avatar.png"),
       require("./assets/logo-small.png"),
       require("./assets/login-img-1.jpg"),
@@ -160,6 +159,8 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
       require("./assets/signup-img-2.jpg"),
       require("./assets/vhqcat-small.png"),
       require("./assets/background-pattern.png"),
+      require("./assets/refer_icon340x405.png"),
+      require("./assets/gold-coins400x172.png"),
     ]);
 
     const fontAssets = cacheFonts([
