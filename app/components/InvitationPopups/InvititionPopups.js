@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     // transform: "translate(-50%,-50%)",
     zIndex: 99999,
     height: 140,
-    width: 100,
+    width: 110,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
     // backgroundColor: "red",
