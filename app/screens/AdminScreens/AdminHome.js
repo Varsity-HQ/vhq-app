@@ -12,6 +12,7 @@ import {
   ADMIN_MARKETPLACE_CATEGORIES,
   ADMIN_STATS_SUMMARY,
   REWARD_PRICINGS,
+  PAYOUT_REQUESTS,
 } from "../../navigation/routes";
 
 const notifications = [
@@ -42,6 +43,11 @@ const reward_n_offers = [
     id: v4(),
     title: "Manage Reward Pricings",
     route: REWARD_PRICINGS,
+  },
+  {
+    id: v4(),
+    title: "Payout Requests",
+    route: PAYOUT_REQUESTS,
   },
 ];
 

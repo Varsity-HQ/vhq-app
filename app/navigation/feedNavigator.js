@@ -83,9 +83,11 @@ import {
   ALL_TRENDING_HASHTAGS,
   SEARCH,
   REWARD_PRICINGS,
+  PAYOUT_REQUESTS,
 } from "./routes";
 import AllHashtags from "../screens/AllHashtags";
 import RewardPricings from "../screens/AdminScreens/RewardPricings";
+import PayoutRequests from "../screens/AdminScreens/PayoutRequests";
 
 const Stack = createNativeStackNavigator();
 // import PostPage from "../screens/PostPage";
@@ -429,6 +431,14 @@ const FeedNavigator = () => (
         }}
         name={REWARD_PRICINGS}
         component={RewardPricings}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+        name={PAYOUT_REQUESTS}
+        component={PayoutRequests}
       />
 
       {/* <Stack.Screen 

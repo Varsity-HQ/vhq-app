@@ -17,6 +17,7 @@ export const ADMIN_ALERT_USERS = "AdminAlertUsers";
 export const ADMIN_STATS_SUMMARY = "AdminStatsSummary";
 export const REWARD_PRICINGS = "RewardPricings";
 export const REWARD_REQUESTS = "RewardRequests";
+export const PAYOUT_REQUESTS = "PayoutRequests";
 
 //Chat Screens
 export const CHAT_HOME = "ChatHome";
