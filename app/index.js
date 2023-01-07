@@ -106,7 +106,7 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
       //   },
       // },
       [routes.CHAT_HOME]: "chat",
-      [routes.REFER_A_FRIEND]: "refer",
+      [routes.REFER_A_FRIEND]: "/r/:ref_id",
     },
   };
 

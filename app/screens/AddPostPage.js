@@ -410,7 +410,7 @@ class AddPostPage extends Component {
                       opacity: 0.3,
                     },
                   ]}
-                >
+                > 
                   <AddImageButton
                     disabled={this.state.pollCreate}
                     max={4}

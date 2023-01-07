@@ -41,7 +41,7 @@ function MCPhoto({ add, image, onImgChange, max, length, removePress }) {
           quality: 0.7,
           // aspect: [1, 1],
           // aspect: [1.91, 1],
-          presentationStyle: 0,
+          // presentationStyle: 0,
           allowsEditing: true,
         });
 

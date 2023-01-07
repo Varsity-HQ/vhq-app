@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Alert, Image, TouchableOpacity } from "react-native";
+import { Alert, Image, TouchableOpacity, Platform } from "react-native";
 import { View, StyleSheet } from "react-native";
 import colors from "../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -33,8 +33,8 @@ function ProfilePicChanger({ image, onImgChange }) {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         quality: 0.5,
         aspect: [1, 1],
-        presentationStyle: 0,
-        allowsEditing: true,
+        // presentationStyle: 0,
+        allowsEditing: Platform.OS === "android" ? false : true,
         // base64: true,
       });
       //
