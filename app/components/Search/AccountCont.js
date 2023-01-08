@@ -15,7 +15,6 @@ import { connect } from "react-redux";
 import check_if_followed from "../../util/check_if_followed";
 import * as routes from "../../navigation/routes";
 import { follow_account, unfollow_account } from "../../store/actions/actions";
-import { color } from "react-native-reanimated";
 
 const sAccount = "jL5PPJzZuqWuqHLz7jb5ECS7cHu2";
 
@@ -86,30 +85,16 @@ function AccountCont({
   };
 
   return (
-    <View
-      style={{
-        borderColor: colors.green,
-        borderWidth: 1,
-        borderRadius: 10,
-        marginBottom: 10,
-      }}
-    >
-      <View
-        style={{
-          position: "relative",
-          paddingTop: 20,
-          borderBottomColor: colors.secondary,
-          borderBottomWidth: 1,
-          marginHorizontal: 40,
-          marginBottom: 20,
-          paddingBottom: 10,
-        }}
-      >
-        <Text style={{ fontSize: 35, fontWeight: "700", alignSelf: "center" }}>
-          R100
-        </Text>
-        <Button title="Close request" type={3} />
-      </View>
+    <View style={[request && styles.outer_container]}>
+      {request ? (
+        <View style={styles.top_container}>
+          <Text style={styles.text_top}>
+            <Text style={styles.r_text}>R</Text>
+            {data.credits}
+          </Text>
+          <Button title="Close request" type={3} />
+        </View>
+      ) : null}
       <View style={[styles.container, style]}>
         <TouchableWithoutFeedback
           onPress={() =>
@@ -158,6 +143,35 @@ function AccountCont({
 }
 
 const styles = StyleSheet.create({
+  outer_container: {
+    borderColor: colors.green,
+    borderWidth: 1,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  top_container: {
+    position: "relative",
+    paddingTop: 20,
+    borderBottomColor: colors.secondary,
+    borderBottomWidth: 1,
+    marginHorizontal: 40,
+    marginBottom: 20,
+    paddingBottom: 10,
+  },
+  r_text: {
+    fontSize: 35,
+    fontWeight: "700",
+    alignSelf: "center",
+    color: colors.secondary_2,
+  },
+  text_top: {
+    display: "flex",
+    fontSize: 35,
+    fontWeight: "700",
+    alignSelf: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
   yostudy: {
     paddingHorizontal: 10,
     // marginHorizontal: 10,
