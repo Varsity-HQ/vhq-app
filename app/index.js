@@ -45,9 +45,9 @@ if (!getApps().length) {
 // axios.defaults.baseURL = "http://192.168.0.116:5000";
 axios.defaults.baseURL = "https://api.varsityhq.co.za";
 
-// const prefix = Linking.createURL("vhq://app");
-const universal = Linking.createURL("https://web.varsityhq.co.za");
-const universal2 = Linking.createURL("https://varsityhq.co.za");
+const universal = Linking.createURL("https://varsityhq.co.za");
+const appScheme = Linking.createURL("/");
+const urlScheme = "https://varsityhq.co.za";
 
 const toastConfig = {
   general: ({ text1, text2 }) => <AppToast text1={text1} text2={text2} />,
@@ -102,17 +102,16 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
       // ScreenB: {
       //   path: "/p/:pid",
       //   parse: {
-      //     pid: (pid) => `${pid}`, 
+      //     pid: (pid) => `${pid}`,
       //   },
       // },
       [routes.HOME]: "/",
-      [routes.CHAT_HOME]: "/chat",
       [routes.REFER_A_FRIEND]: "/r/:ref_id",
     },
   };
 
   const linking = {
-    prefixes: [universal, universal2],
+    prefixes: [universal, appScheme, urlScheme],
     config,
   };
 
