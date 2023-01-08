@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import check_if_followed from "../../util/check_if_followed";
 import * as routes from "../../navigation/routes";
 import { follow_account, unfollow_account } from "../../store/actions/actions";
+import { color } from "react-native-reanimated";
 
 const sAccount = "jL5PPJzZuqWuqHLz7jb5ECS7cHu2";
 
@@ -31,6 +32,8 @@ function AccountCont({
   unfollow_account,
   removeButton,
   chat,
+  style,
+  request,
 }) {
   const navigation = useNavigation();
   const [following, setFollowing] = useState(false);
@@ -83,47 +86,72 @@ function AccountCont({
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableWithoutFeedback
-        onPress={() =>
-          navigation.push(routes.PROFILE, {
-            username: data.username,
-          })
-        }
+    <View
+      style={{
+        borderColor: colors.green,
+        borderWidth: 1,
+        borderRadius: 10,
+        marginBottom: 10,
+      }}
+    >
+      <View
+        style={{
+          position: "relative",
+          paddingTop: 20,
+          borderBottomColor: colors.secondary,
+          borderBottomWidth: 1,
+          marginHorizontal: 40,
+          marginBottom: 20,
+          paddingBottom: 10,
+        }}
       >
-        <View style={styles.leftsec}>
-          {returnDP()}
-          <View>
-            <Text style={styles.name}>
-              {data.firstname}&nbsp;{data.surname}
-            </Text>
-
-            <Text style={styles.uname}>
-              @{data.username}&nbsp;&nbsp;
-              <Text style={styles.yostudy}>
-                {data.yearOfStudy === "postgraduates"
-                  ? "Postgraduate"
-                  : `${data.yearOfStudy} year`}
+        <Text style={{ fontSize: 35, fontWeight: "700", alignSelf: "center" }}>
+          R100
+        </Text>
+        <Button title="Close request" type={3} />
+      </View>
+      <View style={[styles.container, style]}>
+        <TouchableWithoutFeedback
+          onPress={() =>
+            navigation.push(routes.PROFILE, {
+              username: data.username,
+            })
+          }
+        >
+          <View style={styles.leftsec}>
+            {returnDP()}
+            <View>
+              <Text style={styles.name}>
+                {data.firstname}&nbsp;{data.surname}
               </Text>
-            </Text>
+
+              <Text style={styles.uname}>
+                @{data.username}&nbsp;&nbsp;
+                <Text style={styles.yostudy}>
+                  {data.yearOfStudy === "postgraduates"
+                    ? "Postgraduate"
+                    : `${data.yearOfStudy} year`}
+                </Text>
+              </Text>
+            </View>
           </View>
+        </TouchableWithoutFeedback>
+        <View>
+          {!removeButton && data.userID !== sAccount && (
+            <Button
+              type={following ? 5 : 8}
+              onPress={handleAction}
+              title={following ? "Following" : "Follow"}
+            />
+          )}
+          {chat && (
+            <Button
+              type={following ? 5 : 8}
+              onPress={handleChatAction}
+              title={"Message"}
+            />
+          )}
         </View>
-      </TouchableWithoutFeedback>
-      <View>
-        {!removeButton && data.userID !== sAccount && (
-          <Button
-            type={following ? 5 : 8}
-            onPress={handleAction}
-            title={following ? "Following" : "Follow"}
-          />
-        )}
-        {chat && (
-          <Button
-            type={following ? 5 : 8}
-            onPress={handleChatAction}
-            title={"Message"}
-          />
-        )}
       </View>
     </View>
   );

@@ -102,10 +102,11 @@ function App({ authenticated, set_user, setAuthState, set_token, userID }) {
       // ScreenB: {
       //   path: "/p/:pid",
       //   parse: {
-      //     pid: (pid) => `${pid}`,
+      //     pid: (pid) => `${pid}`, 
       //   },
       // },
-      [routes.CHAT_HOME]: "chat",
+      [routes.HOME]: "/",
+      [routes.CHAT_HOME]: "/chat",
       [routes.REFER_A_FRIEND]: "/r/:ref_id",
     },
   };
