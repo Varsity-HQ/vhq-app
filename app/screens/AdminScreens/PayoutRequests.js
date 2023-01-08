@@ -4,7 +4,7 @@ import HeaderedHeader from "../../components/headers/HeaderedHeader";
 import Screen from "../../components/Screen";
 import Account from "../../components/Search/AccountCont";
 import LoadingC from "../../components/Loaders/HomeUploading";
-import { collection, query, where } from "firebase/firestore";
+import { collection, doc, query, updateDoc, where } from "firebase/firestore";
 import db from "../../util/fb_admin";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import Text from "../../components/AppText";
@@ -14,9 +14,26 @@ function PayoutRequests(props) {
   const accQuery = query(accCol, where("payout_requested", "==", true));
   const [data, loading, err] = useCollectionData(accQuery);
 
+  const handle_close_request = async (id) => {
+    try {
+      let docRef = doc(db, "accounts", id);
+      await updateDoc(docRef, {
+        payout_requested: false,
+        payout_request_close_date: new Date().toISOString(),
+      });
+    } catch (error) {}
+  };
+
   const renderItem = ({ item }) => {
     return (
-      <Account request removeButton chat style={styles.account} data={item} />
+      <Account
+        request
+        close_request={handle_close_request}
+        removeButton
+        chat
+        style={styles.account}
+        data={item}
+      />
     );
   };
 

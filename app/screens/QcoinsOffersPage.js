@@ -52,6 +52,7 @@ function QcoinsOffersPage({ navigation, userID }) {
       let docRef = doc(db, "accounts", userID);
       await updateDoc(docRef, {
         payout_requested: true,
+        payout_requested_on: new Date().toISOString(),
       });
       set_payout(true);
     } catch (err) {

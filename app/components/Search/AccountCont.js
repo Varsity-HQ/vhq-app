@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Image as LocalImage,
   TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 
 import Button from "../Button";
@@ -33,6 +34,7 @@ function AccountCont({
   chat,
   style,
   request,
+  close_request,
 }) {
   const navigation = useNavigation();
   const [following, setFollowing] = useState(false);
@@ -84,6 +86,23 @@ function AccountCont({
     );
   };
 
+  const on_close_req_click = () => {
+    Alert.alert(
+      "@warning",
+      "You,re about to close this payout request, Continue ?",
+      [
+        {
+          text: "Yes close",
+          onPress: () => close_request(data.userID),
+        },
+        {
+          text: "No, cancel",
+          style: "cancel",
+        },
+      ],
+    );
+  };
+
   return (
     <View style={[request && styles.outer_container]}>
       {request ? (
@@ -92,7 +111,11 @@ function AccountCont({
             <Text style={styles.r_text}>R</Text>
             {data.credits}
           </Text>
-          <Button title="Close request" type={3} />
+          <Button
+            onPress={() => on_close_req_click()}
+            title="Close request"
+            type={3}
+          />
         </View>
       ) : null}
       <View style={[styles.container, style]}>
