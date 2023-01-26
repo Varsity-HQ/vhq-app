@@ -13,6 +13,7 @@ import * as Clipboard from "expo-clipboard";
 import { PROFILE } from "../../navigation/routes";
 import RefRewardsBox from "./RefRewardsBox";
 import Input from "../Input";
+import ReferralRewardsTnCsButton from "./ReferralRewardsTnCsButton";
 
 const mapStateToProps = (state) => {
   return {
@@ -195,6 +196,7 @@ function Header({ account }) {
                 />
               </View>
             </View>
+            <ReferralRewardsTnCsButton />
             <TouchableOpacity
               onPress={handleCopyLink}
               style={[

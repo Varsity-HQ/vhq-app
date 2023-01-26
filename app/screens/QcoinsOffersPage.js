@@ -13,6 +13,7 @@ import axios from "axios";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { connect } from "react-redux";
 import db from "../util/fb_admin";
+import ReferralRewardsTnCsButton from "../components/ReferAFriend/ReferralRewardsTnCsButton";
 
 const mapStateToProps = (state) => {
   return {
@@ -124,7 +125,16 @@ function QcoinsOffersPage({ navigation, userID }) {
                   You can request payout of minimum R{minimum_payout} to cash.
                 </Text>
               </View>
-              <Text style={styles.text_center}>
+
+              <ReferralRewardsTnCsButton />
+              <Text
+                style={[
+                  styles.text_center,
+                  {
+                    marginTop: 15,
+                  },
+                ]}
+              >
                 Press the button below and our support will message you via the
                 VarsityHQ chat with details.
               </Text>

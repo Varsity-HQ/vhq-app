@@ -84,14 +84,6 @@ function cacheFonts(fonts) {
   return fonts.map((font) => Font.loadAsync(font));
 }
 
-// Notifications.setNotificationHandler({
-//   handleNotification: async () => ({
-//     shouldShowAlert: true,
-//     shouldPlaySound: true,
-//     shouldSetBadge: true,
-//   }),
-// });
-
 function App({ authenticated, set_user, setAuthState, set_token, userID }) {
   const [isReady, setisReady] = useState();
   const [isAssetsCached, setIsAssetsCached] = useState(false);
