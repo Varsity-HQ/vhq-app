@@ -73,6 +73,18 @@ function InterestFilter({ show_me, update_dating_gender_interest }) {
           marginTop: 10,
         }}
       />
+      <Text
+        style={[
+          styles.heading,
+          {
+            fontWeight: "500",
+            color: colors.secondary_2,
+          },
+        ]}
+      >
+        Uncategorised profiles appear if you select the "Both" option, we
+        recommend using this selection to see more people
+      </Text>
     </View>
   );
 }

@@ -76,10 +76,17 @@ const DatingContainer = ({
   const [pokesProfiles, setPokesProfiles] = React.useState([]);
 
   const collectionRef = collection(db, "discover_profiles");
+  let gender_filter = profile.show_me;
+  if (Array.isArray(profile.show_me)) {
+    if (profile.show_me.length >= 2) {
+      gender_filter = [...profile.show_me, ""];
+    }
+  }
   const queryRef = query(
     collectionRef,
     // where("is_active", "==", true),
-    where("gender", "in", profile.show_me),
+    // where("gender", "in", profile.show_me),
+    where("gender", "in", gender_filter),
     orderBy("last_online", "desc"),
   );
   const [profiles, ploading, perror] = useCollectionData(queryRef);
